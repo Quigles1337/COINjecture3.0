@@ -162,3 +162,88 @@ Continue continuous-batch afterward.
   verification. The two supplied audit files enter durable `loop/evidence/` storage
   before analysis; the missing Codex scan file does not block if its findings are
   already fully represented by exact committed 2.0 remediation pointers.
+
+## P-010 documentation governance overlay — RATIFIED (Al, 2026-08-16)
+
+The following non-preempting ruling was received after the P-005 HUMAN-lane stop and
+applied at that packet boundary without merging or modifying P-005's formal-spec branch:
+
+- **P-010 — APPROVED / AUTO:** replace the repository-root `README.md` with the
+  institutional document specified by the live ruling. The packet is docs-only and
+  has no consensus-semantic authority.
+- **Queue placement:** P-010 is appended after P-009 in the durable queue. The live
+  instruction to process it at the next packet boundary authorizes this documentation
+  packet now; it does not mark P-005 complete or unblock P-006/P-007/P-009.
+- **Claims discipline:** present capabilities require evidence pointers; future work,
+  assumptions, and owned TBDs remain explicit. The repository remains private and
+  pre-testnet, with no mainnet claim or configuration.
+- **License:** `License: TBD — owner: Al/Ken`. P-010 does not create a `LICENSE` file
+  or select a license.
+
+### Standing README drift-control rule — RATIFIED (Al, 2026-08-16)
+
+The README status block and roadmap current-position marker MUST be refreshed in the
+same closeout that records every phase-gate decision (G0 through G4). A gate closeout
+is incomplete if either surface is stale or omitted. This standing rule keeps the
+repository entry document synchronized with the gate evidence in `loop/STATE.md`,
+`loop/PACKETS.md`, and `loop/reports/`.
+
+## P-005 HUMAN-lane authorization and review tail — RATIFIED (Al, 2026-08-16)
+
+The following live ruling authorizes the previously stopped HUMAN-lane implementation
+while preserving every ownership boundary and adding a non-automatic review tail:
+
+```text
+P-005 HUMAN-LANE AUTHORIZATION — RATIFIED, with review tail.
+
+The builder is authorized to implement P-005's Spec/*.lean content and JSON
+vector definitions strictly from ratified Protocol Spec §§7–8 and the §14
+vector case list. Constraints:
+
+1. All Al-owned, Sarah-owned, and G0-controlled TBDs remain symbolic or
+   unfilled. Test-only fixture values must be explicitly labeled
+   non-normative and must not populate any protocol TBD.
+2. SI-001, SI-002, and SI-003 remain unresolved and must not be silently
+   decided through Lean code or vectors. Where a V-rule depends on one
+   (e.g., V1 on canonical-encoding details), model the dependency as an
+   abstract, clearly marked interface citing its SI reference — never a
+   concrete choice.
+3. Any new semantic ambiguity triggers a fresh stop, not an inferred choice.
+4. Each Spec/*.lean file carries a header: "NORMATIVE STATUS: draft —
+   pending human ratification; formal-verification ownership reserved per
+   LEDGER D16." No Sarah contact, review attribution, or notification
+   before the D16 reveal.
+5. MERGE RULE: the completed P-005 PR does NOT auto-merge. Finish the
+   packet through the adversary pass and green CI, mark PR #9
+   ready-for-review, and stop it there for my line-by-line review of the
+   Lean encoding against Protocol Spec §§7–8. My merge is the packet's
+   done-condition. That review is what licenses kernel autonomy at P-101;
+   it is not skippable.
+6. QUEUE: while PR #9 awaits my review, continue continuous-batch out of
+   strict order with P-006, P-007, P-009 (interpretation of the ingested
+   audit sources now permitted), and P-010 if present in the queue.
+   P-101 remains blocked on Gate G0 AND the merged, human-reviewed P-005.
+
+Resume.
+```
+
+### Effective P-005 controls
+
+- **Implementation authority:** P-005's Lean files and JSON vector definitions may be
+  implemented only from Protocol Spec §§7–8 and §14's vector case list.
+- **Owned and gated values:** Al-owned, Sarah-owned, and G0-controlled TBDs remain
+  symbolic or absent. Any test fixture is explicitly non-normative and cannot fill a
+  protocol TBD.
+- **SI integrity:** SI-001, SI-002, and SI-003 remain unresolved. A dependent rule is
+  represented by an abstract interface that cites the applicable SI; code and vectors
+  cannot select an encoding or other concrete resolution.
+- **Ambiguity tripwire:** a new semantic ambiguity is a fresh HUMAN stop.
+- **Normative status:** every `Spec/*.lean` file carries the exact required draft and
+  ownership header. No Sarah contact, attribution, invite, or notification occurs
+  before D16 reveal.
+- **Review tail:** PR #9 completes builder work only after its adversary pass and exact-
+  head green CI, when it is marked ready for Al's line-by-line review. It MUST NOT be
+  auto-merged. Al's merge is the packet done-condition.
+- **Queue exception:** while PR #9 awaits that review, P-006, P-007, P-009, and P-010
+  (if present) may run out of strict order, subject to their own tripwires and D11.
+- **P-101:** remains doubly blocked on Gate G0 and a merged, human-reviewed P-005.

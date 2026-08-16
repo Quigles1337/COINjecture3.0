@@ -1,10 +1,12 @@
 # COINjecture 3.0 Packet Queue
 
-**Queue status:** APPROVED IN ORDER — Al live rulings, 2026-08-15 through
-2026-08-16. P-001 through P-007 and P-009 run in continuous-batch mode while the D11
-capacity condition remains clear. P-009 is appended and unblocked; its source-ingest
-first action occurs at the P-004 boundary. Stop at Gate G0, on HUMAN-lane work, or on
-any autonomous-builder tripwire.
+**Queue status:** APPROVED WITH RATIFIED P-005 REVIEW TAIL — Al live rulings,
+2026-08-15 through 2026-08-16. P-005 implementation is HUMAN-authorized under the
+exact constraints in `loop/LEDGER.md`, but PR #9 MUST stop ready-for-review and MUST
+NOT auto-merge. While that review tail is open, P-006, P-007, P-009, and P-010 (if
+present) may run out of strict order under their own tripwires and D11 checks. P-008
+remains blocked on the exact frontend URL. P-101 remains blocked on both Gate G0 and
+the merged, human-reviewed P-005.
 
 | Packet | Phase | Queue status | Blocking condition |
 |--------|-------|--------------|--------------------|
@@ -12,12 +14,13 @@ any autonomous-builder tripwire.
 | P-002 | Phase 0 | COMPLETE — `7ecba896` | PR #3 and exact-merge-SHA D6 CI green |
 | P-003 | Phase 0 | COMPLETE — `e0056157` | PR #5 and exact-merge-SHA D6 CI green |
 | P-004 | Phase 0 | COMPLETE — `4644374f` | PR #7 and exact-merge-SHA D6 CI green |
-| P-005 | Phase 0 | STOP — HUMAN / AWAITING AL | Draft PR #9 contains FRAME/STOP only; resume requires live authority for `Spec/*.lean` content and vector definitions |
-| P-006 | Phase 0 | QUEUED — APPROVED | P-005 complete and D11 re-check |
-| P-007 | Phase 0 | QUEUED — APPROVED | P-006 complete and D11 re-check |
+| P-005 | Phase 0 | IN PROGRESS — HUMAN AUTHORIZED / REVIEW TAIL | Implement on draft PR #9 within the ratified symbolic/SI boundary; adversary + exact-head green CI; mark ready; no builder merge |
+| P-006 | Phase 0 | QUEUED — APPROVED / OUT-OF-ORDER PERMITTED | P-005 PR #9 ready-for-review and D11 re-check |
+| P-007 | Phase 0 | QUEUED — APPROVED / OUT-OF-ORDER PERMITTED | P-005 PR #9 ready-for-review and D11 re-check; its own semantic tripwires remain armed |
 | P-008 | Phase 0 / Phase 4 seam input | BLOCKED | Exact public frontend repository URL supplied by Al; URL MUST NOT be guessed |
-| P-009 | Phase 0 / audit traceability | QUEUED — APPROVED / UNBLOCKED | Source evidence copied durably at the P-004 boundary; execute after earlier approved packets |
-| P-101 | Phase 1 head | BLOCKED | Gate G0 |
+| P-009 | Phase 0 / audit traceability | QUEUED — APPROVED / UNBLOCKED / INTERPRETATION AUTHORIZED | Source evidence copied durably; may execute while P-005 awaits review after its own D11 re-check |
+| P-010 | Phase 0 / documentation | COMPLETE — `1e986cb2` | Feature PR #10 and closeout PR #11; both exact-merge-SHA D6 runs green |
+| P-101 | Phase 1 head | BLOCKED | Gate G0 **and** merged, human-reviewed P-005 |
 
 ## Seed packet definitions
 
@@ -52,7 +55,9 @@ hardness/asymmetry report; run 2.0's legacy classes through it first as calibrat
 
 Lake project; `Spec/Tx.lean` encoding V1–V9 from Protocol Spec §7;
 `Spec/Stf.lean` skeleton; JSON vector exporter (`lake exe vectors`). **Designed Sarah
-entry seam.** Conformance test lands with P-101, not here.
+entry seam.** Conformance test lands with P-101, not here. The 2026-08-16 HUMAN-lane
+authorization permits builder implementation only within the symbolic/SI boundary in
+`loop/LEDGER.md`; PR #9 stops ready-for-review and Al's merge is its done-condition.
 
 Pickup on 2026-08-16 classified the whole packet HUMAN before implementation because
 the done-condition directly requires both `Spec/*.lean` content and protocol-vector
@@ -93,9 +98,27 @@ CJ3's A8 track. The Codex security-scan source remains outstanding, but P-009 do
 not wait if exact committed 2.0 remediation records fully represent its findings and
 are cited as substitutes. No `src/` change is authorized.
 
+### P-010 — Institutional README
+
+Replace the repository-root `README.md` with a GitHub-flavored, diligence-oriented
+entry document below roughly 400 lines. It leads with the 2.0 audit lineage, derives
+the structural response without claiming unimplemented consensus behavior, keeps one
+current status block, condenses A1–A11, maps the planned crate architecture, explains
+governance and evidence inspection, provides only currently working commands, states
+limitations and owned TBDs, and marks the current G0–G4 position. A D6 badge is the
+only permitted badge class; no drifting version badge is permitted.
+
+The packet is docs-only and AUTO eligible. It may edit the README and its own durable
+governance/report/bookkeeping surfaces, but no source, workflow, formal specification,
+protocol vector, consensus semantic, parameter, or license decision. Its adversary
+pass removes or points every unsupported capability sentence. The README status block
+and roadmap marker become mandatory refresh surfaces at every gate closeout under the
+standing rule in `loop/LEDGER.md`.
+
 ### P-101 — Kernel
 
-Phase 1 head, blocked on G0: V1–V9 + STF versus Lean vectors.
+Phase 1 head, blocked on G0 **and** a merged, human-reviewed P-005: V1–V9 + STF versus
+Lean vectors.
 
 ## Pickup guard
 
