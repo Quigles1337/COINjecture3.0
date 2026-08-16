@@ -33,9 +33,12 @@ worst-case problem, attack models, and implementation cost remain assumptions.
 [`estimator.sage`](./estimator.sage) is pinned to `malb/lattice-estimator` commit
 `3e48ef421ec256afddb3e7d2249a77eab6e9ba12`. The runner refuses another commit or an
 `estimator/sis_lattice.py` SHA-256 other than
-`d68ec5d0f471cf4904126211d8b2579186fa6dce645ac7339e95bd621a505be1`, rebuilds the
-official development image, and executes the exact Euclidean (`norm=2`) mapping with
-`length_bound = sqrt(beta_squared)`.
+`d68ec5d0f471cf4904126211d8b2579186fa6dce645ac7339e95bd621a505be1`, refuses a
+dirty or untracked estimator worktree, and executes the exact Euclidean (`norm=2`)
+mapping with `length_bound = sqrt(beta_squared)`. It does not execute the checkout's
+Dockerfile or requirements: the Sage runtime is selected by an immutable OCI manifest
+digest, the checkout and script are mounted read-only, the container root is read-
+only, temporary storage is bounded, and networking is disabled.
 
 The default model and `estimate.rough` model differ by roughly 22–30 log2 operations
 across much of this range. The upstream estimator explicitly says the rough

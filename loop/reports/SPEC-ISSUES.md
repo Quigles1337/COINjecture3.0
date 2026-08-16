@@ -47,3 +47,23 @@ may change normative specification text.
 - **Resolution required:** P-007/G0 must define the canonical signed-integer width and
   either define `s_max` explicitly or replace the check with the equivalent derived
   per-coefficient guard. No consensus byte encoding is inferred here.
+
+## SI-003 — SIS SHAKE expansion lacks a normative candidate-byte convention
+
+- **Discovered by:** P-003 adversary pass, 2026-08-16
+- **Status:** OPEN — G0/P-007 HUMAN
+- **Text:** `docs/PROTOCOL_SPEC.md` §5.2 requires SHAKE-256 plus rejection sampling
+  to derive the matrix, but it does not define the candidate word width, byte order,
+  exact acceptance ceiling, or whether rejected candidates consume a complete fixed-
+  width chunk before the next candidate is read.
+- **Why this matters:** independent implementations can all use unbiased rejection
+  sampling yet derive different matrices from the same seed. Once the class is wired
+  into consensus, that ambiguity could split validation.
+- **Strict reading used by P-003:** the safe-Rust prototype reads four-byte little-
+  endian candidates and accepts `word < floor(2^32/q) * q`. Its independent fixture
+  and unit test are explicitly nonnormative implementation evidence; no P-007 wire or
+  consensus rule is claimed.
+- **Resolution required:** P-007/G0 must ratify exact XOF consumption, candidate width,
+  byte order, rejection ceiling, and canonical test vectors before the SIS class can
+  enter a consensus registry. If G0 chooses another convention, update the prototype
+  and fixture together before admission.

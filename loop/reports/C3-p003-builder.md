@@ -1,7 +1,7 @@
 # Cycle 3 — P-003 Builder Report
 
-**Status:** BUILD COMPLETE — ORIGIN VERIFY PENDING
-**Date:** 2026-08-15
+**Status:** ADVERSARY + LOCAL VERIFY COMPLETE — ORIGIN REVERIFY PENDING
+**Date:** 2026-08-16
 **Packet:** P-003 — SIS genesis class
 **Lane:** AUTO
 **Branch:** `feat/p003-sis-genesis-class`
@@ -289,11 +289,93 @@ Lines are in the same directory.
 
 ## 3. VERIFY
 
-Pending.
+### Original exact-head origin verification
+
+Implementation commit `4516d6bc71612c1b64ec6fb662d61082b0fffb77` was pushed to
+`origin/feat/p003-sis-genesis-class` and opened as draft PR #5. D6 CI run
+`31925679014` completed all eleven jobs successfully on that exact SHA: format,
+clippy, dependency policy, dependency audit, zero-unsafe audit, tests, four explicit
+phase gates, and locked build.
+
+### Post-adversary evidence replay
+
+The hardened estimator runner executed the exact Sage image manifest
+`sha256:ec32d9752b3a11c628103ca6802db890b63cbe9bb480cfea02de09656ecc84a2`
+directly against a clean checkout at estimator commit
+`3e48ef421ec256afddb3e7d2249a77eab6e9ba12`. The checkout and script were read-only,
+the container root was read-only, temporary storage was a bounded 64 MiB `tmpfs`, and
+networking was disabled. All nine normalized JSON records matched
+`estimator-results.jsonl` exactly (`ESTIMATOR_RESULTS_MATCH=9`). An intentional
+untracked-file probe then exited 1 at the cleanliness check before Docker execution;
+removing the probe restored a clean checkout.
+
+### Post-adversary local D6
+
+The complete local D6 sequence passed after the hardening edits:
+
+- `cargo fmt --all -- --check`;
+- `cargo clippy --workspace --all-targets --all-features --locked -- -D warnings`;
+- `cargo deny --locked --all-features check`;
+- `cargo audit --deny warnings` against 1,216 loaded RustSec advisories and 21 locked
+  dependency packages;
+- `scripts/ci/verify-geiger.ps1`, reporting `SOURCE_POLICY=PASS files=14 crates=10`
+  and zero unsafe use in all ten `cj3-*` packages;
+- `cargo test --workspace --all-targets --all-features --locked`, including all seven
+  SIS checker/sampler tests and all four external-solver tests;
+- all four D6 phase-gate scripts, each returning its explicit `NOT_YET_ADMITTED`
+  owner rather than claiming an unimplemented test ran; and
+- `cargo build --workspace --all-targets --all-features --locked`.
+
+The post-hardening commit still requires exact-head origin D6 before merge.
 
 ## 4. ADVERSARY
 
-Pending.
+### Formal security diff scan
+
+Codex Security scan `aabd95d5-7900-4200-96f5-86f9d8810b31` reviewed the exact
+P-003 range
+`4b0102b8e03a1701d2196ed758aeff768b984ef3..4516d6bc71612c1b64ec6fb662d61082b0fffb77`
+under a repository-specific threat model. It sealed with complete coverage and zero
+reportable findings. The generated report is at
+`C:\Users\LEET\AppData\Local\Temp\codex-security-scans-SsNfZL\COINjecture3.0\4516d6bc71612c1b64ec6fb662d61082b0fffb77_20260816T040609Z_gzdaun4s\report.md`.
+
+Two plausible source-level candidates were validated and rejected as current
+security findings, while their boundary-change conditions remain explicit:
+
+1. `SisInstance::from_column_major` can construct a canonical explicit matrix with no
+   committed-seed provenance. Repository-wide callers and `cargo tree --invert`
+   showed only tests and measurement tooling; no trusted runtime consumes the crate.
+   P-006/P-007/P-101 must re-evaluate or narrow this API before a hostile admission
+   path can accept an instance.
+2. `SisParameters::new` proves arithmetic representability but has no operational
+   matrix-entry ceiling, and `derive_instance` allocates `n * m` entries. The only
+   current attacker-controlled source is local argv supplied by the same developer
+   invoking the short-lived, explicitly untrusted solver. Before any node, RPC, wire,
+   or consensus caller exists, admission must restrict values to the ratified tuple
+   or a hard resource ceiling and allocation must fail closed.
+
+### Manual hostile-evidence sweep and remediations
+
+The formal scan and a separate line-by-line adversary pass found two non-reportable
+but merge-relevant governance/reproducibility defects:
+
+- The estimator runner checked the estimator HEAD and one source hash but built the
+  checkout's `docker/Dockerfile.dev`. A dirty Dockerfile or requirements file could
+  therefore execute even while HEAD remained pinned; the Dockerfile also named the
+  mutable `sagemath/sagemath:9.5` tag and unpinned developer dependencies. The runner
+  now refuses dirty/untracked worktrees and performs no build. It runs the exact base
+  manifest by digest with read-only mounts/root, bounded temporary storage, and no
+  network. The resulting nine records match the committed evidence exactly.
+- The Protocol Spec names SHAKE-256 and rejection sampling but leaves candidate word
+  width, byte order, rejection ceiling, and consumption rules undefined. Independent
+  implementations could therefore derive different matrices without either being
+  biased. `SI-003` records this as a G0/P-007 HUMAN decision, and the P-003 fixture is
+  now explicitly nonnormative. No consensus or wire rule was silently created.
+
+The pass also rechecked A1–A11 boundaries: the solver remains out of process and
+outside the trusted dependency graph; checker output is pure and exact; class ID,
+codec bytes, cadence, economics, and Sarah-owned values remain unfilled; provisional
+P-3/P-4 claims stay qualified; and no Critical finding remains.
 
 ## 5. MERGE
 
@@ -334,11 +416,12 @@ Pending.
 
 ## UNKNOWN
 
-- The exact current estimator/tool mapping for homogeneous SIS, applicable security
-  target, and defensible candidate floor are unknown until the primary-source and
-  estimator survey is complete.
-- The attainable witness-generation envelope on this machine and the resulting
-  solve/check asymmetry are unknown until the external-process benchmark runs.
+- Whether G0 accepts the current homogeneous-SIS estimator mapping, the assumed
+  128-bit operation threshold, provisional P-3, or provisional P-4 remains unknown;
+  the packet supplies evidence and recommendations, not ratification.
+- The normative SHAKE candidate width, byte order, rejection-consumption rule, class
+  identifier, and canonical solution codec remain unknown until P-007/G0 resolves
+  `SI-002` and `SI-003`.
 - Final block cadence is unknown because P-1 belongs to P-006. P-003 can measure and
   recommend parameter floors, but P-006/G0 must resolve cadence integration.
 - Reward-margin shaping remains intentionally unknown and unfilled for Al + Sarah at
