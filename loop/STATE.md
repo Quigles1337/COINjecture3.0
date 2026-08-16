@@ -2,12 +2,12 @@
 
 CYCLE: 1
 PHASE: Phase 0 — Foundations and spikes
-PACKET: P-001 — ADVERSARY FINDINGS FIXED, FINAL ORIGIN VERIFY PENDING
-BRANCH: feat/p001-repo-scaffold
+PACKET: P-001 — COMPLETE; P-002 NEXT
+BRANCH: main
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-blocked-on-external
 CAPACITY_OBSERVED_AT: 2026-08-15 live ruling
-STATUS: P001_FINAL_ORIGIN_VERIFY
+STATUS: P001_COMPLETE_P002_READY
 
 ## Ground-truth state
 
@@ -15,8 +15,14 @@ STATUS: P001_FINAL_ORIGIN_VERIFY
   D10 were reconfirmed.
 - Continuous-batch autonomous execution is authorized for P-001 through P-007 in
   order, subject to every tripwire and packet-boundary capacity re-check.
-- P-001 contains only architecture/CI scaffolding; no protocol behavior has been
-  created.
+- P-001 merged through PR #1 at
+  `8367de08bb3d3766bf49b9970eb3109fd1af4389`; exact-head PR CI and exact-merge-SHA
+  mainline CI both passed all eleven jobs. Its ten crates remain empty boundaries with
+  no protocol behavior.
+- The three pinned audit-tool caches are established on `main`; subsequent packet PRs
+  can use the verified cache-hit path.
+- GitHub reports `main` is not currently protected. P-001 documents the required
+  contract in `.github/BRANCH_PROTECTION.md` and does not claim the setting is active.
 - The COINjecture 2.0 agent queue is blocked pending Sarah's GATE-1/GATE-2 answers;
   CJ3 may proceed only while that condition remains true. If those gates clear, the
   capacity flag becomes `remediation-priority` and CJ3 pauses immediately.
@@ -27,11 +33,11 @@ STATUS: P001_FINAL_ORIGIN_VERIFY
 
 ## Next action
 
-1. Commit and push the post-adversary P-001 head.
-2. Require the complete D6 pipeline to pass on that exact origin head and confirm the
-   three cache hits mechanically.
-3. Re-check D17, D11, repository privacy, remote identity, and the final diff at merge
-   time.
+1. Ferry this P-001 merge/calibration record to `main` through the evidence-only
+   closeout PR.
+2. At P-002 pickup, re-check D11, D17, PRIVATE visibility, canonical remotes, and the
+   approved queue.
+3. Create `feat/p002-beacon-spike` and write P-002 FRAME before research or code.
 
 No frontend URL may be inferred for P-008, and no Al- or Sarah-owned TBD may be
 filled.

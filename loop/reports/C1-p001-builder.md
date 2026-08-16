@@ -1,6 +1,6 @@
 # Cycle 1 — P-001 Builder Report
 
-**Status:** IN PROGRESS — ADVERSARY FINDINGS FIXED, FINAL ORIGIN VERIFY PENDING
+**Status:** COMPLETE — MERGED AND MAINLINE GREEN
 **Date:** 2026-08-15
 **Packet:** P-001 — repository and CI scaffold
 **Lane:** AUTO
@@ -159,9 +159,9 @@ branch commit `ac7cf776705a6bb41fa9b30892bb75c0db3eb4ee`.
 - Phase-gate logs explicitly reported `STATUS=NOT_YET_ADMITTED` and the owning packet
   or phase; they also stated that no named test was claimed to have run.
 
-The run calibrated two CI-process findings described in BUILD deviations 5–6. Final
-verification remains pending on the amended workflow; the earlier green run is not
-being reused as evidence for the changed branch head.
+The run calibrated two CI-process findings described in BUILD deviations 5–6. At that
+point, final verification remained pending on the amended workflow; the earlier green
+run was not reused as evidence for a changed branch head.
 
 The cache-seed origin run then passed all eleven jobs for calibration commit
 `d8b9b24e78bdc557e1c948253ef2a4d62a29f4e0`:
@@ -176,6 +176,26 @@ The cache-seed origin run then passed all eleven jobs for calibration commit
 That run proves the cache-miss/install/save path. It predates the adversary fixes and
 therefore is not the final-head verification; the next origin run must prove cache
 hits and the complete corrected diff.
+
+The complete post-adversary branch head then passed all eleven jobs:
+
+- Run: <https://github.com/Quigles1337/COINjecture3.0/actions/runs/31921481384>
+- Exact head: `a454f15c1d31c928dbe68dbb986061d580f347df`
+- Event/result: `pull_request` / `success`
+- GitHub-observed interval: 2026-08-16 02:15:22Z–02:18:02Z
+- All three restore steps were cache hits, all three corresponding install steps were
+  `skipped`, and dependency policy/audit plus per-package Geiger executed successfully.
+
+This is the authoritative P-001 branch verification. The post-merge mainline run also
+passed all eleven jobs on exact merge SHA
+`8367de08bb3d3766bf49b9970eb3109fd1af4389`:
+
+- Run: <https://github.com/Quigles1337/COINjecture3.0/actions/runs/31921663254>
+- Event/result: `push` / `success`
+- GitHub-observed interval: 2026-08-16 02:20:15Z–02:35:57Z
+
+The cold mainline run created all three default-branch tool caches. P-001 therefore
+has both exact-head pre-merge evidence and exact-merge-SHA post-merge evidence.
 
 ## 4. ADVERSARY PASS
 
@@ -238,16 +258,70 @@ action-pinning sweeps.
   command-string construction, or PR-event interpolation exists. All 17 workflow
   action references use full 40-hex commits and workflow permissions are read-only.
 
-**Adversary result:** the two Critical findings were fixed locally. No known Critical
-remains; the amended head still requires a complete green origin run before merge.
+**Adversary result:** the two Critical findings were fixed and re-verified by the
+complete origin pipeline. No known Critical remains.
 
 ## 5. MERGE
 
-Pending.
+At merge time, the following were re-derived rather than carried forward from FRAME:
+
+1. P-001 remained approved and unblocked; D11 still recorded COINjecture 2.0 blocked
+   on Sarah's GATE-1/GATE-2 answers.
+2. The exact diff remained bounded to the predicted scaffold/CI/evidence surface and
+   every Rust root contained only boundary documentation, `forbid(unsafe_code)`, and
+   the two empty binary entry points.
+3. No `.lean` file or vector definition existed.
+4. Governing documents and the LEDGER were unchanged by P-001, and the unratified
+   license assertion had been removed; no new decision remained.
+5. No Al- or Sarah-owned TBD was filled.
+
+The same check re-read repository visibility as `PRIVATE`, confirmed canonical and
+identical fetch/push remotes, matched local/origin/PR head at
+`a454f15c1d31c928dbe68dbb986061d580f347df`, observed all eleven CI jobs green with
+three cache hits, and read the PR as mergeable.
+
+- PR: <https://github.com/Quigles1337/COINjecture3.0/pull/1>
+- Merge time: 2026-08-16 02:20:13Z
+- Merge SHA: `8367de08bb3d3766bf49b9970eb3109fd1af4389`
+- Authoritative branch CI:
+  <https://github.com/Quigles1337/COINjecture3.0/actions/runs/31921481384>
+- Post-merge `main` CI:
+  <https://github.com/Quigles1337/COINjecture3.0/actions/runs/31921663254> — `success`
+  on exact merge SHA, all eleven jobs green.
+
+Because a commit cannot contain its own future merge SHA, this merge record is being
+ferried back through the evidence-only `feat/p001-closeout` branch and a separate PR;
+there is no direct post-bootstrap push to `main`.
 
 ## 6. CALIBRATE
 
-Pending.
+### Predictions versus outcomes
+
+- **Diff surface:** the prediction held exactly at the category level: workspace
+  control, ten empty crate boundaries, CI/policy, `spec/` and `bench/` boundary docs,
+  repository policy, and loop evidence. The implementation merge contained 38 files,
+  1,088 insertions, and 10 deletions relative to bootstrapped `main`; no file escaped
+  the predicted surface and no protocol-semantic content landed.
+- **Risk 1 — toolchain/config drift:** materialized. cargo-geiger 0.13.0 rejected the
+  virtual-workspace invocation, and PowerShell exit-code semantics required two
+  corrections. Exact local execution caught both before the first push.
+- **Risk 2 — dishonest phase gating:** did not become a false claim. The jobs are green
+  only as explicit deferrals, their logs name owners and say the tests did not run,
+  and this remains an accepted residual until the owning packets activate them.
+- **Risk 3 — semantic leakage:** no protocol behavior leaked in. The adversary instead
+  found two non-code authority/claims leaks—the unratified license field and missing
+  A10 usefulness disclosure—which were both treated as Critical and removed/corrected.
+- **Confidence calibration:** MEDIUM was appropriate. The architecture and bounded
+  surface held, but version-sensitive CI edges and two governance/claims findings
+  justified the caution; all were repairable without scope expansion.
+- **Surprise:** compiling three pinned audit tools dominated a cold serial run, while
+  cache hits reduced the final corrected PR pipeline from roughly 19 minutes to under
+  3 minutes. Duplicate push/PR triggers initially doubled that cost.
+
+**One process improvement for P-002:** before its first research or implementation
+commit, perform a dedicated authority-and-claims sweep of public prose and package
+metadata against D17 and A10. That single pre-commit pass would have caught both P-001
+Criticals before origin verification.
 
 ## VERIFIED
 
@@ -290,6 +364,17 @@ Pending.
   injection-prone script construct, no credential-shaped text, no special Git mode,
   and ten workspace members in `Cargo.lock`.
   Evidence: this session's recorded adversary command output.
+- The exact post-adversary branch head passed all eleven origin jobs with all three
+  install steps skipped on verified cache hits.
+  Evidence: <https://github.com/Quigles1337/COINjecture3.0/actions/runs/31921481384>.
+- PR #1 merged that exact head into `main` as
+  `8367de08bb3d3766bf49b9970eb3109fd1af4389`.
+  Evidence: <https://github.com/Quigles1337/COINjecture3.0/pull/1> and matching local,
+  origin, and PR API readback.
+- The post-merge `main` pipeline passed all eleven jobs on the exact merge SHA and
+  created all three default-branch tool caches.
+  Evidence: <https://github.com/Quigles1337/COINjecture3.0/actions/runs/31921663254>
+  and `gh cache list --ref refs/heads/main`.
 
 ## ASSUMED
 
@@ -299,9 +384,6 @@ Pending.
 
 ## UNKNOWN
 
-- Whether the amended workflow restores and executes the pinned cached binaries
-  correctly for the post-adversary branch head. Resolve by pushing the final amended
-  commit and reading its Actions run, cache steps, and every job result from GitHub.
 - Whether repository-plan permissions allow applying branch protection through the
   API. Current evidence is HTTP 404 / `Branch not protected`; P-001 requires a
   documented configuration, and active protection will not be claimed unless a future

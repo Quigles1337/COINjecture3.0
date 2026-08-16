@@ -6,8 +6,8 @@ Gate G0, on HUMAN-lane work, or on any autonomous-builder tripwire.
 
 | Packet | Phase | Queue status | Blocking condition |
 |--------|-------|--------------|--------------------|
-| P-001 | Phase 0 | IN PROGRESS — ADVERSARY FINDINGS FIXED | Final origin CI and merge-time D17/D11 re-check |
-| P-002 | Phase 0 | QUEUED — APPROVED | P-001 complete and D11 re-check |
+| P-001 | Phase 0 | COMPLETE — `8367de08` | PR #1 and exact-merge-SHA D6 CI green |
+| P-002 | Phase 0 | NEXT — APPROVED | P-001 closeout committed and D11 re-check |
 | P-003 | Phase 0 | QUEUED — APPROVED | P-002 complete and D11 re-check |
 | P-004 | Phase 0 | QUEUED — APPROVED | P-003 complete and D11 re-check |
 | P-005 | Phase 0 | QUEUED — APPROVED | P-004 complete; HUMAN-lane constraints apply to `Spec/*.lean` content and vectors |
