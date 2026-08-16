@@ -193,6 +193,10 @@ Every value-moving path in the system routes through V1–V9. There is exactly o
 validity predicate; mempool admission calls the same function as block validation.
 *(2.0 ruling carried: a Transfer-only fix under-fixes; here there is one predicate.)*
 
+Any future value-moving structure — including a new transaction type or fee
+mechanic, and anything else that debits or credits value — MUST extend the normative
+Lean V-rules before any Rust implementation exists. There is no Rust-first exception.
+
 ## §8 State and the state-transition function (STF)
 
 - **State:** `account(addr) -> { balance u64, nonce u64 }` in an authenticated
@@ -260,6 +264,14 @@ so quality variance cannot recreate the fork-choice variance A4 removed.
   START if the secret is unset or empty (fail-closed; A7). Read endpoints are
   rate-limited. The G3 auth matrix test enumerates every mutating endpoint ×
   {no token, bad token, empty-secret-config}.
+- Object-level authorization: every non-public endpoint is enumerated with its
+  protected object and allowed principal/action combinations, and the G3 matrix tests
+  each allowed and denied case. Authentication alone never authorizes arbitrary
+  object access.
+- Log-emission discipline: no unbounded log line or unbounded log rate is reachable
+  from remote input. Remote-controlled fields and repeated failures are bounded at
+  the emission site so an attacker cannot turn accepted or rejected input into a
+  log-flood resource sink.
 
 ## §13 Genesis
 

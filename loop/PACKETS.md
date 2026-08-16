@@ -1,8 +1,10 @@
 # COINjecture 3.0 Packet Queue
 
-**Queue status:** APPROVED IN ORDER — Al live ruling, 2026-08-15. P-001 through P-007
-run in continuous-batch mode while the D11 capacity condition remains clear. Stop at
-Gate G0, on HUMAN-lane work, or on any autonomous-builder tripwire.
+**Queue status:** APPROVED IN ORDER — Al live rulings, 2026-08-15 through
+2026-08-16. P-001 through P-007 and P-009 run in continuous-batch mode while the D11
+capacity condition remains clear. P-009 is appended and unblocked; its source-ingest
+first action occurs at the P-004 boundary. Stop at Gate G0, on HUMAN-lane work, or on
+any autonomous-builder tripwire.
 
 | Packet | Phase | Queue status | Blocking condition |
 |--------|-------|--------------|--------------------|
@@ -14,6 +16,7 @@ Gate G0, on HUMAN-lane work, or on any autonomous-builder tripwire.
 | P-006 | Phase 0 | QUEUED — APPROVED | P-005 complete and D11 re-check |
 | P-007 | Phase 0 | QUEUED — APPROVED | P-006 complete and D11 re-check |
 | P-008 | Phase 0 / Phase 4 seam input | BLOCKED | Exact public frontend repository URL supplied by Al; URL MUST NOT be guessed |
+| P-009 | Phase 0 / audit traceability | QUEUED — APPROVED / UNBLOCKED | Source evidence copied durably at the P-004 boundary; execute after earlier approved packets |
 | P-101 | Phase 1 head | BLOCKED | Gate G0 |
 
 ## Seed packet definitions
@@ -73,6 +76,17 @@ contradict it.
 The legacy repository
 `https://github.com/COINjecture-Network/COINjecture2.0` is explicitly **not** treated as
 the missing frontend URL. Agents MUST NOT guess the frontend URL (A11).
+
+### P-009 — Audit traceability verification
+
+Read-only verification against the source audit documents: enumerate every finding
+ID/class, diff it against `docs/AUDIT_TRACEABILITY.md`, report every unmapped or
+mis-mapped item, and propose matrix v0.2. The third-party security audit and optional
+Lean audit are first copied byte-for-byte from the supplied Downloads paths into
+`loop/evidence/`; the Lean audit is checked specifically for anything bearing on
+CJ3's A8 track. The Codex security-scan source remains outstanding, but P-009 does
+not wait if exact committed 2.0 remediation records fully represent its findings and
+are cited as substitutes. No `src/` change is authorized.
 
 ### P-101 — Kernel
 

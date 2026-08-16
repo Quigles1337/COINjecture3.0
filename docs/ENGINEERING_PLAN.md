@@ -246,7 +246,9 @@ ratified or revised with spike evidence, OPEN D9/D10 ruled.
 `cj3-kernel`: tx validity V1–V9 and STF implemented against Lean vectors (conformance
 test in CI, red = blocked merge); `cj3-store` chain/state DB; genesis file format +
 the genesis spend-test in CI (§6). **Gate G1:** kernel conformance green; property
-tests for conservation invariant; mutation-testing spot check on validity predicate.
+tests for conservation invariant; mutation-testing spot check on validity predicate;
+and a crash-consistency test that kills the process mid-block-apply and requires
+`cj3-store` to recover to the exact pre-block state on restart.
 
 **Phase 2 — Consensus (P-201…P-205).**
 `cj3-beacon` (ratified tech), instance derivation, `cj3-classes` SIS wiring, block

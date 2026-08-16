@@ -2,12 +2,12 @@
 
 CYCLE: 4
 PHASE: Phase 0 — Foundations and spikes
-PACKET: P-004 — COMPLETE; GOVERNANCE INJECTION NEXT
+PACKET: P-004 — COMPLETE; P-009 SOURCE INGEST NEXT
 BRANCH: docs/p004-closeout-audit-governance
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-blocked-on-external
 CAPACITY_OBSERVED_AT: 2026-08-16 resume ruling plus CJ2 gate-state readback
-STATUS: P004_MERGED_MAIN_GREEN_GOVERNANCE_INJECTION_IN_PROGRESS
+STATUS: AUDIT_AMENDMENTS_RATIFIED_AND_APPLIED_P009_SOURCE_INGEST_NEXT
 
 ## Ground-truth state
 
@@ -46,6 +46,11 @@ STATUS: P004_MERGED_MAIN_GREEN_GOVERNANCE_INJECTION_IN_PROGRESS
   exact-merge-SHA mainline run `31954588282` both passed all eleven D6 jobs. The
   inherited legacy-only `bincode 1.3.3` maintenance warning remains explicitly
   quarantined outside CJ3's workspace/runtime.
+- Al's 2026-08-16 governance injection ratified AMEND-1/2/3 and approved/unblocked
+  P-009. `docs/AUDIT_TRACEABILITY.md` was verified at SHA-256
+  `58C762568A63D8A4AFEACDEB1535AA9C930099F49118D2B45B9B483B8D560EFC` and preserved
+  unchanged; the amendments are applied to Protocol Spec §7/§12 and Gate G1 and
+  recorded in the LEDGER overlay.
 - `loop/reports/SPEC-ISSUES.md` keeps three G0/HUMAN interpretation issues open:
   conditional SIS-hardness wording, undefined `s_max`, and the missing normative
   SHAKE candidate-byte convention.
@@ -63,12 +68,13 @@ STATUS: P004_MERGED_MAIN_GREEN_GOVERNANCE_INJECTION_IN_PROGRESS
 
 ## Next action
 
-1. Commit the P-004 merge/calibration closeout at this packet boundary.
-2. Process Al's non-preempting governance injection: preserve the exact supplied
-   audit matrix, apply ratified AMEND-1/2/3 to the governing documents, record the
-   LEDGER overlay, and append approved/unblocked P-009.
-3. Make P-009's first action the durable copy of both supplied audit sources into
-   `loop/evidence/`, preserving and recording exact hashes before analysis.
+1. Make P-009's first action the durable byte-for-byte copy of both supplied audit
+   sources into `loop/evidence/`; record and verify exact source/copy hashes before
+   analysis.
+2. Land this P-004 closeout/governance/source-ingest boundary through a guarded PR
+   with exact-head and exact-merge-SHA D6 evidence.
+3. Resume the earlier approved Phase 0 queue under a fresh D11 check; P-009 remains
+   appended and unblocked for its read-only analysis turn.
 
 No frontend URL may be inferred for P-008, and no Al- or Sarah-owned TBD may be
 filled.
