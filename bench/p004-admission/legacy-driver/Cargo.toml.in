@@ -1,0 +1,10 @@
+[package]
+name = "cj3-p004-legacy-driver"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+cj3-admission-bench = { path = "__CJ3_HARNESS_PATH__" }
+coinject-core = { path = "__CJ2_CORE_PATH__" }
+coinject-consensus = { path = "__CJ2_CONSENSUS_PATH__" }

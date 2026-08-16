@@ -1,5 +1,6 @@
 [workspace]
 members = [
+    "bench/p004-admission",
     "crates/cj3-beacon",
     "crates/cj3-classes",
     "crates/cj3-consensus",

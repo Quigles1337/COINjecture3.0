@@ -12,6 +12,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "cj3-admission-bench"
+version = "0.0.0"
+dependencies = [
+ "cj3-classes",
+]
+
+[[package]]
 name = "cj3-beacon"
 version = "0.0.0"
 
