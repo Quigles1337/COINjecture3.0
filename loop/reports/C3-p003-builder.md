@@ -154,7 +154,35 @@ may expose a genuine feasibility boundary.
 
 ## 2. BUILD
 
-Pending after FRAME.
+### Tripwire log — interpretation and scope re-frame 1
+
+Before implementation, primary-source review found a nonblocking conflict between
+Engineering Plan A10 and Protocol Spec §5.2:
+
+- A10 requires hardness assumptions to be labeled as assumptions everywhere.
+- §5.2 says the sampled SIS distribution's hardness is “provable, not assumed.”
+- Ajtai and the later Micciancio–Regev/GPV results instead give *conditional*,
+  asymptotic worst-case-to-average-case reductions in stated parameter regimes. They
+  neither prove the underlying worst-case lattice problems hard nor turn a concrete
+  estimator output or wall-clock duration into a theorem.
+
+Per the INTERPRETATION tripwire, P-003 proceeds on the stricter A10 reading and logs
+the wording defect as `SI-001` in `loop/reports/SPEC-ISSUES.md`; correcting normative
+spec wording remains G0/HUMAN work. This expands the predicted diff by that one
+required issue-log file. It does not expand implementation scope or touch a
+consensus-semantic file, so the AUTO classification remains valid.
+
+The initial containerized estimator smoke sequence also exposed three distinct
+environment-contract failures rather than a repeated estimator result: the official
+Sage development image lacks `git`; its shell entrypoint re-splits a one-line `-c`
+argument; and Sage 9.5 omits the working directory from `sys.path`. No estimator code
+ran in those failed probes. Source SHA-256 comparison, a direct Sage entrypoint, and
+an explicit `PYTHONPATH=/lattice-estimator` resolved the causes; the next run
+reproduced the official documented `n=113, q=2048, m=276, length_bound=512` result of
+approximately `2^47` operations. The failures were not retried unchanged and did not
+reach the REPETITION stop condition.
+
+Research and implementation continue below.
 
 ## 3. VERIFY
 
