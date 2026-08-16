@@ -2,12 +2,12 @@
 
 CYCLE: 7
 PHASE: Phase 0 — Foundations and spikes
-PACKET: P-005 — HUMAN RESUME; SI-004 MODEL 4 RATIFIED
+PACKET: P-005 — HUMAN REVIEW TAIL; LOCAL BUILDER COMPLETE
 BRANCH: feat/p005-lean-scaffold
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-blocked-on-external
-CAPACITY_OBSERVED_AT: 2026-08-16 P-005 Model 4 resume boundary; CJ2 `CAPACITY_FLAG: none`, GATE-1/GATE-2 still awaiting
-STATUS: P005_HUMAN_MODEL4_IMPLEMENTATION_IN_PROGRESS
+CAPACITY_OBSERVED_AT: 2026-08-16 P-005 hosted-D6 boundary; CJ2 `CAPACITY_FLAG: none`, GATE-1/GATE-2 still awaiting
+STATUS: P005_HUMAN_LOCAL_COMPLETE_EXACT_HEAD_D6_PENDING
 
 ## Ground-truth state
 
@@ -78,6 +78,15 @@ STATUS: P005_HUMAN_MODEL4_IMPLEMENTATION_IN_PROGRESS
 - PR #9 remains draft while the Model 4 implementation, full Lake build, deterministic
   symbolic JSON artifact, adversary pass, and active Lean D6 gate are completed. It
   must then be marked ready-for-review and left unmerged for Al.
+- P-005's Model 4 builder surface is now locally complete at implementation commit
+  `388ede835e8c9e668f5f0126918193ff59f589cd`. The complete Lean 4.33.0 project builds;
+  27 symbolic/non-normative vectors regenerate exactly at SHA-256
+  `30CABF852D623549CD5293628D5B3899BE805D543B537CB223F1B6FAB5C324E1`; the STF proves
+  `reward ≤ subsidy` from Model 4 and uses that exact reward for credit/conservation;
+  the full local D6-equivalent and A1–A11 adversary passes are green. The sealed
+  exact-range security diff found zero reportable findings and is preserved durably at
+  `loop/reports/P-005-security-diff-scan.md`. Hosted exact-head D6 remains pending, so
+  PR #9 is still draft and no hosted-green claim is made.
 - Al's 2026-08-16 governance injection ratified AMEND-1/2/3 and approved/unblocked
   P-009. `docs/AUDIT_TRACEABILITY.md` was verified at SHA-256
   `58C762568A63D8A4AFEACDEB1535AA9C930099F49118D2B45B9B483B8D560EFC` and preserved
@@ -112,14 +121,14 @@ STATUS: P005_HUMAN_MODEL4_IMPLEMENTATION_IN_PROGRESS
 - `docs/RESEARCH_SURVEY.md` and
   `loop/PROMPTS/AUTONOMOUS_BUILDER.md` were supplied for the first governance commit.
 - P-008 remains blocked on the exact Al-supplied public frontend repository URL.
-- P-101 remains blocked on Gate G0.
+- P-101 remains blocked on Gate G0 and the merged, human-reviewed P-005.
 
 ## Next action
 
-1. Resume PR #9 from the partial checkpoint under ratified SI-004 Model 4. Prove the
-   reward ceiling from floor division, complete the affected theorem/vector surface,
-   full Lake build, active Lean D6 handler, and adversary pass.
-2. Obtain exact-head D6, mark PR #9 ready-for-review, and leave it unmerged for Al.
+1. Push the locally complete P-005 closeout head and obtain exact-head hosted D6 from
+   the CI system. If red, diagnose, report, and leave PR #9 draft.
+2. Only after exact-head D6 is green, mark PR #9 ready-for-review and leave it unmerged
+   for Al's mandatory line-by-line review.
 3. Only while completed PR #9 awaits Al's line-by-line review does the out-of-order
    P-006/P-007/P-009 exception activate. It is not active during this implementation
    tail.

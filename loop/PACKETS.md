@@ -3,10 +3,11 @@
 **Queue status:** APPROVED WITH RATIFIED P-005 REVIEW TAIL; SI-004 MODEL 4 RATIFIED —
 Al live rulings, 2026-08-15 through 2026-08-16. P-005 implementation is HUMAN-
 authorized under the exact constraints in `loop/LEDGER.md`; the §8/§11 ambiguity is
-resolved by bounded-above quality normalization, and PR #9 has resumed from its draft
-checkpoint. It MUST NOT auto-merge. The out-of-order P-006/P-007/P-009 exception
-activates only while a completed PR #9 awaits Al's review, so it is not active during
-this implementation tail. P-008 remains blocked on the exact frontend URL. P-101
+resolved by bounded-above quality normalization. P-005 is locally builder-complete and
+PR #9 remains draft until exact-head hosted D6 succeeds. It MUST NOT auto-merge. The
+out-of-order P-006/P-007/P-009 exception activates only while a completed PR #9 awaits
+Al's review, so it is not active until that hosted verification and readiness change.
+P-008 remains blocked on the exact frontend URL. P-101
 remains blocked on both Gate G0 and the merged, human-reviewed P-005.
 
 | Packet | Phase | Queue status | Blocking condition |
@@ -15,7 +16,7 @@ remains blocked on both Gate G0 and the merged, human-reviewed P-005.
 | P-002 | Phase 0 | COMPLETE — `7ecba896` | PR #3 and exact-merge-SHA D6 CI green |
 | P-003 | Phase 0 | COMPLETE — `e0056157` | PR #5 and exact-merge-SHA D6 CI green |
 | P-004 | Phase 0 | COMPLETE — `4644374f` | PR #7 and exact-merge-SHA D6 CI green |
-| P-005 | Phase 0 | IN PROGRESS — HUMAN / MODEL 4 RATIFIED | Prove reward ceiling; finish Lake/vectors/adversary/exact-head D6; mark PR #9 ready; no builder merge |
+| P-005 | Phase 0 | VERIFYING — HUMAN / LOCAL COMPLETE | Exact-head hosted D6; mark PR #9 ready; no builder merge |
 | P-006 | Phase 0 | QUEUED — APPROVED / REVIEW-TAIL EXCEPTION | P-005 PR #9 ready-for-review and D11 re-check; not active during P-005 implementation |
 | P-007 | Phase 0 | QUEUED — APPROVED / REVIEW-TAIL EXCEPTION | P-005 PR #9 ready-for-review and D11 re-check; not active during P-005 implementation; its own tripwires remain armed |
 | P-008 | Phase 0 / Phase 4 seam input | BLOCKED | Exact public frontend repository URL supplied by Al; URL MUST NOT be guessed |

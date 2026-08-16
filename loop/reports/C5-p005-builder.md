@@ -1,6 +1,6 @@
 # Cycle 5 — P-005 Builder Report
 
-**Status:** IN PROGRESS — SI-004 MODEL 4 RATIFIED; HUMAN-LANE RESUME
+**Status:** BUILDER COMPLETE LOCALLY — EXACT-HEAD HOSTED D6 PENDING; DO NOT MERGE
 **Date:** 2026-08-16
 **Packet:** P-005 — Lean scaffold
 **Lane:** HUMAN
@@ -564,3 +564,197 @@ an adjacent, already-staged packet less likely to pull work across an ordering g
 for the canonical branch before the first formal edit, then translate every prose
 state update and invariant into side-by-side equations during FRAME. That would expose
 both shared-worktree collision and issuance-identity conflicts earlier.
+
+## 8. MODEL 4 BUILD, VERIFY, AND ADVERSARY CLOSEOUT
+
+This section supersedes the resumed-stop execution status without erasing the earlier
+tripwire history. The SI-004 governance checkpoint is commit
+`316584a42501f7ed64135490e1a1a070a7a863eb`; the implementation checkpoint is commit
+`388ede835e8c9e668f5f0126918193ff59f589cd`. Hosted exact-head D6 is the remaining
+builder verification step before PR #9 may leave draft status.
+
+### 2. BUILD — COMPLETE
+
+- `Spec/Tx.lean` defines the single draft V1–V9 path. Strict canonical decoding,
+  signature/preimage construction, address derivation, `TX_MAX_BYTES`, `FEE_MIN`, and
+  the chain network identifier remain abstract interfaces. Checked addition and
+  subtraction return `Option UInt64`; successful conversion uses `UInt64.ofNatLT`
+  with a proof rather than an implicit modular conversion.
+- `Spec/Stf.lean` revalidates each transaction against the evolving candidate state,
+  performs every debit/credit/nonce/reward operation with checked arithmetic,
+  validates the post-state root, and exposes only an atomic wrapper that returns the
+  exact pre-state on any error. Concrete account read/write coherence remains an
+  explicit P-101 instantiation obligation rather than a property invented for the
+  abstract store interface.
+- The same STF file defines SI-004 Model 4 as
+  `subsidy * min(Q, R_MAX*SCALE) / (R_MAX*SCALE)` over mathematical naturals, with
+  symbolic `R_MAX ≥ 1`, u64 subsidy/Q inputs, and no selected P-7/P-12 value. It proves:
+  denominator positivity; the numerator fits u128; `reward ≤ subsidy` from the
+  `min`/floor-division formula; the valid-Q lower bound; exact threshold, cap, and
+  `R_MAX = 1` behavior; the complete range; and the checked result's u64 fit. The STF
+  credit and conservation target consume this exact derived function, not an unrelated
+  interface reward.
+- `Spec/Vectors.lean` exports 27 unique §14/Model 4 cases. Every `input_bytes` value is
+  an object containing a symbolic expression and interface reference, carries
+  `normative: false`, and has the exact status `NON-NORMATIVE TEST FIXTURE — ABSTRACT
+  INTERFACE, NOT CANONICAL BYTES`. The `R_MAX = 1` case is a quantified ratified
+  boundary, not a chosen parameter value.
+- `lake exe vectors` deterministically generated
+  `spec/vectors/p005-draft.json`: 10,699 bytes, SHA-256
+  `30CABF852D623549CD5293628D5B3899BE805D543B537CB223F1B6FAB5C324E1`.
+- The active `lean-conformance` handler builds the complete pinned Lean 4.33.0 project,
+  regenerates and hash-compares the artifact, checks required cases/schema/status,
+  enforces the exact D16 header on every `Spec/*.lean`, rejects
+  `sorry`/`admit`/`axiom`, and prints
+  `P101_RUST_CONFORMANCE=NOT_YET_ADMITTED`. The workflow installs Lean through the
+  commit-pinned official action with automatic build/test/lint/cache behavior disabled.
+- No Rust source, canonical codec, cryptographic implementation, state-store
+  implementation, production dependency, owner-controlled value, Sarah attribution,
+  reviewer request, or merge behavior changed.
+
+### 3. VERIFY — LOCAL COMPLETE; HOSTED EXACT HEAD PENDING
+
+Local evidence from the canonical checkout at implementation commit `388ede8` plus the
+durable report-only closeout working tree:
+
+- `lake build`: PASS, complete project, 10 jobs.
+- Active Lean gate: PASS, Lean 4.33.0, 27 vectors, regenerated SHA-256 exactly
+  `30CABF852D623549CD5293628D5B3899BE805D543B537CB223F1B6FAB5C324E1`.
+- `cargo fmt --all -- --check`: PASS.
+- `cargo clippy --workspace --all-targets --all-features --locked -- -D warnings`:
+  PASS.
+- `cargo deny --locked --all-features check`: PASS for advisories, bans, licenses,
+  and sources.
+- `cargo audit --deny warnings`: PASS against 1,216 loaded advisories and the 22-crate
+  lockfile dependency set.
+- `scripts/ci/verify-geiger.ps1`: PASS across 11 packages, zero unsafe, with
+  `forbid(unsafe_code)` present.
+- `cargo test --workspace --all-targets --all-features --locked`: PASS, 18 tests,
+  zero failures.
+- Phase gates: `lean-conformance` ACTIVE/PASS; `conservation-invariant`,
+  `codec-fuzz-smoke`, and `genesis-spend-test` explicitly `NOT_YET_ADMITTED` under
+  their recorded later owners. This is not a claim that the three deferred tests ran.
+- `cargo build --workspace --all-targets --all-features --locked`: PASS.
+- Static policy sweep: 14 Rust source files; zero banned identifiers, zero `unsafe`,
+  zero `f32`/`f64`; all three `Spec/*.lean` files carry the required header and contain
+  zero proof placeholders; all 27 vector names are unique and non-normative.
+
+The full D6 workflow must still pass on origin at the final PR head. Until that run is
+read back from the CI system, this report makes no hosted-green or ready-for-review
+claim.
+
+### 4. ADVERSARY PASS — COMPLETE
+
+**Seat switch: ADVERSARY.** The exact `origin/main..388ede8` range and its supporting
+interfaces were re-read for consensus bypass, arithmetic mismatch, hidden assumptions,
+TBD laundering, canonical-byte leakage, CI greenwashing, toolchain drift, command/path
+injection, external notification, and merge automation.
+
+#### Findings and dispositions
+
+1. **FIXED — modular-conversion ambiguity.** The partial Tx draft originally used
+   `UInt64.ofNat` after a bound check. Even though the check made the value small, the
+   constructor's modular semantics weakened the audit trail. Both checked operations
+   now use `UInt64.ofNatLT` with explicit proofs.
+2. **FIXED — full-project build failures.** The partial checkpoint placed imports after
+   a module documentation block and used inconsistent namespaces. The aggregate
+   project—not merely isolated files—now builds cleanly.
+3. **FIXED — ambient Lean toolchain acceptance.** The first active-handler draft ran
+   `lean --version` from repository root, where an ambient default could mask the
+   package pin. The check now runs while `spec/lean-toolchain` is in scope before any
+   Lake command.
+4. **CONTAINED — abstract storage laws.** `StateOps.setAccount`, account lookup, total
+   balances, and root computation are deliberately abstract and therefore do not prove
+   concrete read/write coherence or the conservation target. The model sequences every
+   read over the candidate state and proves atomic rejection; P-101 must instantiate
+   and prove the store laws. The source and security report state this limit explicitly.
+5. **CONTAINED — concrete `R_MAX` representation.** P-005 models the symbolic divisor
+   as a natural, proves the capped numerator fits u128, and proves the result fits u64.
+   It does not select a wire/storage type or owned value for `R_MAX`. Checked concrete
+   computation of `R_MAX*SCALE` remains a P-007/P-101 instantiation obligation and must
+   conform to the ratified u128 rule; no success claim is made for that absent code.
+6. **PASS — executable-path review.** The vector exporter's optional path is a local
+   developer CLI argument, not remote/node input; CI supplies a GUID temp filename and
+   removes only that exact literal path. Symbolic JSON strings are parsed as data and
+   never evaluated. The Lake manifest has zero packages. No reachable injection or
+   credential-bearing workflow permission was found.
+7. **PASS — independent security-diff workflow.** The sealed exact-range scan found
+   zero reportable security findings. Its deterministic report was copied byte-for-byte
+   from Temp to `loop/reports/P-005-security-diff-scan.md` at SHA-256
+   `4E03D75535B68B0B0447CA2F452E1EAF692A90AA7F2F973300614A3619696C0F` so transient
+   storage is not the only A11 evidence. The scan's generated inventory directly named
+   the two JSON artifacts; the packet adversary review additionally covered all 21
+   changed files and the supporting gate/policy sources.
+
+#### Axiom sweep
+
+| axiom | result |
+|---|---|
+| A1 | PASS: the block does not supply reward; the STF derives it from symbolic subsidy, checker Q, and symbolic `R_MAX`. No self-reported consensus field was added. |
+| A2 | PASS by non-reachability: instance derivation and miner instance choice are untouched. |
+| A3 | PASS: no timing/miner metadata enters the model; the source-policy scan found zero banned identifiers. |
+| A4 | PASS by non-reachability: fork-choice code and chain weight are untouched; quality appears only in the reward model. |
+| A5 | PASS at P-005 scope: amounts/Q are unsigned, arithmetic and u64 conversion are checked/proved, no float exists, and conservation names realized reward. Concrete store conservation remains P-101 work and is not claimed. |
+| A6 | PASS at draft-spec scope: the single V1–V9 predicate runs against current candidate state before mutation, every state update is checked, and the public atomic result restores pre-state on rejection. Concrete storage laws remain explicit. |
+| A7 | PASS by non-reachability: no runtime RPC/network/config surface changed. Abstract strict decode returns typed failure; the developer-only exporter adds no remote parser. |
+| A8 | PASS: the Lean draft and symbolic vectors precede any Rust kernel consumer; CI explicitly refuses to call this P-101 conformance. |
+| A9 | PASS: no Rust dependency/FFI/unsafe surface changed; the Lake manifest has no package dependencies and the workflow action is commit-pinned. |
+| A10 | PASS: draft/non-normative/P-101-not-admitted labels are mechanical, and no hardness, normative-ratification, human-review, or conformance claim is inflated. |
+| A11 | PASS locally/pending hosted: build, vector hash, scans, and durable security report are named above. Hosted exact-head green remains unclaimed until its run URL is read back. |
+
+No Critical remains. The two contained abstraction boundaries are intentional packet
+seams, are visible to Al's mandatory line-by-line review, and do not authorize P-101.
+
+### 6. CALIBRATE — MODEL 4 RESUME
+
+#### Predictions versus outcomes
+
+- **Diff surface:** the prediction held. Governance/spec text, the Lean model/exporter,
+  one active phase handler, minimum workflow setup, generated JSON, and loop evidence
+  changed. No Rust/runtime implementation or owner value entered.
+- **Risk materialization:** arithmetic auditability and hosted toolchain selection both
+  required fixes. The feared vacuous ceiling proof did not materialize: the STF credit
+  and conservation target use the exact function proved by `reward_le_subsidy`.
+- **Confidence:** MED moved to HIGH for the bounded P-005 builder artifact after the
+  complete Lake build, deterministic regeneration, local D6-equivalent pass, axiom
+  sweep, and zero-finding security diff. Confidence remains intentionally unassigned
+  to the future concrete codec/store/kernel instantiations.
+- **Surprise:** the most consequential fixes were not in the Model 4 inequality; they
+  were audit-seam details—a modular-looking constructor and a toolchain check performed
+  one directory too high.
+
+#### Final VERIFIED / ASSUMED / UNKNOWN ledger before hosted D6
+
+**VERIFIED**
+
+- SI-004 governance is committed at `316584a42501f7ed64135490e1a1a070a7a863eb`.
+- The formal implementation is committed at
+  `388ede835e8c9e668f5f0126918193ff59f589cd` and the local evidence above is green.
+- `reward_le_subsidy` is a theorem derived without a reward-bound field, axiom,
+  `sorry`, or admitted premise; the exact derived reward is credited by the STF.
+- All owned/G0 values and SI-001/2/3 remain symbolic/unresolved; all 27 emitted cases
+  are explicitly non-normative abstract interfaces.
+- The durable exact-range security report records zero reportable findings.
+- PR #9 is still draft, has no requested reviewer or auto-merge request, and is
+  unmerged.
+
+**ASSUMED**
+
+- `Context.blockRulesHold` faithfully instantiates B1–B8/B11–B12 when P-101 supplies
+  concrete block validation. This is safe for a skeleton interface only because P-101
+  remains blocked and no kernel conformance claim is made.
+
+**UNKNOWN**
+
+- The concrete canonical byte encoding, signing-preimage construction, address
+  derivation, authenticated-store laws, and `R_MAX` storage/checked-u128 representation.
+  Resolution: P-007/P-101 under G0 and the merged human-reviewed P-005.
+- Whether Al will ratify the draft Lean representation line by line. Resolution: the
+  mandatory PR #9 review and Al's merge.
+- Hosted exact-head D6 status. Resolution: push this closeout head and read the run
+  directly from GitHub Actions before changing PR #9 out of draft.
+
+**One process improvement for the next packet:** make every active toolchain gate run
+its version check from the directory containing that packet's committed toolchain file,
+and fail before the build if the exact version is not observed. This turns ambient
+developer state into a mechanically excluded input.
