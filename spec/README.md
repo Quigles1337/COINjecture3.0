@@ -1,10 +1,11 @@
-# P-005 Lean draft — SI-004 Model 4 ratified
+# P-005 Lean model — HUMAN-RATIFIED semantics
 
-This Lake project is the draft formal model authorized for P-005. Its governing
-sources are Protocol Spec §§7–8, §11's ratified Model 4 formula, and the §14 vector
-case list. The source files remain draft until the completed project passes its
-adversary and CI gates and Al completes the required line-by-line review and merges
-PR #9.
+This Lake project carries the human-reviewed formal encoding authorized for P-005.
+Its governing sources are Protocol Spec §§7–8, §11's ratified Model 4 formula, and the
+§14 vector case list. Al's completed second review ratifies the V1–V9/STF semantics,
+including conservation under `LawfulStateOps`, effective with PR #9's merge. Formal-
+verification ownership remains reserved per LEDGER D16. The vector artifact remains
+non-normative and symbolic pending SI-001/SI-002/SI-003.
 
 The model deliberately leaves these surfaces abstract:
 
@@ -39,9 +40,10 @@ The committed artifact is `vectors/p005-draft.json`. Regenerate it with:
 lake exe vectors -- vectors/p005-draft.json
 ```
 
-The draft vector source labels every `input_bytes` value as a noncanonical abstract
+The non-normative vector source labels every `input_bytes` value as a noncanonical abstract
 interface. It does not define transaction wire bytes, populate a protocol TBD, or
 instantiate a subsidy, fee, network, `R_MAX`, or μ-balance value.
 
-P-101 remains responsible for the Rust kernel consumer after Gate G0 and after human
-review and merge of P-005.
+After P-005's reviewed merge, P-101 remains blocked on Gate G0 only. Its concrete
+kernel/store implementation must still discharge every binding conformance obligation
+recorded in Protocol Spec §§8 and 11 and `loop/LEDGER.md`.

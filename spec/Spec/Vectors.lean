@@ -1,5 +1,5 @@
 /-
-NORMATIVE STATUS: draft — pending human ratification; formal-verification ownership reserved per LEDGER D16.
+NORMATIVE STATUS: RATIFIED — human-reviewed; formal-verification ownership reserved per LEDGER D16
 -/
 
 import Lean.Data.Json

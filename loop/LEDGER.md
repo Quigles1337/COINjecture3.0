@@ -365,3 +365,61 @@ P-009 may run in parallel with this work.
 - **Second review tail:** PR #9 stays open, ready-for-review, and unmerged throughout
   remediation. After full adversary review and exact-head D6, it returns to Al; only
   Al's merge can complete P-005 or help unblock P-101.
+
+## P-005 second-review approval and human ratification — RATIFIED (Al, 2026-08-16)
+
+The following live ruling accepts every first-review remediation, authorizes the
+reviewed HUMAN-lane PR to merge, and fixes the resulting P-101/toolchain boundary:
+
+```text
+P-005 SECOND REVIEW COMPLETE — APPROVED. Merge PR #9 into main.
+
+F1, F2, and F3 are accepted as closed. The conservation proof, the
+panic-free validation path plus its CI regression gate, and the binding
+checker-derived reward provenance obligation all satisfy the review.
+
+Record in the LEDGER: the Lean encoding of Protocol Spec §§7–8 (V1–V9 and
+the STF, including conservation under LawfulStateOps) is HUMAN-RATIFIED as
+of this merge. Update the Spec/*.lean normative-status headers from "draft
+— pending human ratification" to "RATIFIED — human-reviewed; formal-
+verification ownership reserved per LEDGER D16". Vectors remain
+non-normative and symbolic pending SI-001/002/003.
+
+P-101's binding obligations, carried forward: the three LawfulStateOps
+laws; rewardInputs provenance per F3; concrete checked construction of the
+R_MAX × SCALE divisor; storage read/write coherence.
+
+After merge, verify the exact-merge-SHA D6 run green, then resume
+continuous-batch with P-006, P-007, and P-009 per D17. P-101 remains
+blocked on Gate G0 only. Also add a LEDGER note: CJ3 pins Lean 4.33.0 while
+COINjecture 2.0's lean4 project is on 4.28.0 + Mathlib 4.28.0 — a toolchain
+gap to resolve at the D16 reveal, not before.
+```
+
+### Effective second-review controls
+
+- **F1/F2/F3 — CLOSED:** Al accepts the constructive conservation proof under
+  `LawfulStateOps`, the panic-free validation path and regression gate, and the C2
+  checker-derived reward provenance obligation.
+- **Human ratification:** effective with PR #9's reviewed merge, the Lean encoding of
+  Protocol Spec §§7–8 — V1–V9 and the STF, including conservation under
+  `LawfulStateOps` — is HUMAN-RATIFIED. Every `Spec/*.lean` file carries
+  `NORMATIVE STATUS: RATIFIED — human-reviewed; formal-verification ownership reserved
+  per LEDGER D16`.
+- **Vector boundary:** the generated JSON vectors remain non-normative, symbolic, and
+  incapable of resolving SI-001, SI-002, or SI-003. No canonical byte choice or owner
+  value is ratified by the formal-source status change.
+- **P-101 binding obligations:** P-101 MUST (1) discharge read-after-write,
+  read-other-address, and additive `totalBalances/setAccount` replacement for its
+  concrete store; (2) source `Context.rewardInputs` only from
+  `check(derive_instance(instance_seed,size_param),solution)` under F3; (3) construct
+  `R_MAX·SCALE` with checked u128 multiplication, prove the divisor nonzero before
+  floor division, and check the result back to u64; and (4) prove the kernel's actual
+  storage reads and writes coherent with the three laws, with no bypass path.
+- **Queue effect:** after PR #9 merges and its exact-merge-SHA D6 is green, P-101 is
+  blocked on Gate G0 only. D17 resumes P-006, P-007, and P-009 subject to their
+  tripwires and the fresh D11 capacity check.
+- **D16 toolchain gap:** CJ3 pins Lean 4.33.0. Al records the COINjecture 2.0 Lean
+  project at Lean 4.28.0 plus Mathlib 4.28.0. Compatibility is an explicit reveal-time
+  gap to resolve at D16; no pre-reveal migration, Sarah contact, or silent version
+  alignment is authorized.

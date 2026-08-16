@@ -230,7 +230,10 @@ Lean V-rules before any Rust implementation exists. There is no Rust-first excep
   These laws bind nonce-only updates to preserve total balances and must hold for every
   address-aliasing case among sender, recipient, and miner. P-005 proves transaction
   and successful-block conservation from this contract; P-101 must discharge the
-  contract for its concrete store before claiming Lean conformance.
+  contract for its concrete store before claiming Lean conformance. The exported
+  storage read/write operations used by the kernel MUST be coherent with those same
+  laws; no alternate write path, cache, or adapter may bypass read-after-write,
+  read-other-address, or the additive replacement equation.
 
 ## §9 Instance derivation — grinding and theft analysis
 
@@ -290,6 +293,11 @@ UNFILLED — owner: Al (+ Sarah, reserved per D16). `subsidy(·)` remains the P-
 placeholder pending economics ownership. The normalization is bounded above by the
 subsidy, so no reward funding source or premium account exists and the unminted
 remainder is never carried forward.
+
+P-101 MUST construct the concrete `R_MAX·SCALE` divisor with checked u128
+multiplication, prove it nonzero from the ratified domains before division, and check
+the final reward back to u64. A wrapped, saturated, unchecked, block-supplied, or
+otherwise pretrusted divisor is non-conforming.
 
 ## §12 Networking and RPC — baseline requirements (normative for Phase 3)
 

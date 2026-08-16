@@ -1,7 +1,7 @@
 /-
-NORMATIVE STATUS: draft — pending human ratification; formal-verification ownership reserved per LEDGER D16.
+NORMATIVE STATUS: RATIFIED — human-reviewed; formal-verification ownership reserved per LEDGER D16
 
-Draft encoding of Protocol Spec §7 transaction-validity rules V1–V9.
+Human-ratified encoding of Protocol Spec §7 transaction-validity rules V1–V9.
 
 No canonical codec, signature implementation, address derivation, protocol maximum,
 fee floor, or chain identifier is selected here. Those values and operations are

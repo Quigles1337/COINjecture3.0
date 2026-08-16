@@ -2,12 +2,12 @@
 
 CYCLE: 7
 PHASE: Phase 0 — Foundations and spikes
-PACKET: P-005 — HUMAN SECOND-REVIEW HANDOFF; UNMERGED
+PACKET: P-005 — HUMAN SECOND REVIEW APPROVED; RATIFICATION/MERGE CLOSEOUT
 BRANCH: feat/p005-lean-scaffold
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-blocked-on-external
-CAPACITY_OBSERVED_AT: 2026-08-16 P-005 final evidence-rollup boundary; no evidence that CJ2 GATE-1/GATE-2 cleared
-STATUS: P005_SECOND_REVIEW_HANDOFF_NO_MERGE
+CAPACITY_OBSERVED_AT: 2026-08-16 P-005 approved-merge preflight; no evidence that CJ2 GATE-1/GATE-2 cleared
+STATUS: P005_SECOND_REVIEW_APPROVED_MERGE_AUTHORIZED
 
 ## Ground-truth state
 
@@ -146,18 +146,27 @@ STATUS: P005_SECOND_REVIEW_HANDOFF_NO_MERGE
 - `docs/RESEARCH_SURVEY.md` and
   `loop/PROMPTS/AUTONOMOUS_BUILDER.md` were supplied for the first governance commit.
 - P-008 remains blocked on the exact Al-supplied public frontend repository URL.
-- P-101 remains blocked on Gate G0 and the merged, human-reviewed P-005.
+- Al's second P-005 review accepts F1/F2/F3 as closed and authorizes PR #9 to merge.
+  Effective with that merge, the Lean V1–V9/STF encoding, including conservation
+  under `LawfulStateOps`, is HUMAN-RATIFIED. The symbolic vectors remain explicitly
+  non-normative pending SI-001/SI-002/SI-003.
+- P-101 carries the three `LawfulStateOps` laws, checker-derived `rewardInputs`
+  provenance, checked construction of the `R_MAX·SCALE` divisor, and concrete storage
+  read/write coherence. Effective with PR #9's merge, P-101 is blocked on Gate G0
+  only.
+- CJ3 pins Lean 4.33.0 while the COINjecture 2.0 Lean project is recorded by Al as
+  Lean 4.28.0 plus Mathlib 4.28.0. The compatibility gap is reserved for the D16
+  reveal and MUST NOT be resolved beforehand.
 
 ## Next action
 
-1. Require all eleven D6 jobs green on the exact final evidence-rollup PR head and
-   attach that SHA/run evidence to PR #9 without another repository commit.
-2. PR #9 is then returned to Al ready-for-review for the mandatory second line-by-line review
-   against Protocol Spec §§7–8/§11. The builder MUST NOT merge it.
-3. Stop at the second-review boundary. The earlier out-of-order P-006/P-007/P-009
-   review-tail authorization is not exercised in this turn; a future pickup must
-   re-check D11 first. P-008 remains blocked on the exact frontend URL, and P-101
-   remains blocked on Gate G0 plus Al's human-reviewed P-005 merge.
+1. Require all eleven D6 jobs green on the exact ratification-closeout PR head.
+2. Merge PR #9 with an expected-head guard, then require all eleven D6 jobs green on
+   the exact merge SHA. If either run is red, diagnose, report, and stop before any
+   subsequent packet.
+3. Record the immutable merge SHA/run in a docs-only closeout, re-check D11, and resume
+   P-006, P-007, and P-009 under D17. P-008 remains blocked on the exact frontend URL;
+   P-101 remains blocked on Gate G0 only after the P-005 merge.
 
 No frontend URL may be inferred for P-008, and no Al- or Sarah-owned TBD may be
 filled.

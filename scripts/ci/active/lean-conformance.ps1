@@ -7,7 +7,7 @@ Set-StrictMode -Version Latest
 $repoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..\..\..')).Path
 $specRoot = Join-Path $repoRoot 'spec'
 $artifact = Join-Path $specRoot 'vectors\p005-draft.json'
-$requiredHeader = 'NORMATIVE STATUS: draft — pending human ratification; formal-verification ownership reserved per LEDGER D16.'
+$requiredHeader = 'NORMATIVE STATUS: RATIFIED — human-reviewed; formal-verification ownership reserved per LEDGER D16'
 $requiredFixtureStatus = 'NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES'
 $requiredCases = @(
     'v1-v8-baseline-pass',
@@ -54,7 +54,7 @@ if ($leanFiles.Count -eq 0) {
 foreach ($file in $leanFiles) {
     $source = Get-Content -LiteralPath $file.FullName -Raw
     if (-not $source.Contains($requiredHeader)) {
-        throw "Required draft/ownership header missing from $($file.FullName)."
+        throw "Required ratified/ownership header missing from $($file.FullName)."
     }
     if ($source -match '\b(sorry|admit|axiom)\b') {
         throw "Forbidden proof placeholder found in $($file.FullName)."
@@ -137,7 +137,7 @@ try {
         }
     }
 
-    Write-Output "P005_DRAFT_SPEC_BUILD=PASS LEAN=$expectedVersion VECTORS=$($vectors.Count) SHA256=$committedHash"
+    Write-Output "P005_RATIFIED_SPEC_BUILD=PASS LEAN=$expectedVersion VECTORS=$($vectors.Count) SHA256=$committedHash"
     Write-Output 'P101_RUST_CONFORMANCE=NOT_YET_ADMITTED'
 }
 finally {

@@ -1,7 +1,7 @@
 /-
-NORMATIVE STATUS: draft — pending human ratification; formal-verification ownership reserved per LEDGER D16.
+NORMATIVE STATUS: RATIFIED — human-reviewed; formal-verification ownership reserved per LEDGER D16
 
-Draft model of Protocol Spec §8 state-transition sequencing, checked arithmetic,
+Human-ratified model of Protocol Spec §8 state-transition sequencing, checked arithmetic,
 block-granularity atomicity, and the conservation theorem target.
 
 B-rule validation, the subsidy schedule, authenticated-state storage, and root

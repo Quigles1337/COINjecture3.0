@@ -1061,3 +1061,192 @@ out of the spec.
   reviewer, no assignee, and unmerged.
 - Final rollup rule: the commit containing this paragraph receives its own exact-head
   D6. That run is recorded in the PR description rather than another commit.
+
+## SECOND-REVIEW RATIFICATION AND MERGE CLOSEOUT — FRAME
+
+### 1. FRAME — PREDICTION BEFORE EDITING
+
+**Packet and done-condition.** Al's second line-by-line review accepts F1, F2, and F3
+as closed and explicitly authorizes PR #9 to merge. This closeout records that the
+Lean encoding of Protocol Spec §§7–8 is HUMAN-RATIFIED effective with the merge,
+updates the formal-source status headers and their mechanical CI guard, carries the
+four named P-101 obligations forward, and records the Lean toolchain gap reserved for
+the D16 reveal. The packet is done only when the immutable PR head passes all eleven
+D6 jobs, PR #9 is merged with an expected-head guard, and all eleven D6 jobs pass on
+the exact merge SHA. No Lean definition, theorem body, vector definition, JSON byte,
+SI-001/SI-002/SI-003 answer, or owner-controlled value may change.
+
+**Lane classification: HUMAN, explicitly authorized.** The changes include a human
+ratification record and the normative-status headers on `Spec/*.lean`, both of which
+are HUMAN surfaces under D17. Al's live second-review ruling supplies the required
+authority and the earlier prohibition on builder merge is superseded only for this
+reviewed PR. The vector artifact stays non-normative and symbolic. The subsequent
+P-006/P-007/P-009 pickups return to their own lane classifications after the required
+merge-SHA D6 and D11 boundary check.
+
+**Predicted diff surface.** This closeout expects to touch only:
+
+- `spec/Spec/{Tx,Stf,Vectors}.lean` for the exact ratified status header;
+- `scripts/ci/active/lean-conformance.ps1` so CI rejects stale draft headers and emits
+  a ratified-build marker;
+- `docs/PROTOCOL_SPEC.md` to make the already-directed checked divisor construction
+  and storage coherence explicit P-101 conformance obligations;
+- `loop/LEDGER.md`, `loop/PACKETS.md`, and `loop/STATE.md` for the live ruling,
+  ratification, queue, Gate G0-only block, toolchain-gap note, and merge procedure; and
+- this report for FRAME, verification, adversary, and calibration evidence.
+
+The immutable merge SHA and its D6 URL cannot exist before merge; they will be
+recorded in a separate docs-only closeout after the exact-merge-SHA run, without
+rewriting the ratified merge commit.
+
+**Top risks.** (1) A status-only edit accidentally alters a proof or the symbolic
+vector artifact. (2) The CI gate continues accepting the obsolete draft header or
+stops enforcing the ownership reservation. (3) a later commit, branch movement, or
+unguarded merge breaks the exact-head evidence chain. Controls are path-limited
+patching, byte-hash comparison of the generated and committed vector artifact, the
+full pinned Lake/D6-equivalent run, an expected-head merge guard, and CI inspection
+from GitHub for both the PR head and merge SHA.
+
+**Falsifier.** This approach is wrong if the requested ratification cannot be
+represented without changing any Lean semantic declaration or vector definition; if
+the pinned build/vector hash changes; if any SI or owned value becomes concrete; if
+D11 capacity is no longer clear; or if either exact-SHA D6 run is not green. Any such
+observation stops the merge or the subsequent queue as applicable.
+
+**Confidence: HIGH** for the status/governance closeout because the reviewed semantic
+head is immutable and already green. Confidence remains intentionally unassigned to
+P-101's future concrete implementation and to the unexecuted P-006/P-007/P-009
+packets.
+
+### Fresh preflight evidence
+
+- Canonical root: `C:/Users/LEET/COINjecture3.0`; no `OneDrive` component.
+- Resumable branch: `feat/p005-lean-scaffold` at
+  `13c6795b2943ee4086fce835dff88b6031703aa0`, clean and equal to origin; this matches
+  the P-005 handoff in `loop/STATE.md`.
+- Origin fetch/push: exactly
+  `https://github.com/Quigles1337/COINjecture3.0`.
+- GitHub visibility: `PRIVATE`; PR #9 is open, ready, mergeable, has no auto-merge,
+  and its exact current head passed all eleven jobs in D6 run `31965934419`.
+- D17 is RATIFIED in `loop/LEDGER.md`; the supplied research survey and autonomous
+  prompt are present at their ratified hashes; P-008's exact frontend URL remains
+  unfilled.
+- D11: the live 2026-08-16 condition and current `CAPACITY_FLAG` authorize CJ3 while
+  CJ2 awaits GATE-1/GATE-2. A read-only search of the canonical CJ2 checkout found no
+  contrary capacity or gate-clear evidence. Capacity is re-checked again after the
+  merge-SHA D6, before any new packet pickup.
+
+### Scope-tripwire re-FRAME — status consistency
+
+The first complete status diff showed that `spec/README.md`, `spec/Spec.lean`, and
+`spec/Main.lean` would continue to say the project was pending human ratification even
+though every imported `Spec/*.lean` source would carry the ratified header. That stale
+claim would contradict the live ruling and A10. The predicted surface therefore
+expands to those three status/documentation entrypoints only. `Spec/Tx.lean` and
+`Spec/Stf.lean` also replace the adjacent words "Draft encoding/model" with
+"Human-ratified encoding/model"; `Spec/Vectors.lean` continues to identify its vector
+manifest and every byte fixture as non-normative. No executable definition, proof,
+case list, symbolic expression, or JSON artifact is authorized to change. The same
+falsifier and verification requirements remain in force.
+
+### 2. BUILD — RATIFICATION-ONLY DELTA
+
+- Replaced the pending-review header in all three `spec/Spec/*.lean` sources with the
+  exact human-reviewed/LEDGER-D16 reservation and made the active Lean handler require
+  it mechanically.
+- Updated the project aggregate, vector executable, and README so they do not retain a
+  false pending-review claim. Each of those surfaces explicitly preserves the
+  non-normative symbolic vector boundary.
+- Preserved Al's second-review ruling in the LEDGER and carried all four P-101
+  obligations into Protocol Spec §§8/11 and the packet definition: the three store
+  laws, F3 provenance, checked/nonzero u128 `R_MAX·SCALE` construction, and coherence
+  of the concrete kernel store reads/writes with those laws.
+- Updated STATE/PACKETS to make the reviewed merge plus both exact-SHA D6 runs the
+  remaining P-005 closeout and to leave P-101 blocked only on G0 after the merge.
+- Recorded the Lean 4.33.0 versus CJ2 Lean/Mathlib 4.28.0 gap as D16-reveal work and
+  authorized no version change or pre-reveal coordination.
+
+No definition, theorem body, vector case, symbolic expression, fixture value, or JSON
+artifact changed.
+
+### 3. VERIFY — LOCAL RATIFICATION HEAD
+
+- Active Lean conformance handler: PASS. It cold-built all 10 pinned Lean 4.33.0 jobs,
+  regenerated 27 vectors, and emitted
+  `P005_RATIFIED_SPEC_BUILD=PASS LEAN=4.33.0 VECTORS=27
+  SHA256=30CABF852D623549CD5293628D5B3899BE805D543B537CB223F1B6FAB5C324E1` plus
+  `P101_RUST_CONFORMANCE=NOT_YET_ADMITTED`.
+- After removing only each leading status/documentation block comment, the complete
+  `Spec/Tx.lean`, `Spec/Stf.lean`, and `Spec/Vectors.lean` bodies compare byte-for-byte
+  equal to the accepted head.
+- The committed vector artifact remains both SHA-256
+  `30CABF852D623549CD5293628D5B3899BE805D543B537CB223F1B6FAB5C324E1` and Git blob
+  `cc0c3f71c3f7af7db50287f4f56e526bbc56d831`, identical to the accepted head.
+- `git diff --check`: PASS. `cargo fmt --all -- --check`: PASS.
+- Formal-token regression scan: no `sorry`, `admit`, `axiom`, or `unreachable!` in
+  `spec/Spec/*.lean`. Consensus-crate scan: no banned identifier and no `unsafe` token.
+
+The required full D6 result is intentionally not inferred from these local checks. It
+must be read from GitHub on the immutable pushed head before merge.
+
+### 4. ADVERSARY PASS — RATIFICATION DELTA
+
+The entire working delta was re-read after the scope expansion.
+
+| challenge | result |
+|---|---|
+| Did a ratification comment modify any accepted Lean declaration or proof? | NO. All three formal bodies are identical after their leading comments, and the full project elaborates. |
+| Did the header change accidentally ratify canonical vector bytes or answer SI-001/2/3? | NO. The exporter, aggregate, README, Lean manifest, and every JSON fixture retain explicit non-normative/symbolic labels. |
+| Can the CI gate accept the stale draft header? | NO. The handler requires the exact ratified ownership header in every `Spec/*.lean` file and executed successfully. |
+| Did the P-101 wording turn a future conformance obligation into a claimed implementation? | NO. STATE, PACKETS, Protocol Spec, and the handler all say the Rust/store wiring is not yet admitted and remains behind G0. |
+| Can the divisor be wrapped, zero, block-supplied, or silently trusted? | NO under the carried obligation: concrete P-101 must use checked u128 multiplication, establish nonzero before floor division, and check back to u64. No concrete divisor or owned value was supplied here. |
+| Did the toolchain note trigger pre-reveal alignment or Sarah contact? | NO. It records an explicit D16-reveal gap and forbids earlier resolution. |
+| Is the merge vulnerable to a moving PR head? | The merge step is still pending and is required to pass `expected_head_sha` equal to the exact green ratification head. |
+
+#### A1–A11 sweep
+
+- **A1–A4:** no instance, checker, timing, quality, fork-choice, or block-input code
+  changed; the F3 checker-only provenance boundary was strengthened in durable prose.
+- **A5–A6:** accepted checked-arithmetic, validation, transition, atomicity, and
+  conservation declarations are byte-identical outside comments; vector regeneration
+  is unchanged.
+- **A7:** no network, RPC, parser, authorization, secret, or log surface changed.
+- **A8:** human review is recorded before ratification and Rust conformance remains
+  explicitly unadmitted; future store/checker/divisor obligations are not claimed as
+  implemented.
+- **A9:** no dependency, FFI, solver, unsafe code, or toolchain version changed.
+- **A10:** current ratification is separated from non-normative vectors, unresolved
+  SIs, future P-101 work, and the D16 toolchain gap.
+- **A11:** exact local tool versions, vector count/hash/blob, commands, and pending
+  hosted evidence boundary are recorded; GitHub CI remains the merge authority.
+
+No Critical, High, Medium, or Low security or semantic finding survives this delta.
+
+### 5. CALIBRATE — PRE-MERGE
+
+- **Prediction versus outcome:** the formal/governance/gate surfaces matched. The only
+  expansion was the three stale status entrypoints identified during the complete
+  diff review and re-FRAMED before editing.
+- **Risk materialization:** no semantic or vector drift occurred; the CI header gate
+  produced the new ratified marker; exact-head movement remains mechanically pending.
+- **Confidence:** HIGH remains calibrated for the ratification delta after a complete
+  cold elaboration and identity checks. Hosted CI and merge confidence are withheld
+  until their exact-SHA evidence exists.
+- **Surprise:** the two project entrypoint headers and README carried a second copy of
+  the pending-review state even though the mandatory gate covered only
+  `Spec/*.lean`.
+
+**VERIFIED:** all reviewed semantics remain unchanged; the new status gate passes; the
+symbolic vector artifact is identical; no owned/SI value was populated.
+
+**ASSUMED:** Al's live toolchain statement is authoritative governance input. The
+available canonical CJ2 checkout exposed no local Lean project files from which to
+independently reproduce its 4.28.0 pins; compatibility analysis is intentionally
+deferred to D16 as directed.
+
+**UNKNOWN / PENDING:** the immutable ratification-head SHA/run, PR #9 merge SHA, and
+exact-merge-SHA D6 result do not exist yet. They are the remaining closeout evidence.
+
+**Process improvement:** whenever a status transition is ratified, search the whole
+packet surface for duplicated lifecycle language before narrowing the CI guard; this
+prevents an accurately gated core from leaving stale claims in its entrypoints.
