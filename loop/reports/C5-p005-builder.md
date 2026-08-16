@@ -1,6 +1,6 @@
 # Cycle 5 — P-005 Builder Report
 
-**Status:** HUMAN AUTHORIZED — IMPLEMENTATION RESUMED; MANDATORY REVIEW TAIL
+**Status:** STOP — SI-004 SEMANTIC AMBIGUITY; PARTIAL HUMAN-LANE CHECKPOINT
 **Date:** 2026-08-16
 **Packet:** P-005 — Lean scaffold
 **Lane:** HUMAN
@@ -110,6 +110,56 @@ return a mutated state. Any such observation triggers a fresh HUMAN stop.
 **Confidence:** MED. The abstract-interface design directly fits the live ruling, but
 the self-send/aliasing and atomic rollback proof surface deserves adversarial testing,
 and hosted Lean toolchain admission has not yet been exercised in this repository.
+
+## RESUMED BUILD STOP — SI-004
+
+The resumed build reached a new semantic ambiguity and stopped before a vector
+artifact, CI admission, adversary completion, or ready-for-review transition.
+
+### Tripwire
+
+Protocol Spec §8 directs the STF to credit §11's quality-scaled `reward(height, Q)`
+but defines the conservation target as total post-state balances equaling total
+pre-state balances plus exactly `subsidy(height)`. Section §11 allows the credited
+reward to exceed the subsidy when `Q > SCALE` and `R_MAX > 1`; fees are transfers and
+no quality-premium funding debit exists in the state transition. The two requirements
+therefore cannot both hold generally without a new economics decision.
+
+P-005 did not choose among equating issuance with reward, constraining an owner value,
+or adding a funding source. The conflict is now `SI-004` in
+`loop/reports/SPEC-ISSUES.md`. It requires an Al-owned HUMAN ruling and corresponding
+§8/§11 amendment before the conservation target can be encoded coherently.
+
+### Concurrency incident
+
+During the first full Lake compile, a second already-running Codex task wrote
+`spec/Spec/Tx.lean`, `spec/Spec/Stf.lean`, and `spec/README.md` into the same canonical
+checkout. The namespace/content changed between two reads. This session treated that
+as an environment/scope tripwire, identified the peer through the local task list,
+and instructed it to stop all writes. The peer stopped without committing, pushing,
+changing PR #9, starting CI, or advancing the queue. Its candidate files are retained
+in this checkpoint for review; compilation alone does not confer semantic authority.
+
+### Partial checkpoint surface
+
+- `spec/lean-toolchain` pins Lean 4.33.0; the local environment reports Lean 4.33.0
+  and Lake 5.0.0.
+- Candidate `Spec/Tx.lean` and `Spec/Stf.lean` files carry the exact required header
+  and keep codec, signature, address, parameter, block, reward, and storage choices
+  behind interfaces. `lake build Spec.Tx Spec.Stf` passed locally on the pinned
+  toolchain after the concurrency stop. They remain partial HUMAN work, not ratified
+  semantics or a full-project build.
+- A draft symbolic `Spec/Vectors.lean` manifest and executable entrypoint were started
+  but the full project does not build. No committed JSON vector artifact exists.
+- The existing D6 `lean-conformance` job remains the explicit
+  `NOT_YET_ADMITTED` path. No workflow or active-handler change was made, so a green
+  branch D6 must not be described as compilation or conformance of these files.
+- No Rust source, protocol value, canonical byte encoding, signature implementation,
+  address derivation, Protocol Spec text, or P-101 consumer changed.
+
+PR #9 therefore remains draft and MUST NOT be marked ready or merged. The out-of-order
+review-tail queue exception has not begun because P-005 did not reach its completed
+ready-for-review tail.
 
 ## 1. FRAME
 
@@ -385,3 +435,58 @@ content completes the full six-move protocol.
 **One process improvement for the next pickup:** complete top-down queue and D17 lane
 classification before loading packet-specific artifact sources or tooling. This makes
 an adjacent, already-staged packet less likely to pull work across an ordering gate.
+
+## 7. RESUME CALIBRATION
+
+### Predictions versus outcomes
+
+- **Diff surface:** the predicted `spec/` surface began to materialize. Workflow and
+  active-gate edits were correctly withheld because the full project never reached a
+  verified build. `SPEC-ISSUES.md` was an unpredicted but tripwire-required expansion.
+- **Risk materialization:** the predicted conservation/atomicity risk exposed SI-004
+  before a theorem target could encode one economics interpretation. A separate
+  concurrency hazard also materialized when a peer task wrote the same files.
+- **Confidence:** MED was appropriately cautious. Abstract interfaces contained the
+  known codec/TBD surface, but they could not remove the newly discovered internal
+  §8/§11 issuance conflict.
+- **Surprise:** the protocol's state transition and its own conservation equation use
+  different issuance quantities. Compilation pressure did not reveal this; a direct
+  equation-level reread did.
+
+### Final VERIFIED / ASSUMED / UNKNOWN ledger after resumed stop
+
+**VERIFIED**
+
+- Al's P-005 HUMAN authorization is merged on `main` at
+  `8d9dbbfef8552e80c1e7e2e13c0d6815cded523e`; all eleven jobs passed in exact-main
+  run `31958836168`.
+- Protocol Spec §8 names `subsidy(height)` in the conservation equation, while §8
+  applies §11 reward and §11 defines a potentially quality-scaled amount. Evidence:
+  `docs/PROTOCOL_SPEC.md` §§8 and 11 and `loop/reports/SPEC-ISSUES.md` SI-004.
+- The peer task stopped without a commit, push, PR mutation, hosted run, or later-
+  packet pickup. Evidence: local task completion readback recorded during this turn.
+- No active Lean gate or workflow edit exists in the checkpoint diff; P-101 remains
+  blocked on both G0 and merged, human-reviewed P-005.
+- The exact required normative-status sentence appears in all three current
+  `Spec/*.lean` files, and a source scan found zero `sorry`, `admit`, or `axiom`
+  placeholders. Evidence: local checkpoint header/placeholder scan and the committed
+  candidate files.
+
+**ASSUMED**
+
+- None for the stop decision. SI-004 follows algebraically from the two governing
+  equations unless an unstated debit or equality constraint exists; inventing either
+  is exactly what the tripwire forbids.
+
+**UNKNOWN**
+
+- Whether quality premium is intended to mint additional issuance, debit an explicit
+  pool, or be constrained away. Resolution: Al's HUMAN ruling and an amended §8/§11.
+- The final approved conservation theorem statement and corresponding vector outcomes.
+- Whether the retained partial Lean candidate will survive line-by-line human review
+  after SI-004 is resolved. No conformance or normative claim is made now.
+
+**One process improvement for the next resume:** obtain an exclusive-write readback
+for the canonical branch before the first formal edit, then translate every prose
+state update and invariant into side-by-side equations during FRAME. That would expose
+both shared-worktree collision and issuance-identity conflicts earlier.

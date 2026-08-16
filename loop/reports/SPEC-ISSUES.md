@@ -67,3 +67,31 @@ may change normative specification text.
   byte order, rejection ceiling, and canonical test vectors before the SIS class can
   enter a consensus registry. If G0 chooses another convention, update the prototype
   and fixture together before admission.
+
+## SI-004 — §8 conservation target conflicts with §11 quality-scaled reward credit
+
+- **Discovered by:** P-005 resumed HUMAN implementation, 2026-08-16
+- **Status:** OPEN — Al (+ Sarah at D16 reveal) / HUMAN; blocks P-005 completion
+- **Text A:** `docs/PROTOCOL_SPEC.md` §8 step 3 requires the STF to apply §11 reward to
+  `miner_addr`; §11 defines
+  `reward(height, Q) = subsidy(height) · min(Q, R_MAX·SCALE) / SCALE`.
+- **Text B:** §8's conservation invariant requires
+  `Σ balances(post) = Σ balances(pre) + subsidy(height)` for every applied block and
+  states that fees transfer rather than mint.
+- **Why this conflicts:** valid solutions have `Q ≥ SCALE`, and neither the current
+  prose nor an unfilled owner value requires `Q = SCALE` or `R_MAX = 1`. Therefore
+  §11 can direct a miner credit greater than `subsidy(height)`, while the §8 theorem
+  permits total issuance to increase by exactly the subsidy. No premium-funding or
+  debit account is specified, so both statements cannot hold for the general case.
+- **Strict reading used by P-005:** stop before choosing the theorem target or reward
+  funding semantics. Keep `reward`, `subsidy`, `R_MAX`, and any relationship between
+  them abstract. Do not equate reward with subsidy, force an owner value, mint the
+  quality premium, or invent a funding pool through Lean code or fixtures.
+- **Resolution required:** the HUMAN owner must ratify one coherent issuance model
+  and amend the affected §8/§11 prose before P-005 can complete. Examples of the
+  decision surface—not recommendations—include whether total issuance tracks the
+  full quality-scaled reward, whether the premium is funded by an explicit debit,
+  or whether the multiplier is constrained so reward equals subsidy.
+- **P-005 impact:** partial draft `Spec/Tx.lean` and `Spec/Stf.lean` candidates are
+  checkpoint evidence only. PR #9 remains draft, Lean CI is not admitted, no JSON
+  vector artifact is ratified, and the PR cannot be marked ready-for-review.

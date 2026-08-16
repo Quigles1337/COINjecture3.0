@@ -2,12 +2,12 @@
 
 CYCLE: 7
 PHASE: Phase 0 — Foundations and spikes
-PACKET: P-005 — HUMAN AUTHORIZED; IMPLEMENTATION RESUMED
+PACKET: P-005 — STOPPED ON SI-004 SEMANTIC AMBIGUITY
 BRANCH: feat/p005-lean-scaffold
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-blocked-on-external
-CAPACITY_OBSERVED_AT: 2026-08-16 P-005 resume pickup; CJ2 `CAPACITY_FLAG: none`, GATE-1/GATE-2 still awaiting
-STATUS: P005_HUMAN_AUTHORIZED_IMPLEMENTATION_IN_PROGRESS
+CAPACITY_OBSERVED_AT: 2026-08-16 P-005 SI-004 stop checkpoint; CJ2 `CAPACITY_FLAG: none`, GATE-1/GATE-2 still awaiting
+STATUS: P005_STOPPED_HUMAN_SI004_AWAITING_AL
 
 ## Ground-truth state
 
@@ -60,6 +60,18 @@ STATUS: P005_HUMAN_AUTHORIZED_IMPLEMENTATION_IN_PROGRESS
   are the packet done-condition. P-101 remains blocked on both Gate G0 and that merged,
   human-reviewed P-005. While review is pending, P-006, P-007, P-009, and P-010 (if
   present) may execute out of strict order under their own tripwires.
+- P-005 resumed only far enough to create a partial draft Lean candidate. The §8 STF
+  applies §11's quality-scaled reward, but §8's conservation equation permits total
+  issuance to increase by exactly `subsidy(height)`. Because §11 reward may exceed
+  subsidy and no funding debit exists, `SI-004` records a new HUMAN semantic
+  ambiguity. No relationship, owner value, or funding mechanism was inferred.
+- A concurrent local Codex task wrote to the same `spec/` surface during the first
+  build. It was stopped before any commit, push, PR mutation, hosted CI, or queue
+  advance. Its partial Tx/STF candidates are preserved in PR #9's checkpoint and are
+  not represented as normative or fully verified.
+- PR #9 remains draft. The full Lake project is not green, the D6 Lean gate remains
+  `NOT_YET_ADMITTED`, no deterministic JSON artifact is committed, the adversary pass
+  is incomplete, and the PR is not ready for Al's line-by-line review.
 - Al's 2026-08-16 governance injection ratified AMEND-1/2/3 and approved/unblocked
   P-009. `docs/AUDIT_TRACEABILITY.md` was verified at SHA-256
   `58C762568A63D8A4AFEACDEB1535AA9C930099F49118D2B45B9B483B8D560EFC` and preserved
@@ -81,9 +93,9 @@ STATUS: P005_HUMAN_AUTHORIZED_IMPLEMENTATION_IN_PROGRESS
   exact-merge-SHA mainline run `31958393946` both passed all eleven D6 jobs.
 - The standing README drift-control rule is RATIFIED: every G0–G4 closeout refreshes
   the README status block and roadmap marker in the same closeout.
-- `loop/reports/SPEC-ISSUES.md` keeps three G0/HUMAN interpretation issues open:
-  conditional SIS-hardness wording, undefined `s_max`, and the missing normative
-  SHAKE candidate-byte convention.
+- `loop/reports/SPEC-ISSUES.md` keeps four HUMAN interpretation issues open:
+  conditional SIS-hardness wording, undefined `s_max`, the missing normative SHAKE
+  candidate-byte convention, and the §8/§11 subsidy-versus-reward conflict (SI-004).
 - The three pinned audit-tool caches are established on `main`; subsequent packet PRs
   can use the verified cache-hit path.
 - GitHub reports `main` is not currently protected. P-001 documents the required
@@ -98,12 +110,16 @@ STATUS: P005_HUMAN_AUTHORIZED_IMPLEMENTATION_IN_PROGRESS
 
 ## Next action
 
-1. Re-FRAME P-005 against the ratified HUMAN authorization before editing `spec/`.
-2. Implement only the symbolic/SI-bounded Lean and vector surface, run the adversary
-   pass and exact-head D6, mark PR #9 ready-for-review, then leave it unmerged for Al.
-3. While PR #9 awaits Al's line-by-line review, continue P-006, P-007, and P-009 as
-   individually safe. P-010 is already complete; P-008 remains blocked on the exact
-   frontend URL, and P-101 remains blocked on Gate G0 plus Al's P-005 merge.
+1. Al must resolve SI-004 by ratifying one coherent relationship among §8 total
+   issuance, §11 quality-scaled reward, subsidy, and any explicit funding debit, then
+   amend the affected §8/§11 prose. No option is inferred by the builder.
+2. After that ruling, resume PR #9 from the partial checkpoint, re-FRAME the affected
+   theorem/vector surface, finish the full build and adversary pass, obtain exact-head
+   D6, mark ready-for-review, and leave it unmerged for Al.
+3. Only while completed PR #9 awaits Al's line-by-line review does the out-of-order
+   P-006/P-007/P-009 exception activate. It is not active during this SI-004 stop.
+   P-010 is complete; P-008 remains blocked on the exact frontend URL, and P-101
+   remains blocked on Gate G0 plus Al's P-005 merge.
 
 No frontend URL may be inferred for P-008, and no Al- or Sarah-owned TBD may be
 filled.

@@ -1,12 +1,13 @@
 # COINjecture 3.0 Packet Queue
 
-**Queue status:** APPROVED WITH RATIFIED P-005 REVIEW TAIL — Al live rulings,
-2026-08-15 through 2026-08-16. P-005 implementation is HUMAN-authorized under the
-exact constraints in `loop/LEDGER.md`, but PR #9 MUST stop ready-for-review and MUST
-NOT auto-merge. While that review tail is open, P-006, P-007, P-009, and P-010 (if
-present) may run out of strict order under their own tripwires and D11 checks. P-008
-remains blocked on the exact frontend URL. P-101 remains blocked on both Gate G0 and
-the merged, human-reviewed P-005.
+**Queue status:** APPROVED WITH RATIFIED P-005 REVIEW TAIL; P-005 STOPPED ON SI-004 —
+Al live rulings, 2026-08-15 through 2026-08-16. P-005 implementation is HUMAN-
+authorized under the exact constraints in `loop/LEDGER.md`, but a new §8/§11
+issuance/conservation ambiguity stopped the build before PR #9 reached its review
+tail. PR #9 remains draft and MUST NOT auto-merge. The out-of-order P-006/P-007/P-009
+exception activates only while a completed PR #9 awaits Al's review, so it is not
+active at this checkpoint. P-008 remains blocked on the exact frontend URL. P-101
+remains blocked on both Gate G0 and the merged, human-reviewed P-005.
 
 | Packet | Phase | Queue status | Blocking condition |
 |--------|-------|--------------|--------------------|
@@ -14,11 +15,11 @@ the merged, human-reviewed P-005.
 | P-002 | Phase 0 | COMPLETE — `7ecba896` | PR #3 and exact-merge-SHA D6 CI green |
 | P-003 | Phase 0 | COMPLETE — `e0056157` | PR #5 and exact-merge-SHA D6 CI green |
 | P-004 | Phase 0 | COMPLETE — `4644374f` | PR #7 and exact-merge-SHA D6 CI green |
-| P-005 | Phase 0 | IN PROGRESS — HUMAN AUTHORIZED / REVIEW TAIL | Implement on draft PR #9 within the ratified symbolic/SI boundary; adversary + exact-head green CI; mark ready; no builder merge |
-| P-006 | Phase 0 | QUEUED — APPROVED / OUT-OF-ORDER PERMITTED | P-005 PR #9 ready-for-review and D11 re-check |
-| P-007 | Phase 0 | QUEUED — APPROVED / OUT-OF-ORDER PERMITTED | P-005 PR #9 ready-for-review and D11 re-check; its own semantic tripwires remain armed |
+| P-005 | Phase 0 | STOP — HUMAN / SI-004 | §8 conservation uses subsidy while the applied §11 reward may exceed subsidy; Al-owned ruling/amendment required; PR #9 stays draft |
+| P-006 | Phase 0 | QUEUED — APPROVED / REVIEW-TAIL EXCEPTION | P-005 PR #9 ready-for-review and D11 re-check; not active while P-005 is stopped |
+| P-007 | Phase 0 | QUEUED — APPROVED / REVIEW-TAIL EXCEPTION | P-005 PR #9 ready-for-review and D11 re-check; its own semantic tripwires remain armed |
 | P-008 | Phase 0 / Phase 4 seam input | BLOCKED | Exact public frontend repository URL supplied by Al; URL MUST NOT be guessed |
-| P-009 | Phase 0 / audit traceability | QUEUED — APPROVED / UNBLOCKED / INTERPRETATION AUTHORIZED | Source evidence copied durably; may execute while P-005 awaits review after its own D11 re-check |
+| P-009 | Phase 0 / audit traceability | QUEUED — APPROVED / UNBLOCKED / INTERPRETATION AUTHORIZED | Source evidence copied durably; review-tail exception is not active until PR #9 is ready; D11 re-check required |
 | P-010 | Phase 0 / documentation | COMPLETE — `1e986cb2` | Feature PR #10 and closeout PR #11; both exact-merge-SHA D6 runs green |
 | P-101 | Phase 1 head | BLOCKED | Gate G0 **and** merged, human-reviewed P-005 |
 
