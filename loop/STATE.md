@@ -2,12 +2,12 @@
 
 CYCLE: 1
 PHASE: Phase 0 — Foundations and spikes
-PACKET: P-001 — BUILD COMPLETE, ORIGIN VERIFICATION PENDING
+PACKET: P-001 — FIRST ORIGIN RUN GREEN, FINAL CI CALIBRATION PENDING
 BRANCH: feat/p001-repo-scaffold
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-blocked-on-external
 CAPACITY_OBSERVED_AT: 2026-08-15 live ruling
-STATUS: P001_LOCAL_GREEN_AWAITING_ORIGIN
+STATUS: P001_FINAL_ORIGIN_VERIFY
 
 ## Ground-truth state
 
@@ -27,10 +27,11 @@ STATUS: P001_LOCAL_GREEN_AWAITING_ORIGIN
 
 ## Next action
 
-1. Review and commit the complete P-001 diff on `feat/p001-repo-scaffold`.
-2. Push the branch and require the full D6 workflow to complete green on origin.
-3. Run the explicit adversary pass, fix and re-verify any Critical, then re-check D17
-   and D11 at merge time.
+1. Verify the amended, single-trigger D6 workflow and exact-version tool caches on
+   origin.
+2. Run the final explicit adversary pass over the complete diff and fix/re-verify any
+   Critical.
+3. Re-check D17, D11, repository privacy, and remote identity at merge time.
 
 No frontend URL may be inferred for P-008, and no Al- or Sarah-owned TBD may be
 filled.

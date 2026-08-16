@@ -1,6 +1,6 @@
 # Cycle 1 — P-001 Builder Report
 
-**Status:** IN PROGRESS — BUILD COMPLETE, ORIGIN VERIFICATION PENDING
+**Status:** IN PROGRESS — FIRST ORIGIN RUN GREEN, FINAL CI CALIBRATION PENDING
 **Date:** 2026-08-15
 **Packet:** P-001 — repository and CI scaffold
 **Lane:** AUTO
@@ -121,13 +121,35 @@ Implemented the predicted P-001 surface without entering protocol semantics:
 4. Pre-commit review found the same ambiguity in future active phase handlers. Those
    handlers now run in a fresh `pwsh` process, so the dispatcher's exit-code check is
    tied to that handler process rather than inherited shell state.
+5. The first origin execution exposed that both `push` on `feat/**` and
+   `pull_request` launched the same serial D6 pipeline for one commit. The feature-push
+   trigger was removed; feature work now runs once through the PR event, while pushes
+   to `main` remain covered.
+6. The first origin PR pipeline completed successfully but took about 19 minutes
+   because cargo-deny, cargo-audit, and cargo-geiger were compiled from source on every
+   cold job. Exact-version binaries are now cached under tool-and-Rust-specific keys
+   using official `actions/cache` v6.1.0 pinned to commit
+   `55cc8345863c7cc4c66a329aec7e433d2d1c52a9`. Cache misses still install each exact
+   version with Cargo's locked dependency graph; cache hits skip only that repeated
+   installation step.
 
 None of these corrections expanded the predicted file surface or entered a
 consensus-semantic area.
 
 ## 3. VERIFY
 
-Pending.
+The first complete origin PR pipeline passed all eleven serial/blocking jobs for
+branch commit `ac7cf776705a6bb41fa9b30892bb75c0db3eb4ee`.
+
+- Run: <https://github.com/Quigles1337/COINjecture3.0/actions/runs/31919794372>
+- Event/result: `pull_request` / `success`
+- GitHub-observed interval: 2026-08-16 01:32:13Z–01:51:17Z
+- Phase-gate logs explicitly reported `STATUS=NOT_YET_ADMITTED` and the owning packet
+  or phase; they also stated that no named test was claimed to have run.
+
+The run calibrated two CI-process findings described in BUILD deviations 5–6. Final
+verification remains pending on the amended workflow; the earlier green run is not
+being reused as evidence for the changed branch head.
 
 ## 4. ADVERSARY PASS
 
@@ -161,24 +183,27 @@ Pending.
   queried during BUILD.
 - Local formatting, clippy, cargo-deny, cargo-audit, source policy, per-package Geiger,
   workspace tests, explicit phase gates, and locked build completed successfully.
-  Evidence: this session's command output; origin CI remains the required packet
-  done-condition and is not yet claimed.
+  Evidence: this session's command output.
 - Geiger reported `UNSAFE_COUNT=0` and `FORBIDS_UNSAFE=true` for each of the ten
   workspace packages.
   Evidence: `scripts/ci/verify-geiger.ps1` output retained in this session.
+- The complete initial origin pipeline succeeded for the first P-001 build commit.
+  Evidence: <https://github.com/Quigles1337/COINjecture3.0/actions/runs/31919794372>.
+- `actions/cache` v6.1.0 resolves to commit
+  `55cc8345863c7cc4c66a329aec7e433d2d1c52a9`.
+  Evidence: GitHub's `actions/cache` release and Git-ref APIs queried on 2026-08-15.
 
 ## ASSUMED
 
-- GitHub-hosted Ubuntu runners can install the pinned Rust cargo tools selected during
-  BUILD. This is safe to test rather than assume as fact; origin CI is the falsifier.
 - Phase-later D6 gates may report an explicit `NOT YET ADMITTED` state only when the
   owning packet is named and the gate becomes fail-closed once its activation marker
   is committed. This preserves honest claims while P-001 remains non-semantic.
 
 ## UNKNOWN
 
-- Whether the complete GitHub-hosted D6 workflow is green. Resolve by pushing this
-  branch and reading the Actions run and every job result from GitHub.
+- Whether the amended workflow restores and executes the pinned cached binaries
+  correctly on a subsequent origin run. Resolve by pushing this branch and reading the
+  Actions run, cache steps, and every job result from GitHub.
 - Whether repository-plan permissions allow applying branch protection through the
   API. P-001 requires a documented configuration; actual application will be reported
   separately and will not be claimed unless read back from GitHub.

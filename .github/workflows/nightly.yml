@@ -22,7 +22,14 @@ jobs:
         run: rustup show active-toolchain
       - name: Report lockfile drift without writing it
         run: cargo update --dry-run --verbose
+      - name: Restore pinned cargo-audit binary
+        id: cache-cargo-audit
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cargo/bin/cargo-audit
+          key: ${{ runner.os }}-cargo-audit-0.22.2-rust-1.97.1
       - name: Install cargo-audit
+        if: steps.cache-cargo-audit.outputs.cache-hit != 'true'
         run: cargo install cargo-audit --version 0.22.2 --locked
       - name: Audit current lockfile
         run: cargo audit --deny warnings
