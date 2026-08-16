@@ -952,9 +952,11 @@ was copied byte-for-byte from Temp to
 Measured scan usage was 173,445 total tokens, including 4,149,423 input tokens,
 3,991,040 cached input tokens, and 15,062 output tokens; usage coverage was complete.
 
-Hosted D6 is deliberately not claimed in this pre-push evidence commit. The exact
-pushed closeout head and its run URL will be attached to PR #9; a final evidence-only
-rollup, if needed, must itself pass exact-head D6 before handoff.
+Hosted D6 run `31965617214` passed all eleven jobs on exact content/evidence SHA
+`737d462e9ebf01bb9b162ee55bbc39fe11b3db06`. This final evidence-only rollup records
+that immutable result and must itself pass exact-head D6 before handoff. The rollup
+SHA/run URL is attached directly to PR #9 after success, with no post-run repository
+commit that could invalidate the exact-head claim.
 
 ### 4. ADVERSARY — SECOND-REVIEW DELTA
 
@@ -1048,3 +1050,14 @@ no new semantic ambiguity and required no code change after the sealed scan.
 concrete conformance laws from the subset each abstract proof projects. This makes an
 unused law visible as a deliberate future obligation rather than allowing it to drift
 out of the spec.
+
+### 6. HOSTED CONTENT/EVIDENCE VERIFICATION
+
+- Exact SHA: `737d462e9ebf01bb9b162ee55bbc39fe11b3db06`.
+- D6 run: `31965617214`.
+- Result: PASS, all eleven jobs.
+- Lean job: PASS after a cold full build in 2m36s.
+- PR state at the boundary: open, ready-for-review, no auto-merge, no requested
+  reviewer, no assignee, and unmerged.
+- Final rollup rule: the commit containing this paragraph receives its own exact-head
+  D6. That run is recorded in the PR description rather than another commit.

@@ -1,17 +1,18 @@
 # COINjecture 3.0 Packet Queue
 
-**Queue status:** APPROVED WITH RATIFIED P-005 REVIEW TAIL; SECOND-REVIEW REMEDIATION
-LOCALLY COMPLETE / HOSTED D6 PENDING —
+**Queue status:** APPROVED WITH RATIFIED P-005 REVIEW TAIL; READY FOR AL SECOND REVIEW
+AFTER FINAL EVIDENCE-HEAD D6 —
 Al live rulings, 2026-08-15 through 2026-08-16. P-005 implementation is HUMAN-
 authorized under the exact constraints in `loop/LEDGER.md`; the §8/§11 ambiguity is
 resolved by bounded-above quality normalization. Al completed the first review without
 merging and returned F1/F2/F3 for remediation on the same branch. The remediation,
-local D6-equivalent pass, adversary pass, and sealed zero-finding exact-diff scan are
-complete. PR #9 remains ready-for-review and MUST NOT auto-merge; the pushed immutable
-closeout head still requires hosted exact-head D6 before the second-review handoff is
-claimed. P-006/P-007/P-009 remain permitted in parallel, but are not part of the P-005
-review head. P-008 remains blocked on the exact frontend URL. P-101 remains blocked on
-both Gate G0 and the merged, human-reviewed P-005.
+local D6-equivalent pass, adversary pass, sealed zero-finding exact-diff scan, and
+hosted content/evidence-head D6 are complete. PR #9 remains ready-for-review and MUST
+NOT auto-merge. This evidence rollup must itself pass exact-head hosted D6; that final
+run is attached to PR #9 without another repository commit. P-006/P-007/P-009 remain
+permitted in parallel, but are not part of the P-005 review head. P-008 remains blocked
+on the exact frontend URL. P-101 remains blocked on both Gate G0 and the merged,
+human-reviewed P-005.
 
 | Packet | Phase | Queue status | Blocking condition |
 |--------|-------|--------------|--------------------|
@@ -19,7 +20,7 @@ both Gate G0 and the merged, human-reviewed P-005.
 | P-002 | Phase 0 | COMPLETE — `7ecba896` | PR #3 and exact-merge-SHA D6 CI green |
 | P-003 | Phase 0 | COMPLETE — `e0056157` | PR #5 and exact-merge-SHA D6 CI green |
 | P-004 | Phase 0 | COMPLETE — `4644374f` | PR #7 and exact-merge-SHA D6 CI green |
-| P-005 | Phase 0 | HUMAN — SECOND-REVIEW REMEDIATION BUILT / HOSTED D6 PENDING | Exact-head D6, Al second review, and Al merge; no builder merge |
+| P-005 | Phase 0 | READY FOR AL SECOND REVIEW — HUMAN / UNMERGED | Final evidence-head D6, Al second review, and Al merge; no builder merge |
 | P-006 | Phase 0 | QUEUED — APPROVED / REVIEW-TAIL EXCEPTION | Future pickup after current live STOP and a fresh D11 check |
 | P-007 | Phase 0 | QUEUED — APPROVED / REVIEW-TAIL EXCEPTION | Future pickup after current live STOP and a fresh D11 check; its own tripwires remain armed |
 | P-008 | Phase 0 / Phase 4 seam input | BLOCKED | Exact public frontend repository URL supplied by Al; URL MUST NOT be guessed |

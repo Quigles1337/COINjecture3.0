@@ -2,12 +2,12 @@
 
 CYCLE: 7
 PHASE: Phase 0 — Foundations and spikes
-PACKET: P-005 — HUMAN SECOND-REVIEW REMEDIATION; HOSTED D6 PENDING
+PACKET: P-005 — HUMAN SECOND-REVIEW HANDOFF; UNMERGED
 BRANCH: feat/p005-lean-scaffold
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-blocked-on-external
-CAPACITY_OBSERVED_AT: 2026-08-16 P-005 second-review closeout preflight; CJ2 `CAPACITY_FLAG: none`, GATE-1/GATE-2 still awaiting
-STATUS: P005_SECOND_REVIEW_CLOSEOUT_PENDING_HOSTED_D6
+CAPACITY_OBSERVED_AT: 2026-08-16 P-005 final evidence-rollup boundary; no evidence that CJ2 GATE-1/GATE-2 cleared
+STATUS: P005_SECOND_REVIEW_HANDOFF_NO_MERGE
 
 ## Ground-truth state
 
@@ -108,7 +108,10 @@ STATUS: P005_SECOND_REVIEW_CLOSEOUT_PENDING_HOSTED_D6
   reportable findings; its deterministic report is durable at
   `loop/reports/P-005-second-review-security-diff-scan.md`, SHA-256
   `E1C78E9602266105A6739C7104637A384F4C280618C1C056805827F726C07B68`. Hosted
-  exact-head D6 is the remaining builder checkpoint before second-review handoff.
+  content/evidence-head D6 run `31965617214` passed all eleven jobs on exact SHA
+  `737d462e9ebf01bb9b162ee55bbc39fe11b3db06`. The final evidence-only rollup is
+  pushed after this record and must itself pass exact-head D6; its SHA/run evidence is
+  attached directly to PR #9 so no post-run commit invalidates the handoff head.
 - Al's 2026-08-16 governance injection ratified AMEND-1/2/3 and approved/unblocked
   P-009. `docs/AUDIT_TRACEABILITY.md` was verified at SHA-256
   `58C762568A63D8A4AFEACDEB1535AA9C930099F49118D2B45B9B483B8D560EFC` and preserved
@@ -147,9 +150,9 @@ STATUS: P005_SECOND_REVIEW_CLOSEOUT_PENDING_HOSTED_D6
 
 ## Next action
 
-1. Push the P-005 remediation/evidence closeout, require all eleven D6 jobs green on
-   the exact immutable PR head, and attach that SHA/run evidence to PR #9.
-2. Return PR #9 to Al ready-for-review for the mandatory second line-by-line review
+1. Require all eleven D6 jobs green on the exact final evidence-rollup PR head and
+   attach that SHA/run evidence to PR #9 without another repository commit.
+2. PR #9 is then returned to Al ready-for-review for the mandatory second line-by-line review
    against Protocol Spec §§7–8/§11. The builder MUST NOT merge it.
 3. Stop at the second-review boundary. The earlier out-of-order P-006/P-007/P-009
    review-tail authorization is not exercised in this turn; a future pickup must
