@@ -79,6 +79,19 @@ def checkedAdd (left right : UInt64) : Option UInt64 :=
   else
     none
 
+/-- A successful checked addition denotes exact mathematical addition. -/
+theorem checkedAdd_eq_some_toNat
+    {left right result : UInt64}
+    (h : checkedAdd left right = some result) :
+    result.toNat = left.toNat + right.toNat := by
+  unfold checkedAdd at h
+  dsimp only at h
+  split at h
+  · simp only [Option.some.injEq] at h
+    subst result
+    exact UInt64.toNat_ofNatLT
+  · contradiction
+
 /-- Exact checked subtraction: underflow is represented by `none`. -/
 def checkedSub (left right : UInt64) : Option UInt64 :=
   if _h : right.toNat ≤ left.toNat then
@@ -88,6 +101,19 @@ def checkedSub (left right : UInt64) : Option UInt64 :=
     some (UInt64.ofNatLT difference differenceFits)
   else
     none
+
+/-- A successful checked subtraction denotes exact mathematical subtraction. -/
+theorem checkedSub_eq_some_toNat
+    {left right result : UInt64}
+    (h : checkedSub left right = some result) :
+    result.toNat + right.toNat = left.toNat := by
+  unfold checkedSub at h
+  split at h
+  · simp only [Option.some.injEq] at h
+    subst result
+    rw [UInt64.toNat_ofNatLT]
+    exact Nat.sub_add_cancel ‹right.toNat ≤ left.toNat›
+  · contradiction
 
 /-- V1: bounded input plus success of the unresolved strict canonical decoder. -/
 def v1 (context : ValidationContext State) (input : Bytes) : Option Candidate :=
@@ -145,7 +171,7 @@ def validate
   if !v6 context state tx then throw Error.v6CheckedFunds
   if !v7 tx then throw Error.v7RecipientWidth
   if !v8 context tx then throw Error.v8NetworkIsolation
-  if !v9 tx then unreachable!
+  -- V9 is the definitional always-allow rule documented by the theorem below.
   pure tx
 
 /-- V9 is independent of sender/recipient equality. -/

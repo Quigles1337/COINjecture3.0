@@ -61,6 +61,27 @@ foreach ($file in $leanFiles) {
     }
 }
 
+$stfSource = Get-Content -LiteralPath (Join-Path $specRoot 'Spec\Stf.lean') -Raw
+$requiredConservationSurface = @(
+    'structure LawfulStateOps',
+    'totalBalances_setAccount',
+    'account_set_same',
+    'account_set_other',
+    'theorem applyTransaction_conserves',
+    'theorem applyBlockCandidate_conserves',
+    'theorem conservationTarget_holds'
+)
+foreach ($requiredDeclaration in $requiredConservationSurface) {
+    if (-not $stfSource.Contains($requiredDeclaration)) {
+        throw "Required F1 conservation declaration is missing: $requiredDeclaration"
+    }
+}
+
+$txSource = Get-Content -LiteralPath (Join-Path $specRoot 'Spec\Tx.lean') -Raw
+if ($txSource.Contains('unreachable!')) {
+    throw 'F2 regression: Tx.validate retains a panic-capable unreachable! path.'
+}
+
 $tempArtifact = Join-Path ([IO.Path]::GetTempPath()) "cj3-p005-vectors-$([Guid]::NewGuid().ToString('N')).json"
 try {
     Push-Location $specRoot
