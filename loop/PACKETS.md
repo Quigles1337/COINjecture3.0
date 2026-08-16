@@ -3,12 +3,13 @@
 **Queue status:** APPROVED WITH RATIFIED P-005 REVIEW TAIL; SI-004 MODEL 4 RATIFIED —
 Al live rulings, 2026-08-15 through 2026-08-16. P-005 implementation is HUMAN-
 authorized under the exact constraints in `loop/LEDGER.md`; the §8/§11 ambiguity is
-resolved by bounded-above quality normalization. P-005 is locally builder-complete and
-PR #9 remains draft until exact-head hosted D6 succeeds. It MUST NOT auto-merge. The
-out-of-order P-006/P-007/P-009 exception activates only while a completed PR #9 awaits
-Al's review, so it is not active until that hosted verification and readiness change.
-P-008 remains blocked on the exact frontend URL. P-101
-remains blocked on both Gate G0 and the merged, human-reviewed P-005.
+resolved by bounded-above quality normalization. P-005 is builder-complete, its hosted
+content/report head is green, and PR #9 is handed to Al ready-for-review. It MUST NOT
+auto-merge. Although the earlier out-of-order P-006/P-007/P-009 review-tail exception
+exists while PR #9 awaits Al, Al's latest live P-005 instruction says STOP for review,
+so no later packet is picked up in this turn. P-008 remains blocked on the exact
+frontend URL. P-101 remains blocked on both Gate G0 and the merged, human-reviewed
+P-005.
 
 | Packet | Phase | Queue status | Blocking condition |
 |--------|-------|--------------|--------------------|
@@ -16,11 +17,11 @@ remains blocked on both Gate G0 and the merged, human-reviewed P-005.
 | P-002 | Phase 0 | COMPLETE — `7ecba896` | PR #3 and exact-merge-SHA D6 CI green |
 | P-003 | Phase 0 | COMPLETE — `e0056157` | PR #5 and exact-merge-SHA D6 CI green |
 | P-004 | Phase 0 | COMPLETE — `4644374f` | PR #7 and exact-merge-SHA D6 CI green |
-| P-005 | Phase 0 | VERIFYING — HUMAN / LOCAL COMPLETE | Exact-head hosted D6; mark PR #9 ready; no builder merge |
-| P-006 | Phase 0 | QUEUED — APPROVED / REVIEW-TAIL EXCEPTION | P-005 PR #9 ready-for-review and D11 re-check; not active during P-005 implementation |
-| P-007 | Phase 0 | QUEUED — APPROVED / REVIEW-TAIL EXCEPTION | P-005 PR #9 ready-for-review and D11 re-check; not active during P-005 implementation; its own tripwires remain armed |
+| P-005 | Phase 0 | READY FOR AL REVIEW — HUMAN / BUILDER COMPLETE | Al line-by-line review and merge; no builder merge |
+| P-006 | Phase 0 | QUEUED — APPROVED / REVIEW-TAIL EXCEPTION | Future pickup after current live STOP and a fresh D11 check |
+| P-007 | Phase 0 | QUEUED — APPROVED / REVIEW-TAIL EXCEPTION | Future pickup after current live STOP and a fresh D11 check; its own tripwires remain armed |
 | P-008 | Phase 0 / Phase 4 seam input | BLOCKED | Exact public frontend repository URL supplied by Al; URL MUST NOT be guessed |
-| P-009 | Phase 0 / audit traceability | QUEUED — APPROVED / UNBLOCKED / INTERPRETATION AUTHORIZED | Source evidence copied durably; review-tail exception is not active until PR #9 is ready; D11 re-check required |
+| P-009 | Phase 0 / audit traceability | QUEUED — APPROVED / UNBLOCKED / INTERPRETATION AUTHORIZED | Source evidence copied durably; future pickup after current live STOP and a fresh D11 check |
 | P-010 | Phase 0 / documentation | COMPLETE — `1e986cb2` | Feature PR #10 and closeout PR #11; both exact-merge-SHA D6 runs green |
 | P-101 | Phase 1 head | BLOCKED | Gate G0 **and** merged, human-reviewed P-005 |
 

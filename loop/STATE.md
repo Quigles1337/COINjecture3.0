@@ -2,12 +2,12 @@
 
 CYCLE: 7
 PHASE: Phase 0 — Foundations and spikes
-PACKET: P-005 — HUMAN REVIEW TAIL; LOCAL BUILDER COMPLETE
+PACKET: P-005 — HUMAN REVIEW TAIL; BUILDER COMPLETE
 BRANCH: feat/p005-lean-scaffold
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-blocked-on-external
 CAPACITY_OBSERVED_AT: 2026-08-16 P-005 hosted-D6 boundary; CJ2 `CAPACITY_FLAG: none`, GATE-1/GATE-2 still awaiting
-STATUS: P005_HUMAN_LOCAL_COMPLETE_EXACT_HEAD_D6_PENDING
+STATUS: P005_HUMAN_REVIEW_HANDOFF_NO_MERGE
 
 ## Ground-truth state
 
@@ -75,18 +75,20 @@ STATUS: P005_HUMAN_LOCAL_COMPLETE_EXACT_HEAD_D6_PENDING
   build. It was stopped before any commit, push, PR mutation, hosted CI, or queue
   advance. Its partial Tx/STF candidates are preserved in PR #9's checkpoint and are
   not represented as normative or fully verified.
-- PR #9 remains draft while the Model 4 implementation, full Lake build, deterministic
-  symbolic JSON artifact, adversary pass, and active Lean D6 gate are completed. It
-  must then be marked ready-for-review and left unmerged for Al.
-- P-005's Model 4 builder surface is now locally complete at implementation commit
+- PR #9 was kept draft while the Model 4 implementation, full Lake build,
+  deterministic symbolic JSON artifact, adversary pass, and active Lean D6 gate were
+  completed. Its authorized builder transition is ready-for-review, never merge.
+- P-005's Model 4 builder surface is complete at implementation commit
   `388ede835e8c9e668f5f0126918193ff59f589cd`. The complete Lean 4.33.0 project builds;
   27 symbolic/non-normative vectors regenerate exactly at SHA-256
   `30CABF852D623549CD5293628D5B3899BE805D543B537CB223F1B6FAB5C324E1`; the STF proves
   `reward ≤ subsidy` from Model 4 and uses that exact reward for credit/conservation;
   the full local D6-equivalent and A1–A11 adversary passes are green. The sealed
   exact-range security diff found zero reportable findings and is preserved durably at
-  `loop/reports/P-005-security-diff-scan.md`. Hosted exact-head D6 remains pending, so
-  PR #9 is still draft and no hosted-green claim is made.
+  `loop/reports/P-005-security-diff-scan.md`. Exact implementation/report head
+  `f494a605825a2d2dcd15d8babb71193abccae18f` passed all eleven hosted D6 jobs in run
+  `31963016862`. The evidence-only closeout head's check rollup is attached to PR #9;
+  the PR is handed to Al ready-for-review and remains unmerged with no Sarah contact.
 - Al's 2026-08-16 governance injection ratified AMEND-1/2/3 and approved/unblocked
   P-009. `docs/AUDIT_TRACEABILITY.md` was verified at SHA-256
   `58C762568A63D8A4AFEACDEB1535AA9C930099F49118D2B45B9B483B8D560EFC` and preserved
@@ -125,15 +127,13 @@ STATUS: P005_HUMAN_LOCAL_COMPLETE_EXACT_HEAD_D6_PENDING
 
 ## Next action
 
-1. Push the locally complete P-005 closeout head and obtain exact-head hosted D6 from
-   the CI system. If red, diagnose, report, and leave PR #9 draft.
-2. Only after exact-head D6 is green, mark PR #9 ready-for-review and leave it unmerged
-   for Al's mandatory line-by-line review.
-3. Only while completed PR #9 awaits Al's line-by-line review does the out-of-order
-   P-006/P-007/P-009 exception activate. It is not active during this implementation
-   tail.
-   P-010 is complete; P-008 remains blocked on the exact frontend URL, and P-101
-   remains blocked on Gate G0 plus Al's P-005 merge.
+1. Al performs the mandatory line-by-line review of PR #9 against Protocol Spec
+   §§7–8/§11 and either requests changes or merges it. The builder MUST NOT merge it.
+2. Stop at this review boundary under Al's latest live instruction. The earlier
+   out-of-order P-006/P-007/P-009 review-tail authorization is not exercised in this
+   turn; a future pickup must re-check D11 first.
+3. P-010 is complete; P-008 remains blocked on the exact frontend URL, and P-101
+   remains blocked on Gate G0 plus Al's human-reviewed P-005 merge.
 
 No frontend URL may be inferred for P-008, and no Al- or Sarah-owned TBD may be
 filled.

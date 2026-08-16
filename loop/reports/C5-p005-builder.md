@@ -1,6 +1,6 @@
 # Cycle 5 — P-005 Builder Report
 
-**Status:** BUILDER COMPLETE LOCALLY — EXACT-HEAD HOSTED D6 PENDING; DO NOT MERGE
+**Status:** BUILDER COMPLETE — REVIEW HANDOFF; DO NOT MERGE
 **Date:** 2026-08-16
 **Packet:** P-005 — Lean scaffold
 **Lane:** HUMAN
@@ -570,8 +570,9 @@ both shared-worktree collision and issuance-identity conflicts earlier.
 This section supersedes the resumed-stop execution status without erasing the earlier
 tripwire history. The SI-004 governance checkpoint is commit
 `316584a42501f7ed64135490e1a1a070a7a863eb`; the implementation checkpoint is commit
-`388ede835e8c9e668f5f0126918193ff59f589cd`. Hosted exact-head D6 is the remaining
-builder verification step before PR #9 may leave draft status.
+`388ede835e8c9e668f5f0126918193ff59f589cd`. The complete implementation/report head
+`f494a605825a2d2dcd15d8babb71193abccae18f` passed hosted D6 run `31963016862` before
+this evidence-only closeout.
 
 ### 2. BUILD — COMPLETE
 
@@ -612,7 +613,7 @@ builder verification step before PR #9 may leave draft status.
   implementation, production dependency, owner-controlled value, Sarah attribution,
   reviewer request, or merge behavior changed.
 
-### 3. VERIFY — LOCAL COMPLETE; HOSTED EXACT HEAD PENDING
+### 3. VERIFY — LOCAL AND HOSTED COMPLETE
 
 Local evidence from the canonical checkout at implementation commit `388ede8` plus the
 durable report-only closeout working tree:
@@ -639,9 +640,15 @@ durable report-only closeout working tree:
   zero `f32`/`f64`; all three `Spec/*.lean` files carry the required header and contain
   zero proof placeholders; all 27 vector names are unique and non-normative.
 
-The full D6 workflow must still pass on origin at the final PR head. Until that run is
-read back from the CI system, this report makes no hosted-green or ready-for-review
-claim.
+Hosted D6 run
+[31963016862](https://github.com/Quigles1337/COINjecture3.0/actions/runs/31963016862)
+completed successfully on exact SHA
+`f494a605825a2d2dcd15d8babb71193abccae18f`; all eleven jobs passed. In particular,
+`lean-conformance` installed the pinned Lean toolchain and executed the active handler,
+while the three later phase gates remained explicit deferrals. This evidence-only
+closeout changes loop state, the batch line, and run pointers only. Its own exact-head
+rollup is attached to PR #9 before the ready-for-review transition rather than creating
+an infinite series of commits that each tries to embed its own future run ID.
 
 ### 4. ADVERSARY PASS — COMPLETE
 
@@ -700,7 +707,7 @@ injection, external notification, and merge automation.
 | A8 | PASS: the Lean draft and symbolic vectors precede any Rust kernel consumer; CI explicitly refuses to call this P-101 conformance. |
 | A9 | PASS: no Rust dependency/FFI/unsafe surface changed; the Lake manifest has no package dependencies and the workflow action is commit-pinned. |
 | A10 | PASS: draft/non-normative/P-101-not-admitted labels are mechanical, and no hardness, normative-ratification, human-review, or conformance claim is inflated. |
-| A11 | PASS locally/pending hosted: build, vector hash, scans, and durable security report are named above. Hosted exact-head green remains unclaimed until its run URL is read back. |
+| A11 | PASS: build, vector hash, scans, durable security report, exact content/report SHA, and hosted run 31963016862 are named above. The final evidence-only head rollup is attached to PR #9 before readiness. |
 
 No Critical remains. The two contained abstraction boundaries are intentional packet
 seams, are visible to Al's mandatory line-by-line review, and do not authorize P-101.
@@ -723,7 +730,7 @@ seams, are visible to Al's mandatory line-by-line review, and do not authorize P
   were audit-seam details—a modular-looking constructor and a toolchain check performed
   one directory too high.
 
-#### Final VERIFIED / ASSUMED / UNKNOWN ledger before hosted D6
+#### Final VERIFIED / ASSUMED / UNKNOWN ledger
 
 **VERIFIED**
 
@@ -736,7 +743,10 @@ seams, are visible to Al's mandatory line-by-line review, and do not authorize P
   are explicitly non-normative abstract interfaces.
 - The durable exact-range security report records zero reportable findings.
 - PR #9 is still draft, has no requested reviewer or auto-merge request, and is
-  unmerged.
+  unmerged at the evidence-commit boundary. It is changed to ready-for-review only
+  after the evidence-only head's exact hosted rollup succeeds.
+- Hosted D6 run `31963016862` passed all eleven jobs on exact SHA
+  `f494a605825a2d2dcd15d8babb71193abccae18f`.
 
 **ASSUMED**
 
@@ -751,8 +761,6 @@ seams, are visible to Al's mandatory line-by-line review, and do not authorize P
   Resolution: P-007/P-101 under G0 and the merged human-reviewed P-005.
 - Whether Al will ratify the draft Lean representation line by line. Resolution: the
   mandatory PR #9 review and Al's merge.
-- Hosted exact-head D6 status. Resolution: push this closeout head and read the run
-  directly from GitHub Actions before changing PR #9 out of draft.
 
 **One process improvement for the next packet:** make every active toolchain gate run
 its version check from the directory containing that packet's committed toolchain file,
