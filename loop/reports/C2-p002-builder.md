@@ -1,6 +1,6 @@
 # Cycle 2 — P-002 Builder Report
 
-**Status:** BUILD COMPLETE — ORIGIN CI PENDING
+**Status:** ORIGIN CI GREEN — FINAL EVIDENCE HEAD PENDING
 **Date:** 2026-08-15
 **Packet:** P-002 — beacon spike
 **Lane:** AUTO
@@ -314,8 +314,22 @@ After the adversary wording/configuration hardening, the complete D6 sequence an
 the positive/negative testnet-tag matrix were run again. They ended in
 `POST_ADVERSARY_LOCAL_D6=PASS` and `POST_ADVERSARY_TESTNET_GATE=PASS`.
 
-Origin verification is pending the intentional feature commit, draft PR, and exact-
-head D6 run.
+### First exact-head origin run
+
+The complete serial D6 workflow passed all eleven jobs for the intentional feature
+commit:
+
+- Run: <https://github.com/Quigles1337/COINjecture3.0/actions/runs/31923287404>
+- Exact head: `8b1c8d601629a499b47ae4ab9e904dd0949fcd65`
+- Event/result: `pull_request` / `success`
+- GitHub-observed interval: 2026-08-16 03:02:29Z–03:05:11Z
+- The cargo-deny, cargo-audit, and cargo-geiger restore steps all succeeded; all three
+  corresponding install steps were skipped on cache hits.
+
+The jobs were format, Clippy, dependency policy, dependency audit, unsafe audit,
+unit/property tests, the four explicit phase gates, and locked build. This run proves
+the implementation commit on origin. Because adding this evidence to the report
+changes the PR head, a second complete exact-head run is required before merge.
 
 ## 4. ADVERSARY PASS
 
@@ -449,6 +463,10 @@ Pending.
   or `Cargo.lock`.
   Evidence: local command output ending in `ADVERSARY_MECHANICAL_SWEEP=PASS` and Git
   status/diff inspection.
+- The intentional feature commit passed all eleven origin D6 jobs with all three
+  audit-tool install steps skipped on verified cache hits.
+  Evidence: <https://github.com/Quigles1337/COINjecture3.0/actions/runs/31923287404>
+  on exact head `8b1c8d601629a499b47ae4ab9e904dd0949fcd65`.
 
 ## ASSUMED
 
