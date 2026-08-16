@@ -1,21 +1,22 @@
 # COINjecture 3.0 Loop State
 
-CYCLE: 6
+CYCLE: 7
 PHASE: Phase 0 — Foundations and spikes
-PACKET: P-010 — COMPLETE; P-005 HUMAN STOP REMAINS
-BRANCH: feat/p010-closeout
+PACKET: P-005 — HUMAN AUTHORIZED; GOVERNANCE OVERLAY IN FLIGHT
+BRANCH: docs/p005-human-authorization
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-blocked-on-external
-CAPACITY_OBSERVED_AT: 2026-08-16 P-010 merge guard and closeout; CJ2 `CAPACITY_FLAG: none`, GATE-1/GATE-2 still awaiting
-STATUS: P010_COMPLETE_P005_HUMAN_STOP_AWAITING_AL
+CAPACITY_OBSERVED_AT: 2026-08-16 P-005 authorization boundary; CJ2 `CAPACITY_FLAG: none`, GATE-1/GATE-2 still awaiting
+STATUS: P005_HUMAN_AUTHORIZED_GOVERNANCE_OVERLAY
 
 ## Ground-truth state
 
 - Al ratified D1, D2, D14, D15, D16, and D17 in the 2026-08-15 live ruling; D9 and
   D10 were reconfirmed.
 - Continuous-batch autonomous execution is authorized for P-001 through P-007, P-009,
-  and P-010 subject to every tripwire and packet-boundary capacity re-check. P-010's
-  live next-boundary instruction did not complete P-005 or unblock its dependents.
+  and P-010 subject to every tripwire and packet-boundary capacity re-check. The
+  2026-08-16 P-005 HUMAN-lane ruling now authorizes the Lean/vector implementation
+  inside its exact symbolic/SI boundary and adds a mandatory non-merge review tail.
 - P-001 merged through PR #1 at
   `8367de08bb3d3766bf49b9970eb3109fd1af4389`; exact-head PR CI and exact-merge-SHA
   mainline CI both passed all eleven jobs. Its ten crates remain empty boundaries with
@@ -47,11 +48,18 @@ STATUS: P010_COMPLETE_P005_HUMAN_STOP_AWAITING_AL
   exact-merge-SHA mainline run `31954588282` both passed all eleven D6 jobs. The
   inherited legacy-only `bincode 1.3.3` maintenance warning remains explicitly
   quarantined outside CJ3's workspace/runtime.
-- P-005 classified the whole Lean/vector packet HUMAN before implementation. Draft
-  PR #9 contains only its FRAME/STOP checkpoint; no Lean rule, vector, CI admission,
-  Rust state machine, normative semantic choice, or owned TBD was added. Checkpoint
-  run `31955875423` passed all eleven D6 jobs, but the branch remains unmerged and
-  requires new live HUMAN authority to resume.
+- P-005 originally classified the whole Lean/vector packet HUMAN before
+  implementation. Draft PR #9 contains only its FRAME/STOP checkpoint; no Lean rule,
+  vector, CI admission, Rust state machine, normative semantic choice, or owned TBD
+  was added. Checkpoint run `31955875423` passed all eleven D6 jobs. Al's 2026-08-16
+  ruling now authorizes implementation strictly from Protocol Spec §§7–8 and §14,
+  keeps every owned/G0 TBD symbolic or absent, keeps SI-001/2/3 abstract and
+  unresolved, and makes any new semantic ambiguity a fresh stop.
+- P-005's builder tail is now explicit: complete the adversary pass and exact-head CI,
+  mark PR #9 ready-for-review, and do not merge it. Al's line-by-line review and merge
+  are the packet done-condition. P-101 remains blocked on both Gate G0 and that merged,
+  human-reviewed P-005. While review is pending, P-006, P-007, P-009, and P-010 (if
+  present) may execute out of strict order under their own tripwires.
 - Al's 2026-08-16 governance injection ratified AMEND-1/2/3 and approved/unblocked
   P-009. `docs/AUDIT_TRACEABILITY.md` was verified at SHA-256
   `58C762568A63D8A4AFEACDEB1535AA9C930099F49118D2B45B9B483B8D560EFC` and preserved
@@ -68,6 +76,9 @@ STATUS: P010_COMPLETE_P005_HUMAN_STOP_AWAITING_AL
   `3b43cca42e14e53412747fb2b559d6fc29c4ac9d`; final PR-head run `31957723975` and
   exact-merge-SHA mainline run `31957922841` both passed all eleven D6 jobs. Its
   adversary pass found and fixed one broken rendered heading fragment before merge.
+- P-010's docs-only closeout merged through PR #11 at
+  `1e986cb22956f2970e08281e18a11282c812ed9e`; exact-head run `31958216281` and
+  exact-merge-SHA mainline run `31958393946` both passed all eleven D6 jobs.
 - The standing README drift-control rule is RATIFIED: every G0–G4 closeout refreshes
   the README status block and roadmap marker in the same closeout.
 - `loop/reports/SPEC-ISSUES.md` keeps three G0/HUMAN interpretation issues open:
@@ -87,13 +98,13 @@ STATUS: P010_COMPLETE_P005_HUMAN_STOP_AWAITING_AL
 
 ## Next action
 
-1. Continuous-batch returns to P-005's HUMAN stop. Al must supply human-approved
-   Lean/vector content or explicitly authorize the builder to implement
-   `Spec/Tx.lean`, `Spec/Stf.lean`, and the JSON vector definitions while keeping every
-   owned TBD unfilled or explicitly defining the permitted symbolic/concrete boundary.
-2. If P-005 receives that live authority, resume draft PR #9 and complete the full
-   six-move protocol before merge. Only then may the ordered queue advance to P-006,
-   P-007, and P-009; P-008 remains blocked on the exact frontend URL.
+1. Merge this governance-only overlay after exact-head and exact-merge-SHA D6 evidence.
+2. Resume draft PR #9, re-FRAME against the ratified authorization, and implement the
+   Lean/vector packet. Finish its adversary pass and exact-head D6, mark it
+   ready-for-review, then leave it unmerged for Al.
+3. While PR #9 awaits review, continue P-006, P-007, and P-009 out of strict order as
+   individually safe. P-010 is already complete; P-008 remains blocked on the exact
+   frontend URL, and P-101 remains blocked on Gate G0 plus Al's P-005 merge.
 
 No frontend URL may be inferred for P-008, and no Al- or Sarah-owned TBD may be
 filled.
