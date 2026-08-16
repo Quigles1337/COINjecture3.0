@@ -1250,3 +1250,15 @@ exact-merge-SHA D6 result do not exist yet. They are the remaining closeout evid
 **Process improvement:** whenever a status transition is ratified, search the whole
 packet surface for duplicated lifecycle language before narrowing the CI guard; this
 prevents an accurately gated core from leaving stale claims in its entrypoints.
+
+### Scope-tripwire re-FRAME — hosted CI label
+
+D6 run `31967505857` on ratification commit
+`06df7e2d91f922d8d8559a43d2245b498a99a9dc` exposed a stale workflow display name:
+`Install pinned Lean toolchain for P-005 draft spec`. The step executed the correct
+ratified handler, and every completed job was green, but retaining the word `draft`
+would contradict the just-ratified lifecycle claim. The predicted surface expands once
+more to `.github/workflows/ci.yml` for that display-name replacement only. No trigger,
+permission, action, command, dependency, or gate behavior may change. The run on
+`06df7e2d...` is therefore superseded as merge evidence; a fresh full D6 run on the
+new immutable head remains mandatory.
