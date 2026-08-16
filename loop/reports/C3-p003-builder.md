@@ -1,6 +1,6 @@
 # Cycle 3 — P-003 Builder Report
 
-**Status:** FRAME COMPLETE — BUILD NOT STARTED
+**Status:** BUILD COMPLETE — ORIGIN VERIFY PENDING
 **Date:** 2026-08-15
 **Packet:** P-003 — SIS genesis class
 **Lane:** AUTO
@@ -183,6 +183,109 @@ approximately `2^47` operations. The failures were not retried unchanged and did
 reach the REPETITION stop condition.
 
 Research and implementation continue below.
+
+### Tripwire log — interpretation and scope re-frame 2
+
+Protocol Spec §5.2 refers to `s_max(P-4)`, but the P-4 tuple does not contain that
+quantity and no definition exists elsewhere. Under the same INTERPRETATION rule,
+P-003 logged `SI-002` and uses only the stricter consequence already implied by the
+global norm: reject a coefficient when `s_i^2 > beta_squared`, before accumulation.
+This changes no valid solution set and adds no wire representation. P-007/G0 still
+owns the coefficient width, strict decoder, and wording repair.
+
+### Research and parameter result
+
+The selected candidate *family*, rather than an isolated hand-tuned tuple, is:
+
+```text
+q(n) = first prime strictly greater than n^2
+m(n) = 2 n ceil(log2(q(n)))
+beta_squared(n) = m(n)
+```
+
+This makes `2^m > q^n`; by pigeonhole, two binary vectors share a syndrome and their
+nonzero difference is a `{−1,0,1}^m` kernel vector with squared norm at most
+`m = beta_squared`. It also has
+`q / (beta sqrt(n ln n)) = Theta(n / ln n)`, so the family—not an arbitrary finite
+tuple—follows the growth direction required by the cited Micciancio-Regev/GPV SIS
+reductions. The concrete points remain conditional security candidates, not proofs.
+
+The pinned estimator sweep is in `bench/p003-sis/estimator-results.jsonl`. The default
+and rough/ADPS16 models disagree materially. At the largest sampled point,
+`(128, 3840, 16411, 3840)`, they report log2 operation estimates 165.520 and 143.956,
+respectively. That point is the first *sampled* candidate above an explicitly assumed
+128-bit threshold under both models. Neither the threshold nor the estimate is called
+a ratified CJ3 security level.
+
+### Implementation result
+
+- `cj3-classes` now exposes a static `ProblemClass` contract, fixed-point `Quality`,
+  structured invalid reasons, a validated SIS tuple, deterministic column-major
+  SHAKE-256 expansion with rejection sampling, a decoded solution type with no codec,
+  and a safe integer checker. The checker validates exact length, nonzero, the derived
+  per-coefficient bound, global squared norm, every modular row, and quality with
+  checked/u128 intermediates.
+- `Sis<const ID: u16>` requires the production registry identifier to be bound
+  explicitly. No numeric genesis ID appears because no authority source assigns one.
+- The independent Python `hashlib` vector is preserved at
+  `bench/p003-sis/SHAKE-VECTOR.md` and locked by a Rust unit test.
+- `cj3-solver-sis` is a standalone binary. It constructs a full-rank integer basis for
+  the modular kernel, applies exact integral LLL, converts only coefficients that fit
+  the decoded type, and rechecks a candidate before standard output. Its space-
+  separated text is labeled benchmark-only/noncanonical. No trusted crate depends on
+  the solver.
+- `sha3 = 0.10.9` is exact-pinned with default features disabled. The numerically newer
+  `sha3` 0.12.0 package no longer exported `Shake256` in the inspected API, so the
+  signed RustCrypto 0.10.9 SHAKE-capable release was selected rather than pretending a
+  fixed-output SHA-3 hash was the required XOF.
+- `puremp = 0.2.4` is confined to the solver with default features disabled and only
+  `std` plus `lattice` enabled. That selects its pure-Rust exact integer/rational LLL;
+  float, FFI, CLI, and unrelated algorithms are not enabled. A pre-verification
+  `cargo deny` run correctly rejected the initial versionless path dependency on
+  `cj3-classes`; adding its exact workspace version corrected that single cause.
+
+### Reproducible measurements
+
+The environment is recorded at `bench/p003-sis/ENVIRONMENT.md`; runners and raw JSON
+Lines are in the same directory.
+
+- Exact-LLL solver, release profile: `n=8` solved/rechecked 5/5 with 0.244 s median;
+  `n=12` solved/rechecked 5/5 with 1.184 s median; `n=16` solved/rechecked 3/3 with
+  3.897 s median. At `n=24`, LLL completed in 19.752 s but returned no row within the
+  admitted bound. The negative result is preserved and is not interpreted as no
+  solution existing.
+- Full-path checker fixture, release profile, 200 samples per tuple: the provisional
+  `(128, 3840, 16411, 3840)` point measured 4.366 ms median, 5.589 ms p95, and
+  7.818 ms maximum on the named Ryzen host. The valid zero-matrix/unit-vector fixture
+  forces traversal of all matrix terms but is not a hardness-distributed instance.
+
+### P-3 and P-4 recommendations
+
+- **P-3:** provisional `VALIDATION_BUDGET = 15 ms` on the reference host recorded in
+  `bench/p003-sis/ENVIRONMENT.md`. This is 2.68× the measured p95 and 1.92× the
+  observed maximum for the largest candidate. G0 must ratify the hardware definition
+  and budget; this single-host sample is not a platform guarantee.
+- **P-4:** provisional minimum candidate
+  `(n, m, q, beta_squared) = (128, 3840, 16411, 3840)`, conditional on G0 accepting
+  the explicitly labeled 128-bit model threshold and estimator mapping. It guarantees
+  existence of a binary witness, excludes `q e_i`, clears both pinned estimator models
+  at that assumed threshold, and verifies within the proposed P-3 budget.
+- **Unresolved:** this is not a final cadence-compatible P-4. P-1 belongs to P-006,
+  and the bundled LLL demonstrator does not solve the candidate. P-006/G0 must connect
+  a reproducible solver envelope to the chosen cadence, revise the family without
+  losing its reduction/security properties, or reject the recommendation.
+
+### Provenance matrix
+
+| Claim or artifact | Primary/exact source | Mapping and falsification |
+|---|---|---|
+| Random modular matrices have a conditional worst-case-to-average-case lattice reduction lineage | Ajtai, ECCC TR96-007: <https://eccc.weizmann.ac.il/report/1996/007/>; Micciancio-Regev author copy and publication record: <https://cseweb.ucsd.edu/~daniele/papers/Gaussian.html> | Supports the reduction lineage only. `SI-001` falsifies any reading that the source worst-case problem or a concrete tuple is unconditionally hard. |
+| Modern polynomial-parameter SIS/ISIS reduction conditions and Gaussian sampling | Gentry-Peikert-Vaikuntanathan, ECCC TR07-133: <https://eccc.weizmann.ac.il/report/2007/133/> | The family is checked against the asymptotic growth conditions; finite ratios and estimator outputs are reported separately. A bounded ratio or trivial `beta >= q` would falsify the mapping. |
+| SHAKE-256 XOF semantics | NIST FIPS 202: <https://csrc.nist.gov/pubs/fips/202/final> | Protocol seed bytes feed SHAKE-256; 32-bit little-endian candidates use a rejection ceiling. `bench/p003-sis/SHAKE-VECTOR.md` cross-checks RustCrypto with Python `hashlib`; `u32::MAX` at q=17 falsifies modulo-only sampling. |
+| Rust SHAKE implementation | RustCrypto signed `sha3-v0.10.9` release: <https://github.com/RustCrypto/hashes/releases/tag/sha3-v0.10.9>; exact version in `Cargo.lock` | Default features are off. Determinism/rejection tests and full D6 supply-chain checks must pass; any vector mismatch or advisory fails the choice. |
+| Concrete attack estimates | `malb/lattice-estimator` commit `3e48ef421ec256afddb3e7d2249a77eab6e9ba12`: <https://github.com/malb/lattice-estimator/commit/3e48ef421ec256afddb3e7d2249a77eab6e9ba12>; source SHA-256 pinned by `run-estimator.ps1` | Inputs use Euclidean norm and `sqrt(beta_squared)`. Both default and rough models are retained. Model divergence, a newer attack, or a mapping correction can falsify the proposed floor. |
+| Exact external LLL implementation | `puremp` release 0.2.4 commit `1bc6985a977675339f84c9a88fdbddcc9966c7fe`: <https://github.com/KarpelesLab/puremp/commit/1bc6985a977675339f84c9a88fdbddcc9966c7fe>; exact lockfile entry | Only `std,lattice` features are enabled. Every output is rechecked. A checker rejection, dependency-policy failure, or trusted-crate dependency would falsify the boundary. |
+| Candidate and validation measurements | `bench/p003-sis/*-results.jsonl`, `ENVIRONMENT.md`, and the committed runners | Raw successes, failure, limits, hashes, build profile, sample count, statistics, and host are present. Reruns outside the margin or a target host over 15 ms falsify P-3. |
 
 ## 3. VERIFY
 

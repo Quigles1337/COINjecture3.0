@@ -31,3 +31,19 @@ may change normative specification text.
   Reductions based on Gaussian Measures* (SIAM J. Comput. 2007); C. Peikert,
   *A Decade of Lattice Cryptography* (FnT TCS 2016); pinned `malb/lattice-estimator`
   commit `3e48ef421ec256afddb3e7d2249a77eab6e9ba12` and its README/model docs.
+
+## SI-002 — SIS coefficient bound is referenced but not defined
+
+- **Discovered by:** P-003, 2026-08-15
+- **Status:** OPEN — G0/P-007 HUMAN
+- **Text:** `docs/PROTOCOL_SPEC.md` §5.2 requires every decoded coefficient to obey
+  `|s_i| <= s_max(P-4)`, but P-4 contains only `(n, m, q, beta_squared)` and no
+  definition of `s_max` appears elsewhere in the specification.
+- **Strict reading used by P-003:** before accumulating the global squared norm,
+  reject any coefficient whose square exceeds `beta_squared`. This is a necessary
+  consequence of the already normative global Euclidean bound and therefore does not
+  alter the valid-solution set or invent another parameter. Canonical coefficient
+  width and decoding remain absent from P-003.
+- **Resolution required:** P-007/G0 must define the canonical signed-integer width and
+  either define `s_max` explicitly or replace the check with the equivalent derived
+  per-coefficient guard. No consensus byte encoding is inferred here.
