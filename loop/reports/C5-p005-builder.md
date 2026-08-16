@@ -1,10 +1,115 @@
 # Cycle 5 — P-005 Builder Report
 
-**Status:** STOP — HUMAN LANE; CHECKPOINT D6 GREEN; IMPLEMENTATION NOT STARTED
+**Status:** HUMAN AUTHORIZED — IMPLEMENTATION RESUMED; MANDATORY REVIEW TAIL
 **Date:** 2026-08-16
 **Packet:** P-005 — Lean scaffold
 **Lane:** HUMAN
 **Branch:** `feat/p005-lean-scaffold`
+
+## RESUME RULING AND RE-FRAME — 2026-08-16
+
+This section supersedes the earlier STOP disposition without erasing it. Al's live
+`P-005 HUMAN-LANE AUTHORIZATION — RATIFIED, with review tail` ruling is preserved in
+`loop/LEDGER.md` on `main` at
+`8d9dbbfef8552e80c1e7e2e13c0d6815cded523e`. Its exact-merge-SHA D6 run
+`31958836168` passed all eleven jobs. That higher-authority ruling explicitly
+authorizes the builder to implement the HUMAN-lane Lean/vector content, subject to
+its symbolic/TBD/SI boundary and non-automatic merge rule.
+
+### Restated packet and done-condition
+
+P-005 will add a pinned Lake project, a draft Lean model of Protocol Spec §7 V1–V9,
+a draft §8 STF model and conservation theorem target, and a deterministic
+`lake exe vectors` exporter covering the §14 case list. The formal model is
+parameterized over unresolved byte-codec, cryptographic, address-derivation,
+economics, reward, and block-prevalidation interfaces; it does not instantiate an
+Al-owned, Sarah-owned, G0-controlled, or SI-controlled value.
+
+The builder portion is done only when the complete diff has passed local mechanical
+checks, an explicit adversary/A1–A11 pass, and all eleven hosted D6 jobs at the exact
+PR #9 head. PR #9 is then marked ready-for-review and left unmerged. Al's line-by-line
+review and merge—not a builder action—is the packet's ultimate done-condition and the
+necessary P-101 license alongside Gate G0.
+
+### Lane classification against D17
+
+**Classification remains HUMAN, now explicitly authorized.** The ruling does not
+convert formal semantics into AUTO work; it grants the builder authority for this
+specific HUMAN surface and dictates its review tail. The five merge conditions are
+therefore not used to auto-merge PR #9. They remain mandatory safety checks before the
+PR is handed to Al.
+
+- Queue authority and D11: PASS. P-005 is authorized, repository visibility remains
+  PRIVATE, and the current CJ2 operational state still reports `CAPACITY_FLAG: none`
+  with GATE-1/GATE-2 awaiting.
+- Semantic surface: HUMAN by definition. Scope is bounded to Protocol Spec §§7–8 and
+  §14 plus the minimum project/CI/bookkeeping machinery needed to build and verify it.
+- Formal/vector content: HUMAN by definition and covered by the live authorization.
+- Ratification/invention: no new ratification is permitted. Interfaces remain
+  abstract wherever prose, a TBD, G0, or SI-001/2/3 withholds a concrete choice.
+- Owned values: no Al-owned or Sarah-owned value is instantiated. Any executable
+  fixture is labeled `NON-NORMATIVE TEST FIXTURE` in both Lean and emitted JSON.
+
+### Known symbolic boundary (not new semantic rulings)
+
+- V1 canonical decode and `input_bytes` production remain behind an abstract codec
+  interface. Draft vectors use explicit symbolic input-byte expressions rather than
+  selecting a wire format. This is the pre-existing P-005 unknown recorded in the
+  original FRAME and is also guarded against the byte-level invention pattern in
+  SI-002/SI-003; those SIS-specific issues themselves remain wholly unresolved.
+- V2 verification, its signing preimage construction, V3 `addr(pubkey)`, and any
+  cryptographic byte operation are abstract interfaces. No hash/codec layout is
+  chosen through the formal model.
+- `TX_MAX_BYTES`, `FEE_MIN`, the block-prevalidation result, miner address, subsidy,
+  and reward application are inputs or abstract operations. No P-8/P-9/P-12 or other
+  G0/owned value is supplied.
+- SI-001's hardness-claims conflict and SI-002/SI-003's SIS encoding issues do not
+  enter the transaction/STF model and remain OPEN. P-005 makes no SIS claim or vector.
+
+If implementation reveals a semantic ambiguity beyond these already identified and
+explicitly abstracted boundaries, the build stops immediately and records a new
+issue rather than choosing a behavior.
+
+### Predicted diff surface
+
+- `spec/lean-toolchain`, `spec/lakefile.toml`, and the minimal Lake module/executable
+  roots.
+- `spec/Spec/Tx.lean`, `spec/Spec/Stf.lean`, and at most one `Spec/*.lean` vector-case
+  module. Every `Spec/*.lean` file will carry the exact required draft/ownership
+  header.
+- A committed deterministic draft JSON vector artifact beneath `spec/vectors/`, with
+  each `input_bytes` value explicitly symbolic and every executable fixture labeled
+  non-normative.
+- `scripts/ci/active/lean-conformance.ps1` plus only the minimal pinned workflow
+  setup needed to make the existing `lean-conformance` D6 job run the Lake build and
+  exporter rather than report `NOT_YET_ADMITTED`.
+- This report and the packet boundary files in `loop/`.
+
+No Rust crate, consensus implementation, canonical codec, dependency lockfile,
+protocol parameter, Protocol Spec text, Engineering Plan text, or P-101 conformance
+consumer is predicted or authorized.
+
+### Top risks, falsifier, and confidence
+
+1. **Abstraction leak:** a convenience mock could become a de facto canonical codec,
+   signature, address, fee, or reward choice. Control: interfaces are named as
+   unresolved and exported bytes stay symbolic; fixtures carry non-normative labels.
+2. **STF aliasing/atomicity error:** self-send or miner/source/destination aliasing
+   could accidentally mint/burn value or expose partial state. Control: apply the §8
+   operations in the stated order to a candidate state and return the original state
+   on any failure; adversary vectors cover aliasing and late-block rollback.
+3. **False vector-conformance claim:** green Lean compilation could be mistaken for
+   ratified wire vectors or Rust conformance. Control: D6 names this a P-005 draft
+   model/export check; P-101 consumption remains absent and blocked.
+
+**Falsifier:** this approach is wrong if any emitted byte string could be consumed as
+the canonical transaction encoding, any fixture fixes an owned/G0/SI value, any V-rule
+or §8 operation cannot be traced directly to the ratified prose, or atomic failure can
+return a mutated state. Any such observation triggers a fresh HUMAN stop.
+
+**Confidence:** MED. The abstract-interface design directly fits the live ruling, but
+the self-send/aliasing and atomic rollback proof surface deserves adversarial testing,
+and hosted Lean toolchain admission has not yet been exercised in this repository.
 
 ## 1. FRAME
 
