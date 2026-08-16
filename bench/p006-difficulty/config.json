@@ -1,0 +1,123 @@
+{
+  "schema": "cj3-p006-nonnormative-simulation-v1",
+  "normative_status": "NON-NORMATIVE RESEARCH FIXTURE — HUMAN/G0 RATIFICATION REQUIRED",
+  "normalized_target_interval": 1.0,
+  "blocks_per_run": 768,
+  "shock_block": 192,
+  "tail_blocks": 192,
+  "fixed_seeds": [6006001, 6006002, 6006003, 6006004],
+  "solve_fraction_sensitivities": [0.2, 0.5],
+  "quality_elasticity_sensitivities": [0.5, 1.0, 2.0],
+  "quality_headroom": 0.5,
+  "quality_noise_sigma": 0.12,
+  "quality_target": 1.5,
+  "hash_gain": 0.125,
+  "size_gain": 0.5,
+  "candidate_grid": {
+    "hash_ema_blocks": [16, 32, 64],
+    "hash_step_limit": [1.125, 1.25],
+    "size_window_blocks": [64, 128, 256],
+    "size_step_limit": [1.125, 1.25]
+  },
+  "envelope": {
+    "tail_interval_relative_error_max": 0.2,
+    "tail_hash_state_relative_error_max": 0.35,
+    "tail_size_state_relative_error_max": 0.35,
+    "recovery_band_relative_error": 0.2,
+    "recovery_hold_blocks": 24,
+    "recovery_blocks_max": 384,
+    "state_excursion_log2_max": 5.0,
+    "adversarial_size_retention_min": 0.8
+  },
+  "scenarios": [
+    {
+      "id": "stationary_honest",
+      "kind": "constant",
+      "schedule_class": "honest_baseline",
+      "hash_power": 1.0,
+      "solve_power": 1.0,
+      "honest": true
+    },
+    {
+      "id": "hash_step_up_4x",
+      "kind": "step",
+      "schedule_class": "honest_step",
+      "hash_before": 1.0,
+      "hash_after": 4.0,
+      "solve_before": 1.0,
+      "solve_after": 1.0,
+      "honest": true
+    },
+    {
+      "id": "hash_step_down_4x",
+      "kind": "step",
+      "schedule_class": "honest_step",
+      "hash_before": 1.0,
+      "hash_after": 0.25,
+      "solve_before": 1.0,
+      "solve_after": 1.0,
+      "honest": true
+    },
+    {
+      "id": "solve_step_up_4x",
+      "kind": "step",
+      "schedule_class": "honest_step",
+      "hash_before": 1.0,
+      "hash_after": 1.0,
+      "solve_before": 1.0,
+      "solve_after": 4.0,
+      "honest": true
+    },
+    {
+      "id": "solve_step_down_4x",
+      "kind": "step",
+      "schedule_class": "honest_step",
+      "hash_before": 1.0,
+      "hash_after": 1.0,
+      "solve_before": 1.0,
+      "solve_after": 0.25,
+      "honest": true
+    },
+    {
+      "id": "opposed_hash_up_solve_down",
+      "kind": "step",
+      "schedule_class": "adversarial_power_schedule",
+      "hash_before": 1.0,
+      "hash_after": 4.0,
+      "solve_before": 1.0,
+      "solve_after": 0.25,
+      "honest": true
+    },
+    {
+      "id": "periodic_opposed_64",
+      "kind": "periodic_opposed",
+      "schedule_class": "adversarial_power_schedule",
+      "period_blocks": 64,
+      "hash_high": 4.0,
+      "hash_low": 0.25,
+      "solve_high": 4.0,
+      "solve_low": 0.25,
+      "honest": true
+    },
+    {
+      "id": "quality_suppression_35pct",
+      "kind": "constant",
+      "schedule_class": "adversarial_quality_selection",
+      "hash_power": 1.0,
+      "solve_power": 1.0,
+      "adversary_share_after_shock": 0.35,
+      "quality_margin_retained": 0.0,
+      "honest": false
+    },
+    {
+      "id": "quality_suppression_51pct",
+      "kind": "constant",
+      "schedule_class": "adversarial_quality_selection",
+      "hash_power": 1.0,
+      "solve_power": 1.0,
+      "adversary_share_after_shock": 0.51,
+      "quality_margin_retained": 0.0,
+      "honest": false
+    }
+  ]
+}
