@@ -264,4 +264,4 @@ The phase gates are evidence thresholds, not calendar or deployment promises
 
 ## License
 
-License: TBD — owner: Al/Ken
+License: TBD 
