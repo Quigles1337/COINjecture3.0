@@ -1,10 +1,84 @@
 # Cycle 5 — P-005 Builder Report
 
-**Status:** STOP — SI-004 SEMANTIC AMBIGUITY; PARTIAL HUMAN-LANE CHECKPOINT
+**Status:** IN PROGRESS — SI-004 MODEL 4 RATIFIED; HUMAN-LANE RESUME
 **Date:** 2026-08-16
 **Packet:** P-005 — Lean scaffold
 **Lane:** HUMAN
 **Branch:** `feat/p005-lean-scaffold`
+
+## SI-004 MODEL 4 RULING AND SECOND RE-FRAME — 2026-08-16
+
+Al ratified SI-004 Model 4 and explicitly resumed P-005 under all six standing
+HUMAN-lane constraints. The governing formula is now
+`reward = subsidy · min(Q,R_MAX·SCALE)/(R_MAX·SCALE)` using a u128 intermediate and
+floor division, with `R_MAX ≥ 1`. Section §8 conserves realized reward rather than the
+subsidy ceiling; unminted issuance disappears, and no funding account exists. P-7's
+semantics change from inflation multiplier to quality span divisor, but its value and
+all curve shaping remain owner-controlled and UNFILLED.
+
+### Restated affected work and done-condition
+
+Resume the existing draft formal model; amend the governance/specification trail;
+replace the SI-004 placeholder with the ratified reward formula; prove in
+`Spec/Stf.lean` that floor-divided reward never exceeds subsidy; update the symbolic
+§14 vector surface for the threshold, cap, above-cap, `R_MAX = 1`, and realized-
+issuance boundaries; generate deterministic noncanonical JSON; and admit the pinned
+Lake build/exporter into the existing D6 Lean job.
+
+The builder tail is complete only after the full Lake project and deterministic
+artifact verify locally, the entire final diff passes the explicit ADVERSARY/A1–A11
+sweep, the exact pushed head passes all eleven hosted D6 jobs, and PR #9 is marked
+ready-for-review. PR #9 remains unmerged; Al's line-by-line review and merge are still
+the packet done-condition and P-101 license.
+
+### Lane and authority
+
+**HUMAN — explicitly authorized.** The new ruling supplies the previously missing
+reward/conservation semantics but does not fill an owned value. SI-001/2/3 remain
+abstract, all Al/Sarah/G0 values remain symbolic, and no Sarah contact or attribution
+is permitted before D16 reveal. `R_MAX ≥ 1` is a ratified domain constraint; no
+concrete `R_MAX`, subsidy schedule, fee, codec, key, address, network, or μ-balance
+choice may enter the implementation.
+
+### Re-framed diff surface
+
+- Governance/specification: `loop/LEDGER.md`, `docs/PROTOCOL_SPEC.md`, the conflicting
+  R7 sentence in `docs/ENGINEERING_PLAN.md`, `loop/reports/SPEC-ISSUES.md`, and P-005
+  state/packet/report bookkeeping. The Engineering Plan edit is consistency-only and
+  carries no new semantic choice beyond Model 4.
+- Formal model: `spec/Spec/Stf.lean`, the existing §7 model only where mechanical
+  proof support requires it, `spec/Spec/Vectors.lean`, aggregate/executable roots,
+  generated symbolic JSON, and `spec/README.md`.
+- Verification: the existing active-handler convention and the minimum workflow
+  setup necessary for the `lean-conformance` D6 job to compile the pinned project,
+  regenerate the artifact, and fail on drift. No Rust conformance consumer enters
+  before P-101.
+- Evidence: this report, `loop/STATE.md`, `loop/PACKETS.md`, and
+  `loop/reports/BATCH-LOG.md` at the final packet boundary.
+
+### Risks, falsifier, and confidence
+
+1. **Vacuous ceiling proof:** proving a generic division lemma while the STF still
+   consumes an unrelated abstract reward would not make the issuance ceiling real.
+   Control: the STF must derive its credited amount and conservation target from the
+   same Model 4 function whose theorem is proved.
+2. **Owned-value laundering:** using `R_MAX = 1`, a sample subsidy, or μ-normalization
+   as executable fixture data could silently fill P-7/P-12. Control: all cases remain
+   symbolic expressions and explicitly non-normative; `R_MAX = 1` appears only as a
+   quantified semantic boundary.
+3. **Arithmetic mismatch:** Nat proofs can hide u128/u64 conversion behavior. Control:
+   model nonnegative mathematical arithmetic, prove the subsidy ceiling, prove the
+   result fits u64 because subsidy is u64, and keep actual Rust/u128 conformance for
+   P-101.
+
+**Falsifier:** the approach is wrong if the credited STF reward is not definitionally
+the proved floor-division function, if the upper-bound proof imports `reward ≤ subsidy`
+as a premise, if any vector contains canonical bytes or an owned value, or if generated
+JSON can drift from the Lean source without making CI red.
+
+**Confidence:** MED. The ratified formula removes the economics ambiguity and its
+upper bound is mathematically direct, but the Lean library lemma names, alias-sensitive
+STF review, deterministic exporter, and hosted toolchain path remain to be exercised.
 
 ## RESUME RULING AND RE-FRAME — 2026-08-16
 

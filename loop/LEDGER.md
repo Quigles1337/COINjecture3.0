@@ -247,3 +247,59 @@ Resume.
 - **Queue exception:** while PR #9 awaits that review, P-006, P-007, P-009, and P-010
   (if present) may run out of strict order, subject to their own tripwires and D11.
 - **P-101:** remains doubly blocked on Gate G0 and a merged, human-reviewed P-005.
+
+## SI-004 bounded-above quality normalization — RATIFIED (Al, 2026-08-16)
+
+The following live HUMAN ruling resolves SI-004 and resumes P-005 without weakening
+any standing P-005 constraint:
+
+```text
+SI-004 RATIFIED — Model 4 (bounded-above quality normalization).
+
+§11 amendment: reward(height, Q) = subsidy(height) · min(Q, R_MAX·SCALE)
+  / (R_MAX · SCALE), computed in u128 with floor division, checked back to
+  u64. Range: reward ∈ [floor(subsidy/R_MAX), subsidy]. R_MAX ≥ 1.
+  R_MAX's semantics change from "maximum inflation multiple" to "quality
+  span divisor": a threshold solution (Q = SCALE) earns subsidy/R_MAX; a
+  solution at or beyond R_MAX·SCALE earns the full subsidy. R_MAX = 1
+  degenerates to reward = subsidy for every valid block. Record the
+  semantic change against P-7. R_MAX's VALUE and the curve shaping
+  (including any μ-balance normalization) remain owner-controlled and
+  UNFILLED — owner: Al (+ Sarah, reserved per D16).
+
+§8 amendment: conservation becomes
+  Σ balances(post) = Σ balances(pre) + reward(height, Q),
+  subject to the standing invariant reward(height, Q) ≤ subsidy(height).
+  subsidy(height) is a per-block issuance CEILING, not a target; realized
+  issuance may fall below schedule and the unminted remainder is never
+  minted. Fees transfer only, never mint — unchanged.
+
+Funding source: none required. No treasury, reserve, or premium account is
+introduced; no insufficient-funds branch exists by construction.
+
+LEAN OBLIGATION: Spec/Stf.lean must carry reward ≤ subsidy as a proved
+theorem under floor division, not an assumption — it is the invariant that
+makes the ceiling real.
+
+Resume P-005 under the standing HUMAN-LANE AUTHORIZATION (all six
+constraints still bind, including the no-auto-merge review tail). Re-FRAME
+the affected theorem and vector surface, complete the full lake build and
+adversary pass, obtain exact-head D6, mark PR #9 ready-for-review, and STOP
+for my review. Do not merge.
+```
+
+### Effective SI-004 controls
+
+- **Reward formula:** derive the credited amount with u128 intermediate arithmetic
+  and floor division by `R_MAX·SCALE`; validators derive it from Q and never read it.
+- **Issuance ceiling:** §8 conservation adds realized reward, and formalization proves
+  `reward ≤ subsidy` from the formula plus `R_MAX ≥ 1`. That inequality is not an
+  interface assumption.
+- **P-7 semantics and ownership:** `R_MAX` is a quality span divisor. Its value and
+  curve shaping, including μ-balance normalization, remain UNFILLED and owned by Al
+  (+ Sarah, reserved per D16).
+- **No funding source:** there is no treasury, reserve, premium account, carry-forward,
+  or insufficient-funds branch. Unminted subsidy never enters state.
+- **P-005 tail:** all six standing HUMAN constraints remain binding. PR #9 is marked
+  ready only after full local verification, adversary review, and exact-head D6; the
+  builder never merges it.

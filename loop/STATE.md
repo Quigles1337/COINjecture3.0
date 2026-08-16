@@ -2,12 +2,12 @@
 
 CYCLE: 7
 PHASE: Phase 0 — Foundations and spikes
-PACKET: P-005 — STOPPED ON SI-004 SEMANTIC AMBIGUITY
+PACKET: P-005 — HUMAN RESUME; SI-004 MODEL 4 RATIFIED
 BRANCH: feat/p005-lean-scaffold
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-blocked-on-external
-CAPACITY_OBSERVED_AT: 2026-08-16 P-005 SI-004 stop checkpoint; CJ2 `CAPACITY_FLAG: none`, GATE-1/GATE-2 still awaiting
-STATUS: P005_STOPPED_HUMAN_SI004_AWAITING_AL
+CAPACITY_OBSERVED_AT: 2026-08-16 P-005 Model 4 resume boundary; CJ2 `CAPACITY_FLAG: none`, GATE-1/GATE-2 still awaiting
+STATUS: P005_HUMAN_MODEL4_IMPLEMENTATION_IN_PROGRESS
 
 ## Ground-truth state
 
@@ -65,13 +65,19 @@ STATUS: P005_STOPPED_HUMAN_SI004_AWAITING_AL
   issuance to increase by exactly `subsidy(height)`. Because §11 reward may exceed
   subsidy and no funding debit exists, `SI-004` records a new HUMAN semantic
   ambiguity. No relationship, owner value, or funding mechanism was inferred.
+- Al resolved SI-004 on 2026-08-16 by ratifying Model 4 bounded-above quality
+  normalization. Reward is `subsidy · min(Q,R_MAX·SCALE)/(R_MAX·SCALE)` with floor
+  division and `R_MAX ≥ 1`; §8 conservation adds realized reward, while subsidy is an
+  issuance ceiling. No funding account exists. The P-7 value and curve shaping remain
+  owner-controlled and unfilled. P-005 is authorized to resume, and Lean must prove
+  `reward ≤ subsidy` from the formula rather than assume it.
 - A concurrent local Codex task wrote to the same `spec/` surface during the first
   build. It was stopped before any commit, push, PR mutation, hosted CI, or queue
   advance. Its partial Tx/STF candidates are preserved in PR #9's checkpoint and are
   not represented as normative or fully verified.
-- PR #9 remains draft. The full Lake project is not green, the D6 Lean gate remains
-  `NOT_YET_ADMITTED`, no deterministic JSON artifact is committed, the adversary pass
-  is incomplete, and the PR is not ready for Al's line-by-line review.
+- PR #9 remains draft while the Model 4 implementation, full Lake build, deterministic
+  symbolic JSON artifact, adversary pass, and active Lean D6 gate are completed. It
+  must then be marked ready-for-review and left unmerged for Al.
 - Al's 2026-08-16 governance injection ratified AMEND-1/2/3 and approved/unblocked
   P-009. `docs/AUDIT_TRACEABILITY.md` was verified at SHA-256
   `58C762568A63D8A4AFEACDEB1535AA9C930099F49118D2B45B9B483B8D560EFC` and preserved
@@ -93,9 +99,9 @@ STATUS: P005_STOPPED_HUMAN_SI004_AWAITING_AL
   exact-merge-SHA mainline run `31958393946` both passed all eleven D6 jobs.
 - The standing README drift-control rule is RATIFIED: every G0–G4 closeout refreshes
   the README status block and roadmap marker in the same closeout.
-- `loop/reports/SPEC-ISSUES.md` keeps four HUMAN interpretation issues open:
-  conditional SIS-hardness wording, undefined `s_max`, the missing normative SHAKE
-  candidate-byte convention, and the §8/§11 subsidy-versus-reward conflict (SI-004).
+- `loop/reports/SPEC-ISSUES.md` keeps three HUMAN interpretation issues open:
+  conditional SIS-hardness wording, undefined `s_max`, and the missing normative
+  SHAKE candidate-byte convention. SI-004 is resolved by the ratified Model 4 ruling.
 - The three pinned audit-tool caches are established on `main`; subsequent packet PRs
   can use the verified cache-hit path.
 - GitHub reports `main` is not currently protected. P-001 documents the required
@@ -110,14 +116,13 @@ STATUS: P005_STOPPED_HUMAN_SI004_AWAITING_AL
 
 ## Next action
 
-1. Al must resolve SI-004 by ratifying one coherent relationship among §8 total
-   issuance, §11 quality-scaled reward, subsidy, and any explicit funding debit, then
-   amend the affected §8/§11 prose. No option is inferred by the builder.
-2. After that ruling, resume PR #9 from the partial checkpoint, re-FRAME the affected
-   theorem/vector surface, finish the full build and adversary pass, obtain exact-head
-   D6, mark ready-for-review, and leave it unmerged for Al.
+1. Resume PR #9 from the partial checkpoint under ratified SI-004 Model 4. Prove the
+   reward ceiling from floor division, complete the affected theorem/vector surface,
+   full Lake build, active Lean D6 handler, and adversary pass.
+2. Obtain exact-head D6, mark PR #9 ready-for-review, and leave it unmerged for Al.
 3. Only while completed PR #9 awaits Al's line-by-line review does the out-of-order
-   P-006/P-007/P-009 exception activate. It is not active during this SI-004 stop.
+   P-006/P-007/P-009 exception activate. It is not active during this implementation
+   tail.
    P-010 is complete; P-008 remains blocked on the exact frontend URL, and P-101
    remains blocked on Gate G0 plus Al's P-005 merge.
 

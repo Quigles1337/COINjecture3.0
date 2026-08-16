@@ -325,9 +325,13 @@ advisory diff report (dependency drift visibility without auto-bumping).
 - **R6 — Beacon grinding edges.** Seed derivation must exclude miner-influencable
   low-cost fields (timestamp excluded by spec); analysis section in SPEC §9 tracks
   residual grinding vectors; P-002 report must address last-block-withholding.
-- **R7 — Reward-shaping exploitability.** Quality-margin multipliers could recreate
-  variance incentives A4 removed. Mitigation: multiplier bounded [1.0, R_max] and
-  deterministic (SPEC §11); economic parameters owned by Al, never agent-invented.
+- **R7 — Reward-shaping exploitability.** Quality normalization can still create
+  variance incentives even though it cannot increase issuance above the subsidy.
+  Mitigation: the Model 4 curve is deterministic and bounded in
+  `[floor(subsidy/R_MAX), subsidy]`, with `R_MAX ≥ 1` acting as a quality span divisor
+  rather than an inflation multiple (SPEC §11). The `R_MAX` value and curve shaping,
+  including any μ-balance normalization, remain owned by Al (+ Sarah per D16) and are
+  never agent-invented.
 
 ## §8 Loop protocol binding
 

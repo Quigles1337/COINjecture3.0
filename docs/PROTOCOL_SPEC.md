@@ -47,7 +47,7 @@ bytes and in instance seeds ⇒ no cross-network replay of transactions or solut
 | P-4 | SIS `(n, m, q, β²)` | TBD(P-003) | parameter search |
 | P-5 | `θ` threshold quality (see §5.3) | `SCALE` (i.e. ‖s‖² ≤ β²) | definitional |
 | P-6 | `SCALE` quality fixed-point | 1_000_000 | definitional |
-| P-7 | `R_MAX` reward multiplier cap | TBD — owner Al (+ Sarah), not agent-inventable | economics |
+| P-7 | `R_MAX` quality span divisor (`R_MAX ≥ 1`) | TBD — owner Al (+ Sarah), not agent-inventable | economics; Model 4 semantics ratified, value/curve unfilled |
 | P-8 | `TX_MAX_BYTES`, `BLOCK_MAX_BYTES`, `SOL_MAX_BYTES` | TBD(P-001 defaults, ratify G0) | ingress bounds |
 | P-9 | `FEE_MIN` | TBD — owner Al | economics |
 | P-10 | `TIMESTAMP_DRIFT_Δ` | TBD(P-001 default, ratify G0) | §6 B11 |
@@ -121,9 +121,11 @@ merely the class the chain's security leans on. Plan D1.)*
 - **Solver:** out-of-process, untrusted (A9). Reference solver ships in
   `cj3-solver-sis` (lattice reduction; free choice of algorithm — the protocol only
   ever sees `Solution` bytes).
-- **Reward-margin caution (risk R7):** the Q-multiplier curve interacts with
-  diminishing returns of reduction algorithms. Curve shaping — including any
-  μ-balance normalization — is owned by Al + Sarah and is NOT agent-inventable.
+- **Reward-margin caution (risk R7):** the bounded-above Q-normalization curve
+  interacts with diminishing returns of reduction algorithms. `R_MAX` is the quality
+  span divisor from §11, not a maximum inflation multiple. Its value and all curve
+  shaping — including any μ-balance normalization — are owned by Al + Sarah and are
+  NOT agent-inventable.
 
 ## §6 Blocks
 
@@ -213,7 +215,11 @@ Lean V-rules before any Rust implementation exists. There is no Rust-first excep
      block is rejected and state is untouched. There is no partial-apply API; the
      commit path owns its own precondition checks and exposes no bypass constructor.
 - **Conservation invariant (CI property test):** for every applied block,
-  `Σ balances(post) = Σ balances(pre) + subsidy(height)`. Fees transfer, never mint.
+  `Σ balances(post) = Σ balances(pre) + reward(height, Q)`, subject to the standing
+  invariant `reward(height, Q) ≤ subsidy(height)`. `subsidy(height)` is a per-block
+  issuance ceiling, not a target: realized issuance may be lower, and the unminted
+  remainder is never minted. Fees transfer, never mint. No treasury, reserve,
+  premium account, or insufficient-funds branch exists for reward issuance.
 
 ## §9 Instance derivation — grinding and theft analysis
 
@@ -248,11 +254,21 @@ Lean V-rules before any Rust implementation exists. There is no Rust-first excep
 
 ## §11 Rewards
 
-`reward(height, Q) = subsidy(height) · min(Q, R_MAX·SCALE) / SCALE`, computed in u128,
-checked back to u64, credited in §8 step 3, and **validated by every node (B12)** —
-the reward is derived from the checker's Q, never read from the block. `subsidy(·)` is
-the P-12 placeholder pending economics ownership. The multiplier is bounded (risk R7)
-so quality variance cannot recreate the fork-choice variance A4 removed.
+`reward(height, Q) = subsidy(height) · min(Q, R_MAX·SCALE) /
+(R_MAX·SCALE)`, computed in u128 with floor division, checked back to u64, credited in
+§8 step 3, and **validated by every node (B12)** — the reward is derived from the
+checker's Q, never read from the block. `R_MAX ≥ 1`, and
+`reward ∈ [floor(subsidy/R_MAX), subsidy]` for every valid solution (`Q ≥ SCALE`). A
+threshold solution (`Q = SCALE`) earns `floor(subsidy/R_MAX)`; a solution at or beyond
+`R_MAX·SCALE` earns the full subsidy. `R_MAX = 1` degenerates to `reward = subsidy`
+for every valid block.
+
+`R_MAX` is a quality span divisor, not a maximum inflation multiple. Its value and the
+curve shaping, including any μ-balance normalization, remain P-7 owner-controlled and
+UNFILLED — owner: Al (+ Sarah, reserved per D16). `subsidy(·)` remains the P-12
+placeholder pending economics ownership. The normalization is bounded above by the
+subsidy, so no reward funding source or premium account exists and the unminted
+remainder is never carried forward.
 
 ## §12 Networking and RPC — baseline requirements (normative for Phase 3)
 
@@ -299,7 +315,8 @@ so quality variance cannot recreate the fork-choice variance A4 removed.
 ## §15 Open-TBD index
 
 P-1/P-2/P-11 retarget constants → P-006 · P-3 validation budget + P-4 SIS parameters →
-P-003 · P-7/P-9/P-12 economics → Al (+ Ken for P-12) · P-8/P-10 ingress/drift defaults
+P-003 · P-7 quality-span value/curve and P-9/P-12 economics → Al (+ Sarah for P-7;
+Ken for P-12) · P-8/P-10 ingress/drift defaults
 → P-001 proposal, G0 ratification · Beacon technology → P-002 · Hash/signature
 primitives (§1) → G0 confirmation (D15) · Reward curve shaping incl. μ-balance hook
 (§5.2) → Al + Sarah.
