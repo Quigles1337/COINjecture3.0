@@ -182,18 +182,51 @@ independently place the required deliverables in the HUMAN lane.
 The HUMAN-lane tripwire fired during FRAME, before any Lean project, formal predicate,
 vector definition, dependency, CI gate, or runtime source was created or edited.
 
-## 3. VERIFY — STOP CHECKPOINT PENDING
+## 3. VERIFY — STOP CHECKPOINT
 
-Only the docs-only FRAME/STOP checkpoint will be committed and pushed. Hosted D6
-evidence for the final checkpoint head will be attached to the draft pull request;
-embedding that run ID in this commit would itself create a new, unverified head.
+- FRAME-first commit: `89bd450afa704aad69b70dd8ea6f3bea192faac0`.
+- Draft pull request: [#9 — P-005 HUMAN-lane stop](https://github.com/Quigles1337/COINjecture3.0/pull/9).
+- This checkpoint changes only the P-005 report and loop bookkeeping. The hosted D6
+  run on this checkpoint head is pending; its immutable URL will be written in a
+  follow-up evidence commit and the final evidence-only head will be read back from
+  the PR check rollup. This avoids representing the base-main run as branch proof.
+- No Lean toolchain is invoked and the existing phase gate remains an explicit
+  `NOT_YET_ADMITTED` deferral. This is intentionally not evidence that P-005 formal
+  content exists or passes.
 
 ## 4. ADVERSARY PASS — STOP-SURFACE REVIEW
 
-**Seat switch: ADVERSARY.** The authorized stop surface is being checked for any
+**Seat switch: ADVERSARY.** The authorized stop surface was checked for any
 implicit normative choice, owned-TBD value, false completion claim, pre-reveal Sarah
 notification, or out-of-order P-009 analysis. No implementation diff exists to
-attack. Final findings will be recorded with the pushed checkpoint evidence.
+attack.
+
+### Findings and dispositions
+
+1. **No formal-content smuggling:** no file beneath `spec/` changed, and no example
+   predicate, pseudocode, fixture, expected result, or dependency pin was added.
+2. **No TBD laundering:** the checkpoint names unresolved values only as unresolved
+   parameters; it supplies no amount, fee, encoding width, crypto convention, reward
+   value, or Sarah-owned choice.
+3. **No pre-reveal disclosure:** no reviewer was requested, and no external fork,
+   issue, comment, star, watch, or message was created. Draft PR #9 is in the already
+   verified private personal repository and attributes no Sarah review.
+4. **No queue inversion:** neither preserved audit source was opened or interpreted.
+   P-009 remains after P-006/P-007, exactly as the appended queue says.
+
+### Axiom sweep
+
+| axiom | stop-surface result |
+|---|---|
+| A1–A4 | PASS by non-reachability: no instance, checker, score, eligibility, or fork-choice behavior changed. |
+| A5–A7 | PASS by non-reachability: no amount, arithmetic, apply path, endpoint, or configuration changed. |
+| A8 | PASS: formal/state-machine ordering is preserved by stopping before both formal content and Rust implementation. |
+| A9 | PASS: no dependency, executable, FFI, or trusted-computing-base surface changed. |
+| A10 | PASS: the packet is reported as unimplemented/HUMAN, not scaffolded, reviewed, or green. |
+| A11 | PASS at checkpoint scope: authority, base SHA/run, preflight readbacks, FRAME commit, branch, and draft PR are explicit evidence pointers; branch-head D6 remains pending rather than inferred. |
+
+No Critical exists on the docs-only stop surface. P-005 remains ineligible for merge
+because HUMAN-lane authorization/content—not a defect fix—is absent.
 
 ## 5. MERGE — PROHIBITED
 
@@ -201,9 +234,44 @@ D17 permits merge only for AUTO-lane packets. This HUMAN-lane branch must remain
 unmerged until a higher-authority ruling resumes P-005 and the resulting formal
 content completes the full six-move protocol.
 
-## 6. CALIBRATE — STOP CHECKPOINT PENDING
+## 6. CALIBRATE
 
-The FRAME prediction is that no implementation surface will be touched and the
-packet will stop solely on its explicit Lean/vector lane classification. Final
-calibration will be recorded after the loop checkpoint is committed and origin
-verification completes.
+### Predictions versus outcomes
+
+- **Diff surface:** the FRAME prediction held. Only the report and loop checkpoint
+  changed; no `spec/`, CI, dependency, Rust, protocol, or engineering-plan surface
+  was touched.
+- **Risk materialization:** none of the three implementation risks was allowed to
+  materialize. The lane gate prevented executable-spec invention, TBD laundering,
+  and premature Sarah attribution before a formal artifact existed.
+- **Confidence:** HIGH was calibrated correctly. Four independent authorities—the
+  packet definition, A8/D5, `spec/README.md`, and D17—agree on the stop.
+- **Surprise:** loading the DOCX/PDF review skills for the later P-009 packet before
+  re-reading the queue exposed a sequencing hazard. The sources themselves were not
+  opened; the authoritative `execute after earlier approved packets` row corrected
+  course before any analysis.
+
+### Final VERIFIED / ASSUMED / UNKNOWN ledger
+
+**VERIFIED**
+
+- P-005 is approved but HUMAN, and draft PR #9 contains no Lean/vector content.
+- The exact base-main boundary passed all eleven D6 jobs in run 31955437332.
+- The stop checkpoint is committed and pushed; hosted branch-head D6 remains pending
+  at this commit and will be recorded without claiming it early.
+
+**ASSUMED**
+
+- Al can resume the packet through a higher-authority live instruction that supplies
+  or explicitly authorizes the HUMAN semantic surface. This follows the recorded
+  authority chain but does not presume the content of that instruction.
+
+**UNKNOWN**
+
+- The human-approved Lean representation and vector set remain unknown by design.
+- The symbolic/concrete boundary for vectors involving owner-controlled or G0 values
+  remains unknown until Al rules; no value has been inferred.
+
+**One process improvement for the next pickup:** complete top-down queue and D17 lane
+classification before loading packet-specific artifact sources or tooling. This makes
+an adjacent, already-staged packet less likely to pull work across an ordering gate.

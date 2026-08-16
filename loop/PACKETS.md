@@ -12,7 +12,7 @@ any autonomous-builder tripwire.
 | P-002 | Phase 0 | COMPLETE — `7ecba896` | PR #3 and exact-merge-SHA D6 CI green |
 | P-003 | Phase 0 | COMPLETE — `e0056157` | PR #5 and exact-merge-SHA D6 CI green |
 | P-004 | Phase 0 | COMPLETE — `4644374f` | PR #7 and exact-merge-SHA D6 CI green |
-| P-005 | Phase 0 | NEXT — APPROVED | P-004 complete; HUMAN-lane constraints apply to `Spec/*.lean` content and vectors |
+| P-005 | Phase 0 | STOP — HUMAN / AWAITING AL | Draft PR #9 contains FRAME/STOP only; resume requires live authority for `Spec/*.lean` content and vector definitions |
 | P-006 | Phase 0 | QUEUED — APPROVED | P-005 complete and D11 re-check |
 | P-007 | Phase 0 | QUEUED — APPROVED | P-006 complete and D11 re-check |
 | P-008 | Phase 0 / Phase 4 seam input | BLOCKED | Exact public frontend repository URL supplied by Al; URL MUST NOT be guessed |
@@ -53,6 +53,11 @@ hardness/asymmetry report; run 2.0's legacy classes through it first as calibrat
 Lake project; `Spec/Tx.lean` encoding V1–V9 from Protocol Spec §7;
 `Spec/Stf.lean` skeleton; JSON vector exporter (`lake exe vectors`). **Designed Sarah
 entry seam.** Conformance test lands with P-101, not here.
+
+Pickup on 2026-08-16 classified the whole packet HUMAN before implementation because
+the done-condition directly requires both `Spec/*.lean` content and protocol-vector
+definitions, each named by D17 as HUMAN lane. Draft PR #9 is an unmerged stop
+checkpoint only; no formal content or vector exists on that branch.
 
 ### P-006 — Difficulty simulation
 

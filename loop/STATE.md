@@ -1,13 +1,13 @@
 # COINjecture 3.0 Loop State
 
-CYCLE: 4
+CYCLE: 5
 PHASE: Phase 0 — Foundations and spikes
-PACKET: P-004 — COMPLETE; P-009 SOURCES INGESTED
-BRANCH: docs/p004-closeout-audit-governance
+PACKET: P-005 — STOPPED AT HUMAN LANE; IMPLEMENTATION NOT STARTED
+BRANCH: feat/p005-lean-scaffold
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-blocked-on-external
-CAPACITY_OBSERVED_AT: 2026-08-16 resume ruling plus CJ2 gate-state readback
-STATUS: P004_CLOSEOUT_GOVERNANCE_P009_SOURCES_READY_FOR_BOUNDARY_PR
+CAPACITY_OBSERVED_AT: 2026-08-16 P-005 pickup; CJ2 `CAPACITY_FLAG: none`, GATE-1/GATE-2 still awaiting
+STATUS: P005_HUMAN_STOP_AWAITING_AL
 
 ## Ground-truth state
 
@@ -54,6 +54,16 @@ STATUS: P004_CLOSEOUT_GOVERNANCE_P009_SOURCES_READY_FOR_BOUNDARY_PR
 - P-009's required first action is complete: both supplied source audits are copied
   byte-for-byte into `loop/evidence/`. Source and durable-copy sizes/hashes are in
   `loop/evidence/P-009-SOURCE-MANIFEST.md`; neither document has yet been interpreted.
+- The P-004 closeout, AMEND-1/2/3 governance overlay, and P-009 source-ingest boundary
+  merged through PR #8 at `1f379308ddba03d41774cf9d35ea6b27c5795fb0`.
+  Exact-head run `31955187990` and exact-merge-SHA mainline run `31955437332` both
+  passed all eleven D6 jobs.
+- P-005 FRAME classified the packet HUMAN before implementation: its approved
+  done-condition directly requires both `Spec/*.lean` content and protocol-vector
+  definitions, and its V-rule/STF surface independently trips D17's consensus-
+  semantic scope guard. Draft PR #9 contains only the FRAME/STOP checkpoint; no Lean
+  file, vector, CI admission change, Rust source, normative rule, or owned TBD was
+  created or edited.
 - `loop/reports/SPEC-ISSUES.md` keeps three G0/HUMAN interpretation issues open:
   conditional SIS-hardness wording, undefined `s_max`, and the missing normative
   SHAKE candidate-byte convention.
@@ -71,10 +81,17 @@ STATUS: P004_CLOSEOUT_GOVERNANCE_P009_SOURCES_READY_FOR_BOUNDARY_PR
 
 ## Next action
 
-1. Land this P-004 closeout/governance/source-ingest boundary through a guarded PR
-   with exact-head and exact-merge-SHA D6 evidence.
-2. Resume the earlier approved Phase 0 queue under a fresh D11 check; P-009 remains
-   appended and unblocked for its read-only analysis turn.
+1. Al must either supply human-approved P-005 Lean/vector content or explicitly
+   authorize the builder to implement `Spec/Tx.lean`, `Spec/Stf.lean`, and the JSON
+   vector definitions from the current ratified governing documents. Any such ruling
+   must keep Al-/Sarah-owned TBDs unfilled or state the permitted symbolic/concrete
+   boundary; it must not imply pre-G1 Sarah review or notification.
+2. After that live HUMAN-lane ruling, resume draft PR #9 on
+   `feat/p005-lean-scaffold`, re-FRAME any authorized semantic surface, and complete
+   the full six-move protocol before merge.
+3. Only after P-005 completes may the ordered queue advance to P-006, P-007, and then
+   P-009. P-008 stays blocked on the exact frontend URL, and P-101 stays blocked on
+   Gate G0.
 
 No frontend URL may be inferred for P-008, and no Al- or Sarah-owned TBD may be
 filled.
