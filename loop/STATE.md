@@ -2,12 +2,12 @@
 
 CYCLE: 7
 PHASE: Phase 0 — Foundations and spikes
-PACKET: P-005 — HUMAN AUTHORIZED; GOVERNANCE OVERLAY IN FLIGHT
-BRANCH: docs/p005-human-authorization
+PACKET: P-005 — HUMAN SECOND REVIEW APPROVED; RATIFICATION/MERGE CLOSEOUT
+BRANCH: feat/p005-lean-scaffold
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-blocked-on-external
-CAPACITY_OBSERVED_AT: 2026-08-16 P-005 authorization boundary; CJ2 `CAPACITY_FLAG: none`, GATE-1/GATE-2 still awaiting
-STATUS: P005_HUMAN_AUTHORIZED_GOVERNANCE_OVERLAY
+CAPACITY_OBSERVED_AT: 2026-08-16 P-005 approved-merge preflight; no evidence that CJ2 GATE-1/GATE-2 cleared
+STATUS: P005_SECOND_REVIEW_APPROVED_MERGE_AUTHORIZED
 
 ## Ground-truth state
 
@@ -60,6 +60,58 @@ STATUS: P005_HUMAN_AUTHORIZED_GOVERNANCE_OVERLAY
   are the packet done-condition. P-101 remains blocked on both Gate G0 and that merged,
   human-reviewed P-005. While review is pending, P-006, P-007, P-009, and P-010 (if
   present) may execute out of strict order under their own tripwires.
+- P-005 resumed only far enough to create a partial draft Lean candidate. The §8 STF
+  applies §11's quality-scaled reward, but §8's conservation equation permits total
+  issuance to increase by exactly `subsidy(height)`. Because §11 reward may exceed
+  subsidy and no funding debit exists, `SI-004` records a new HUMAN semantic
+  ambiguity. No relationship, owner value, or funding mechanism was inferred.
+- Al resolved SI-004 on 2026-08-16 by ratifying Model 4 bounded-above quality
+  normalization. Reward is `subsidy · min(Q,R_MAX·SCALE)/(R_MAX·SCALE)` with floor
+  division and `R_MAX ≥ 1`; §8 conservation adds realized reward, while subsidy is an
+  issuance ceiling. No funding account exists. The P-7 value and curve shaping remain
+  owner-controlled and unfilled. P-005 is authorized to resume, and Lean must prove
+  `reward ≤ subsidy` from the formula rather than assume it.
+- A concurrent local Codex task wrote to the same `spec/` surface during the first
+  build. It was stopped before any commit, push, PR mutation, hosted CI, or queue
+  advance. Its partial Tx/STF candidates are preserved in PR #9's checkpoint and are
+  not represented as normative or fully verified.
+- PR #9 was kept draft while the Model 4 implementation, full Lake build,
+  deterministic symbolic JSON artifact, adversary pass, and active Lean D6 gate were
+  completed. Its authorized builder transition is ready-for-review, never merge.
+- P-005's Model 4 builder surface is complete at implementation commit
+  `388ede835e8c9e668f5f0126918193ff59f589cd`. The complete Lean 4.33.0 project builds;
+  27 symbolic/non-normative vectors regenerate exactly at SHA-256
+  `30CABF852D623549CD5293628D5B3899BE805D543B537CB223F1B6FAB5C324E1`; the STF proves
+  `reward ≤ subsidy` from Model 4 and uses that exact reward for credit/conservation;
+  the full local D6-equivalent and A1–A11 adversary passes are green. The sealed
+  exact-range security diff found zero reportable findings and is preserved durably at
+  `loop/reports/P-005-security-diff-scan.md`. Exact implementation/report head
+  `f494a605825a2d2dcd15d8babb71193abccae18f` passed all eleven hosted D6 jobs in run
+  `31963016862`. The evidence-only closeout head's check rollup is attached to PR #9;
+  the PR is handed to Al ready-for-review and remains unmerged with no Sarah contact.
+- Al completed that first line-by-line review without merging and returned F1/F2/F3.
+  The resumed HUMAN remediation is implemented at
+  `97fa5110af60b832a9f3b26dd57cc7690a31cc75`: `LawfulStateOps` states the additive
+  total-balance replacement, read-after-write, and read-other-address laws;
+  `applyTransaction_conserves` explicitly eliminates all five sender/recipient/miner
+  alias partitions; `applyBlockCandidate_conserves` and
+  `conservationTarget_holds` discharge successful candidate conservation; and
+  `Tx.validate` has no `unreachable!` path while `v9_allows_self_send` remains.
+  Protocol Spec §11, the LEDGER, P-101, and Gate G2 bind `Context.rewardInputs` to
+  `check(derive_instance(instance_seed,size_param),solution)` and forbid
+  block-supplied quality.
+- The second-review remediation passes the full pinned Lake build, unchanged
+  27-vector regeneration at SHA-256
+  `30CABF852D623549CD5293628D5B3899BE805D543B537CB223F1B6FAB5C324E1`, the complete
+  local D6-equivalent suite, and A1–A11. Codex Security scan
+  `1b01d903-6760-4402-8925-311735487350` sealed complete coverage with zero
+  reportable findings; its deterministic report is durable at
+  `loop/reports/P-005-second-review-security-diff-scan.md`, SHA-256
+  `E1C78E9602266105A6739C7104637A384F4C280618C1C056805827F726C07B68`. Hosted
+  content/evidence-head D6 run `31965617214` passed all eleven jobs on exact SHA
+  `737d462e9ebf01bb9b162ee55bbc39fe11b3db06`. The final evidence-only rollup is
+  pushed after this record and must itself pass exact-head D6; its SHA/run evidence is
+  attached directly to PR #9 so no post-run commit invalidates the handoff head.
 - Al's 2026-08-16 governance injection ratified AMEND-1/2/3 and approved/unblocked
   P-009. `docs/AUDIT_TRACEABILITY.md` was verified at SHA-256
   `58C762568A63D8A4AFEACDEB1535AA9C930099F49118D2B45B9B483B8D560EFC` and preserved
@@ -81,9 +133,9 @@ STATUS: P005_HUMAN_AUTHORIZED_GOVERNANCE_OVERLAY
   exact-merge-SHA mainline run `31958393946` both passed all eleven D6 jobs.
 - The standing README drift-control rule is RATIFIED: every G0–G4 closeout refreshes
   the README status block and roadmap marker in the same closeout.
-- `loop/reports/SPEC-ISSUES.md` keeps three G0/HUMAN interpretation issues open:
+- `loop/reports/SPEC-ISSUES.md` keeps three HUMAN interpretation issues open:
   conditional SIS-hardness wording, undefined `s_max`, and the missing normative
-  SHAKE candidate-byte convention.
+  SHAKE candidate-byte convention. SI-004 is resolved by the ratified Model 4 ruling.
 - The three pinned audit-tool caches are established on `main`; subsequent packet PRs
   can use the verified cache-hit path.
 - GitHub reports `main` is not currently protected. P-001 documents the required
@@ -94,17 +146,27 @@ STATUS: P005_HUMAN_AUTHORIZED_GOVERNANCE_OVERLAY
 - `docs/RESEARCH_SURVEY.md` and
   `loop/PROMPTS/AUTONOMOUS_BUILDER.md` were supplied for the first governance commit.
 - P-008 remains blocked on the exact Al-supplied public frontend repository URL.
-- P-101 remains blocked on Gate G0.
+- Al's second P-005 review accepts F1/F2/F3 as closed and authorizes PR #9 to merge.
+  Effective with that merge, the Lean V1–V9/STF encoding, including conservation
+  under `LawfulStateOps`, is HUMAN-RATIFIED. The symbolic vectors remain explicitly
+  non-normative pending SI-001/SI-002/SI-003.
+- P-101 carries the three `LawfulStateOps` laws, checker-derived `rewardInputs`
+  provenance, checked construction of the `R_MAX·SCALE` divisor, and concrete storage
+  read/write coherence. Effective with PR #9's merge, P-101 is blocked on Gate G0
+  only.
+- CJ3 pins Lean 4.33.0 while the COINjecture 2.0 Lean project is recorded by Al as
+  Lean 4.28.0 plus Mathlib 4.28.0. The compatibility gap is reserved for the D16
+  reveal and MUST NOT be resolved beforehand.
 
 ## Next action
 
-1. Merge this governance-only overlay after exact-head and exact-merge-SHA D6 evidence.
-2. Resume draft PR #9, re-FRAME against the ratified authorization, and implement the
-   Lean/vector packet. Finish its adversary pass and exact-head D6, mark it
-   ready-for-review, then leave it unmerged for Al.
-3. While PR #9 awaits review, continue P-006, P-007, and P-009 out of strict order as
-   individually safe. P-010 is already complete; P-008 remains blocked on the exact
-   frontend URL, and P-101 remains blocked on Gate G0 plus Al's P-005 merge.
+1. Require all eleven D6 jobs green on the exact ratification-closeout PR head.
+2. Merge PR #9 with an expected-head guard, then require all eleven D6 jobs green on
+   the exact merge SHA. If either run is red, diagnose, report, and stop before any
+   subsequent packet.
+3. Record the immutable merge SHA/run in a docs-only closeout, re-check D11, and resume
+   P-006, P-007, and P-009 under D17. P-008 remains blocked on the exact frontend URL;
+   P-101 remains blocked on Gate G0 only after the P-005 merge.
 
 No frontend URL may be inferred for P-008, and no Al- or Sarah-owned TBD may be
 filled.
