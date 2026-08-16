@@ -2,6 +2,9 @@
 NORMATIVE STATUS: draft — pending human ratification; formal-verification ownership reserved per LEDGER D16.
 -/
 
+import Lean.Data.Json
+import Spec.Stf
+
 /-!
 Draft §14 vector-case manifest.
 
@@ -11,10 +14,7 @@ vector. This prevents P-005 from resolving canonical encoding or SI-002/SI-003 b
 fixture. No Al-owned, Sarah-owned, or G0-controlled parameter value appears here.
 -/
 
-import Lean.Data.Json
-import Spec.Stf
-
-namespace CJ3.Spec.Vectors
+namespace Cj3.Spec.Vectors
 
 open Lean
 
@@ -37,8 +37,10 @@ private def reject (rule : String) (stateOutcome := "not_applicable") : Expected
 
 /--
 The ratified §14 case list, expressed without canonical bytes or owned parameters.
-`fee_min`, `tx_max_bytes`, `chain_network_id`, `reward`, and account values are
-symbols supplied by the eventual ratified interface instantiation.
+`fee_min`, `tx_max_bytes`, `chain_network_id`, `subsidy`, `r_max`, and account values
+are symbols supplied by the eventual ratified interface instantiation. `SCALE` and
+the `R_MAX = 1` degeneration are definitional/quantified semantic boundaries, not
+selected P-7 fixture values.
 -/
 def cases : List DraftVector := [
   {
@@ -170,8 +172,38 @@ def cases : List DraftVector := [
   {
     name := "block-atomicity-reward-credit-overflow"
     inputExpression := "block_where_symbolic_reward_credit_overflows_u64"
-    interfaceRef := "§8 reward interface (P-12/owners) + checked-u64 arithmetic"
+    interfaceRef := "§8 derived Model 4 reward + symbolic P-12 subsidy + checked-u64 arithmetic"
     expected := reject "STF_CHECKED_REWARD" "exact_pre_block_state"
+  },
+  {
+    name := "reward-threshold-quality-floor"
+    inputExpression := "block_where_Q_eq_SCALE_and_r_max_is_symbolic_ge_1"
+    interfaceRef := "SI-004 Model 4; symbolic P-7 R_MAX and P-12 subsidy"
+    expected := accept "REWARD_MODEL4" "miner_credit=floor(subsidy/r_max);total_issuance=reward;unminted_remainder=never_minted"
+  },
+  {
+    name := "reward-at-quality-cap"
+    inputExpression := "block_where_Q_eq_checked_product(r_max,SCALE)"
+    interfaceRef := "SI-004 Model 4; symbolic P-7 R_MAX and P-12 subsidy"
+    expected := accept "REWARD_MODEL4" "miner_credit=subsidy;total_issuance=subsidy"
+  },
+  {
+    name := "reward-above-quality-cap"
+    inputExpression := "block_where_Q_gt_checked_product(r_max,SCALE)"
+    interfaceRef := "SI-004 Model 4 min-cap; symbolic P-7 R_MAX and P-12 subsidy"
+    expected := accept "REWARD_MODEL4" "miner_credit=subsidy;quality_above_cap_does_not_increase_issuance"
+  },
+  {
+    name := "reward-r-max-one-degeneration"
+    inputExpression := "forall_valid_Q_when_r_max_eq_1"
+    interfaceRef := "SI-004 quantified boundary; does not select the P-7 value"
+    expected := accept "REWARD_MODEL4" "miner_credit=subsidy"
+  },
+  {
+    name := "conservation-uses-realized-reward"
+    inputExpression := "applied_block_with_symbolic_reward_lt_subsidy"
+    interfaceRef := "§8 conservation + proved SI-004 reward ceiling"
+    expected := accept "STF_CONSERVATION" "total_post=total_pre+reward;unminted_remainder=never_minted;no_funding_account"
   }
 ]
 
@@ -198,4 +230,4 @@ def json : Json := Json.arr (cases.map vectorJson).toArray
 
 def render : String := json.pretty
 
-end CJ3.Spec.Vectors
+end Cj3.Spec.Vectors

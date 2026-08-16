@@ -136,6 +136,16 @@ jobs:
     steps:
       - name: Check out source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Install pinned Lean toolchain for P-005 draft spec
+        uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9 # v1, resolved 2026-08-16
+        with:
+          auto-config: 'false'
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'false'
+          use-github-cache: 'false'
+          lake-package-directory: spec
       - name: Run or explicitly defer gate
         shell: pwsh
         run: ./scripts/ci/check-phase-gate.ps1 -Gate lean-conformance

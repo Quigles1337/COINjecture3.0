@@ -74,12 +74,18 @@ def u64Modulus : Nat := 2 ^ 64
 /-- Exact checked addition: overflow is represented by `none`, never wraparound. -/
 def checkedAdd (left right : UInt64) : Option UInt64 :=
   let sum := left.toNat + right.toNat
-  if sum < u64Modulus then some (UInt64.ofNat sum) else none
+  if h : sum < u64Modulus then
+    some (UInt64.ofNatLT sum (by simpa [u64Modulus] using h))
+  else
+    none
 
 /-- Exact checked subtraction: underflow is represented by `none`. -/
 def checkedSub (left right : UInt64) : Option UInt64 :=
-  if right.toNat ≤ left.toNat then
-    some (UInt64.ofNat (left.toNat - right.toNat))
+  if _h : right.toNat ≤ left.toNat then
+    let difference := left.toNat - right.toNat
+    have differenceFits : difference < UInt64.size :=
+      Nat.lt_of_le_of_lt (Nat.sub_le left.toNat right.toNat) left.toNat_lt
+    some (UInt64.ofNatLT difference differenceFits)
   else
     none
 

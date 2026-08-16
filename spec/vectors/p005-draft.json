@@ -1,0 +1,247 @@
+[{"name": "v1-v8-baseline-pass",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface":
+   "V1 TxCodec (P-007/G0); cryptography/address interfaces abstract",
+   "expression": "TxCodec.encode(valid_tx_at_all_symbolic_boundaries)"},
+  "expected": {"state": "not_applicable", "rule": "V1-V8", "accepted": true}},
+ {"name": "v1-size-at-limit-pass",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface": "V1 TxCodec + symbolic TX_MAX_BYTES (P-8/G0)",
+   "expression": "canonical_input_with_length(tx_max_bytes)"},
+  "expected": {"state": "not_applicable", "rule": "V1", "accepted": true}},
+ {"name": "v1-size-over-limit-reject",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface": "V1 TxCodec + symbolic TX_MAX_BYTES (P-8/G0)",
+   "expression": "canonical_input_with_length(tx_max_bytes + 1)"},
+  "expected": {"state": "not_applicable", "rule": "V1", "accepted": false}},
+ {"name": "v1-unknown-field-reject",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface": "V1 TxCodec (P-007/G0); no concrete encoding selected",
+   "expression": "noncanonical_input_with_unknown_field"},
+  "expected": {"state": "not_applicable", "rule": "V1", "accepted": false}},
+ {"name": "v2-signature-mismatch-reject",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface":
+   "V2 signature/message interfaces (D15; canonical bytes abstract)",
+   "expression": "canonical_tx_with_verify_signature_false"},
+  "expected": {"state": "not_applicable", "rule": "V2", "accepted": false}},
+ {"name": "v3-address-binding-mismatch-reject",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface": "V3 address-derivation interface (single addr; P-007/G0)",
+   "expression": "canonical_tx_where_from_ne_addr(pubkey)"},
+  "expected": {"state": "not_applicable", "rule": "V3", "accepted": false}},
+ {"name": "v4-nonce-equal-pass",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface": "V4 state account projection",
+   "expression": "canonical_tx_where_nonce_eq_state_nonce"},
+  "expected": {"state": "not_applicable", "rule": "V4", "accepted": true}},
+ {"name": "v4-nonce-one-below-reject",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface": "V4 state account projection",
+   "expression": "canonical_tx_where_nonce_plus_1_eq_state_nonce"},
+  "expected": {"state": "not_applicable", "rule": "V4", "accepted": false}},
+ {"name": "v4-nonce-one-above-reject",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface": "V4 state account projection",
+   "expression": "canonical_tx_where_nonce_eq_state_nonce_plus_1"},
+  "expected": {"state": "not_applicable", "rule": "V4", "accepted": false}},
+ {"name": "v5-fee-at-minimum-pass",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface": "V5 symbolic FEE_MIN (P-9; owner Al)",
+   "expression": "canonical_tx_where_fee_eq_fee_min"},
+  "expected": {"state": "not_applicable", "rule": "V5", "accepted": true}},
+ {"name": "v5-fee-below-minimum-reject",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface": "V5 symbolic FEE_MIN (P-9; owner Al)",
+   "expression": "canonical_tx_where_fee_plus_1_eq_fee_min"},
+  "expected": {"state": "not_applicable", "rule": "V5", "accepted": false}},
+ {"name": "v6-exact-balance-pass",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface": "V6 checked-u64 arithmetic",
+   "expression": "canonical_tx_where_balance_eq_checked_add(amount,fee)"},
+  "expected": {"state": "not_applicable", "rule": "V6", "accepted": true}},
+ {"name": "v6-insufficient-by-one-reject",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface": "V6 checked-u64 arithmetic",
+   "expression":
+   "canonical_tx_where_balance_plus_1_eq_checked_add(amount,fee)"},
+  "expected": {"state": "not_applicable", "rule": "V6", "accepted": false}},
+ {"name": "v6-u64-max-plus-one-reject",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface":
+   "V6 definitional u64::MAX neighborhood; symbolic FEE_MIN remains unfilled",
+   "expression":
+   "canonical_tx_where_amount_eq_u64_max_and_fee_is_positive_and_ge_fee_min"},
+  "expected": {"state": "not_applicable", "rule": "V6", "accepted": false}},
+ {"name": "v6-u64-max-boundary-pass",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface":
+   "V6 definitional u64::MAX neighborhood; symbolic FEE_MIN remains unfilled",
+   "expression":
+   "canonical_tx_where_fee_eq_fee_min_and_amount_eq_u64_max_minus_fee_min_and_balance_eq_u64_max"},
+  "expected": {"state": "not_applicable", "rule": "V6", "accepted": true}},
+ {"name": "v7-destination-32-bytes-pass",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface": "V7 address shape",
+   "expression": "canonical_tx_where_to_length_eq_32"},
+  "expected": {"state": "not_applicable", "rule": "V7", "accepted": true}},
+ {"name": "v7-destination-31-bytes-reject",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface":
+   "V7 address shape; V1 interface supplies candidate for rule isolation",
+   "expression": "decoded_candidate_where_to_length_eq_31"},
+  "expected": {"state": "not_applicable", "rule": "V7", "accepted": false}},
+ {"name": "v8-network-match-pass",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface": "V8 symbolic chain network_id",
+   "expression": "canonical_tx_where_network_id_eq_chain_network_id"},
+  "expected": {"state": "not_applicable", "rule": "V8", "accepted": true}},
+ {"name": "v8-network-mismatch-reject",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface": "V8 symbolic chain network_id",
+   "expression": "canonical_tx_where_network_id_ne_chain_network_id"},
+  "expected": {"state": "not_applicable", "rule": "V8", "accepted": false}},
+ {"name": "v9-self-send-pass-and-fee-applies",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface": "V9 + ordered STF; all owned parameters symbolic",
+   "expression": "canonical_valid_tx_where_from_eq_to"},
+  "expected":
+  {"state": "applied_with_fee_transfer_and_nonce_increment",
+   "rule": "V9",
+   "accepted": true}},
+ {"name": "block-atomicity-late-transaction-failure",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface": "§8 evolving-state revalidation",
+   "expression": "block(valid_tx_0, tx_1_rejected_by_V4)"},
+  "expected":
+  {"state": "exact_pre_block_state", "rule": "V4", "accepted": false}},
+ {"name": "block-atomicity-reward-credit-overflow",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface":
+   "§8 derived Model 4 reward + symbolic P-12 subsidy + checked-u64 arithmetic",
+   "expression": "block_where_symbolic_reward_credit_overflows_u64"},
+  "expected":
+  {"state": "exact_pre_block_state",
+   "rule": "STF_CHECKED_REWARD",
+   "accepted": false}},
+ {"name": "reward-threshold-quality-floor",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface": "SI-004 Model 4; symbolic P-7 R_MAX and P-12 subsidy",
+   "expression": "block_where_Q_eq_SCALE_and_r_max_is_symbolic_ge_1"},
+  "expected":
+  {"state":
+   "miner_credit=floor(subsidy/r_max);total_issuance=reward;unminted_remainder=never_minted",
+   "rule": "REWARD_MODEL4",
+   "accepted": true}},
+ {"name": "reward-at-quality-cap",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface": "SI-004 Model 4; symbolic P-7 R_MAX and P-12 subsidy",
+   "expression": "block_where_Q_eq_checked_product(r_max,SCALE)"},
+  "expected":
+  {"state": "miner_credit=subsidy;total_issuance=subsidy",
+   "rule": "REWARD_MODEL4",
+   "accepted": true}},
+ {"name": "reward-above-quality-cap",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface": "SI-004 Model 4 min-cap; symbolic P-7 R_MAX and P-12 subsidy",
+   "expression": "block_where_Q_gt_checked_product(r_max,SCALE)"},
+  "expected":
+  {"state": "miner_credit=subsidy;quality_above_cap_does_not_increase_issuance",
+   "rule": "REWARD_MODEL4",
+   "accepted": true}},
+ {"name": "reward-r-max-one-degeneration",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface": "SI-004 quantified boundary; does not select the P-7 value",
+   "expression": "forall_valid_Q_when_r_max_eq_1"},
+  "expected":
+  {"state": "miner_credit=subsidy", "rule": "REWARD_MODEL4", "accepted": true}},
+ {"name": "conservation-uses-realized-reward",
+  "input_bytes":
+  {"status":
+   "NON-NORMATIVE TEST FIXTURE — ABSTRACT INTERFACE, NOT CANONICAL BYTES",
+   "normative": false,
+   "interface": "§8 conservation + proved SI-004 reward ceiling",
+   "expression": "applied_block_with_symbolic_reward_lt_subsidy"},
+  "expected":
+  {"state":
+   "total_post=total_pre+reward;unminted_remainder=never_minted;no_funding_account",
+   "rule": "STF_CONSERVATION",
+   "accepted": true}}]
