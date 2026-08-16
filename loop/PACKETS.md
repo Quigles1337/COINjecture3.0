@@ -1,18 +1,19 @@
 # COINjecture 3.0 Packet Queue
 
-**Queue status:** UNAPPROVED — Cycle 0 STOP. No packet may be picked up until Al
-approves or revises this queue and the D11 capacity check passes.
+**Queue status:** APPROVED IN ORDER — Al live ruling, 2026-08-15. P-001 through P-007
+run in continuous-batch mode while the D11 capacity condition remains clear. Stop at
+Gate G0, on HUMAN-lane work, or on any autonomous-builder tripwire.
 
 | Packet | Phase | Queue status | Blocking condition |
 |--------|-------|--------------|--------------------|
-| P-001 | Phase 0 | QUEUED — UNAPPROVED | Al queue approval and D11 capacity clearance |
-| P-002 | Phase 0 | QUEUED — UNAPPROVED | Al queue approval and D11 capacity clearance |
-| P-003 | Phase 0 | QUEUED — UNAPPROVED | Al queue approval and D11 capacity clearance |
-| P-004 | Phase 0 | QUEUED — UNAPPROVED | Al queue approval and D11 capacity clearance |
-| P-005 | Phase 0 | QUEUED — UNAPPROVED | Al queue approval and D11 capacity clearance |
-| P-006 | Phase 0 | QUEUED — UNAPPROVED | Al queue approval and D11 capacity clearance |
-| P-007 | Phase 0 | QUEUED — UNAPPROVED | Al queue approval and D11 capacity clearance |
-| P-008 | Phase 0 / Phase 4 seam input | BLOCKED — UNAPPROVED | Exact public frontend repository URL supplied by Al; Al queue approval; D11 capacity clearance |
+| P-001 | Phase 0 | NEXT — APPROVED | Governance commit, autonomy preflight, and D11 re-check |
+| P-002 | Phase 0 | QUEUED — APPROVED | P-001 complete and D11 re-check |
+| P-003 | Phase 0 | QUEUED — APPROVED | P-002 complete and D11 re-check |
+| P-004 | Phase 0 | QUEUED — APPROVED | P-003 complete and D11 re-check |
+| P-005 | Phase 0 | QUEUED — APPROVED | P-004 complete; HUMAN-lane constraints apply to `Spec/*.lean` content and vectors |
+| P-006 | Phase 0 | QUEUED — APPROVED | P-005 complete and D11 re-check |
+| P-007 | Phase 0 | QUEUED — APPROVED | P-006 complete and D11 re-check |
+| P-008 | Phase 0 / Phase 4 seam input | BLOCKED | Exact public frontend repository URL supplied by Al; URL MUST NOT be guessed |
 | P-101 | Phase 1 head | BLOCKED | Gate G0 |
 
 ## Seed packet definitions
@@ -80,5 +81,6 @@ Phase 1 head, blocked on G0: V1–V9 + STF versus Lean vectors.
 ## Pickup guard
 
 Every pickup MUST re-read `loop/STATE.md`, check this repository's `CAPACITY_FLAG`, and
-obtain the session's COINjecture 2.0 capacity state. `remediation-priority` in either
-project pauses CJ3 under D11.
+re-check the live D11 condition. Current authorization exists only while COINjecture
+2.0 remains blocked pending Sarah's GATE-1/GATE-2 answers. `remediation-priority` in
+either project, or evidence that those gates cleared, pauses CJ3 immediately.

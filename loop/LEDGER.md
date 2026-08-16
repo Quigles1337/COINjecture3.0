@@ -1,12 +1,14 @@
 # COINjecture 3.0 Decision Ledger
 
-This ledger has two layers:
+This ledger has three layers:
 
 1. the required Cycle 0 seed of D1–D15 from `docs/ENGINEERING_PLAN.md` §3, with the
    source statuses preserved verbatim; and
 2. later Al rulings/additions received during the blocked Cycle 0 session. Later
    rulings supersede the corresponding seed status without rewriting the historical
-   seed.
+   seed; and
+3. the 2026-08-15 live autonomy ruling, preserved verbatim below, which ratifies the
+   remaining Cycle 0 decisions and authorizes the Phase 0 packet queue.
 
 ## D1–D15 seed from Engineering Plan §3
 
@@ -51,10 +53,70 @@ design freeze. Reveal event = org migration + Sarah invite + handoff of
 Sarah-owned TBDs. Her TBDs (P-7, reward curve, μ-balance hook, Lean review seat) stay
 UNFILLED until reveal.
 
-## Pending Al action at Cycle 0 STOP
+## Live autonomy ruling overlay — RATIFIED (Al, 2026-08-15)
 
-- Ratify or revise D1, D2, D14, and D15.
-- Rule on proposed D16.
-- Approve or revise `loop/PACKETS.md`.
-- Supply the D11 capacity state before any packet pickup.
-- Supply the exact public frontend repository URL before P-008 can begin.
+The following live ruling is preserved verbatim. It supersedes the pending Cycle 0
+items above without rewriting their historical status:
+
+```text
+LIVE CJ3 RULING — 2026-08-15
+
+Use C:\Users\LEET\COINjecture3.0 as the canonical checkout. Do not use the empty
+C:\Users\LEET\projects\COINJECTURE 3.0 repository; I am deleting it.
+
+D1 RATIFIED as proposed.
+D2 RATIFIED as proposed.
+D14 RATIFIED as proposed, with final VDF technology selected by P-002.
+D15 RATIFIED as proposed.
+
+D16 RATIFIED: reveal at G1, with a hard ceiling before the Phase 2 design freeze.
+At reveal, migrate to the organization, invite Sarah, and hand off Sarah-owned TBDs.
+Until reveal, all Sarah-owned TBDs remain unfilled.
+
+D17 RATIFIED: autonomous continuous-batch execution is authorized under the supplied
+AUTONOMOUS_BUILDER prompt, subject to every tripwire, HUMAN-lane restriction, phase
+gate, capacity check, and stop condition in that prompt.
+
+The existing D9 and D10 rulings in loop/LEDGER.md are confirmed.
+
+The P-001 through P-007 queue is approved in order. P-008 remains blocked until I
+supply the exact frontend URL. P-101 remains blocked on Gate G0.
+
+Current D11 capacity condition:
+COINjecture 2.0's agent queue is blocked pending Sarah's GATE-1/GATE-2 answers and
+cannot advance until they arrive; CJ3 may proceed under D11 until those gates clear,
+at which point 2.0 immediately reclaims capacity and CJ3 pauses.
+
+The required research survey is already placed at
+C:\Users\LEET\COINjecture3.0\docs\RESEARCH_SURVEY.md — verify presence and commit it.
+
+First governance commit: record this ruling as the LEDGER overlay (D1/D2/D14/D15/D16/
+D17 RATIFIED, D9/D10 confirmed), correct loop/STATE.md BRANCH from master to main,
+commit the autonomous prompt as loop/PROMPTS/AUTONOMOUS_BUILDER.md, and commit
+docs/RESEARCH_SURVEY.md. Then run the full autonomy preflight, bootstrap-push main
+after verifying the repo is PRIVATE, and start P-001 on feat/p001-repo-scaffold in
+continuous-batch mode. STOP at Gate G0.
+```
+
+### Effective ratifications
+
+- **D1 — RATIFIED:** lattice SIS is the genesis problem class behind the
+  `ProblemClass` registry, as proposed.
+- **D2 — RATIFIED:** Nakamoto longest-chain with eligibility/quality decoupling is the
+  consensus skeleton, as proposed.
+- **D14 — RATIFIED:** the beacon is a trait-gated VDF design, with final technology
+  selected by P-002 and the marked devnet-only placeholder retained as proposed.
+- **D15 — RATIFIED:** Ed25519 with domain-separated canonical encoding, as proposed.
+- **D16 — RATIFIED:** reveal at G1, no later than the Phase 2 design freeze; the reveal
+  event is organization migration, Sarah invite, and handoff of Sarah-owned TBDs.
+- **D17 — RATIFIED:** autonomous continuous-batch mode is authorized under
+  `loop/PROMPTS/AUTONOMOUS_BUILDER.md` and every guard named in the live ruling.
+- **D9/D10 — CONFIRMED:** the prior effective rulings remain unchanged.
+
+### Effective queue and capacity ruling
+
+- P-001 through P-007 are approved in order.
+- P-008 remains blocked on the exact Al-supplied frontend URL.
+- P-101 remains blocked on Gate G0.
+- D11 capacity is clear only while the COINjecture 2.0 agent queue remains blocked on
+  Sarah's GATE-1/GATE-2 answers. If those gates clear, CJ3 pauses immediately.

@@ -1,31 +1,36 @@
 # COINjecture 3.0 Loop State
 
-CYCLE: 0
-PHASE: Cycle 0 scaffold
-PACKET: NONE
-BRANCH: master
+CYCLE: 1
+PHASE: Phase 0 — Foundations and spikes
+PACKET: P-001 — AUTHORIZED, PREFLIGHT NOT YET RUN
+BRANCH: main
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
-CAPACITY_FLAG: unconfirmed
-STATUS: STOPPED_PENDING_AL
+CAPACITY_FLAG: cj2-blocked-on-external
+CAPACITY_OBSERVED_AT: 2026-08-15 live ruling
+STATUS: GOVERNANCE_OVERLAY_READY_FOR_PREFLIGHT
 
 ## Ground-truth state
 
-- Cycle 0 scaffold is the only authorized work in this cycle.
+- Al ratified D1, D2, D14, D15, D16, and D17 in the 2026-08-15 live ruling; D9 and
+  D10 were reconfirmed.
+- Continuous-batch autonomous execution is authorized for P-001 through P-007 in
+  order, subject to every tripwire and packet-boundary capacity re-check.
 - No protocol code has been created.
-- The packet queue is not approved.
-- The COINjecture 2.0 capacity state for the next packet pickup was not supplied in
-  this session. `CAPACITY_FLAG: unconfirmed` therefore prohibits packet pickup; it
-  MUST NOT be interpreted as capacity clearance.
+- The COINjecture 2.0 agent queue is blocked pending Sarah's GATE-1/GATE-2 answers;
+  CJ3 may proceed only while that condition remains true. If those gates clear, the
+  capacity flag becomes `remediation-priority` and CJ3 pauses immediately.
+- `docs/RESEARCH_SURVEY.md` and
+  `loop/PROMPTS/AUTONOMOUS_BUILDER.md` were supplied for the first governance commit.
+- P-008 remains blocked on the exact Al-supplied public frontend repository URL.
+- P-101 remains blocked on Gate G0.
 
-## Resume conditions
+## Next action
 
-Before any packet begins, Al must:
+1. Commit the governance overlay and supplied artifacts on `main`.
+2. Run every autonomy preflight check with evidence.
+3. If every check passes, bootstrap-push `main` and confirm remote `main` equals local
+   `HEAD`.
+4. Pick up P-001 on `feat/p001-repo-scaffold`.
 
-1. ratify or revise D1, D2, D14, and D15;
-2. rule on proposed D16;
-3. approve or revise the queue in `loop/PACKETS.md`;
-4. state the current COINjecture 2.0 capacity condition required by D11; and
-5. identify the approved packet and branch.
-
-P-008 additionally requires the exact public frontend repository URL from Al. Agents
-MUST NOT infer that URL from the legacy COINjecture 2.0 repository.
+No frontend URL may be inferred for P-008, and no Al- or Sarah-owned TBD may be
+filled.
