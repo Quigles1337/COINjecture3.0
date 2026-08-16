@@ -1,13 +1,10 @@
 # COINjecture 3.0 Packet Queue
 
-**Queue status:** P-005 COMPLETE; P-006/P-007/P-009 CONTINUOUS BATCH READY —
-Al's second review accepted F1/F2/F3 and authorized PR #9. Final reviewed head
-`8d8ec440f86cbe06fc30eff78f9cfcc6076c0180` passed all eleven D6 jobs in run
-`31967696333`; expected-head guarded merge
-`916e5027f0918973bf45d6a2bf90abd2ae253197` passed exact-merge-SHA D6 in run
-`31968030240`. The V1–V9/STF encoding is HUMAN-RATIFIED; vectors remain non-normative
-and symbolic pending SI-001/SI-002/SI-003. P-008 remains blocked on the exact frontend
-URL. P-101 is blocked on Gate G0 only.
+**Queue status:** STOPPED AT GATE G0 — P-006 and P-009 are COMPLETE with exact-
+merge-SHA D6 green. P-007 is HUMAN / INCOMPLETE at the canonical-codec and open-SI
+tripwire; its checked-amount checkpoint remains draft PR #14 and MUST NOT merge before
+the G0 rulings. P-008 remains blocked on the exact frontend URL. P-101 is blocked on
+Gate G0 only. No Al-owned, Sarah-owned, or G0-controlled value was inferred.
 
 | Packet | Phase | Queue status | Blocking condition |
 |--------|-------|--------------|--------------------|
@@ -16,10 +13,10 @@ URL. P-101 is blocked on Gate G0 only.
 | P-003 | Phase 0 | COMPLETE — `e0056157` | PR #5 and exact-merge-SHA D6 CI green |
 | P-004 | Phase 0 | COMPLETE — `4644374f` | PR #7 and exact-merge-SHA D6 CI green |
 | P-005 | Phase 0 | COMPLETE — HUMAN-RATIFIED — `916e5027` | PR #9 and exact-merge-SHA D6 green |
-| P-006 | Phase 0 | QUEUED — APPROVED / READY | Fresh D11 check at pickup |
-| P-007 | Phase 0 | QUEUED — APPROVED / READY | Fresh D11 check at pickup; its own SI/tripwires remain armed |
+| P-006 | Phase 0 | COMPLETE — `7244f094` | PR #16 and exact-merge-SHA D6 green; full two-knob envelope 0/36 |
+| P-007 | Phase 0 | HUMAN STOP / INCOMPLETE — draft PR #14, `9acea83c` | G0 must rule canonical codec/hash/domain/P-8/SI-002/SI-003/strict Ed25519; SI-001 also remains open |
 | P-008 | Phase 0 / Phase 4 seam input | BLOCKED | Exact public frontend repository URL supplied by Al; URL MUST NOT be guessed |
-| P-009 | Phase 0 / audit traceability | QUEUED — APPROVED / UNBLOCKED / INTERPRETATION AUTHORIZED / READY | Source evidence copied durably; fresh D11 check at pickup |
+| P-009 | Phase 0 / audit traceability | COMPLETE — `ce0b9752` | PR #15 and exact-merge-SHA D6 green; GAP-7–13 remain non-ratified |
 | P-010 | Phase 0 / documentation | COMPLETE — `1e986cb2` | Feature PR #10 and closeout PR #11; both exact-merge-SHA D6 runs green |
 | P-101 | Phase 1 head | BLOCKED | Gate G0 only |
 
@@ -74,10 +71,29 @@ symbolic pending SI-001/SI-002/SI-003.
 Offline, no chain code: model the two-knob retarget under honest/adversarial hash- and
 solve-power schedules; report stability envelope; feeds the D2 Phase-2 gate.
 
+**Outcome:** COMPLETE through PR #16 at
+`7244f094aa22d1890039a535ad997c9775ba9ed3`; exact-head run `31971074815` and
+exact-merge-SHA run `31971438778` passed all eleven jobs. The sealed 5,971,968-block
+matrix found 0/36 full honest/unmanipulated-quality passes and 0/36 full adversarial
+passes. All 6/6 unique isolated hash-loop settings passed, but no tested size-window
+setting survived the solve-power/interaction sensitivities. P-1/P-2/P-11 and exact
+clamps/functions remain unfilled. G0 must decide whether D2 proceeds with a
+manipulation-resistant size observable, a static human-upgraded size, or its fallback
+ADR path; the packet does not select among them.
+
 ### P-007 — `cj3-types`
 
 Canonical encodings, domain tags, the single `addr()`, amount newtypes, codec fuzz
 targets wired into CI.
+
+**Outcome:** HUMAN STOP / INCOMPLETE. Draft PR #14 exact head
+`9acea83ca17d67a19e0d41aeb5e7275666a54013` passed all eleven jobs in run
+`31969740766` and preserves only the independently specified checked `Amount(u64)`
+boundary. It remains unmerged. The complete packet requires G0/HUMAN choices for the
+canonical codec grammar; SHA-256 confirmation; exact bytes/framing for all seven
+domain tags; P-8 byte limits; SI-002 signed-coefficient representation and bound
+wording; SI-003 SHAKE consumption; and GAP-12 strict Ed25519 behavior. The active
+codec-fuzz job still reports `NOT_YET_ADMITTED`; green is not a fuzz-success claim.
 
 ### P-008 — Frontend contract extraction
 
@@ -102,6 +118,15 @@ Lean audit are first copied byte-for-byte from the supplied Downloads paths into
 CJ3's A8 track. The Codex security-scan source remains outstanding, but P-009 does
 not wait if exact committed 2.0 remediation records fully represent its findings and
 are cited as substitutes. No `src/` change is authorized.
+
+**Outcome:** COMPLETE through PR #15 at
+`ce0b9752c9101e89f93a90379cd9e5ac1a08842d`; refreshed exact-head run `31971741833`
+and exact-merge-SHA run `31972017916` passed all eleven jobs. Matrix v0.2 accounts for
+33/33 third-party findings (17 mapped, 10 partial, six surface-excluded), all 25 Lean
+claim-points, and R1–R8. GAP-7 through GAP-13 are proposals only. The absent original
+Codex report's exact IDs/titles/severities/count remain UNKNOWN; exact committed CJ2
+remediation pointers preserve the known five program families and two finding IDs
+without pretending to replace the missing source inventory.
 
 ### P-010 — Institutional README
 

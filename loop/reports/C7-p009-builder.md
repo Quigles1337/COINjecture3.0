@@ -355,3 +355,29 @@ into a reproducible check.
 This bounded worker will commit only the two scoped documentation files locally.
 It will not push, open a PR, edit governance closeout files, or merge. The parent owns
 governance integration, exact-head hosted D6, PR publication, and final packet status.
+
+### Parent integration addendum — hosted verification and merge
+
+- The source-verification commit `8b6406c3118cada6af1f5b432b63173c47695f48`
+  passed all eleven hosted D6 jobs in run
+  [31970504355](https://github.com/Quigles1337/COINjecture3.0/actions/runs/31970504355).
+- After P-006 merged, P-009 was refreshed onto actual main without changing its
+  two-file diff. Refreshed exact head
+  `34ce596d0f1160b152a33d95b1f6ddf25e4111c4` passed all eleven jobs in run
+  [31971741833](https://github.com/Quigles1337/COINjecture3.0/actions/runs/31971741833).
+- The expected-head guarded merge produced
+  `ce0b9752c9101e89f93a90379cd9e5ac1a08842d`; exact-merge-SHA run
+  [31972017916](https://github.com/Quigles1337/COINjecture3.0/actions/runs/31972017916)
+  passed all eleven jobs.
+- GAP-7 through GAP-13 remain non-ratified proposals. The original Codex report is
+  still absent, so its exact per-finding inventory remains UNKNOWN; no merge or CI
+  result changes that epistemic boundary.
+
+## Parent closeout calibration
+
+- **Prediction versus outcome:** refreshing onto P-006 main changed no P-009 content
+  surface; the exact two-file diff passed both refreshed-head and merge-SHA D6.
+- **Risk and confidence:** source-inventory confidence remains HIGH, while exact Codex
+  per-finding completeness remains UNKNOWN rather than being raised by green CI.
+- **Process improvement retained:** future audit ingestion starts with a mechanically
+  counted one-row-per-source-item inventory before root-cause rollups.
