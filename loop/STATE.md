@@ -2,12 +2,12 @@
 
 CYCLE: 4
 PHASE: Phase 0 — Foundations and spikes
-PACKET: P-004 — COMPLETE; P-009 SOURCE INGEST NEXT
+PACKET: P-004 — COMPLETE; P-009 SOURCES INGESTED
 BRANCH: docs/p004-closeout-audit-governance
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-blocked-on-external
 CAPACITY_OBSERVED_AT: 2026-08-16 resume ruling plus CJ2 gate-state readback
-STATUS: AUDIT_AMENDMENTS_RATIFIED_AND_APPLIED_P009_SOURCE_INGEST_NEXT
+STATUS: P004_CLOSEOUT_GOVERNANCE_P009_SOURCES_READY_FOR_BOUNDARY_PR
 
 ## Ground-truth state
 
@@ -51,6 +51,9 @@ STATUS: AUDIT_AMENDMENTS_RATIFIED_AND_APPLIED_P009_SOURCE_INGEST_NEXT
   `58C762568A63D8A4AFEACDEB1535AA9C930099F49118D2B45B9B483B8D560EFC` and preserved
   unchanged; the amendments are applied to Protocol Spec §7/§12 and Gate G1 and
   recorded in the LEDGER overlay.
+- P-009's required first action is complete: both supplied source audits are copied
+  byte-for-byte into `loop/evidence/`. Source and durable-copy sizes/hashes are in
+  `loop/evidence/P-009-SOURCE-MANIFEST.md`; neither document has yet been interpreted.
 - `loop/reports/SPEC-ISSUES.md` keeps three G0/HUMAN interpretation issues open:
   conditional SIS-hardness wording, undefined `s_max`, and the missing normative
   SHAKE candidate-byte convention.
@@ -68,12 +71,9 @@ STATUS: AUDIT_AMENDMENTS_RATIFIED_AND_APPLIED_P009_SOURCE_INGEST_NEXT
 
 ## Next action
 
-1. Make P-009's first action the durable byte-for-byte copy of both supplied audit
-   sources into `loop/evidence/`; record and verify exact source/copy hashes before
-   analysis.
-2. Land this P-004 closeout/governance/source-ingest boundary through a guarded PR
+1. Land this P-004 closeout/governance/source-ingest boundary through a guarded PR
    with exact-head and exact-merge-SHA D6 evidence.
-3. Resume the earlier approved Phase 0 queue under a fresh D11 check; P-009 remains
+2. Resume the earlier approved Phase 0 queue under a fresh D11 check; P-009 remains
    appended and unblocked for its read-only analysis turn.
 
 No frontend URL may be inferred for P-008, and no Al- or Sarah-owned TBD may be
