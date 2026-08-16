@@ -2,12 +2,12 @@
 
 CYCLE: 7
 PHASE: Phase 0 — Foundations and spikes
-PACKET: P-005 — HUMAN REVIEW TAIL; BUILDER COMPLETE
+PACKET: P-005 — HUMAN SECOND-REVIEW REMEDIATION; HOSTED D6 PENDING
 BRANCH: feat/p005-lean-scaffold
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-blocked-on-external
-CAPACITY_OBSERVED_AT: 2026-08-16 P-005 hosted-D6 boundary; CJ2 `CAPACITY_FLAG: none`, GATE-1/GATE-2 still awaiting
-STATUS: P005_HUMAN_REVIEW_HANDOFF_NO_MERGE
+CAPACITY_OBSERVED_AT: 2026-08-16 P-005 second-review closeout preflight; CJ2 `CAPACITY_FLAG: none`, GATE-1/GATE-2 still awaiting
+STATUS: P005_SECOND_REVIEW_CLOSEOUT_PENDING_HOSTED_D6
 
 ## Ground-truth state
 
@@ -89,6 +89,26 @@ STATUS: P005_HUMAN_REVIEW_HANDOFF_NO_MERGE
   `f494a605825a2d2dcd15d8babb71193abccae18f` passed all eleven hosted D6 jobs in run
   `31963016862`. The evidence-only closeout head's check rollup is attached to PR #9;
   the PR is handed to Al ready-for-review and remains unmerged with no Sarah contact.
+- Al completed that first line-by-line review without merging and returned F1/F2/F3.
+  The resumed HUMAN remediation is implemented at
+  `97fa5110af60b832a9f3b26dd57cc7690a31cc75`: `LawfulStateOps` states the additive
+  total-balance replacement, read-after-write, and read-other-address laws;
+  `applyTransaction_conserves` explicitly eliminates all five sender/recipient/miner
+  alias partitions; `applyBlockCandidate_conserves` and
+  `conservationTarget_holds` discharge successful candidate conservation; and
+  `Tx.validate` has no `unreachable!` path while `v9_allows_self_send` remains.
+  Protocol Spec §11, the LEDGER, P-101, and Gate G2 bind `Context.rewardInputs` to
+  `check(derive_instance(instance_seed,size_param),solution)` and forbid
+  block-supplied quality.
+- The second-review remediation passes the full pinned Lake build, unchanged
+  27-vector regeneration at SHA-256
+  `30CABF852D623549CD5293628D5B3899BE805D543B537CB223F1B6FAB5C324E1`, the complete
+  local D6-equivalent suite, and A1–A11. Codex Security scan
+  `1b01d903-6760-4402-8925-311735487350` sealed complete coverage with zero
+  reportable findings; its deterministic report is durable at
+  `loop/reports/P-005-second-review-security-diff-scan.md`, SHA-256
+  `E1C78E9602266105A6739C7104637A384F4C280618C1C056805827F726C07B68`. Hosted
+  exact-head D6 is the remaining builder checkpoint before second-review handoff.
 - Al's 2026-08-16 governance injection ratified AMEND-1/2/3 and approved/unblocked
   P-009. `docs/AUDIT_TRACEABILITY.md` was verified at SHA-256
   `58C762568A63D8A4AFEACDEB1535AA9C930099F49118D2B45B9B483B8D560EFC` and preserved
@@ -127,12 +147,13 @@ STATUS: P005_HUMAN_REVIEW_HANDOFF_NO_MERGE
 
 ## Next action
 
-1. Al performs the mandatory line-by-line review of PR #9 against Protocol Spec
-   §§7–8/§11 and either requests changes or merges it. The builder MUST NOT merge it.
-2. Stop at this review boundary under Al's latest live instruction. The earlier
-   out-of-order P-006/P-007/P-009 review-tail authorization is not exercised in this
-   turn; a future pickup must re-check D11 first.
-3. P-010 is complete; P-008 remains blocked on the exact frontend URL, and P-101
+1. Push the P-005 remediation/evidence closeout, require all eleven D6 jobs green on
+   the exact immutable PR head, and attach that SHA/run evidence to PR #9.
+2. Return PR #9 to Al ready-for-review for the mandatory second line-by-line review
+   against Protocol Spec §§7–8/§11. The builder MUST NOT merge it.
+3. Stop at the second-review boundary. The earlier out-of-order P-006/P-007/P-009
+   review-tail authorization is not exercised in this turn; a future pickup must
+   re-check D11 first. P-008 remains blocked on the exact frontend URL, and P-101
    remains blocked on Gate G0 plus Al's human-reviewed P-005 merge.
 
 No frontend URL may be inferred for P-008, and no Al- or Sarah-owned TBD may be

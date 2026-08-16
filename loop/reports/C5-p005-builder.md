@@ -837,3 +837,214 @@ Al also accepted V1–V9 independence/order, V3 binding, V4 strict equality, evo
 state revalidation, sequential alias handling, atomic rejection, and the Model 4 reward
 theorems. Those surfaces are held fixed except where F1/F2 mechanically require proof
 support.
+
+### 2. BUILD — SECOND-REVIEW REMEDIATION
+
+The governance FRAME was committed first at
+`067d14efb3ac3b6cab433665232efc4f82723e28`. The formal remediation was then committed
+at `97fa5110af60b832a9f3b26dd57cc7690a31cc75`.
+
+#### F1 — lawful state operations and discharged conservation
+
+- `LawfulStateOps context ops` is a `Prop` structure with the three required
+  concrete-store obligations:
+  - `totalBalances_setAccount` relates a replacement write to the old account balance
+    with the additive equation
+    `total(post) + old.balance = total(pre) + replacement.balance`;
+  - `account_set_same` is read-after-write at the written address; and
+  - `account_set_other` preserves every read whose address differs from the written
+    address.
+- `totalBalances_after_checkedSub`, `totalBalances_after_checkedAdd`, and
+  `totalBalances_after_nonce` derive exact balance deltas from that local contract and
+  the proved checked-arithmetic equalities. None imports a conservation premise.
+- `applyValidatedTransaction_conserves_core` follows the executable match tree through
+  debit, recipient credit, miner fee credit, and nonce increment. Each successful
+  checked operation contributes its exact mathematical delta; `omega` closes only the
+  resulting natural-number arithmetic.
+- `AddressAliasing` and `classifyAddressAliasing` exhaust the five realizable
+  partitions: all distinct, sender=recipient, sender=miner, recipient=miner, and all
+  three equal. `applyTransaction_conserves` connects the public
+  `Tx.validate`/`applyTransaction` success result to the core proof and explicitly
+  eliminates every partition. The core accounting is intentionally alias-invariant
+  because each credit reads the candidate state produced by the immediately preceding
+  write; no pairwise-distinct premise exists.
+- `applyTransactions_conserves` proves the evolving-state ordered fold by induction.
+  `applyReward_conserves` proves exact addition of the same Model 4
+  `rewardNat` credited by the executable path. `applyBlockCandidate_conserves`
+  follows the actual block-rule, transaction, reward, and state-root success branches
+  and proves
+  `total(post) = total(pre) + rewardNat(context.rewardInputs block)`.
+  `conservationTarget_holds` discharges the public `ConservationTarget` for every
+  candidate outcome.
+
+Protocol Spec §8 and the P-101 queue entry now bind a concrete authenticated store to
+all three `LawfulStateOps` laws. P-005 does not pretend that an abstract law is already
+a concrete implementation proof.
+
+#### F2 — panic-free validation
+
+`Tx.validate` no longer executes or mentions `unreachable!`. After V1–V8 succeed it
+returns the candidate directly. The definitional V9 rule and
+`v9_allows_self_send` theorem remain unchanged and continue to document that
+self-sends are legal.
+
+The active Lean handler now rejects any `unreachable!` regression in
+`Spec/Tx.lean`. This textual tripwire supplements, rather than substitutes for, the
+full Lake build.
+
+#### F3 — C2 provenance obligation
+
+Protocol Spec §11, the LEDGER overlay, the P-101 packet definition, and Gate G2 now bind
+`Context.rewardInputs` to the Q returned by
+`check(derive_instance(instance_seed, size_param), solution)` for that same validated
+block. A block-supplied quality, work score, timing value, or equivalent field is
+forbidden. Gate G2 must attempt both a wrong-instance solution and a quality-spoof
+input and prove neither can influence reward.
+
+As directed, this is an obligation rather than a premature P-005 implementation:
+`Context.rewardInputs` remains abstract, no checker/decoder wiring was invented, and
+the exact P-101/G2 boundary is now auditable before any Rust kernel is admitted.
+
+No vector definition changed. All owner/G0-controlled values remain symbolic or
+unfilled, and SI-001/SI-002/SI-003 remain unresolved.
+
+### 3. VERIFY — LOCAL AND SEALED SECURITY EVIDENCE
+
+Local verification at exact formal-remediation head
+`97fa5110af60b832a9f3b26dd57cc7690a31cc75`:
+
+- `lake build`: PASS, complete pinned Lean 4.33.0 project, 10 jobs.
+- Active `lean-conformance.ps1`: PASS with
+  `P005_DRAFT_SPEC_BUILD=PASS LEAN=4.33.0 VECTORS=27
+  SHA256=30CABF852D623549CD5293628D5B3899BE805D543B537CB223F1B6FAB5C324E1`
+  and `P101_RUST_CONFORMANCE=NOT_YET_ADMITTED`.
+- `cargo fmt --all -- --check`: PASS.
+- `cargo clippy --workspace --all-targets --all-features --locked -- -D warnings`:
+  PASS.
+- `cargo deny --locked --all-features check`: PASS.
+- `cargo audit --deny warnings`: PASS after loading 1,216 advisories.
+- `scripts/ci/verify-geiger.ps1`: PASS across all 11 packages with zero unsafe.
+- `cargo test --workspace --all-targets --all-features --locked`: PASS, 18 tests,
+  zero failures.
+- Conservation runtime gate: explicitly `NOT_YET_ADMITTED` for P-101.
+- Codec fuzz and genesis gates: explicitly deferred to P-007 and Phase 1 respectively.
+- `cargo build --workspace --all-targets --all-features --locked`: PASS.
+- `git diff --check`: PASS.
+
+A temporary proof-audit module used `#print axioms` against the two checked-arithmetic
+lemmas and the public conservation theorems, then was deleted before commit. Lean
+reported only its standard `propext` and `Quot.sound` foundations (the arithmetic
+lemmas used `propext`; the conservation theorems used `propext, Quot.sound`). The
+packet introduces no custom axiom declaration, `sorry`, `admit`, or proof
+placeholder; the active gate independently rejects those tokens in every
+`Spec/*.lean` file.
+
+The Codex Security exact-diff scan
+`1b01d903-6760-4402-8925-311735487350` covered
+`42da63c6cdec7c0cee84033365c509e04459fe07..97fa5110af60b832a9f3b26dd57cc7690a31cc75`.
+It sealed complete coverage with zero candidates, zero reportable findings, and no
+deferred work. Its source classifier returned an empty compact inventory for this
+Lean/PowerShell/documentation-only range, so the scan explicitly compensated by
+enumerating and reviewing all eight changed files from Git. The deterministic report
+was copied byte-for-byte from Temp to
+`loop/reports/P-005-second-review-security-diff-scan.md` at SHA-256
+`E1C78E9602266105A6739C7104637A384F4C280618C1C056805827F726C07B68`.
+Measured scan usage was 173,445 total tokens, including 4,149,423 input tokens,
+3,991,040 cached input tokens, and 15,062 output tokens; usage coverage was complete.
+
+Hosted D6 is deliberately not claimed in this pre-push evidence commit. The exact
+pushed closeout head and its run URL will be attached to PR #9; a final evidence-only
+rollup, if needed, must itself pass exact-head D6 before handoff.
+
+### 4. ADVERSARY — SECOND-REVIEW DELTA
+
+#### Falsifier and abuse-case pass
+
+| challenge | result |
+|---|---|
+| Can the additive law smuggle in the desired block conservation theorem? | NO. It relates exactly one `setAccount` to the account it replaces; transaction and block conservation are derived over the executable write sequence. |
+| Is any equality partition silently assumed away? | NO. `classifyAddressAliasing` is constructive and exhaustive; the public transaction theorem eliminates all-distinct plus the four required alias classes. |
+| Does the proof cover only a helper rather than the public `Except` result? | NO. The public transaction and block theorems destruct the actual validator/transition results and impossible error branches. |
+| Can failure leak a partial candidate state? | NO. Error paths return no state, and `applyBlockAtomic` returns the exact pre-state on every candidate error. |
+| Can validation still panic on V9? | NO. `Tx.validate` contains no panic path and returns directly after V8; V9 remains theorem-documented. |
+| Can P-005 source Q from a block field? | NO concrete source exists in P-005. The future instantiation is now bound in §11/LEDGER/P-101/G2 to the checker over the derived instance. |
+| Did remediation choose a codec, parameter, SI answer, or owner value? | NO. The symbolic Context and unchanged 27-vector artifact preserve every ownership and SI boundary. |
+| Can the CI declaration grep alone counterfeit a proof? | NO. The grep is supplemental; `lake build` elaborates the complete theorem bodies and the vector artifact is regenerated and hash-compared. |
+
+#### Axiom sweep
+
+| axiom | result |
+|---|---|
+| A1 | PASS at P-005 scope: the Model 4 reward remains derived, and the new binding obligation permits Q only from the checker over the validator-derived instance. P-101/G2, not this abstract scaffold, must prove the concrete wiring. |
+| A2 | PASS: no miner-authored instance surface was introduced; F3 explicitly couples checker input to `derive_instance(instance_seed,size_param)`. |
+| A3 | PASS: no timing or miner metadata enters reward; the quality-spoof boundary is explicit. |
+| A4 | PASS by non-reachability: fork-choice code is unchanged and Q appears only in validity/reward surfaces. |
+| A5 | PASS at draft-spec scope: exact checked u64 arithmetic feeds a local additive store law; successful transactions conserve exactly and successful blocks add only the proved bounded reward. |
+| A6 | PASS: the proof connects the single V1–V9 validator, sequential evolving-state writes, ordered transaction fold, reward, root check, and atomic rejection path. |
+| A7 | PASS by non-reachability: no network, RPC, parser implementation, secret, or authorization surface changed. |
+| A8 | PASS: the formal proof and P-101 obligations precede any Rust kernel; the handler continues to print `P101_RUST_CONFORMANCE=NOT_YET_ADMITTED`, and human review remains mandatory. |
+| A9 | PASS: only Lean core `Init.Omega` was imported; no package dependency, FFI, Rust unsafe, or linked solver surface was added. |
+| A10 | PASS: the report distinguishes proved abstract theorems from unproved concrete-store/checker instantiations and discloses Lean's standard proof foundations. |
+| A11 | PASS: exact commits, commands, vector hash, scan ID/range/hash, coverage limitation, and durable report are recorded. Exact hosted evidence will be attached to the immutable PR head. |
+
+No Critical, High, Medium, or Low security finding survived. The adversary pass found
+no new semantic ambiguity and required no code change after the sealed scan.
+
+### 5. CALIBRATE — SECOND-REVIEW REMEDIATION
+
+- **Prediction versus outcome:** the predicted formal, governance, gate, and evidence
+  surfaces held. The symbolic vector artifact remained byte-identical and no Rust
+  runtime surface changed.
+- **Risk materialization:** the primary proof-engineering risk was controlled by making
+  the accounting core independent of address distinctness while still exposing an
+  explicit exhaustive alias partition at the public theorem. No conservation premise,
+  hidden equality premise, panic branch, or checker-provenance implementation choice
+  was needed.
+- **Confidence:** MED moved to HIGH for the bounded P-005 remediation artifact after
+  complete elaboration, full local D6-equivalent execution, explicit proof-foundation
+  audit, exhaustive alias classification, and a zero-finding sealed exact-diff scan.
+  Confidence remains intentionally unassigned to P-101's future concrete store and
+  checker wiring.
+- **Surprise:** the requested read-after-write and read-other-address laws are stronger
+  concrete-store obligations than the balance-total proof strictly consumes. The
+  conservation algebra needs the additive replacement law; the two read laws remain
+  binding because they establish the operational coherence P-101 must provide, rather
+  than being discarded merely because this particular theorem can close without
+  projecting them.
+
+#### Final VERIFIED / ASSUMED / UNKNOWN ledger
+
+**VERIFIED**
+
+- F1's three-law `LawfulStateOps` contract is stated constructively.
+- Successful `applyTransaction` and `applyBlockCandidate` conservation is proved
+  against the actual executable results, with the required explicit alias partition.
+- F2's validation panic is removed and `v9_allows_self_send` remains.
+- F3 is recorded in Protocol Spec §11, the LEDGER, P-101, and Gate G2 as the C2
+  structural boundary.
+- Full local Lean/D6 verification is green; the symbolic vector remains exactly
+  `30CABF852D623549CD5293628D5B3899BE805D543B537CB223F1B6FAB5C324E1`.
+- The sealed exact-range security scan has complete coverage, zero reportable findings,
+  and durable report hash
+  `E1C78E9602266105A6739C7104637A384F4C280618C1C056805827F726C07B68`.
+
+**ASSUMED**
+
+- `Context.blockRulesHold` remains the authorized abstract projection of B1–B8 and
+  B11–B12. P-005 neither implements nor claims production block validation.
+
+**UNKNOWN / RESERVED**
+
+- Whether the future P-101 authenticated store satisfies all three
+  `LawfulStateOps` laws.
+- Whether P-101's concrete decoder/checker pipeline satisfies the exact F3 reward-input
+  provenance obligation.
+- Canonical bytes, signing preimage, address derivation, owner-controlled `R_MAX`
+  value/curve, and SI-001/SI-002/SI-003.
+- Al's second line-by-line judgment and merge decision. PR #9 remains unmerged, and
+  only Al's merge can complete P-005 or help unblock P-101.
+
+**Process improvement:** keep a theorem-surface audit that distinguishes required
+concrete conformance laws from the subset each abstract proof projects. This makes an
+unused law visible as a deliberate future obligation rather than allowing it to drift
+out of the spec.
