@@ -1,6 +1,6 @@
 # Cycle 1 — P-001 Builder Report
 
-**Status:** IN PROGRESS — FIRST ORIGIN RUN GREEN, FINAL CI CALIBRATION PENDING
+**Status:** IN PROGRESS — ADVERSARY FINDINGS FIXED, FINAL ORIGIN VERIFY PENDING
 **Date:** 2026-08-15
 **Packet:** P-001 — repository and CI scaffold
 **Lane:** AUTO
@@ -132,6 +132,18 @@ Implemented the predicted P-001 surface without entering protocol semantics:
    `55cc8345863c7cc4c66a329aec7e433d2d1c52a9`. Cache misses still install each exact
    version with Cargo's locked dependency graph; cache hits skip only that repeated
    installation step.
+7. Adversarial review found an unratified legal assertion in workspace metadata:
+   `LicenseRef-Proprietary`. No license choice appears in the governing sources, so the
+   field and its ten crate inheritances were removed rather than silently making that
+   decision for the project.
+8. Adversarial review also found that the public root README named PoUW without
+   explicitly acknowledging the governing survey's Ofelimos usefulness ceiling. The
+   README now states the at-most-one-half ceiling, the absence of a problem class with
+   provably high usefulness, and the requirement to label future hardness claims as
+   assumptions with packet evidence.
+9. The source-policy gate was strengthened to reject `f32`/`f64` anywhere in a
+   `cj3-*` Rust crate and to catch joined or camel-case forms of `MainNetwork`, closing
+   easy evasions of A5 and D12 before protocol types exist.
 
 None of these corrections expanded the predicted file surface or entered a
 consensus-semantic area.
@@ -151,9 +163,83 @@ The run calibrated two CI-process findings described in BUILD deviations 5–6. 
 verification remains pending on the amended workflow; the earlier green run is not
 being reused as evidence for the changed branch head.
 
+The cache-seed origin run then passed all eleven jobs for calibration commit
+`d8b9b24e78bdc557e1c948253ef2a4d62a29f4e0`:
+
+- Run: <https://github.com/Quigles1337/COINjecture3.0/actions/runs/31920639189>
+- Event/result: `pull_request` / `success`
+- GitHub-observed interval: 2026-08-16 01:54:40Z–02:13:44Z
+- Durable PR-ref caches created: cargo-deny 0.20.2 (4,786,069 bytes), cargo-audit
+  0.22.2 (7,780,154 bytes), and cargo-geiger 0.13.0 (10,364,091 bytes), each keyed to
+  Linux and Rust 1.97.1.
+
+That run proves the cache-miss/install/save path. It predates the adversary fixes and
+therefore is not the final-head verification; the next origin run must prove cache
+hits and the complete corrected diff.
+
 ## 4. ADVERSARY PASS
 
-Pending.
+**Seat switch: ADVERSARY.** The complete 38-file diff was re-read from `main` to the
+packet head, followed by mechanical surface, policy, file-mode, credential-shape, and
+action-pinning sweeps.
+
+### Findings, recorded verbatim
+
+1. **Critical — A10 honest-claims omission (fixed):** “The public README calls the
+   project Proof of Useful Work but does not itself acknowledge the governing
+   Ofelimos `≤½` usefulness ceiling. A reader can encounter marketing language without
+   its required limiting fact.” Fix: added the ceiling, the lack of a problem class
+   with provably high usefulness, and the assumption/evidence rule to `README.md`.
+2. **Critical — unratified project decision (fixed):** “`LicenseRef-Proprietary`
+   silently selects legal metadata absent from Al's rulings and both governing design
+   documents. P-001 has no authority to make that licensing decision.” Fix: removed
+   the workspace license field and all crate inheritances; no replacement was guessed.
+3. **Non-critical process finding (fixed):** “One feature commit launches duplicate
+   serial pipelines through both `push` and `pull_request`, doubling cost without
+   independent evidence.” Fix: feature branches now run through the PR trigger only;
+   `main` retains its push trigger.
+4. **Non-critical availability finding (fixed):** “Cold-compiling the three pinned
+   audit tools consumes nearly the entire serial pipeline and magnifies the cost of
+   every evidence-only commit.” Fix: added exact-version, exact-Rust cache keys via the
+   commit-pinned official cache action; cache misses preserve locked installs.
+5. **Accepted residual — honest phase deferrals:** “Four required status names are
+   green today even though their future-phase tests do not yet exist.” This is not
+   closed by pretending they ran: each log emits `NOT_YET_ADMITTED`, names its owner,
+   and disclaims test execution; the owning packet must add the active handler. This
+   residual remains visible until P-005/P-007/Phase 1 activation.
+6. **Accepted residual — repository setting:** “GitHub's protection readback returns
+   HTTP 404 / `Branch not protected` for `main`.” P-001's explicit done-condition is
+   to document the protection configuration, which `.github/BRANCH_PROTECTION.md`
+   does. Active protection is not claimed; the autonomous merge protocol remains the
+   current enforcement layer.
+
+### Axiom and hostile-input sweep
+
+- **A1–A4:** no consensus structure, instance, score, quality, fork-choice, or miner
+  metadata exists. The Rust sweep found none of `solve_time`, `work_score`,
+  `reported_*`, or `self_reported`.
+- **A5:** no amount or arithmetic implementation exists; the strengthened CI policy
+  rejects `f32` and `f64` throughout every core crate.
+- **A6–A7:** no apply path, state mutation, RPC endpoint, secret, or input codec exists.
+- **A8:** no `.lean` file or vector definition exists; `spec/README.md` only marks the
+  future HUMAN-lane boundary.
+- **A9:** all ten implementation roots are Rust, no C/C++/Python/build-script/FFI file
+  exists, every entry point forbids unsafe code, and Geiger reports zero unsafe items
+  in every package.
+- **A10:** the corrected README now carries the required caveats and makes no hardness,
+  readiness, or security claim.
+- **A11:** every green claim in this report points to a run URL or a committed artifact;
+  future-phase jobs explicitly deny that their tests ran.
+- **TBD integrity:** no governing plan/spec/decision value changed, no Al- or
+  Sarah-owned value was filled, and P-008 remains blocked on the exact frontend URL.
+- **Overflow/parser/injection:** there is no amount math or protocol codec. The only
+  parser consumes Cargo-owned JSON with `ConvertFrom-Json`; resolved manifest paths
+  are passed as one process argument. Gate input is a closed `ValidateSet`. No eval,
+  command-string construction, or PR-event interpolation exists. All 17 workflow
+  action references use full 40-hex commits and workflow permissions are read-only.
+
+**Adversary result:** the two Critical findings were fixed locally. No known Critical
+remains; the amended head still requires a complete green origin run before merge.
 
 ## 5. MERGE
 
@@ -189,9 +275,21 @@ Pending.
   Evidence: `scripts/ci/verify-geiger.ps1` output retained in this session.
 - The complete initial origin pipeline succeeded for the first P-001 build commit.
   Evidence: <https://github.com/Quigles1337/COINjecture3.0/actions/runs/31919794372>.
+- The cache-seed pipeline succeeded and GitHub lists all three exact cache entries on
+  the PR merge ref.
+  Evidence: <https://github.com/Quigles1337/COINjecture3.0/actions/runs/31920639189>
+  and `gh cache list --ref refs/pull/1/merge` output recorded above.
 - `actions/cache` v6.1.0 resolves to commit
   `55cc8345863c7cc4c66a329aec7e433d2d1c52a9`.
   Evidence: GitHub's `actions/cache` release and Git-ref APIs queried on 2026-08-15.
+- The post-adversary local D6 sequence passed after removing unratified license
+  metadata, correcting A10 disclosure, and strengthening source policy.
+  Evidence: this session's command output and the changed files themselves.
+- The mechanical adversary sweep found exactly 38 changed files, no deletions, no
+  out-of-surface path, ten Rust entry points, no formal/polyglot/native file, no
+  injection-prone script construct, no credential-shaped text, no special Git mode,
+  and ten workspace members in `Cargo.lock`.
+  Evidence: this session's recorded adversary command output.
 
 ## ASSUMED
 
@@ -202,8 +300,9 @@ Pending.
 ## UNKNOWN
 
 - Whether the amended workflow restores and executes the pinned cached binaries
-  correctly on a subsequent origin run. Resolve by pushing this branch and reading the
-  Actions run, cache steps, and every job result from GitHub.
+  correctly for the post-adversary branch head. Resolve by pushing the final amended
+  commit and reading its Actions run, cache steps, and every job result from GitHub.
 - Whether repository-plan permissions allow applying branch protection through the
-  API. P-001 requires a documented configuration; actual application will be reported
-  separately and will not be claimed unless read back from GitHub.
+  API. Current evidence is HTTP 404 / `Branch not protected`; P-001 requires a
+  documented configuration, and active protection will not be claimed unless a future
+  setting change is read back from GitHub.

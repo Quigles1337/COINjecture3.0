@@ -10,7 +10,8 @@ if ($sourceFiles.Count -eq 0) {
 }
 
 $bannedPattern = '\bsolve_time\b|\bwork_score\b|\bself_reported\b|\breported_[A-Za-z0-9_]*\b'
-$networkPattern = '\bmainnet\b|\bmain[-_ ]network\b'
+$networkPattern = '\bmain(?:net|[-_ ]?network)\b'
+$floatPattern = '\bf32\b|\bf64\b'
 $failures = [System.Collections.Generic.List[string]]::new()
 
 foreach ($file in $sourceFiles) {
@@ -20,6 +21,9 @@ foreach ($file in $sourceFiles) {
     }
     if ($content -match $networkPattern) {
         $failures.Add("forbidden production-network surface: $($file.FullName)")
+    }
+    if ($content -match $floatPattern) {
+        $failures.Add("floating-point type forbidden in cj3-* crate: $($file.FullName)")
     }
 }
 

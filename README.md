@@ -4,6 +4,12 @@ COINjecture 3.0 is a ground-up, derive-don't-trust Proof-of-Useful-Work protocol
 program. This repository is pre-testnet software: **no main network configuration
 exists**, and no production-readiness or security claim is made.
 
+PoUW is not wholly useful work. The governing research survey records the Ofelimos
+engine-usefulness ceiling of **at most one half** and notes that no problem class has
+yet demonstrated provably high usefulness. Any eventual hardness claim in this
+project must be labeled as an assumption and supported by packet evidence; P-001 makes
+no hardness claim.
+
 The current code is the P-001 architecture and CI scaffold only. Crate roots are empty
 trust-boundary markers; they do not implement transaction rules, state transition,
 beacons, consensus, networking, RPC, storage, or solving behavior.
