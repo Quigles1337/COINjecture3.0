@@ -120,3 +120,45 @@ continuous-batch mode. STOP at Gate G0.
 - P-101 remains blocked on Gate G0.
 - D11 capacity is clear only while the COINjecture 2.0 agent queue remains blocked on
   Sarah's GATE-1/GATE-2 answers. If those gates clear, CJ3 pauses immediately.
+
+## Audit traceability amendment overlay — RATIFIED (Al, 2026-08-16)
+
+The following non-preempting live ruling was received during P-004 and applied at its
+next packet boundary, after P-004's exact-merge-SHA mainline D6 completed:
+
+```text
+GOVERNANCE INJECTION — non-preempting. Do NOT interrupt the in-flight packet;
+process this at the next packet boundary.
+
+docs/AUDIT_TRACEABILITY.md is already placed — verify presence (SHA-256
+58C762568A63D8A4AFEACDEB1535AA9C930099F49118D2B45B9B483B8D560EFC) and commit it.
+
+AMEND-1, AMEND-2, AMEND-3 (defined in that document, GAP-2/3/4) are RATIFIED —
+apply them to PROTOCOL_SPEC §12 and the Gate G1 criteria in the same commit,
+and record the ratification in the LEDGER overlay.
+
+P-009 is approved, appended to the queue, and UNBLOCKED. Source documents:
+  1. C:\Users\LEET\Downloads\COINjecture-2.0-Security-Audit.docx  (third-party audit)
+  2. C:\Users\LEET\Downloads\DARQ-LV-001_COINjecture_v2.6_Lean_Audit.pdf  (optional
+     third source — Lean audit; flag anything bearing on CJ3's A8 track)
+First action of P-009: copy both into loop/evidence/ and commit — Downloads is
+not durable evidence storage. The Codex security-scan report source is still
+outstanding; if its findings are already fully represented in the committed
+2.0 remediation record, say so with pointers rather than waiting on the file.
+
+Continue continuous-batch afterward.
+```
+
+### Effective audit amendments and queue ruling
+
+- **AMEND-1 — RATIFIED:** Protocol Spec §12 now requires explicit object-level
+  authorization enumeration for every non-public endpoint and bounded remote-input
+  log emission/rate discipline.
+- **AMEND-2 — RATIFIED:** Gate G1 now requires a forced mid-block-apply process-death
+  test proving that `cj3-store` restarts at the exact pre-block state.
+- **AMEND-3 — RATIFIED:** every future value-moving structure must extend the
+  normative Lean V-rules before any Rust implementation exists.
+- **P-009 — APPROVED / UNBLOCKED:** perform read-only source-audit traceability
+  verification. The two supplied audit files enter durable `loop/evidence/` storage
+  before analysis; the missing Codex scan file does not block if its findings are
+  already fully represented by exact committed 2.0 remediation pointers.
