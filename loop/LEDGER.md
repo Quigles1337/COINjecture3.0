@@ -103,7 +103,8 @@ continuous-batch mode. STOP at Gate G0.
 - **D1 — RATIFIED:** lattice SIS is the genesis problem class behind the
   `ProblemClass` registry, as proposed.
 - **D2 — RATIFIED:** Nakamoto longest-chain with eligibility/quality decoupling is the
-  consensus skeleton, as proposed.
+  consensus skeleton, as proposed and subsequently amended by the Gate G0-A ruling
+  below.
 - **D14 — RATIFIED:** the beacon is a trait-gated VDF design, with final technology
   selected by P-002 and the marked devnet-only placeholder retained as proposed.
 - **D15 — RATIFIED:** Ed25519 with domain-separated canonical encoding, as proposed.
@@ -423,3 +424,89 @@ gap to resolve at the D16 reveal, not before.
   project at Lean 4.28.0 plus Mathlib 4.28.0. Compatibility is an explicit reveal-time
   gap to resolve at D16; no pre-reveal migration, Sarah contact, or silent version
   alignment is authorized.
+
+## Gate G0 partial ruling overlay — G0-A RATIFIED / G0 HOLD (Al, 2026-08-16)
+
+The following live ruling is preserved verbatim. It ratifies G0-A only, amends D2,
+and leaves the overall gate and every other listed surface on HOLD:
+
+```text
+GATE G0 — PARTIAL RULING. G0 disposition: HOLD (not PASS).
+
+G0-A RATIFIED — Option 2, static size_param.
+  size_param is a protocol constant, changed only by explicit human-ratified
+  protocol upgrade. No dynamic size retarget exists in the codebase. B3
+  validates size_param against the constant. P-11 is struck as moot.
+  P-1/P-2 apply to the hash-target knob ONLY: propose values derived from
+  P-006's stable hash-only envelope (36/36) with the supporting evidence,
+  for my review — do not fill them unilaterally.
+  Record in LEDGER as an amendment to D2, with this rationale: the failure
+  is in size calibration, not fork choice; D2's decoupling means an
+  easy-drifting instance degrades usefulness, not chain security.
+  Record the honest consequence in README limitations: CJ3's useful-work
+  difficulty is governance-calibrated, not self-calibrating.
+  Add a standing item: size adequacy is re-reviewed at every phase gate.
+
+NEW STANDING LESSON (LEDGER) — SELECTION-BIAS CHANNEL: a consensus quantity
+  may be honestly derived and still adversarially distributed, because
+  miners choose which valid solutions to publish. Any future control loop
+  that aggregates published miner behavior must state its resistance to
+  strategic withholding or be rejected. Cite P-006's retention figures.
+
+G0-B, G0-C, G0-D, G0-E: HOLD. I am drafting these with a reviewer and will
+  supply normative text. Do NOT infer, propose defaults for, or partially
+  implement them. P-007/PR #14 stays draft and unmerged.
+
+Permitted work while G0 holds: nothing that touches held surfaces. If no
+  packet qualifies, STOP and idle — do not manufacture work.
+```
+
+### Effective G0-A amendment to D2
+
+- **Gate disposition:** G0 is **HOLD**, not PASS. P-101 remains blocked. G0-B through
+  G0-E remain HUMAN-held and receive no defaults, partial implementation, or inferred
+  wording from this overlay.
+- **Static useful-work size:** `size_param` is an active protocol constant. A block
+  MUST carry exactly that constant, B3 MUST reject any other value, and the constant
+  changes only through an explicit human-ratified protocol upgrade. There is no
+  dynamic `size_param` retarget or published-quality controller on any protocol or
+  runtime path. The sealed P-006 offline simulator remains historical rejection
+  evidence only; it is not an admitted implementation.
+- **P-11:** `SIZE_RETARGET_WINDOW` is **STRUCK — MOOT**. Its historical P-006 test
+  range remains evidence, not an active parameter surface.
+- **Hash-only scope:** P-1 and P-2 govern only the Nakamoto hash-target cadence and
+  controller. They do not govern instance size.
+- **D2 rationale:** P-006 falsified the tested size-calibration controller, not the
+  longest-chain fork-choice skeleton. Because D2 decouples checked useful-work
+  validity/quality from chain weight, an instance that becomes too easy degrades the
+  usefulness/calibration objective; it does not grant that quality signal more chain
+  weight or independently break fork choice.
+- **Governance consequence:** useful-work difficulty is governance-calibrated rather
+  than self-calibrating. Every G0–G4 phase-gate closeout MUST re-review whether the
+  active static `size_param` remains adequate and either retain it explicitly or route
+  a change through a human-ratified protocol upgrade.
+
+### P-1/P-2 proposals for Al review — NOT RATIFIED
+
+These are proposal inputs, not an amendment and not protocol values:
+
+- **P-1:** no absolute value is proposed. P-006 normalized its target interval to
+  `1.0` and contains no propagation, reference-miner, production-VDF-delay, or solved-
+  SIS distribution evidence from which seconds can be derived. A numeric P-1 would be
+  invention; it remains `TBD` for Al's review.
+- **P-2:** builder review candidate: EMA window `W = 32` blocks, fixed controller gain
+  `1/8`, and multiplicative per-update clamp `[8/9, 9/8]`. P-006 passed all six unique
+  hash-only settings: windows `{16, 32, 64}` crossed with upper caps `{9/8, 5/4}`.
+  The candidate uses the interior window and conservative passing cap, but P-006 did
+  **not** statistically distinguish it from the other five. It is `PROPOSED FOR AL
+  REVIEW` and MUST NOT be treated as filled or implemented before ratification.
+
+### Standing lesson — selection-bias channel
+
+A consensus quantity can be honestly recomputed and still be adversarially
+distributed because miners choose which valid solutions to publish. Any future
+control loop that aggregates published miner behavior MUST state and evidence its
+resistance to strategic withholding or be rejected. P-006's persistent-selection
+model retained only `0.423–0.806` of honest equilibrium size at 35% strategic share
+and `0.240–0.700` at 51%; changing window speed delayed the drift but did not remove
+its direction.

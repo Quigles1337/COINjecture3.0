@@ -5,6 +5,10 @@
 **Convention:** `TBD(P-xxx)` marks values discovered by the named packet — agents MUST
 NOT invent these (A11). "MUST/MUST NOT/SHOULD" per RFC 2119.
 
+**Gate status:** G0 is HOLD. G0-A is ratified and incorporated below; G0-B through
+G0-E remain held. This document remains draft and no held value is implied by the
+G0-A amendment.
+
 ---
 
 ## §1 Notation and cryptographic primitives
@@ -41,8 +45,8 @@ bytes and in instance seeds ⇒ no cross-network replay of transactions or solut
 
 | ID | Parameter | Value | Source |
 |----|-----------|-------|--------|
-| P-1 | `TARGET_BLOCK_TIME` | TBD(P-006) | difficulty sim |
-| P-2 | `RETARGET_WINDOW_W` | TBD(P-006) | difficulty sim |
+| P-1 | `TARGET_BLOCK_TIME` — hash-target cadence only | TBD — P-006 normalized to `1.0` and cannot derive seconds | G0-A; proposal review required |
+| P-2 | `RETARGET_WINDOW_W` — hash-target controller only | TBD — review candidate below is NOT RATIFIED | G0-A; P-006 hash-only envelope |
 | P-3 | `VALIDATION_BUDGET` — max checker cost per block (ms, reference hardware) | TBD(P-003) | asymmetry bench; gates Tier-1 trigger (plan D4) |
 | P-4 | SIS `(n, m, q, β²)` | TBD(P-003) | parameter search |
 | P-5 | `θ` threshold quality (see §5.3) | `SCALE` (i.e. ‖s‖² ≤ β²) | definitional |
@@ -51,8 +55,21 @@ bytes and in instance seeds ⇒ no cross-network replay of transactions or solut
 | P-8 | `TX_MAX_BYTES`, `BLOCK_MAX_BYTES`, `SOL_MAX_BYTES` | TBD(P-001 defaults, ratify G0) | ingress bounds |
 | P-9 | `FEE_MIN` | TBD — owner Al | economics |
 | P-10 | `TIMESTAMP_DRIFT_Δ` | TBD(P-001 default, ratify G0) | §6 B11 |
-| P-11 | `SIZE_RETARGET_WINDOW` | TBD(P-006) | difficulty sim |
+| P-11 | `SIZE_RETARGET_WINDOW` | STRUCK — MOOT; no dynamic size retarget | G0-A ratified |
 | P-12 | Subsidy schedule | placeholder constant; owner Al + Ken | explicitly out of program scope |
+
+`size_param` is the symbolic active protocol constant `ACTIVE_SIZE_PARAM`. G0-A
+ratifies its static status, not its numeric value: the value remains unfilled while
+the held class/parameter surface is unresolved. It changes only through an explicit
+human-ratified protocol upgrade, never through block history or miner observations.
+
+**P-1/P-2 proposal for Al review — non-normative:** P-006 supports the broad hash-only
+region `W ∈ {16, 32, 64}` blocks and multiplicative upper cap
+`c ∈ {9/8, 5/4}` under fixed gain `1/8`; all six unique coordinates passed. The
+builder review candidate is `W = 32`, gain `1/8`, clamp `[8/9, 9/8]`, chosen as the
+interior window and conservative passing cap. P-006 did not distinguish it from the
+other five coordinates, so P-2 remains TBD pending Al's review. No absolute P-1 is
+proposed because P-006 contains only normalized time and cannot justify seconds.
 
 ## §4 Beacon
 
@@ -139,7 +156,7 @@ Header {
   beacon_out      [32]        // §4, verified B4
   instance_seed   [32]        // derived, verified B5
   class_id        u16         // must equal active anchor class
-  size_param      SizeParam   // derived by retarget, verified B3
+  size_param      SizeParam   // equals ACTIVE_SIZE_PARAM, verified B3
   hash_target     [32]        // derived by retarget, verified B3
   tx_root         [32]        // Merkle root of canonical tx encodings
   state_root      [32]        // post-state commitment, verified B10
@@ -154,8 +171,10 @@ Header {
 
 - **B1** Header and body decode canonically; sizes within P-8.
 - **B2** `parent_hash` known; `height = parent.height + 1`; `network_id` matches.
-- **B3** `hash_target` and `size_param` EQUAL the retarget function outputs computed
-  from ancestor headers (§10). *Difficulty is derived and checked, never read.*
+- **B3** `hash_target` EQUALS the hash-target retarget output computed from ancestor
+  headers (§10), and `size_param == ACTIVE_SIZE_PARAM`. The header fields are checked,
+  never trusted. `ACTIVE_SIZE_PARAM` changes only by explicit human-ratified protocol
+  upgrade; no dynamic size retarget exists.
 - **B4** `Beacon::verify(parent, beacon_out)`.
 - **B5** `instance_seed == H(D_INST ‖ network_id ‖ height ‖ parent_hash ‖ beacon_out)`.
 - **B6** Body contains exactly one `Solution`; `class_id` = active anchor;
@@ -258,13 +277,20 @@ Lean V-rules before any Rust implementation exists. There is no Rust-first excep
 - **Weight:** `weight(block) = ⌊2²⁵⁶ / (hash_target + 1)⌋` — deterministic from a
   header field that B3 itself validates. Chain weight = Σ weights. Ties: lower
   `H(header)` wins. **Quality Q appears nowhere in this section (A4).**
-- **Retarget — two knobs, two timescales:**
+- **Retarget — hash target only:**
   - `hash_target`: clamped EMA on inter-block times over `W` (P-2), targeting P-1.
-    Standard Nakamoto-style; exact clamps TBD(P-006).
-  - `size_param`: slower window (P-11) adjusting instance size toward a target solve
-    envelope inferred from on-chain quality margins. Exact function TBD(P-006) —
-    **Phase 2 MUST NOT freeze this before the P-006 stability report is ratified**
-    (risk R2; promotion criteria in plan D2 if unstabilizable).
+    P-1/P-2 remain unfilled pending Al's review of the non-normative proposal in §3.
+  - `size_param`: exactly `ACTIVE_SIZE_PARAM`, a human-governed protocol constant.
+    There is no on-chain size controller, no dynamic size-retarget function, and no
+    aggregation of published quality margins for instance-size adjustment. P-11 is
+    struck as moot. P-006's sealed offline simulator is retained as historical
+    rejection evidence and is not protocol/runtime code.
+- **Selection-bias boundary:** any future control loop proposed over published miner
+  behavior MUST state and evidence resistance to strategic withholding or be rejected.
+  An honestly recomputed observation is not necessarily honestly distributed.
+- **Adequacy review:** every G0–G4 phase gate MUST re-review whether
+  `ACTIVE_SIZE_PARAM` remains adequate. A change requires an explicit human-ratified
+  protocol upgrade; gate review is not an automatic retarget.
 
 ## §11 Rewards
 
@@ -343,8 +369,10 @@ otherwise pretrusted divisor is non-conforming.
 
 ## §15 Open-TBD index
 
-P-1/P-2/P-11 retarget constants → P-006 · P-3 validation budget + P-4 SIS parameters →
-P-003 · P-7 quality-span value/curve and P-9/P-12 economics → Al (+ Sarah for P-7;
+P-1/P-2 hash-target constants → P-006 proposal, Al review · P-11 → struck as moot by
+G0-A · `ACTIVE_SIZE_PARAM` value → held class/parameter ruling plus explicit human
+upgrade · P-3 validation budget + P-4 SIS parameters → P-003 · P-7 quality-span
+value/curve and P-9/P-12 economics → Al (+ Sarah for P-7;
 Ken for P-12) · P-8/P-10 ingress/drift defaults
 → P-001 proposal, G0 ratification · Beacon technology → P-002 · Hash/signature
 primitives (§1) → G0 confirmation (D15) · Reward curve shaping incl. μ-balance hook
