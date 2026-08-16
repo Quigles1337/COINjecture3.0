@@ -1,13 +1,13 @@
 # COINjecture 3.0 Packet Queue
 
-**Queue status:** P-005 SECOND REVIEW APPROVED; RATIFICATION/MERGE CLOSEOUT IN FLIGHT —
-Al live rulings, 2026-08-15 through 2026-08-16. Al accepts F1/F2/F3 as closed and
-authorizes PR #9 to merge. The reviewed V1–V9/STF encoding becomes HUMAN-RATIFIED with
-that merge; `Spec/*.lean` carries the ratified ownership header, while all vector bytes
-remain non-normative and symbolic pending SI-001/SI-002/SI-003. The ratification head
-must pass exact-head D6, the merge is guarded by that exact head, and exact-merge-SHA
-D6 must then pass before P-006/P-007/P-009 resume. P-008 remains blocked on the exact
-frontend URL. Effective with P-005's merge, P-101 remains blocked on Gate G0 only.
+**Queue status:** P-005 COMPLETE; P-006/P-007/P-009 CONTINUOUS BATCH READY —
+Al's second review accepted F1/F2/F3 and authorized PR #9. Final reviewed head
+`8d8ec440f86cbe06fc30eff78f9cfcc6076c0180` passed all eleven D6 jobs in run
+`31967696333`; expected-head guarded merge
+`916e5027f0918973bf45d6a2bf90abd2ae253197` passed exact-merge-SHA D6 in run
+`31968030240`. The V1–V9/STF encoding is HUMAN-RATIFIED; vectors remain non-normative
+and symbolic pending SI-001/SI-002/SI-003. P-008 remains blocked on the exact frontend
+URL. P-101 is blocked on Gate G0 only.
 
 | Packet | Phase | Queue status | Blocking condition |
 |--------|-------|--------------|--------------------|
@@ -15,13 +15,13 @@ frontend URL. Effective with P-005's merge, P-101 remains blocked on Gate G0 onl
 | P-002 | Phase 0 | COMPLETE — `7ecba896` | PR #3 and exact-merge-SHA D6 CI green |
 | P-003 | Phase 0 | COMPLETE — `e0056157` | PR #5 and exact-merge-SHA D6 CI green |
 | P-004 | Phase 0 | COMPLETE — `4644374f` | PR #7 and exact-merge-SHA D6 CI green |
-| P-005 | Phase 0 | HUMAN-RATIFIED AT MERGE — MERGE AUTHORIZED | Ratification-head and exact-merge-SHA D6 green |
-| P-006 | Phase 0 | QUEUED — APPROVED | Pickup after P-005 exact-merge-SHA D6 and fresh D11 check |
-| P-007 | Phase 0 | QUEUED — APPROVED | Pickup after P-005 exact-merge-SHA D6 and fresh D11 check; its own tripwires remain armed |
+| P-005 | Phase 0 | COMPLETE — HUMAN-RATIFIED — `916e5027` | PR #9 and exact-merge-SHA D6 green |
+| P-006 | Phase 0 | QUEUED — APPROVED / READY | Fresh D11 check at pickup |
+| P-007 | Phase 0 | QUEUED — APPROVED / READY | Fresh D11 check at pickup; its own SI/tripwires remain armed |
 | P-008 | Phase 0 / Phase 4 seam input | BLOCKED | Exact public frontend repository URL supplied by Al; URL MUST NOT be guessed |
-| P-009 | Phase 0 / audit traceability | QUEUED — APPROVED / UNBLOCKED / INTERPRETATION AUTHORIZED | Source evidence copied durably; pickup after P-005 exact-merge-SHA D6 and fresh D11 check |
+| P-009 | Phase 0 / audit traceability | QUEUED — APPROVED / UNBLOCKED / INTERPRETATION AUTHORIZED / READY | Source evidence copied durably; fresh D11 check at pickup |
 | P-010 | Phase 0 / documentation | COMPLETE — `1e986cb2` | Feature PR #10 and closeout PR #11; both exact-merge-SHA D6 runs green |
-| P-101 | Phase 1 head | BLOCKED | Gate G0 only, effective with P-005's human-reviewed merge |
+| P-101 | Phase 1 head | BLOCKED | Gate G0 only |
 
 ## Seed packet definitions
 
@@ -63,9 +63,11 @@ authorization permits builder implementation only within the symbolic/SI boundar
 Pickup on 2026-08-16 classified the whole packet HUMAN because the done-condition
 directly requires both `Spec/*.lean` content and protocol-vector definitions, each
 named by D17 as HUMAN lane. Al reviewed the complete encoding twice, returned F1/F2/F3
-after the first review, and accepted all three as closed after remediation. Effective
-with PR #9's authorized merge, the V1–V9/STF encoding is HUMAN-RATIFIED. The vector
-artifact remains explicitly non-normative and symbolic pending SI-001/SI-002/SI-003.
+after the first review, and accepted all three as closed after remediation. PR #9
+merged at `916e5027f0918973bf45d6a2bf90abd2ae253197`; exact-head run `31967696333`
+and exact-merge-SHA run `31968030240` both passed all eleven jobs. The V1–V9/STF
+encoding is HUMAN-RATIFIED. The vector artifact remains explicitly non-normative and
+symbolic pending SI-001/SI-002/SI-003.
 
 ### P-006 — Difficulty simulation
 
@@ -120,8 +122,8 @@ standing rule in `loop/LEDGER.md`.
 
 ### P-101 — Kernel
 
-Phase 1 head, blocked on G0 only after P-005's human-reviewed merge: V1–V9 + STF versus
-Lean vectors. Its concrete authenticated store MUST discharge all three
+Phase 1 head, blocked on G0 only: V1–V9 + STF versus Lean vectors. Its concrete
+authenticated store MUST discharge all three
 `LawfulStateOps` laws from Protocol Spec §8 and prove that the kernel's actual storage
 reads and writes are coherent with them. Its `Context.rewardInputs` wiring MUST
 consume only the Q returned by
