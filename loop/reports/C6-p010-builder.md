@@ -1,6 +1,6 @@
 # Cycle 6 — P-010 Builder Report
 
-**Status:** IN PROGRESS — ADVERSARY FIX; EXACT-HEAD REVERIFY REQUIRED
+**Status:** MERGE GUARDS PENDING — CONTENT/ADVERSARY HEAD D6 GREEN
 **Date:** 2026-08-16
 **Packet:** P-010 — DOCUMENTARIAN / institutional README
 **Lane:** AUTO
@@ -185,7 +185,7 @@ dependents.
 
 ## 3. VERIFY
 
-**Status:** local pass; original content-head D6 passed; adversary-fix head pending.
+**Status:** local pass; content/adversary head D6 passed.
 
 ### Quickstart command evidence
 
@@ -238,8 +238,20 @@ Every command printed in the README ran successfully from the P-010 repository r
 
 The post-CI adversary pass found a broken depth link into this report and changed its
 heading to a stable anchor. Therefore run 31957255022 is retained as evidence for the
-original content but is not represented as verification of the final head. A new
-exact-head D6 run is required after the fix is pushed.
+original content but is not represented as verification of the stable-anchor fix. A
+new exact-head D6 run was therefore required after the fix was pushed.
+
+### Content/adversary-head origin evidence
+
+- Stable-anchor/adversary head: `64ecc94161bcc75d103cbe4c6fbefb42658e9b3c`.
+- Exact-head D6: [run 31957497462](https://github.com/Quigles1337/COINjecture3.0/actions/runs/31957497462),
+  success on that SHA; all eleven jobs succeeded.
+- Authenticated GitHub rendering of that branch resolved all 21 distinct Markdown
+  heading fragments, including this report's repaired `#3-verify` target.
+
+This paragraph is an evidence-only report update after the verified content head. Its
+own exact-head rollup is checked on draft PR #10 before merge; no further commit is
+created merely to embed that later run ID, which would recurse indefinitely.
 
 ## 4. ADVERSARY PASS
 
@@ -297,9 +309,10 @@ the BUILD summary.
 | A10 | PASS: conditional hardness, usefulness ceiling, VDF absence, formal absence, and negative legacy evidence are prominent limitations. |
 | A11 | PASS after the heading fix is reverified: local commands, rendered links, original exact-head D6, and every prior packet claim have exact evidence pointers. |
 
-No Critical remains in the content. Merge eligibility now depends on exact-head D6 for
-the stable-anchor fix and the fresh D11/D17/private-repository guard.
+No Critical remains in the content. The stable-anchor fix passed exact-head D6; merge
+eligibility now depends on the evidence-only head rollup and the fresh
+D11/D17/private-repository guard.
 
-## 5. MERGE — PENDING
+## 5. MERGE — PENDING GUARDS
 
-## 6. CALIBRATE — PENDING
+## 6. CALIBRATE — PENDING MERGE
