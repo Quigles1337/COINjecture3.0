@@ -19,17 +19,17 @@ enforces the complete design ([audit mapping](docs/AUDIT_TRACEABILITY.md#1-findi
 
 ## Status
 
-> Refreshed 2026-08-16 for the Phase 0 / Gate G0 handoff. This is the repository's single current-status
+> Refreshed 2026-08-16 for the partial Gate G0 ruling. This is the repository's single current-status
 > block; its refresh is required at every gate closeout
 > ([standing rule](loop/LEDGER.md#standing-readme-drift-control-rule--ratified-al-2026-08-16)).
 >
 > | Field | Current record | Evidence |
 > |---|---|---|
 > | Scope | Private repository; pre-testnet; no running testnet, production node, or mainnet configuration | [D9/D12 rulings](loop/LEDGER.md#effective-ratifications), [source-policy gate](scripts/ci/check-source-policy.ps1) |
-> | Phase | **Phase 0 — stopped at Gate G0** | [phase plan](docs/ENGINEERING_PLAN.md#4-phase-plan), [packet queue](loop/PACKETS.md) |
-> | Last phase gate | None of G0–G4 has passed; G0 remains open | [G0 criteria](docs/ENGINEERING_PLAN.md#4-phase-plan), [queue state](loop/PACKETS.md) |
+> | Phase | **Phase 0 — Gate G0 HOLD** | [phase plan](docs/ENGINEERING_PLAN.md#4-phase-plan), [packet queue](loop/PACKETS.md) |
+> | Last phase gate | None of G0–G4 has passed; G0-A is ratified but G0 remains HOLD | [G0-A ruling](loop/LEDGER.md#gate-g0-partial-ruling-overlay--g0-a-ratified--g0-hold-al-2026-08-16), [queue state](loop/PACKETS.md) |
 > | Completed packet evidence | P-001 through P-006, P-009, and P-010 are merged with exact-mainline CI records; P-005's Lean V1–V9/STF is HUMAN-RATIFIED | [batch log](loop/reports/BATCH-LOG.md), [G0 handoff](loop/reports/C7-phase0-g0-handoff.md) |
-> | Current stop | Gate G0 requires HUMAN rulings: P-006 found no robust full two-knob candidate, and P-007 cannot choose canonical codec/domain/SI/P-8/strict-signature semantics | [P-006 report](loop/reports/C7-p006-builder.md), [draft P-007 PR #14](https://github.com/Quigles1337/COINjecture3.0/pull/14), [G0 handoff](loop/reports/C7-phase0-g0-handoff.md) |
+> | Current stop | G0-A ratifies static `size_param`; G0-B through G0-E remain held, so P-007 and P-101 cannot advance | [G0-A ruling](loop/LEDGER.md#gate-g0-partial-ruling-overlay--g0-a-ratified--g0-hold-al-2026-08-16), [draft P-007 PR #14](https://github.com/Quigles1337/COINjecture3.0/pull/14), [G0 handoff](loop/reports/C7-phase0-g0-handoff.md) |
 > | Implemented surfaces | D6 CI and source policy; trait-gated beacon boundary; sampled-SIS derivation/checking and external demonstrator; admission and difficulty benches; HUMAN-ratified Lean V1–V9/STF; symbolic non-normative vectors; source-verified audit matrix v0.2 | [workflow](.github/workflows/ci.yml), [formal project](spec/README.md), [P-006 bench](bench/p006-difficulty/README.md), [audit matrix](docs/AUDIT_TRACEABILITY.md) |
 > | Planned or absent | Canonical Rust codecs/domain bytes and codec fuzzing; kernel, storage, consensus, networking, RPC, node behavior; production VDF; testnet | [P-007 stop](loop/PACKETS.md#p-007--cj3-types), [explicit phase deferrals](scripts/ci/check-phase-gate.ps1), [roadmap](docs/ENGINEERING_PLAN.md#4-phase-plan) |
 
@@ -224,12 +224,22 @@ its immutable run rather than treating an unpinned local installation as equival
   establish a hard sampled distribution
   ([P-004 report](loop/reports/C4-p004-builder.md),
   [calibration evidence](bench/p004-admission/evidence/LEGACY-CALIBRATION.md)).
+- CJ3's useful-work difficulty is **governance-calibrated, not self-calibrating**.
+  G0-A makes `size_param` a static protocol constant changed only by explicit human-
+  ratified upgrade; every phase gate re-reviews its adequacy. An instance that becomes
+  too easy loses usefulness, even though D2's eligibility/quality decoupling prevents
+  that quality drift from directly weighting fork choice. P-006 also showed that
+  checker-honest published quality can remain selection-biased: modeled equilibrium
+  size retention was `0.423–0.806` at 35% strategic share and `0.240–0.700` at 51%
+  ([G0-A amendment](loop/LEDGER.md#effective-g0-a-amendment-to-d2),
+  [P-006 result](loop/reports/C7-p006-builder.md#candidate-findings)).
 
 Material unfilled values remain visible:
 
 | Item | State and owner | Evidence |
 |---|---|---|
-| P-1/P-2/P-11 — block time and retarget windows | **UNFILLED** — P-006 found no robust full two-knob candidate; owner: G0/HUMAN ruling | [P-006 report](loop/reports/C7-p006-builder.md), [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
+| P-1/P-2 — hash-target cadence/controller only | **UNFILLED / PROPOSED FOR AL REVIEW** — no absolute P-1 can be derived; P-2 review candidate is `W=32`, gain `1/8`, clamp `[8/9,9/8]`, not ratified | [G0-A proposal](loop/LEDGER.md#p-1p-2-proposals-for-al-review--not-ratified), [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
+| P-11 — size-retarget window | **STRUCK — MOOT** — `size_param` is static and changed only by human-ratified protocol upgrade | [G0-A amendment](loop/LEDGER.md#effective-g0-a-amendment-to-d2), [Spec §10](docs/PROTOCOL_SPEC.md#10-fork-choice-and-difficulty) |
 | P-3/P-4 — validation budget and SIS tuple | **TBD at the normative layer** — provisional P-003 recommendations; owner: G0/HUMAN ratification | [P-003 report](loop/reports/C3-p003-builder.md), [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
 | P-7 — reward cap and reward curve | **TBD** — owner: Al + Sarah after the D16 reveal | [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters), [D16 ratification](loop/LEDGER.md#effective-ratifications) |
 | P-8/P-10 — ingress bounds and timestamp drift | **TBD** — owner: G0/HUMAN ratification | [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
@@ -245,7 +255,7 @@ The phase gates are evidence thresholds, not calendar or deployment promises
 
 | Gate | Planned phase outcome | Current position |
 |---|---|---|
-| **G0 — Foundations and spikes** | P-001–P-007 reports complete; D1/D2/D14/D15 and open interpretation issues resolved with spike evidence | **▶ CURRENT — HUMAN STOP; evidence assembled, P-007 and the P-006 negative result require rulings** ([G0 handoff](loop/reports/C7-phase0-g0-handoff.md)) |
+| **G0 — Foundations and spikes** | P-001–P-007 reports complete; D1/D2/D14/D15 and open interpretation issues resolved with spike evidence | **▶ CURRENT — HOLD; G0-A static size is ratified, G0-B through G0-E await normative text** ([G0-A ruling](loop/LEDGER.md#gate-g0-partial-ruling-overlay--g0-a-ratified--g0-hold-al-2026-08-16), [G0 handoff](loop/reports/C7-phase0-g0-handoff.md)) |
 | **G1 — Kernel** | Lean-vector conformance, conservation properties, mutation spot-check, genesis spend, and crash consistency | Planned after G0 ([Plan G1](docs/ENGINEERING_PLAN.md#4-phase-plan)) |
 | **G2 — Consensus** | Deterministic two-node replay and typed rejection of the adversarial block corpus | Planned after G1 ([Plan G2](docs/ENGINEERING_PLAN.md#4-phase-plan)) |
 | **G3 — Network and RPC** | Three-node devnet adversarial replay and complete fail-closed auth matrix | Planned after G2 ([Plan G3](docs/ENGINEERING_PLAN.md#4-phase-plan)) |

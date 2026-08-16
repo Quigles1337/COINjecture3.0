@@ -1,13 +1,13 @@
 # COINjecture 3.0 Loop State
 
-CYCLE: 7
-PHASE: Phase 0 — Gate G0 handoff
-PACKET: Gate G0 — HUMAN RULING REQUIRED
+CYCLE: 8
+PHASE: Phase 0 — Gate G0 HOLD
+PACKET: Gate G0 partial ruling — G0-A RATIFIED; G0-B through G0-E HELD
 BRANCH: main
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-blocked-on-external
-CAPACITY_OBSERVED_AT: 2026-08-16 P-009 exact-merge-SHA boundary; targeted CJ2 search found no evidence that GATE-1/GATE-2 cleared
-STATUS: G0_STOP
+CAPACITY_OBSERVED_AT: 2026-08-16 G0-A pickup; CJ2 operational state reports CAPACITY_FLAG none with surviving GATE-1/GATE-2 items blocked/awaiting
+STATUS: G0_HOLD_IDLE
 
 ## Ground-truth state
 
@@ -176,9 +176,9 @@ STATUS: G0_STOP
   merge-SHA run `31971438778`. The sealed matrix contains 5,971,968 simulated blocks.
   The full honest/unmanipulated-quality and adversarial envelopes are both 0/36. The
   isolated hash loop passes all 6/6 unique settings, but no tested 64–256-block size
-  window survives the solve-power and interaction sensitivities. P-1/P-2/P-11 remain
-  unfilled; a quality-only size retarget is a G0/Phase-2 design blocker, not a selected
-  protocol function.
+  window survives the solve-power and interaction sensitivities. G0-A subsequently
+  ratified static `size_param`, struck P-11 as moot, and confined unfilled P-1/P-2 to
+  the hash-target controller. No dynamic size retarget is selected or permitted.
 - P-007 is STOPPED / INCOMPLETE in the HUMAN lane. Draft PR #14 preserves only the
   independently specified checked `Amount(u64)` boundary at exact head
   `9acea83ca17d67a19e0d41aeb5e7275666a54013`; run `31969740766` passed all eleven
@@ -191,18 +191,35 @@ STATUS: G0_STOP
   merge-SHA run `31972017916`. Matrix v0.2 records 17 mapped, 10 partial, and six
   surface-excluded third-party findings; tiers all 25 Lean claims without importing
   proof credit; and leaves GAP-7 through GAP-13 explicitly non-ratified.
+- Al's 2026-08-16 partial Gate G0 ruling sets the gate disposition to **HOLD**, not
+  PASS. G0-A ratifies D2 Option 2: `size_param` is an active protocol constant changed
+  only by explicit human-ratified upgrade; B3 compares the header value to that
+  constant; P-11 is struck as moot; and every phase gate re-reviews size adequacy.
+- P-1/P-2 now concern the hash-target knob only and remain unfilled. P-006 cannot
+  derive an absolute P-1 in seconds. The non-normative P-2 review candidate is
+  `W=32`, gain `1/8`, clamp `[8/9,9/8]`; P-006 passed all six tested hash-only
+  coordinates and did not distinguish this candidate from the other five.
+- The standing selection-bias lesson is binding: an honestly recomputed quantity can
+  still be adversarially distributed through selective publication. Any future
+  miner-behavior control loop must evidence withholding resistance or be rejected.
+  P-006 modeled equilibrium size retention of `0.423–0.806` at 35% strategic share
+  and `0.240–0.700` at 51%.
+- G0-B, G0-C, G0-D, and G0-E remain held for Al's reviewer-assisted normative text.
+  Nothing on those surfaces was inferred, defaulted, or partially implemented. Draft
+  PR #14 remains unmerged.
 
 ## Next action
 
-1. STOP at Gate G0. Al must rule on the exact decision surface in
-   `loop/reports/C7-phase0-g0-handoff.md`; no agent may infer those choices.
-2. Keep draft PR #14 unmerged until the P-007 codec/domain/SI/P-8/strict-signature
-   rulings are supplied. Its green `codec-fuzz-smoke` job is a deferral marker, not a
-   fuzz-success claim.
-3. P-008 remains blocked on the exact frontend URL. P-101 remains blocked on Gate G0
+1. STOP and idle at Gate G0 HOLD. No queued packet qualifies without touching a held
+   surface; do not manufacture work.
+2. Await Al's normative G0-B through G0-E text and review of the P-1/P-2 hash-target
+   proposal. No numeric P-1 or P-2 value is ratified by the current overlay.
+3. Keep draft PR #14 unmerged. Its green `codec-fuzz-smoke` job is a deferral marker,
+   not a fuzz-success claim.
+4. P-008 remains blocked on the exact frontend URL. P-101 remains blocked on Gate G0
    only. Sarah-owned and Al-owned values remain unfilled under D16 and their existing
    ownership rules.
-4. On any resume, re-check D11 before touching the repository. If COINjecture 2.0's
+5. On any resume, re-check D11 before touching the repository. If COINjecture 2.0's
    GATE-1/GATE-2 answers have arrived, 2.0 immediately reclaims capacity and CJ3
    remains paused.
 

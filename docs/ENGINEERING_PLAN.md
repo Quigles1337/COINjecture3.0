@@ -215,16 +215,27 @@ cheap, D4) or a BFT stack.
 | "PoUW purity" | Work gates validity | Work gates entry | Work is a paid service |
 | Known formal grounding | Ofelimos (CRYPTO'22) pattern | Hybrid-consensus literature | Filecoin/rollup patterns |
 
-**Decision (proposed).** (a′). **Promotion criteria to (b):** if the network later needs
-fast finality, or P-006 simulation shows the two-knob retarget (hash target × instance
-size) cannot be stabilized, open an ADR to bolt a finality gadget onto (a′) rather than
-rebuild. (c) remains the honest fallback if the usefulness/security tension (RS caveats)
-proves unresolvable for any admitted class.
+**Decision (proposed, later ratified and amended by G0-A).** (a′). The original
+proposal would have opened a finality-gadget ADR if the network needed fast finality
+or P-006 could not stabilize the two-knob retarget. G0-A supersedes the second trigger:
+P-006's size-calibration failure does not reopen fork choice. A finality ADR remains
+available only if the network independently needs fast finality. (c) remains the
+honest fallback if the usefulness/security tension (RS caveats) proves unresolvable
+for any admitted class.
 
 **Consequences.** Easier: smallest consensus codebase, direct reuse of 2.0 remediation
 learnings (the fork work on 2.0 is literally this validation path, done right). Harder:
 two interacting difficulty knobs (named risk R2, spiked in P-006); probabilistic
 finality. Revisit at Phase 2 gate with P-006 data in hand.
+
+**G0-A ratified amendment (Al, 2026-08-16).** D2 retains the decoupled Nakamoto
+longest-chain skeleton, but the two-knob controller is removed. `size_param` is a
+protocol constant changed only by explicit human-ratified upgrade; B3 validates it
+against the active constant, and P-11 is struck as moot. Only the hash target retargets
+under P-1/P-2. P-006's failure was in size calibration, not fork choice: because
+quality does not weight the chain, an instance that drifts too easy degrades useful-
+work adequacy rather than granting additional chain weight. G0 remains HOLD while
+G0-B through G0-E await normative text.
 
 ---
 
@@ -234,13 +245,20 @@ Each phase ends at a **gate**: builder ships a phase report with evidence pointe
 (A11); Al reviews and rules before the next phase's packets unblock. Estimates are
 agent-loop cycles, not calendar promises.
 
+**Standing size-adequacy item (G0-A):** every G0–G4 gate closeout re-reviews whether
+the active static `size_param` remains adequate, cites the available measurement and
+adversarial evidence, and explicitly retains it or routes a change through a human-
+ratified protocol upgrade. This review never acts as an automatic retarget.
+
 **Phase 0 — Foundations & spikes (packets P-001…P-007).**
 Repo + CI scaffold green on an empty workspace; beacon tech selection; SIS
 parameterization and asymmetry bench with *measured* numbers; admission bench harness;
 Lean spec of Tx validity with vector exporter; difficulty two-knob simulation;
 `cj3-types` with the single `addr()` derivation and codec fuzz targets.
 **Gate G0:** all spike reports in `loop/reports/`, PROPOSED decisions D1/D2/D14/D15
-ratified or revised with spike evidence, OPEN D9/D10 ruled.
+ratified or revised with spike evidence, OPEN D9/D10 ruled. Current disposition:
+**HOLD**; G0-A is ratified as the static-`size_param` D2 amendment, while G0-B through
+G0-E remain held for human-supplied normative text.
 
 **Phase 1 — Kernel (P-101…P-104).**
 `cj3-kernel`: tx validity V1–V9 and STF implemented against Lean vectors (conformance
@@ -252,7 +270,9 @@ and a crash-consistency test that kills the process mid-block-apply and requires
 
 **Phase 2 — Consensus (P-201…P-205).**
 `cj3-beacon` (ratified tech), instance derivation, `cj3-classes` SIS wiring, block
-validation, fork choice, difficulty retarget per P-006's ratified model.
+validation, fork choice, hash-target retarget under later-ratified P-1/P-2, and B3
+validation of the static active `size_param`. No dynamic size retarget exists on the
+consensus/runtime path; P-006's sealed offline simulator remains rejection evidence.
 **Gate G2:** two-node deterministic replay test (same blocks → same state root);
 adversarial block corpus (malformed solutions, wrong-instance solutions, replayed
 solutions, overflow txs, future nonces) all rejected with typed errors, zero panics;
@@ -314,9 +334,12 @@ advisory diff report (dependency drift visibility without auto-bumping).
   no proven hard sampleable distribution (RS §2). Mitigation: admission bench (P-004)
   with published parameter floors; D13 honesty; anchor stays SIS until an ADR says
   otherwise.
-- **R2 — Two-knob difficulty interaction.** Hash target (rate/variance) × instance
-  size (work calibration) may oscillate. Mitigation: P-006 offline simulation before
-  any Phase 2 freeze; promotion criteria in D2 if unstabilizable.
+- **R2 — Useful-work size adequacy and selection bias.** P-006 rejected the tested
+  published-quality size controller: honest/full and adversarial envelopes were 0/36,
+  despite all 6/6 isolated hash-loop settings passing. Mitigation: G0-A makes
+  `size_param` a human-upgraded protocol constant, strikes P-11, and requires an
+  adequacy review at every phase gate. Any future miner-behavior control loop must
+  evidence resistance to strategic withholding before consideration.
 - **R3 — Pure-Rust VDF availability.** chiavdf is C++ (A9-forbidden on trusted path).
   Mitigation: P-002 spike; trait-gated placeholder for devnet only; worst case,
   beacon ships later than consensus scaffold without blocking Phase 1.
