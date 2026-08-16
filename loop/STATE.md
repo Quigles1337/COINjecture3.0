@@ -1,13 +1,13 @@
 # COINjecture 3.0 Loop State
 
 CYCLE: 7
-PHASE: Phase 0 — Foundations and spikes
-PACKET: P-006 / P-007 / P-009 — CONTINUOUS BATCH READY
+PHASE: Phase 0 — Gate G0 handoff
+PACKET: Gate G0 — HUMAN RULING REQUIRED
 BRANCH: main
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-blocked-on-external
-CAPACITY_OBSERVED_AT: 2026-08-16 P-005 exact-merge-SHA boundary; targeted CJ2 search found no evidence that GATE-1/GATE-2 cleared
-STATUS: P005_COMPLETE_BATCH_READY
+CAPACITY_OBSERVED_AT: 2026-08-16 P-009 exact-merge-SHA boundary; targeted CJ2 search found no evidence that GATE-1/GATE-2 cleared
+STATUS: G0_STOP
 
 ## Ground-truth state
 
@@ -117,9 +117,13 @@ STATUS: P005_COMPLETE_BATCH_READY
   `58C762568A63D8A4AFEACDEB1535AA9C930099F49118D2B45B9B483B8D560EFC` and preserved
   unchanged; the amendments are applied to Protocol Spec §7/§12 and Gate G1 and
   recorded in the LEDGER overlay.
-- P-009's required first action is complete: both supplied source audits are copied
-  byte-for-byte into `loop/evidence/`. Source and durable-copy sizes/hashes are in
-  `loop/evidence/P-009-SOURCE-MANIFEST.md`; neither document has yet been interpreted.
+- P-009's required first action copied both supplied source audits byte-for-byte into
+  `loop/evidence/`. Source and durable-copy sizes/hashes are sealed in
+  `loop/evidence/P-009-SOURCE-MANIFEST.md`. P-009 then completed the authorized
+  source interpretation: matrix v0.2 accounts for all 33 third-party findings, all 25
+  Lean claim-points, and all eight Lean recommendations. GAP-7 through GAP-13 remain
+  proposals, not ratifications; the absent original Codex report's exact per-finding
+  inventory remains UNKNOWN.
 - P-010 replaced the stale P-001 README with a 254-line evidence-linked repository
   index. It records private/pre-testnet scope, the open G0 position, implemented versus
   planned surfaces, audit lineage, A1–A11, the crate map, governance, evidence checks,
@@ -163,16 +167,44 @@ STATUS: P005_COMPLETE_BATCH_READY
   `916e5027f0918973bf45d6a2bf90abd2ae253197`; and exact-merge-SHA mainline run
   `31968030240` passed all eleven jobs. The Lean V1–V9/STF encoding is therefore
   HUMAN-RATIFIED as of that merge. P-101 is blocked on Gate G0 only.
+- P-005's docs-only immutable closeout merged through PR #13 at
+  `44ae3ae8807bc7ae594494870bffa96da6ea0ca1`; exact-head run `31968497094` and
+  exact-merge-SHA run `31968806291` both passed all eleven D6 jobs.
+- P-006 is COMPLETE. PR #16's exact head
+  `eb6b96d612bf8de4f43d6f42639da874b811bd0b` passed all eleven D6 jobs in run
+  `31971074815`; merge `7244f094aa22d1890039a535ad997c9775ba9ed3` passed exact-
+  merge-SHA run `31971438778`. The sealed matrix contains 5,971,968 simulated blocks.
+  The full honest/unmanipulated-quality and adversarial envelopes are both 0/36. The
+  isolated hash loop passes all 6/6 unique settings, but no tested 64–256-block size
+  window survives the solve-power and interaction sensitivities. P-1/P-2/P-11 remain
+  unfilled; a quality-only size retarget is a G0/Phase-2 design blocker, not a selected
+  protocol function.
+- P-007 is STOPPED / INCOMPLETE in the HUMAN lane. Draft PR #14 preserves only the
+  independently specified checked `Amount(u64)` boundary at exact head
+  `9acea83ca17d67a19e0d41aeb5e7275666a54013`; run `31969740766` passed all eleven
+  D6 jobs. The PR remains draft and unmerged. Canonical codec grammar, hash/domain
+  bytes and framing, SI-002, SI-003, P-8 limits, strict Ed25519 semantics, and actual
+  codec-fuzz admission require G0/HUMAN rulings. SI-001 is an independent G0 issue.
+- P-009 is COMPLETE. Refreshed PR #15 head
+  `34ce596d0f1160b152a33d95b1f6ddf25e4111c4` passed all eleven D6 jobs in run
+  `31971741833`; merge `ce0b9752c9101e89f93a90379cd9e5ac1a08842d` passed exact-
+  merge-SHA run `31972017916`. Matrix v0.2 records 17 mapped, 10 partial, and six
+  surface-excluded third-party findings; tiers all 25 Lean claims without importing
+  proof credit; and leaves GAP-7 through GAP-13 explicitly non-ratified.
 
 ## Next action
 
-1. Merge this docs-only P-005 evidence closeout after exact-head D6, then verify its
-   exact merge-SHA D6 before treating the durable boundary as sealed.
-2. Re-check D11 at each pickup and execute P-006, P-007, and P-009 under their own
-   FRAME/tripwire/CI/adversary/merge/calibration protocols. Stop an individual packet
-   on any HUMAN ambiguity without inventing an SI or owner-controlled value.
+1. STOP at Gate G0. Al must rule on the exact decision surface in
+   `loop/reports/C7-phase0-g0-handoff.md`; no agent may infer those choices.
+2. Keep draft PR #14 unmerged until the P-007 codec/domain/SI/P-8/strict-signature
+   rulings are supplied. Its green `codec-fuzz-smoke` job is a deferral marker, not a
+   fuzz-success claim.
 3. P-008 remains blocked on the exact frontend URL. P-101 remains blocked on Gate G0
-   only; stop at G0 after the Phase 0 queue is drained.
+   only. Sarah-owned and Al-owned values remain unfilled under D16 and their existing
+   ownership rules.
+4. On any resume, re-check D11 before touching the repository. If COINjecture 2.0's
+   GATE-1/GATE-2 answers have arrived, 2.0 immediately reclaims capacity and CJ3
+   remains paused.
 
 No frontend URL may be inferred for P-008, and no Al- or Sarah-owned TBD may be
 filled.

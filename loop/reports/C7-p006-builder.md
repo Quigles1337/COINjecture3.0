@@ -489,3 +489,29 @@ budget, failure-through saturation semantics, and adversarial observability test
 FRAME time, before the first matrix run. That prevents both accidental evidence
 denial and late discovery that a controller's input is authentic but strategically
 selectable.
+
+## Parent integration addendum — hosted verification and merge
+
+- PR #16 exact head `eb6b96d612bf8de4f43d6f42639da874b811bd0b` passed all
+  eleven hosted D6 jobs in run
+  [31971074815](https://github.com/Quigles1337/COINjecture3.0/actions/runs/31971074815).
+- The expected-head guarded merge produced
+  `7244f094aa22d1890039a535ad997c9775ba9ed3`; exact-merge-SHA run
+  [31971438778](https://github.com/Quigles1337/COINjecture3.0/actions/runs/31971438778)
+  passed all eleven jobs.
+- The merge does not ratify a coordinate. The honest/full and adversarial/full 0/36
+  results, 6/6 isolated hash-loop region, unfilled P-1/P-2/P-11 values, and G0/HUMAN
+  size-observable decision all remain exactly as reported above.
+- The narrow LF policy repair was exercised by hosted Linux CI and a fresh Windows
+  autocrlf checkout; the HUMAN vector content stayed at SHA-256
+  `30CABF852D623549CD5293628D5B3899BE805D543B537CB223F1B6FAB5C324E1`.
+
+## Parent closeout calibration
+
+- **Prediction versus outcome:** the hosted and merge boundaries preserved the exact
+  negative matrix, narrow EOL repair, and no-normative-choice scope.
+- **Risk and confidence:** HIGH merge-readiness confidence was justified by two exact
+  green heads; the result does not increase confidence in a quality-only size loop.
+- **Process improvement retained:** future simulation packets must define work bounds,
+  saturation semantics, and adversarial observability in FRAME before running the
+  matrix.

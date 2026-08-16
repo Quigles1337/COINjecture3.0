@@ -19,19 +19,19 @@ enforces the complete design ([audit mapping](docs/AUDIT_TRACEABILITY.md#1-findi
 
 ## Status
 
-> Refreshed 2026-08-16 for P-010. This is the repository's single current-status
+> Refreshed 2026-08-16 for the Phase 0 / Gate G0 handoff. This is the repository's single current-status
 > block; its refresh is required at every gate closeout
 > ([standing rule](loop/LEDGER.md#standing-readme-drift-control-rule--ratified-al-2026-08-16)).
 >
 > | Field | Current record | Evidence |
 > |---|---|---|
 > | Scope | Private repository; pre-testnet; no running testnet, production node, or mainnet configuration | [D9/D12 rulings](loop/LEDGER.md#effective-ratifications), [source-policy gate](scripts/ci/check-source-policy.ps1) |
-> | Phase | **Phase 0 — foundations and spikes** | [phase plan](docs/ENGINEERING_PLAN.md#4-phase-plan), [packet queue](loop/PACKETS.md) |
+> | Phase | **Phase 0 — stopped at Gate G0** | [phase plan](docs/ENGINEERING_PLAN.md#4-phase-plan), [packet queue](loop/PACKETS.md) |
 > | Last phase gate | None of G0–G4 has passed; G0 remains open | [G0 criteria](docs/ENGINEERING_PLAN.md#4-phase-plan), [queue state](loop/PACKETS.md) |
-> | Completed packet evidence | P-001 scaffold, P-002 beacon spike, P-003 sampled-SIS prototype, and P-004 admission bench are merged with exact-mainline CI records | [batch log](loop/reports/BATCH-LOG.md) |
-> | Current stop | P-005 is HUMAN-lane work; draft PR #9 contains a FRAME/STOP checkpoint and no Lean rules or vectors | [draft PR #9](https://github.com/Quigles1337/COINjecture3.0/pull/9), [checkpoint D6 run 31955875423](https://github.com/Quigles1337/COINjecture3.0/actions/runs/31955875423) |
-> | Implemented surfaces | D6 CI and source policy; a trait-gated beacon boundary with a devnet-only placeholder; deterministic sampled-SIS derivation/checking; an out-of-process SIS demonstrator; and a bounded admission bench | [workflow](.github/workflows/ci.yml), [`cj3-beacon`](crates/cj3-beacon/src/lib.rs), [`cj3-classes`](crates/cj3-classes/src/lib.rs), [`cj3-solver-sis`](crates/cj3-solver-sis/src/main.rs), [P-004 bench](bench/p004-admission/README.md) |
-> | Planned or absent | Lean V1–V9/STF content and vectors; canonical types/codecs; kernel, storage, consensus, networking, RPC, node behavior; production VDF; testnet | [formal boundary](spec/README.md), [explicit phase deferrals](scripts/ci/check-phase-gate.ps1), [roadmap](docs/ENGINEERING_PLAN.md#4-phase-plan) |
+> | Completed packet evidence | P-001 through P-006, P-009, and P-010 are merged with exact-mainline CI records; P-005's Lean V1–V9/STF is HUMAN-RATIFIED | [batch log](loop/reports/BATCH-LOG.md), [G0 handoff](loop/reports/C7-phase0-g0-handoff.md) |
+> | Current stop | Gate G0 requires HUMAN rulings: P-006 found no robust full two-knob candidate, and P-007 cannot choose canonical codec/domain/SI/P-8/strict-signature semantics | [P-006 report](loop/reports/C7-p006-builder.md), [draft P-007 PR #14](https://github.com/Quigles1337/COINjecture3.0/pull/14), [G0 handoff](loop/reports/C7-phase0-g0-handoff.md) |
+> | Implemented surfaces | D6 CI and source policy; trait-gated beacon boundary; sampled-SIS derivation/checking and external demonstrator; admission and difficulty benches; HUMAN-ratified Lean V1–V9/STF; symbolic non-normative vectors; source-verified audit matrix v0.2 | [workflow](.github/workflows/ci.yml), [formal project](spec/README.md), [P-006 bench](bench/p006-difficulty/README.md), [audit matrix](docs/AUDIT_TRACEABILITY.md) |
+> | Planned or absent | Canonical Rust codecs/domain bytes and codec fuzzing; kernel, storage, consensus, networking, RPC, node behavior; production VDF; testnet | [P-007 stop](loop/PACKETS.md#p-007--cj3-types), [explicit phase deferrals](scripts/ci/check-phase-gate.ps1), [roadmap](docs/ENGINEERING_PLAN.md#4-phase-plan) |
 
 ## Contents
 
@@ -64,12 +64,13 @@ known identifier family in every `cj3-*` Rust source file
 [Protocol Spec §10](docs/PROTOCOL_SPEC.md#10-fork-choice-and-difficulty),
 [source-policy script](scripts/ci/check-source-policy.ps1)).
 
-That record has a deliberate limit: the committed audit matrix describes intent
-coverage compiled from the 2.0 remediation record, while P-009's finding-by-finding
-comparison against the preserved source audits remains planned. Source preservation
-is evidence custody, not completed reconciliation
+That record has a deliberate limit: P-009 reconciled all 33 third-party findings and
+all 25 Lean claim-points against the preserved sources, but the original Codex scan
+file remains absent. The exact missing report inventory is therefore UNKNOWN even
+though committed 2.0 remediation pointers preserve the known five program families
+and two finding IDs
 ([matrix epistemic status](docs/AUDIT_TRACEABILITY.md),
-[P-009 definition](loop/PACKETS.md#p-009--audit-traceability-verification)).
+[P-009 report](loop/reports/C7-p009-builder.md)).
 
 ## Design axioms
 
@@ -215,9 +216,10 @@ its immutable run rather than treating an unpinned local installation as equival
   devnet-only and compile-rejected for testnet-tagged builds
   ([P-002 report](loop/reports/C2-p002-builder.md),
   [beacon source](crates/cj3-beacon/src/lib.rs)).
-- Lean 4 transaction/STF content and conformance vectors do not yet exist; P-005 is a
-  HUMAN-lane stop, not a partial formal verification result
-  ([formal boundary](spec/README.md), [draft PR #9](https://github.com/Quigles1337/COINjecture3.0/pull/9)).
+- The Lean V1–V9/STF encoding is HUMAN-RATIFIED and proves conservation under
+  `LawfulStateOps`; its JSON vectors remain symbolic and non-normative pending
+  SI-001/SI-002/SI-003, and no Rust kernel conformance claim exists yet
+  ([formal boundary](spec/README.md), [P-005 merge](https://github.com/Quigles1337/COINjecture3.0/pull/9)).
 - P-004 measured fixture behavior but admitted no legacy class; checker speed does not
   establish a hard sampled distribution
   ([P-004 report](loop/reports/C4-p004-builder.md),
@@ -227,14 +229,14 @@ Material unfilled values remain visible:
 
 | Item | State and owner | Evidence |
 |---|---|---|
-| P-1/P-2/P-11 — block time and retarget windows | **TBD(P-006)** — owner: P-006, then G0 ratification | [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
+| P-1/P-2/P-11 — block time and retarget windows | **UNFILLED** — P-006 found no robust full two-knob candidate; owner: G0/HUMAN ruling | [P-006 report](loop/reports/C7-p006-builder.md), [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
 | P-3/P-4 — validation budget and SIS tuple | **TBD at the normative layer** — provisional P-003 recommendations; owner: G0/HUMAN ratification | [P-003 report](loop/reports/C3-p003-builder.md), [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
 | P-7 — reward cap and reward curve | **TBD** — owner: Al + Sarah after the D16 reveal | [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters), [D16 ratification](loop/LEDGER.md#effective-ratifications) |
 | P-8/P-10 — ingress bounds and timestamp drift | **TBD** — owner: G0/HUMAN ratification | [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
 | P-9 — minimum fee | **TBD** — owner: Al | [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
 | P-12 — subsidy schedule | Placeholder only; owner: Al + Ken | [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
-| SIS coefficient encoding and SHAKE candidate convention | **TBD** — owner: P-007/G0 HUMAN | [SI-002/SI-003](loop/reports/SPEC-ISSUES.md) |
-| Audit matrix v0.2 reconciliation | **Planned(P-009)** — source files preserved; owner: P-009 | [source manifest](loop/evidence/P-009-SOURCE-MANIFEST.md), [queue](loop/PACKETS.md#p-009--audit-traceability-verification) |
+| Codec/domain bytes, strict Ed25519, SIS coefficient encoding, and SHAKE candidate convention | **UNFILLED** — owner: P-007/G0 HUMAN; draft PR #14 remains unmerged | [P-007 stop](loop/PACKETS.md#p-007--cj3-types), [SI-002/SI-003](loop/reports/SPEC-ISSUES.md) |
+| Audit matrix v0.2 reconciliation | **COMPLETE** — 33 security findings, 25 Lean claims, R1–R8; GAP-7–13 remain proposals | [audit matrix](docs/AUDIT_TRACEABILITY.md), [P-009 report](loop/reports/C7-p009-builder.md) |
 
 ## Roadmap
 
@@ -243,7 +245,7 @@ The phase gates are evidence thresholds, not calendar or deployment promises
 
 | Gate | Planned phase outcome | Current position |
 |---|---|---|
-| **G0 — Foundations and spikes** | P-001–P-007 reports complete; D1/D2/D14/D15 and open interpretation issues resolved with spike evidence | **▶ CURRENT — open; P-005 stopped before formal content** ([queue](loop/PACKETS.md)) |
+| **G0 — Foundations and spikes** | P-001–P-007 reports complete; D1/D2/D14/D15 and open interpretation issues resolved with spike evidence | **▶ CURRENT — HUMAN STOP; evidence assembled, P-007 and the P-006 negative result require rulings** ([G0 handoff](loop/reports/C7-phase0-g0-handoff.md)) |
 | **G1 — Kernel** | Lean-vector conformance, conservation properties, mutation spot-check, genesis spend, and crash consistency | Planned after G0 ([Plan G1](docs/ENGINEERING_PLAN.md#4-phase-plan)) |
 | **G2 — Consensus** | Deterministic two-node replay and typed rejection of the adversarial block corpus | Planned after G1 ([Plan G2](docs/ENGINEERING_PLAN.md#4-phase-plan)) |
 | **G3 — Network and RPC** | Three-node devnet adversarial replay and complete fail-closed auth matrix | Planned after G2 ([Plan G3](docs/ENGINEERING_PLAN.md#4-phase-plan)) |
