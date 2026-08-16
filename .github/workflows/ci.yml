@@ -1,0 +1,179 @@
+name: D6 CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: d6-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  format:
+    name: format
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Select pinned Rust toolchain
+        run: rustup show active-toolchain
+      - name: Check formatting
+        run: cargo fmt --all -- --check
+
+  clippy:
+    name: clippy
+    needs: format
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Select pinned Rust toolchain
+        run: rustup show active-toolchain
+      - name: Deny lint warnings
+        run: cargo clippy --workspace --all-targets --all-features --locked -- -D warnings
+
+  dependency-policy:
+    name: dependency-policy
+    needs: clippy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Select pinned Rust toolchain
+        run: rustup show active-toolchain
+      - name: Restore pinned cargo-deny binary
+        id: cache-cargo-deny
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cargo/bin/cargo-deny
+          key: ${{ runner.os }}-cargo-deny-0.20.2-rust-1.97.1
+      - name: Install cargo-deny
+        if: steps.cache-cargo-deny.outputs.cache-hit != 'true'
+        run: cargo install cargo-deny --version 0.20.2 --locked
+      - name: Check dependency policy
+        run: cargo deny --locked --all-features check
+
+  dependency-audit:
+    name: dependency-audit
+    needs: dependency-policy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Select pinned Rust toolchain
+        run: rustup show active-toolchain
+      - name: Restore pinned cargo-audit binary
+        id: cache-cargo-audit
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cargo/bin/cargo-audit
+          key: ${{ runner.os }}-cargo-audit-0.22.2-rust-1.97.1
+      - name: Install cargo-audit
+        if: steps.cache-cargo-audit.outputs.cache-hit != 'true'
+        run: cargo install cargo-audit --version 0.22.2 --locked
+      - name: Audit the committed lockfile
+        run: cargo audit --deny warnings
+
+  unsafe-audit:
+    name: unsafe-audit
+    needs: dependency-audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Select pinned Rust toolchain
+        run: rustup show active-toolchain
+      - name: Restore pinned cargo-geiger binary
+        id: cache-cargo-geiger
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cargo/bin/cargo-geiger
+          key: ${{ runner.os }}-cargo-geiger-0.13.0-rust-1.97.1
+      - name: Install cargo-geiger
+        if: steps.cache-cargo-geiger.outputs.cache-hit != 'true'
+        run: cargo install cargo-geiger --version 0.13.0 --locked
+      - name: Enforce zero-unsafe policy
+        shell: pwsh
+        run: ./scripts/ci/verify-geiger.ps1
+
+  unit-and-property-tests:
+    name: unit-and-property-tests
+    needs: unsafe-audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Select pinned Rust toolchain
+        run: rustup show active-toolchain
+      - name: Run admitted tests
+        run: cargo test --workspace --all-targets --all-features --locked
+
+  conservation-invariant:
+    name: conservation-invariant
+    needs: unit-and-property-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Run or explicitly defer gate
+        shell: pwsh
+        run: ./scripts/ci/check-phase-gate.ps1 -Gate conservation-invariant
+
+  lean-conformance:
+    name: lean-conformance
+    needs: unit-and-property-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Run or explicitly defer gate
+        shell: pwsh
+        run: ./scripts/ci/check-phase-gate.ps1 -Gate lean-conformance
+
+  codec-fuzz-smoke:
+    name: codec-fuzz-smoke
+    needs: unit-and-property-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Run or explicitly defer gate
+        shell: pwsh
+        run: ./scripts/ci/check-phase-gate.ps1 -Gate codec-fuzz-smoke
+
+  genesis-spend-test:
+    name: genesis-spend-test
+    needs: unit-and-property-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Run or explicitly defer gate
+        shell: pwsh
+        run: ./scripts/ci/check-phase-gate.ps1 -Gate genesis-spend-test
+
+  locked-build:
+    name: locked-build
+    needs:
+      - conservation-invariant
+      - lean-conformance
+      - codec-fuzz-smoke
+      - genesis-spend-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Select pinned Rust toolchain
+        run: rustup show active-toolchain
+      - name: Build from the committed lockfile
+        run: cargo build --workspace --all-targets --all-features --locked

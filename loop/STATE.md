@@ -2,12 +2,12 @@
 
 CYCLE: 1
 PHASE: Phase 0 — Foundations and spikes
-PACKET: P-001 — AUTHORIZED, PREFLIGHT NOT YET RUN
-BRANCH: main
+PACKET: P-001 — ADVERSARY FINDINGS FIXED, FINAL ORIGIN VERIFY PENDING
+BRANCH: feat/p001-repo-scaffold
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-blocked-on-external
 CAPACITY_OBSERVED_AT: 2026-08-15 live ruling
-STATUS: GOVERNANCE_OVERLAY_READY_FOR_PREFLIGHT
+STATUS: P001_FINAL_ORIGIN_VERIFY
 
 ## Ground-truth state
 
@@ -15,7 +15,8 @@ STATUS: GOVERNANCE_OVERLAY_READY_FOR_PREFLIGHT
   D10 were reconfirmed.
 - Continuous-batch autonomous execution is authorized for P-001 through P-007 in
   order, subject to every tripwire and packet-boundary capacity re-check.
-- No protocol code has been created.
+- P-001 contains only architecture/CI scaffolding; no protocol behavior has been
+  created.
 - The COINjecture 2.0 agent queue is blocked pending Sarah's GATE-1/GATE-2 answers;
   CJ3 may proceed only while that condition remains true. If those gates clear, the
   capacity flag becomes `remediation-priority` and CJ3 pauses immediately.
@@ -26,11 +27,11 @@ STATUS: GOVERNANCE_OVERLAY_READY_FOR_PREFLIGHT
 
 ## Next action
 
-1. Commit the governance overlay and supplied artifacts on `main`.
-2. Run every autonomy preflight check with evidence.
-3. If every check passes, bootstrap-push `main` and confirm remote `main` equals local
-   `HEAD`.
-4. Pick up P-001 on `feat/p001-repo-scaffold`.
+1. Commit and push the post-adversary P-001 head.
+2. Require the complete D6 pipeline to pass on that exact origin head and confirm the
+   three cache hits mechanically.
+3. Re-check D17, D11, repository privacy, remote identity, and the final diff at merge
+   time.
 
 No frontend URL may be inferred for P-008, and no Al- or Sarah-owned TBD may be
 filled.
