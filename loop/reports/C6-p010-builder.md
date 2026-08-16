@@ -1,6 +1,6 @@
 # Cycle 6 — P-010 Builder Report
 
-**Status:** MERGE GUARDS PENDING — CONTENT/ADVERSARY HEAD D6 GREEN
+**Status:** COMPLETE — PR AND EXACT-MERGE-SHA D6 GREEN
 **Date:** 2026-08-16
 **Packet:** P-010 — DOCUMENTARIAN / institutional README
 **Lane:** AUTO
@@ -253,6 +253,11 @@ This paragraph is an evidence-only report update after the verified content head
 own exact-head rollup is checked on draft PR #10 before merge; no further commit is
 created merely to embed that later run ID, which would recurse indefinitely.
 
+The evidence-only final PR head was
+`ae860d229cce4c3d36047e7c68331b3c95422529`. Draft PR #10's check rollup and
+[run 31957723975](https://github.com/Quigles1337/COINjecture3.0/actions/runs/31957723975)
+reported all eleven jobs successful on that exact SHA before merge.
+
 ## 4. ADVERSARY PASS
 
 **Seat switch: ADVERSARY.** The complete `main...HEAD` diff and GitHub-rendered branch
@@ -266,8 +271,8 @@ the BUILD summary.
    heading included `— LOCAL PASS; ORIGIN PENDING`, so GitHub rendered a longer anchor.
    All other 20 Markdown depth fragments matched the branch-rendered targets. The
    report now uses the stable heading `## 3. VERIFY` with status on a separate line;
-   the README link therefore remains stable as evidence accumulates. This fix changes
-   the branch head and must pass D6 again before merge.
+   the README link therefore remains stable as evidence accumulates. The fixed head
+   passed all eleven D6 jobs before merge.
 
 ### Claims and voice review
 
@@ -307,12 +312,80 @@ the BUILD summary.
 | A8 | PASS: no Lean term/vector or Rust state-machine code was added; the absence and HUMAN stop are explicit. |
 | A9 | PASS: no dependency, FFI, source, or trusted-computing-base surface changed; exact-head geiger remained zero. |
 | A10 | PASS: conditional hardness, usefulness ceiling, VDF absence, formal absence, and negative legacy evidence are prominent limitations. |
-| A11 | PASS after the heading fix is reverified: local commands, rendered links, original exact-head D6, and every prior packet claim have exact evidence pointers. |
+| A11 | PASS: local commands, all 21 rendered depth links, exact-head D6, and every prior packet claim have exact evidence pointers. |
 
-No Critical remains in the content. The stable-anchor fix passed exact-head D6; merge
-eligibility now depends on the evidence-only head rollup and the fresh
-D11/D17/private-repository guard.
+No Critical remained in the content. The stable-anchor fix and evidence-only head both
+passed exact-head D6, and the fresh D11/D17/private-repository guard passed immediately
+before merge.
 
-## 5. MERGE — PENDING GUARDS
+## 5. MERGE
 
-## 6. CALIBRATE — PENDING MERGE
+- Feature/report commits: `cff3155` (FRAME), `441458b` (README/governance),
+  `64ecc94` (stable evidence anchor), and `ae860d2` (adversary-head evidence).
+- Pull request: [#10 — P-010 institutional README](https://github.com/Quigles1337/COINjecture3.0/pull/10).
+- Exact final PR-head D6:
+  [run 31957723975](https://github.com/Quigles1337/COINjecture3.0/actions/runs/31957723975),
+  success on `ae860d229cce4c3d36047e7c68331b3c95422529`; all eleven jobs
+  succeeded.
+- Guarded merge commit: `3b43cca42e14e53412747fb2b559d6fc29c4ac9d`.
+- Exact-merge-SHA mainline D6:
+  [run 31957922841](https://github.com/Quigles1337/COINjecture3.0/actions/runs/31957922841),
+  success on `3b43cca42e14e53412747fb2b559d6fc29c4ac9d`; all eleven jobs
+  succeeded.
+
+Immediately before merge, GitHub reported the repository PRIVATE, PR #10
+`MERGEABLE`/`CLEAN`, the head SHA unchanged, and every required check successful. The
+2.0 capacity file still reported `CAPACITY_FLAG: none` with GATE-1/GATE-2 awaiting.
+The five AUTO conditions remained true: live approval was recorded; the diff contained
+only four Markdown surfaces; no formal/vector or consensus-semantic content changed;
+no decision was invented beyond the verbatim live standing rule; and no owned TBD was
+filled. P-005's HUMAN branch remained unmerged and untouched.
+
+## 6. CALIBRATE
+
+### Predictions versus outcomes
+
+- **Diff surface:** the prediction held exactly. The feature PR changed the root
+  README, LEDGER, PACKETS, and this report; STATE and BATCH-LOG are the separate
+  closeout surfaces after exact-merge-SHA evidence exists. No source, workflow,
+  manifest, lockfile, formal spec, vector, protocol document, or audit source changed.
+- **Risk materialization:** design/implementation tense leakage was caught and
+  corrected before the first origin run; green-job overclaim was prevented by naming
+  every deferral; the adversary pass found one broken GitHub heading link and fixed it
+  with a stable report anchor.
+- **Confidence:** MEDIUM was calibrated correctly. The repository evidence was
+  sufficient, but the interaction between mutable report status text and GitHub anchor
+  generation produced a real, non-obvious diligence defect.
+- **Surprise:** a link could resolve to a real file yet still fail at the promised
+  section. Rendering and checking heading fragments—not only file paths—was necessary.
+
+### Final VERIFIED / ASSUMED / UNKNOWN ledger
+
+**VERIFIED**
+
+- The 254-line root README contains the required structure, one authorized badge, one
+  Mermaid diagram, and the exact license line; all 21 depth fragments resolved on the
+  final feature branch.
+- All five quickstart commands and the full local D6-equivalent sequence passed. The
+  four phase jobs remained explicit deferrals, not claimed executions.
+- Final PR-head and exact-merge-SHA mainline D6 each passed all eleven jobs at the
+  immutable URLs and SHAs above.
+- The standing README gate-closeout refresh rule is durable in `loop/LEDGER.md`; P-010
+  is durable in the packet queue; P-005 remains a HUMAN stop.
+
+**ASSUMED**
+
+- The standard D6 workflow badge resolves for authenticated viewers of the private
+  repository, as the live packet specification explicitly states. No public or
+  unauthenticated badge behavior is claimed.
+
+**UNKNOWN**
+
+- P-009's finding-by-finding source-audit reconciliation remains unexecuted; source
+  custody does not predict its result.
+- P-005's human-approved Lean semantics and vector set remain unknown by design.
+
+**One process improvement for the next documentation packet:** keep report section
+headings stable from FRAME onward and place changing status on a separate line, then
+validate both local targets and rendered GitHub heading fragments before the first
+origin run.

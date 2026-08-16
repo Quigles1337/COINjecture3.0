@@ -1,20 +1,21 @@
 # COINjecture 3.0 Loop State
 
-CYCLE: 4
+CYCLE: 6
 PHASE: Phase 0 — Foundations and spikes
-PACKET: P-004 — COMPLETE; P-009 SOURCES INGESTED
-BRANCH: docs/p004-closeout-audit-governance
+PACKET: P-010 — COMPLETE; P-005 HUMAN STOP REMAINS
+BRANCH: feat/p010-closeout
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-blocked-on-external
-CAPACITY_OBSERVED_AT: 2026-08-16 resume ruling plus CJ2 gate-state readback
-STATUS: P004_CLOSEOUT_GOVERNANCE_P009_SOURCES_READY_FOR_BOUNDARY_PR
+CAPACITY_OBSERVED_AT: 2026-08-16 P-010 merge guard and closeout; CJ2 `CAPACITY_FLAG: none`, GATE-1/GATE-2 still awaiting
+STATUS: P010_COMPLETE_P005_HUMAN_STOP_AWAITING_AL
 
 ## Ground-truth state
 
 - Al ratified D1, D2, D14, D15, D16, and D17 in the 2026-08-15 live ruling; D9 and
   D10 were reconfirmed.
-- Continuous-batch autonomous execution is authorized for P-001 through P-007 in
-  order, subject to every tripwire and packet-boundary capacity re-check.
+- Continuous-batch autonomous execution is authorized for P-001 through P-007, P-009,
+  and P-010 subject to every tripwire and packet-boundary capacity re-check. P-010's
+  live next-boundary instruction did not complete P-005 or unblock its dependents.
 - P-001 merged through PR #1 at
   `8367de08bb3d3766bf49b9970eb3109fd1af4389`; exact-head PR CI and exact-merge-SHA
   mainline CI both passed all eleven jobs. Its ten crates remain empty boundaries with
@@ -46,6 +47,11 @@ STATUS: P004_CLOSEOUT_GOVERNANCE_P009_SOURCES_READY_FOR_BOUNDARY_PR
   exact-merge-SHA mainline run `31954588282` both passed all eleven D6 jobs. The
   inherited legacy-only `bincode 1.3.3` maintenance warning remains explicitly
   quarantined outside CJ3's workspace/runtime.
+- P-005 classified the whole Lean/vector packet HUMAN before implementation. Draft
+  PR #9 contains only its FRAME/STOP checkpoint; no Lean rule, vector, CI admission,
+  Rust state machine, normative semantic choice, or owned TBD was added. Checkpoint
+  run `31955875423` passed all eleven D6 jobs, but the branch remains unmerged and
+  requires new live HUMAN authority to resume.
 - Al's 2026-08-16 governance injection ratified AMEND-1/2/3 and approved/unblocked
   P-009. `docs/AUDIT_TRACEABILITY.md` was verified at SHA-256
   `58C762568A63D8A4AFEACDEB1535AA9C930099F49118D2B45B9B483B8D560EFC` and preserved
@@ -54,6 +60,16 @@ STATUS: P004_CLOSEOUT_GOVERNANCE_P009_SOURCES_READY_FOR_BOUNDARY_PR
 - P-009's required first action is complete: both supplied source audits are copied
   byte-for-byte into `loop/evidence/`. Source and durable-copy sizes/hashes are in
   `loop/evidence/P-009-SOURCE-MANIFEST.md`; neither document has yet been interpreted.
+- P-010 replaced the stale P-001 README with a 254-line evidence-linked repository
+  index. It records private/pre-testnet scope, the open G0 position, implemented versus
+  planned surfaces, audit lineage, A1–A11, the crate map, governance, evidence checks,
+  working commands, limitations/TBD ownership, and the exact TBD license line.
+- P-010 merged through PR #10 at
+  `3b43cca42e14e53412747fb2b559d6fc29c4ac9d`; final PR-head run `31957723975` and
+  exact-merge-SHA mainline run `31957922841` both passed all eleven D6 jobs. Its
+  adversary pass found and fixed one broken rendered heading fragment before merge.
+- The standing README drift-control rule is RATIFIED: every G0–G4 closeout refreshes
+  the README status block and roadmap marker in the same closeout.
 - `loop/reports/SPEC-ISSUES.md` keeps three G0/HUMAN interpretation issues open:
   conditional SIS-hardness wording, undefined `s_max`, and the missing normative
   SHAKE candidate-byte convention.
@@ -71,10 +87,13 @@ STATUS: P004_CLOSEOUT_GOVERNANCE_P009_SOURCES_READY_FOR_BOUNDARY_PR
 
 ## Next action
 
-1. Land this P-004 closeout/governance/source-ingest boundary through a guarded PR
-   with exact-head and exact-merge-SHA D6 evidence.
-2. Resume the earlier approved Phase 0 queue under a fresh D11 check; P-009 remains
-   appended and unblocked for its read-only analysis turn.
+1. Continuous-batch returns to P-005's HUMAN stop. Al must supply human-approved
+   Lean/vector content or explicitly authorize the builder to implement
+   `Spec/Tx.lean`, `Spec/Stf.lean`, and the JSON vector definitions while keeping every
+   owned TBD unfilled or explicitly defining the permitted symbolic/concrete boundary.
+2. If P-005 receives that live authority, resume draft PR #9 and complete the full
+   six-move protocol before merge. Only then may the ordered queue advance to P-006,
+   P-007, and P-009; P-008 remains blocked on the exact frontend URL.
 
 No frontend URL may be inferred for P-008, and no Al- or Sarah-owned TBD may be
 filled.
