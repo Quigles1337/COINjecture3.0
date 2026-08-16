@@ -2,11 +2,11 @@
 
 CYCLE: 8
 PHASE: Phase 0 — Gate G0 HOLD
-PACKET: Gate G0 partial ruling — G0-A RATIFIED; G0-B through G0-E HELD
+PACKET: Gate G0-A integration closeout — P-2 PROVISIONAL; G0-B through G0-E HELD
 BRANCH: main
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-blocked-on-external
-CAPACITY_OBSERVED_AT: 2026-08-16 G0-A pickup; CJ2 operational state reports CAPACITY_FLAG none with surviving GATE-1/GATE-2 items blocked/awaiting
+CAPACITY_OBSERVED_AT: 2026-08-16 G0-A closeout pickup; CJ2 operational state reports CAPACITY_FLAG none with surviving GATE-1/GATE-2 items blocked/awaiting
 STATUS: G0_HOLD_IDLE
 
 ## Ground-truth state
@@ -177,8 +177,10 @@ STATUS: G0_HOLD_IDLE
   The full honest/unmanipulated-quality and adversarial envelopes are both 0/36. The
   isolated hash loop passes all 6/6 unique settings, but no tested 64–256-block size
   window survives the solve-power and interaction sensitivities. G0-A subsequently
-  ratified static `size_param`, struck P-11 as moot, and confined unfilled P-1/P-2 to
-  the hash-target controller. No dynamic size retarget is selected or permitted.
+  ratified static `size_param`, struck P-11 as moot, and confined P-1/P-2 to the hash-
+  target controller. P-1 remains unfilled. P-2 is provisionally `W=32`, gain `1/8`,
+  clamp `[8/9,9/8]`, subject to re-derivation when P-1 is ratified. No dynamic size
+  retarget is selected or permitted.
 - P-007 is STOPPED / INCOMPLETE in the HUMAN lane. Draft PR #14 preserves only the
   independently specified checked `Amount(u64)` boundary at exact head
   `9acea83ca17d67a19e0d41aeb5e7275666a54013`; run `31969740766` passed all eleven
@@ -195,10 +197,14 @@ STATUS: G0_HOLD_IDLE
   PASS. G0-A ratifies D2 Option 2: `size_param` is an active protocol constant changed
   only by explicit human-ratified upgrade; B3 compares the header value to that
   constant; P-11 is struck as moot; and every phase gate re-reviews size adequacy.
-- P-1/P-2 now concern the hash-target knob only and remain unfilled. P-006 cannot
-  derive an absolute P-1 in seconds. The non-normative P-2 review candidate is
-  `W=32`, gain `1/8`, clamp `[8/9,9/8]`; P-006 passed all six tested hash-only
-  coordinates and did not distinguish this candidate from the other five.
+- G0-A merged through PR #18 at
+  `9bbbd43fd9e4c07f8b389f182b34281183be3737`. Exact-head D6 run `31975177926` and
+  exact-merge-SHA D6 run `31977067852` both passed all eleven jobs.
+- P-1/P-2 concern the hash-target knob only. P-1 remains unfilled and receives no
+  builder proposal because P-006 cannot derive an absolute cadence. P-2 is RATIFIED
+  AS PROVISIONAL: `W=32`, gain `1/8`, clamp `[8/9,9/8]`, selected as a conservative
+  interior point of the 36/36 passing region rather than a tuned optimum. P-2 MUST be
+  re-derived when P-1 is ratified and is not yet implemented.
 - The standing selection-bias lesson is binding: an honestly recomputed quantity can
   still be adversarially distributed through selective publication. Any future
   miner-behavior control loop must evidence withholding resistance or be rejected.
@@ -212,8 +218,8 @@ STATUS: G0_HOLD_IDLE
 
 1. STOP and idle at Gate G0 HOLD. No queued packet qualifies without touching a held
    surface; do not manufacture work.
-2. Await Al's normative G0-B through G0-E text and review of the P-1/P-2 hash-target
-   proposal. No numeric P-1 or P-2 value is ratified by the current overlay.
+2. Await Al's normative G0-B through G0-E text. P-1 remains unfilled and proposal-
+   free; P-2 remains provisional and must be re-derived when P-1 is ratified.
 3. Keep draft PR #14 unmerged. Its green `codec-fuzz-smoke` job is a deferral marker,
    not a fuzz-success claim.
 4. P-008 remains blocked on the exact frontend URL. P-101 remains blocked on Gate G0

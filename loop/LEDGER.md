@@ -486,20 +486,42 @@ Permitted work while G0 holds: nothing that touches held surfaces. If no
   active static `size_param` remains adequate and either retain it explicitly or route
   a change through a human-ratified protocol upgrade.
 
-### P-1/P-2 proposals for Al review — NOT RATIFIED
+### G0-A integration and P-2 provisional ratification overlay (Al, 2026-08-16)
 
-These are proposal inputs, not an amendment and not protocol values:
+The following live follow-up ruling is preserved verbatim:
 
-- **P-1:** no absolute value is proposed. P-006 normalized its target interval to
-  `1.0` and contains no propagation, reference-miner, production-VDF-delay, or solved-
-  SIS distribution evidence from which seconds can be derived. A numeric P-1 would be
-  invention; it remains `TBD` for Al's review.
-- **P-2:** builder review candidate: EMA window `W = 32` blocks, fixed controller gain
-  `1/8`, and multiplicative per-update clamp `[8/9, 9/8]`. P-006 passed all six unique
-  hash-only settings: windows `{16, 32, 64}` crossed with upper caps `{9/8, 5/4}`.
-  The candidate uses the interior window and conservative passing cap, but P-006 did
-  **not** statistically distinguish it from the other five. It is `PROPOSED FOR AL
-  REVIEW` and MUST NOT be treated as filled or implemented before ratification.
+```text
+G0-A MERGED. P-2 RATIFIED AS PROVISIONAL: EMA window 32, gain 1/8,
+multiplicative clamp [8/9, 9/8], on the stated rationale that this is a
+conservative interior point of the 36/36 passing hash-only region, not a
+tuned optimum. Marked provisional and subject to re-derivation once P-1 is
+ratified. P-1 remains UNFILLED — correctly, since P-006's normalized
+interval cannot justify an absolute cadence; do not propose one.
+
+Complete the G0-A closeout: verify the exact-merge-SHA D6 run green, write
+the BATCH-LOG integration row with real evidence, update STATE.md.
+
+Then STOP at G0 HOLD. G0-B/C/D/E remain held; PR #14 stays draft. If no
+packet qualifies, idle — do not manufacture work.
+```
+
+### Effective P-1/P-2 disposition
+
+- **P-1 — UNFILLED / no proposal:** P-006 normalized its target interval to `1.0`
+  and contains no propagation, reference-miner, production-VDF-delay, or solved-SIS
+  distribution evidence from which seconds can be derived. A numeric P-1 would be
+  invention. No builder proposal is authorized.
+- **P-2 — RATIFIED AS PROVISIONAL:** EMA window `W = 32` blocks, controller gain
+  `1/8`, and multiplicative per-update clamp `[8/9, 9/8]`. The human-ratified rationale
+  is that this is a conservative interior point of P-006's 36/36 passing hash-only
+  region, not a tuned or statistically preferred optimum. P-2 MUST be re-derived when
+  P-1 is ratified.
+- **Implementation status:** this ratifies the protocol parameter only. It does not
+  admit a hash-retarget implementation while P-1 is unfilled or authorize any held
+  G0-B/C/D/E choice.
+- **Integration evidence:** G0-A merged through PR #18 at
+  `9bbbd43fd9e4c07f8b389f182b34281183be3737`. Exact-head D6 run `31975177926` and
+  exact-merge-SHA D6 run `31977067852` each passed all eleven jobs.
 
 ### Standing lesson — selection-bias channel
 

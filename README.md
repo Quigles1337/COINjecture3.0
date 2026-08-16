@@ -238,7 +238,8 @@ Material unfilled values remain visible:
 
 | Item | State and owner | Evidence |
 |---|---|---|
-| P-1/P-2 — hash-target cadence/controller only | **UNFILLED / PROPOSED FOR AL REVIEW** — no absolute P-1 can be derived; P-2 review candidate is `W=32`, gain `1/8`, clamp `[8/9,9/8]`, not ratified | [G0-A proposal](loop/LEDGER.md#p-1p-2-proposals-for-al-review--not-ratified), [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
+| P-1 — hash-target cadence only | **UNFILLED; no builder proposal** — P-006's normalized interval cannot justify an absolute cadence | [G0-A follow-up](loop/LEDGER.md#g0-a-integration-and-p-2-provisional-ratification-overlay-al-2026-08-16), [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
+| P-2 — hash-target controller | **RATIFIED AS PROVISIONAL** — `W=32`, gain `1/8`, clamp `[8/9,9/8]`; conservative interior point, not a tuned optimum; re-derive when P-1 is ratified | [effective disposition](loop/LEDGER.md#effective-p-1p-2-disposition), [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
 | P-11 — size-retarget window | **STRUCK — MOOT** — `size_param` is static and changed only by human-ratified protocol upgrade | [G0-A amendment](loop/LEDGER.md#effective-g0-a-amendment-to-d2), [Spec §10](docs/PROTOCOL_SPEC.md#10-fork-choice-and-difficulty) |
 | P-3/P-4 — validation budget and SIS tuple | **TBD at the normative layer** — provisional P-003 recommendations; owner: G0/HUMAN ratification | [P-003 report](loop/reports/C3-p003-builder.md), [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
 | P-7 — reward cap and reward curve | **TBD** — owner: Al + Sarah after the D16 reveal | [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters), [D16 ratification](loop/LEDGER.md#effective-ratifications) |

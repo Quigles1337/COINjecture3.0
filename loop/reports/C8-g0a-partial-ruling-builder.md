@@ -262,9 +262,10 @@ No Critical finding remains.
   Geiger remains zero-unsafe.
 - **A10 — PASS:** the README states the governance-calibration limitation, the
   selection-bias channel, and the non-discriminating nature of the P-2 evidence.
-- **A11 — PENDING HOSTED HEAD:** local claims above point to commands and sealed
-  artifacts. Exact-head and exact-merge D6 URLs must be added in the integration
-  closeout before session end.
+- **A11 — PASS:** PR #18 exact head `a3b54337b3a930a421f59faac4d7368ec77627f1`
+  passed D6 run `31975177926`; exact merge
+  `9bbbd43fd9e4c07f8b389f182b34281183be3737` passed all eleven jobs in D6 run
+  `31977067852`. The immutable URLs are recorded in the batch log.
 
 ## 5. VERIFIED / ASSUMED / UNKNOWN
 
@@ -281,9 +282,9 @@ No Critical finding remains.
 
 ### ASSUMED
 
-- `W=32` plus the smaller passing cap is a reasonable *review candidate* because it is
-  interior/conservative. This assumption cannot support ratification and is labeled
-  accordingly.
+- During the original proposal pass, `W=32` plus the smaller passing cap was treated
+  only as an interior/conservative review heuristic. No builder assumption supplied
+  ratification; Al's later explicit ruling is the sole authority for provisional P-2.
 - The active static size value will be supplied through held normative text or a later
   explicit upgrade. Its absence is safe here because B3's comparison shape can be
   stated symbolically without choosing the value.
@@ -292,24 +293,141 @@ No Critical finding remains.
 
 - P-1 in seconds; resolution requires propagation, production beacon delay, reference-
   miner, and solved-class distribution evidence or Al's explicit ruling.
-- Which of the six passing hash coordinates Al will accept, revise, or reject.
+- P-1's future ratification and the resulting mandatory re-derivation of provisional
+  P-2.
 - The value of the active static `size_param` and every G0-B/C/D/E item.
 - Future adequacy of any static size under real solver progress; every phase gate now
   re-opens that evidence question without creating an automatic controller.
 
-## 6. CALIBRATE — pre-integration
+## 6. CALIBRATE — integrated
 
-- **Predicted versus actual surface:** the seven predicted governance/current-status
-  files plus this report changed. The batch-log integration line is deferred to the
-  post-merge evidence closeout so it can contain a real merge SHA and CI URL.
+- **Predicted versus actual surface:** the original seven predicted governance/current-
+  status files plus this report changed in PR #18. The closeout adds the previously
+  deferred batch-log row and refreshes only current documentation/evidence surfaces.
 - **Materialized risks:** unsupported absolute P-1, false unique-coordinate signaling,
   the stale D2 fallback trigger, and the offline-simulator wording ambiguity all
   materialized and were contained before commit.
-- **Confidence:** HIGH held for applying G0-A and preserving held surfaces. MEDIUM
-  remains appropriate for the review-only P-2 candidate.
+- **Confidence:** HIGH held for applying G0-A, integrating immutable evidence, and
+  preserving held surfaces. P-2 is explicitly provisional by human ruling; the
+  experiment still does not support a tuned-optimum claim.
 - **Surprise:** the strongest outcome of the proposal exercise is negative: P-006 can
   justify a broad hash-controller envelope, but not an absolute cadence or a uniquely
   preferred coordinate.
 - **Next-process improvement:** parameter-proposal packets should carry a machine-
   readable `identified`, `bounded`, or `underdetermined` classification so a broad
   passing envelope cannot silently become a selected default.
+
+## 7. G0-A integration closeout — re-FRAME recorded before closeout edits
+
+Al's 2026-08-16 follow-up confirms that PR #18 is merged and ratifies P-2
+**provisionally**: EMA window `W=32`, gain `1/8`, and multiplicative clamp
+`[8/9,9/8]`. The stated rationale is the conservative interior position within the
+36/36 passing hash-only grid, not a tuned optimum. P-2 MUST be re-derived when P-1 is
+ratified. P-1 remains unfilled, and no numeric cadence may be proposed from P-006's
+normalized interval.
+
+This closeout is **HUMAN ruling / AUTO evidence integration**. Its done-condition is
+limited to:
+
+1. verify PR #18's actual merge SHA and the D6 run at that exact SHA;
+2. record the P-2 provisional ratification without implying implementation or tuning;
+3. keep P-1 visibly unfilled and proposal-free;
+4. add the real G0-A integration row to `loop/reports/BATCH-LOG.md`;
+5. update current governance, specification, plan, queue, README, and state text that
+   still labels P-2 as proposed; and
+6. stop at G0 HOLD with G0-B/C/D/E and draft PR #14 untouched.
+
+Predicted closeout surface: `loop/LEDGER.md`, `docs/PROTOCOL_SPEC.md`,
+`docs/ENGINEERING_PLAN.md`, `README.md`, `loop/PACKETS.md`, `loop/STATE.md`,
+`loop/reports/BATCH-LOG.md`, and this report. No Rust, Lean, vector, workflow,
+dependency, historical P-006 evidence, or PR #14 change is authorized.
+
+Top risks are (a) accidentally laundering a P-1 value through P-2 notation, (b)
+describing the provisional coordinate as experimentally preferred, (c) treating the
+partial gate ruling as G0 PASS, and (d) citing a synthetic merge SHA or an incomplete
+run. The falsifier is any diff outside the predicted documentation/evidence surface,
+any changed G0-B/C/D/E content, any P-1 number/proposal, or any statement that P-2 is
+final, tuned, or implemented. Confidence is HIGH for the mechanical evidence
+closeout; P-2's own protocol status is PROVISIONAL by human ruling.
+
+## 8. Closeout BUILD / VERIFY / ADVERSARY / CALIBRATE
+
+### BUILD
+
+- Preserved Al's follow-up ruling verbatim in the LEDGER and separated the binding
+  disposition from the historical proposal record.
+- Set P-1 to `UNFILLED; no builder proposal` everywhere current state is summarized.
+- Set P-2 to `RATIFIED AS PROVISIONAL`: `W=32`, gain `1/8`, clamp `[8/9,9/8]`, not a
+  tuned optimum, not implemented, and subject to mandatory re-derivation when P-1 is
+  ratified.
+- Added the G0-A batch row using PR #18's real merge SHA and immutable exact-head and
+  exact-merge D6 runs; refreshed STATE while retaining `G0_HOLD_IDLE`.
+- Changed only the eight predicted Markdown governance/evidence files. No executable,
+  formal, vector, dependency, workflow, or P-006 evidence file changed.
+
+### VERIFY
+
+- PR #18: exact head `a3b54337b3a930a421f59faac4d7368ec77627f1`, D6 run
+  `31975177926`, 11/11 jobs green.
+- PR #18 merge: `9bbbd43fd9e4c07f8b389f182b34281183be3737`, exact-merge-SHA
+  D6 run `31977067852`, `push` event, 11/11 jobs green including Lean conformance and
+  locked build.
+- Local Rust/security suite: formatting, Clippy with warnings denied, dependency
+  policy, RustSec audit over 22 locked dependencies, source policy, 11-package
+  zero-unsafe enforcement, 18 workspace tests, and locked build all passed.
+- Phase handlers: conservation, codec fuzz, and genesis returned their exact explicit
+  `NOT_YET_ADMITTED` markers; no future-test success is claimed.
+- P-006: exact-byte reproducibility passed and all 8 simulator unit tests passed.
+- Documentation: `git diff --check` passed; 130 local Markdown link targets resolved;
+  the stale-current-surface scan found no remaining current claim that P-2 is TBD,
+  unratified, or awaiting review; executable diff count was zero.
+- Lean/EOL evidence: the long-lived Windows checkout built 10/10 Lean jobs but its
+  wrapper correctly rejected the stale CRLF working copy (`B45D9472...`). A staged
+  checkout with exact Git bytes had zero CRLF, vector SHA-256
+  `30CABF852D623549CD5293628D5B3899BE805D543B537CB223F1B6FAB5C324E1`, and passed the
+  active Lean gate with Lean 4.33.0, 10/10 jobs, and 27 vectors. No vector changed.
+- D11 remained clear at closeout pickup: CJ2 reported `CAPACITY_FLAG: none` and the
+  surviving GATE-1/GATE-2 items remained blocked/awaiting. PR #14 remained open,
+  draft, unmerged, and unchanged at `9acea83ca17d67a19e0d41aeb5e7275666a54013`.
+
+### ADVERSARY — A1–A11
+
+- **A1/A2/A3 — PASS:** no instance, checker-input, scoring, or self-report path changed;
+  no executable source changed.
+- **A4 — PASS:** D2 remains hash-weight-only; provisional P-2 governs the hash-target
+  controller and does not couple quality or size to fork choice.
+- **A5 — PASS:** no amount, reward, issuance, or arithmetic surface changed.
+- **A6 — PASS:** B3's static `size_param` obligation is unchanged; no prevalidation or
+  state-application path was introduced.
+- **A7 — PASS:** no parser, network, RPC, startup, panic, or remote-input path changed.
+- **A8 — PASS:** no Lean/vector semantic was inferred. The staged-tree check verified
+  the existing human-ratified formal artifact byte-for-byte.
+- **A9 — PASS:** no dependency, unsafe, native, FFI, build, or workflow surface changed.
+- **A10 — PASS:** every current surface says P-2 is provisional, non-tuned,
+  unimplemented, and re-derived after P-1; P-1 is unfilled and proposal-free; G0 is
+  HOLD; G0-B/C/D/E remain held.
+- **A11 — PASS:** the BATCH-LOG row cites the actual PR #18 merge SHA and both immutable
+  D6 runs. Local red/green EOL evidence is distinguished explicitly.
+
+No Critical finding exists. The closeout does not qualify another packet.
+
+### Final evidence classification and calibration
+
+- **VERIFIED:** PR #18 merge identity and 11/11 exact-merge D6 result; P-006's 36/36
+  hash-only envelope; the eight-file docs-only surface; P-1's blank state; provisional
+  P-2 wording; D11 clearance; PR #14's draft/unmerged state; all checks listed above.
+- **ASSUMED:** none of the provisional P-2 authority. The interior/conservative
+  rationale is human-ratified but remains a design rationale, not experimental proof
+  of optimality.
+- **UNKNOWN:** P-1's absolute cadence; the later P-2 re-derivation outcome; the active
+  static `size_param` value; every held G0-B/C/D/E value; future size adequacy under
+  solver progress.
+- **Prediction versus result:** the eight predicted documentation/evidence files are
+  the exact diff. The key materialized risk was stale proposal language, which the
+  current-surface scan eliminated without rewriting the historical FRAME record.
+- **Process delta:** parameter evidence and parameter authority are now recorded
+  separately: P-006 bounds a passing region, Al provisionally chooses an interior
+  point, and the mandatory P-1-triggered re-derivation prevents provisionality from
+  silently becoming permanence.
+- **Terminal state:** STOP / IDLE at G0 HOLD. No additional packet qualifies without
+  touching a held surface.
