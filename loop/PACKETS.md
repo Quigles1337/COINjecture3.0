@@ -1,10 +1,11 @@
 # COINjecture 3.0 Packet Queue
 
 **Queue status:** APPROVED IN ORDER — Al live rulings, 2026-08-15 through
-2026-08-16. P-001 through P-007 and P-009 run in continuous-batch mode while the D11
-capacity condition remains clear. P-009 is appended and unblocked; its source-ingest
-first action occurs at the P-004 boundary. Stop at Gate G0, on HUMAN-lane work, or on
-any autonomous-builder tripwire.
+2026-08-16. P-001 through P-007, P-009, and P-010 run in continuous-batch mode while
+the D11 capacity condition remains clear. P-009 and P-010 are appended in that order.
+P-010's live ruling directs its docs-only AUTO work at the P-005 stop boundary; this
+does not complete P-005 or unblock its dependents. Stop at Gate G0, on HUMAN-lane
+work, or on any autonomous-builder tripwire.
 
 | Packet | Phase | Queue status | Blocking condition |
 |--------|-------|--------------|--------------------|
@@ -12,11 +13,12 @@ any autonomous-builder tripwire.
 | P-002 | Phase 0 | COMPLETE — `7ecba896` | PR #3 and exact-merge-SHA D6 CI green |
 | P-003 | Phase 0 | COMPLETE — `e0056157` | PR #5 and exact-merge-SHA D6 CI green |
 | P-004 | Phase 0 | COMPLETE — `4644374f` | PR #7 and exact-merge-SHA D6 CI green |
-| P-005 | Phase 0 | NEXT — APPROVED | P-004 complete; HUMAN-lane constraints apply to `Spec/*.lean` content and vectors |
+| P-005 | Phase 0 | STOP — HUMAN / AWAITING AL | Draft PR #9 contains FRAME/STOP only; resume requires live authority for `Spec/*.lean` content and vector definitions |
 | P-006 | Phase 0 | QUEUED — APPROVED | P-005 complete and D11 re-check |
 | P-007 | Phase 0 | QUEUED — APPROVED | P-006 complete and D11 re-check |
 | P-008 | Phase 0 / Phase 4 seam input | BLOCKED | Exact public frontend repository URL supplied by Al; URL MUST NOT be guessed |
 | P-009 | Phase 0 / audit traceability | QUEUED — APPROVED / UNBLOCKED | Source evidence copied durably at the P-004 boundary; execute after earlier approved packets |
+| P-010 | Phase 0 / documentation | IN PROGRESS — APPROVED / AUTO | Live next-boundary ruling; root README and loop evidence only |
 | P-101 | Phase 1 head | BLOCKED | Gate G0 |
 
 ## Seed packet definitions
@@ -87,6 +89,23 @@ Lean audit are first copied byte-for-byte from the supplied Downloads paths into
 CJ3's A8 track. The Codex security-scan source remains outstanding, but P-009 does
 not wait if exact committed 2.0 remediation records fully represent its findings and
 are cited as substitutes. No `src/` change is authorized.
+
+### P-010 — Institutional README
+
+Replace the repository-root `README.md` with a GitHub-flavored, diligence-oriented
+entry document below roughly 400 lines. It leads with the 2.0 audit lineage, derives
+the structural response without claiming unimplemented consensus behavior, keeps one
+current status block, condenses A1–A11, maps the planned crate architecture, explains
+governance and evidence inspection, provides only currently working commands, states
+limitations and owned TBDs, and marks the current G0–G4 position. A D6 badge is the
+only permitted badge class; no drifting version badge is permitted.
+
+The packet is docs-only and AUTO eligible. It may edit the README and its own durable
+governance/report/bookkeeping surfaces, but no source, workflow, formal specification,
+protocol vector, consensus semantic, parameter, or license decision. Its adversary
+pass removes or points every unsupported capability sentence. The README status block
+and roadmap marker become mandatory refresh surfaces at every gate closeout under the
+standing rule in `loop/LEDGER.md`.
 
 ### P-101 — Kernel
 

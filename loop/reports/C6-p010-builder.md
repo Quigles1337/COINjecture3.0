@@ -141,9 +141,94 @@ risk of grammatically subtle overclaiming.
 - P-009's finding-by-finding source reconciliation remains undone; the README must not
   infer its outcome from source preservation alone.
 
-## 2. BUILD — PENDING
+## 2. BUILD
 
-## 3. VERIFY — PENDING
+The root README was rewritten as a 254-line evidence index with the required section
+order. Its only badge is the private-repository D6 workflow badge. The document keeps
+all repository-wide status in one block, then separates ratified requirements,
+implemented spike boundaries, intended architecture, planned phases, limitations, and
+owned TBDs.
+
+The audit lineage leads the substantive narrative. It names the 2.0 C2
+`solve_time`/reported-score failure, links the committed traceability matrix and source
+manifest, derives the absence of those inputs from the current trait/spec/source-policy
+surfaces, and explicitly says that P-009 source reconciliation remains planned.
+
+The architecture Mermaid diagram is adapted from Engineering Plan §2 and labeled as
+the governed crate map rather than runtime evidence. The status block and verification
+section separately identify the implemented P-002/P-003/P-004 surfaces and the empty or
+deferred Phase 1–4 boundaries. The quickstart contains only pinned-toolchain format,
+source-policy, test, and build commands; it intentionally omits a node launch because
+`cj3-node` has no behavior.
+
+The live governance was recorded without a new decision number. `loop/LEDGER.md` now
+contains P-010's AUTO/docs-only authority, queue placement, claims/license constraints,
+and the standing rule that every G0–G4 closeout refresh both README status surfaces.
+`loop/PACKETS.md` appends P-010, records P-005's independently evidenced HUMAN stop,
+and states that this live next-boundary packet neither completes P-005 nor unblocks its
+dependents.
+
+### Scope/tripwire log
+
+- **SCOPE:** only the predicted README, LEDGER, PACKETS, and this report are modified
+  at BUILD time. No source, workflow, formal specification, vector, audit source,
+  manifest, lockfile, or protocol document changed.
+- **INVENTION:** every material protocol value remains `TBD`, provisional, placeholder,
+  or planned with an owner. The exact mandated license line is present, and no
+  `LICENSE` file was created.
+- **INTERPRETATION:** the README follows SI-001's stricter A10 reading rather than the
+  Protocol Spec's unconditional SIS wording; concrete hardness is called an assumption.
+- **AUTHORITY:** P-005's commits were not copied, merged, rebased, or modified. Its
+  stop is cited through draft PR #9 and run 31955875423 from the independent P-010
+  branch based on `main`.
+- **REPETITION/ENVIRONMENT/DEGRADATION:** no tripwire fired during the docs build.
+
+## 3. VERIFY — LOCAL PASS; ORIGIN PENDING
+
+### Quickstart command evidence
+
+Every command printed in the README ran successfully from the P-010 repository root:
+
+- `rustup show active-toolchain` selected pinned
+  `1.97.1-x86_64-pc-windows-msvc` from `rust-toolchain.toml`.
+- `cargo fmt --all -- --check` passed.
+- `pwsh -NoProfile -File scripts/ci/check-source-policy.ps1` passed with
+  `SOURCE_POLICY=PASS files=14 crates=10`.
+- `cargo test --workspace --all-targets --all-features --locked` passed 18 tests
+  across the implemented packages, with zero failures; empty boundary crates reported
+  zero tests rather than being described as tested behavior.
+- `cargo build --workspace --all-targets --all-features --locked` passed.
+
+### Full local D6-equivalent evidence
+
+- Clippy with `-D warnings` passed across the workspace/all targets/all features.
+- `cargo deny --locked --all-features check` returned advisories, bans, licenses, and
+  sources all `ok`.
+- `cargo audit --deny warnings` scanned the committed lock's 22 dependencies with no
+  reported advisory.
+- `scripts/ci/verify-geiger.ps1` passed source policy and reported
+  `GEIGER_POLICY=PASS packages=11 unsafe_count=0`.
+- The conservation, Lean conformance, codec fuzz smoke, and genesis spend dispatchers
+  each returned `STATUS=NOT_YET_ADMITTED` with their owner. These are verified
+  deferrals, not execution of the future tests.
+- The final locked all-target/all-feature build passed after the geiger scans.
+
+### Documentation mechanics
+
+- `README.md` is 254 lines, contains one badge and one Mermaid fence, and has the exact
+  required license line. No root `LICENSE*` file exists.
+- Every non-HTTP Markdown target resolves in the worktree. Nineteen distinct heading
+  fragments into already committed documents matched GitHub's authenticated rendered
+  anchors; the one new standing-rule anchor was checked against its local heading.
+- GitHub's GFM render endpoint produced one H1, twelve H2 elements, five tables, one
+  Mermaid block, and 132 links from the draft without a render error.
+- The banned voice-contract terms are absent. The sole `solve_time` occurrence is the
+  required historical C2 provenance, not a current mechanism or identifier claim.
+- `git diff --check` passed. The diff remains Markdown-only and within the FRAME
+  surface.
+
+Exact-head origin D6, its immutable URL, and the draft PR remain pending until the
+content commit is pushed. No hosted-green claim is made yet.
 
 ## 4. ADVERSARY PASS — PENDING
 

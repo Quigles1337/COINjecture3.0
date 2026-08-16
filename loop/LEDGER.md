@@ -162,3 +162,28 @@ Continue continuous-batch afterward.
   verification. The two supplied audit files enter durable `loop/evidence/` storage
   before analysis; the missing Codex scan file does not block if its findings are
   already fully represented by exact committed 2.0 remediation pointers.
+
+## P-010 documentation governance overlay — RATIFIED (Al, 2026-08-16)
+
+The following non-preempting ruling was received after the P-005 HUMAN-lane stop and
+applied at that packet boundary without merging or modifying P-005's formal-spec branch:
+
+- **P-010 — APPROVED / AUTO:** replace the repository-root `README.md` with the
+  institutional document specified by the live ruling. The packet is docs-only and
+  has no consensus-semantic authority.
+- **Queue placement:** P-010 is appended after P-009 in the durable queue. The live
+  instruction to process it at the next packet boundary authorizes this documentation
+  packet now; it does not mark P-005 complete or unblock P-006/P-007/P-009.
+- **Claims discipline:** present capabilities require evidence pointers; future work,
+  assumptions, and owned TBDs remain explicit. The repository remains private and
+  pre-testnet, with no mainnet claim or configuration.
+- **License:** `License: TBD — owner: Al/Ken`. P-010 does not create a `LICENSE` file
+  or select a license.
+
+### Standing README drift-control rule — RATIFIED (Al, 2026-08-16)
+
+The README status block and roadmap current-position marker MUST be refreshed in the
+same closeout that records every phase-gate decision (G0 through G4). A gate closeout
+is incomplete if either surface is stale or omitted. This standing rule keeps the
+repository entry document synchronized with the gate evidence in `loop/STATE.md`,
+`loop/PACKETS.md`, and `loop/reports/`.
