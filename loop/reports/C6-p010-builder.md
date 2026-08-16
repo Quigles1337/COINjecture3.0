@@ -1,6 +1,6 @@
 # Cycle 6 — P-010 Builder Report
 
-**Status:** IN PROGRESS — FRAME COMPLETE
+**Status:** IN PROGRESS — ADVERSARY FIX; EXACT-HEAD REVERIFY REQUIRED
 **Date:** 2026-08-16
 **Packet:** P-010 — DOCUMENTARIAN / institutional README
 **Lane:** AUTO
@@ -183,7 +183,9 @@ dependents.
   branch based on `main`.
 - **REPETITION/ENVIRONMENT/DEGRADATION:** no tripwire fired during the docs build.
 
-## 3. VERIFY — LOCAL PASS; ORIGIN PENDING
+## 3. VERIFY
+
+**Status:** local pass; original content-head D6 passed; adversary-fix head pending.
 
 ### Quickstart command evidence
 
@@ -227,10 +229,76 @@ Every command printed in the README ran successfully from the P-010 repository r
 - `git diff --check` passed. The diff remains Markdown-only and within the FRAME
   surface.
 
-Exact-head origin D6, its immutable URL, and the draft PR remain pending until the
-content commit is pushed. No hosted-green claim is made yet.
+### Original content-head origin evidence
 
-## 4. ADVERSARY PASS — PENDING
+- Draft pull request: [#10 — P-010 institutional README](https://github.com/Quigles1337/COINjecture3.0/pull/10).
+- Original content head: `441458b1b62157bf0534aa3890d37a4cb4c1d139`.
+- Exact-head D6: [run 31957255022](https://github.com/Quigles1337/COINjecture3.0/actions/runs/31957255022),
+  success on that SHA; GitHub readback reported all eleven jobs successful.
+
+The post-CI adversary pass found a broken depth link into this report and changed its
+heading to a stable anchor. Therefore run 31957255022 is retained as evidence for the
+original content but is not represented as verification of the final head. A new
+exact-head D6 run is required after the fix is pushed.
+
+## 4. ADVERSARY PASS
+
+**Seat switch: ADVERSARY.** The complete `main...HEAD` diff and GitHub-rendered branch
+were re-read as a skeptical diligence reviewer, sentence by sentence rather than from
+the BUILD summary.
+
+### Finding and disposition
+
+1. **Fixed — mutable report heading broke a README evidence link.** The README linked
+   its quickstart evidence to `loop/reports/C6-p010-builder.md#3-verify`, but the report
+   heading included `— LOCAL PASS; ORIGIN PENDING`, so GitHub rendered a longer anchor.
+   All other 20 Markdown depth fragments matched the branch-rendered targets. The
+   report now uses the stable heading `## 3. VERIFY` with status on a separate line;
+   the README link therefore remains stable as evidence accumulates. This fix changes
+   the branch head and must pass D6 again before merge.
+
+### Claims and voice review
+
+- Every present-tense implementation statement is confined to the status/evidence
+  surfaces and has a path or run pointer. Intended architecture is introduced as a
+  governed map, and Phase 1–4 behavior is labeled planned or absent.
+- The C1/C2 thesis is bounded to the governing interface and the implemented P-003
+  trait; it expressly excludes a claim that Phase 2 consensus code exists.
+- “Blocking workflow” language was removed before origin verification because main is
+  not protected. The README now says the workflow *defines* the jobs and separately
+  points readers to immutable run evidence.
+- A5–A11 table text is imperative/normative rather than present-tense implementation
+  prose. A5–A8 entries point to planned STF/RPC/formal surfaces instead of implying
+  those components run.
+- No slogan, version badge, production-readiness statement, general security claim,
+  or self-description as institutional-grade exists. The single standard workflow
+  badge is the class expressly authorized by the live P-010 ruling.
+- The historical `solve_time` occurrence is necessary audit provenance. No banned
+  identifier appears as a current field, API, feature, or recommendation.
+- All hardness text uses conditional/assumption language; the Ofelimos ≤1/2 ceiling is
+  identified as prior art rather than a CJ3 measurement; negative P-004 evidence is
+  not converted into admission.
+- The status block contains phase, last gate, scope, implemented surfaces, absent work,
+  and the P-005 stop. The only required repetition of current position is the roadmap
+  marker governed by the new standing rule.
+- All named parameters remain TBD/provisional/placeholder with an owner. The license
+  line is exact, and no license file or implied license was added.
+
+### Axiom sweep
+
+| axiom | adversary result |
+|---|---|
+| A1–A4 | PASS at docs scope: the thesis and architecture point to the derived-instance/pure-checker/decoupled-fork-choice requirements and distinguish implemented trait code from planned consensus. |
+| A5 | PASS: no amount code or value changed; integer-money text is a requirement, not a capability claim. |
+| A6 | PASS: no apply surface changed; V-rule/STF controls are explicitly planned. |
+| A7 | PASS: no endpoint/configuration changed; fail-closed RPC is explicitly a Phase 3 requirement. |
+| A8 | PASS: no Lean term/vector or Rust state-machine code was added; the absence and HUMAN stop are explicit. |
+| A9 | PASS: no dependency, FFI, source, or trusted-computing-base surface changed; exact-head geiger remained zero. |
+| A10 | PASS: conditional hardness, usefulness ceiling, VDF absence, formal absence, and negative legacy evidence are prominent limitations. |
+| A11 | PASS after the heading fix is reverified: local commands, rendered links, original exact-head D6, and every prior packet claim have exact evidence pointers. |
+
+No Critical remains in the content. Merge eligibility now depends on exact-head D6 for
+the stable-anchor fix and the fresh D11/D17/private-repository guard.
 
 ## 5. MERGE — PENDING
 
