@@ -1,13 +1,13 @@
 # COINjecture 3.0 Loop State
 
-CYCLE: 3
+CYCLE: 4
 PHASE: Phase 0 — Foundations and spikes
-PACKET: P-003 — COMPLETE; P-004 NEXT
-BRANCH: main
+PACKET: P-004 — COMPLETE; GOVERNANCE INJECTION NEXT
+BRANCH: docs/p004-closeout-audit-governance
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-blocked-on-external
 CAPACITY_OBSERVED_AT: 2026-08-16 resume ruling plus CJ2 gate-state readback
-STATUS: P003_COMPLETE_P004_READY
+STATUS: P004_MERGED_MAIN_GREEN_GOVERNANCE_INJECTION_IN_PROGRESS
 
 ## Ground-truth state
 
@@ -37,6 +37,15 @@ STATUS: P003_COMPLETE_P004_READY
   exact-merge-SHA mainline run `31926645964` both passed all eleven D6 jobs. The
   sealed zero-finding security report is preserved at
   `loop/reports/P-003-security-scan.md`.
+- P-004 added a bounded, class-neutral safe-Rust admission controller and a
+  hash-pinned, read-only legacy calibration driver. SubsetSum, SAT, and TSP were
+  rejected on sampled-hardness/checker-contract evidence; GraphColoring,
+  Factorization, and SVP remain insufficient; Custom is not a concrete class.
+- P-004 merged through PR #7 at
+  `4644374f5073a929bf5ecc88c0e191f0d9bab1be`; exact-head run `31954357570` and
+  exact-merge-SHA mainline run `31954588282` both passed all eleven D6 jobs. The
+  inherited legacy-only `bincode 1.3.3` maintenance warning remains explicitly
+  quarantined outside CJ3's workspace/runtime.
 - `loop/reports/SPEC-ISSUES.md` keeps three G0/HUMAN interpretation issues open:
   conditional SIS-hardness wording, undefined `s_max`, and the missing normative
   SHAKE candidate-byte convention.
@@ -54,12 +63,12 @@ STATUS: P003_COMPLETE_P004_READY
 
 ## Next action
 
-1. Ferry this P-003 merge/calibration record and durable security report to `main`
-   through the evidence-only
-   closeout PR.
-2. At P-004 pickup, re-check D11, D17, PRIVATE visibility, canonical remotes, and the
-   approved queue.
-3. Create `feat/p004-admission-bench` and write P-004 FRAME before research or code.
+1. Commit the P-004 merge/calibration closeout at this packet boundary.
+2. Process Al's non-preempting governance injection: preserve the exact supplied
+   audit matrix, apply ratified AMEND-1/2/3 to the governing documents, record the
+   LEDGER overlay, and append approved/unblocked P-009.
+3. Make P-009's first action the durable copy of both supplied audit sources into
+   `loop/evidence/`, preserving and recording exact hashes before analysis.
 
 No frontend URL may be inferred for P-008, and no Al- or Sarah-owned TBD may be
 filled.

@@ -9,8 +9,8 @@ Gate G0, on HUMAN-lane work, or on any autonomous-builder tripwire.
 | P-001 | Phase 0 | COMPLETE — `8367de08` | PR #1 and exact-merge-SHA D6 CI green |
 | P-002 | Phase 0 | COMPLETE — `7ecba896` | PR #3 and exact-merge-SHA D6 CI green |
 | P-003 | Phase 0 | COMPLETE — `e0056157` | PR #5 and exact-merge-SHA D6 CI green |
-| P-004 | Phase 0 | NEXT — APPROVED | P-003 closeout committed and D11 re-check |
-| P-005 | Phase 0 | QUEUED — APPROVED | P-004 complete; HUMAN-lane constraints apply to `Spec/*.lean` content and vectors |
+| P-004 | Phase 0 | COMPLETE — `4644374f` | PR #7 and exact-merge-SHA D6 CI green |
+| P-005 | Phase 0 | NEXT — APPROVED | P-004 complete; HUMAN-lane constraints apply to `Spec/*.lean` content and vectors |
 | P-006 | Phase 0 | QUEUED — APPROVED | P-005 complete and D11 re-check |
 | P-007 | Phase 0 | QUEUED — APPROVED | P-006 complete and D11 re-check |
 | P-008 | Phase 0 / Phase 4 seam input | BLOCKED | Exact public frontend repository URL supplied by Al; URL MUST NOT be guessed |

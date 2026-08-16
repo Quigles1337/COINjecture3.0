@@ -1,6 +1,6 @@
 # Cycle 4 — P-004 Builder Report
 
-**Status:** FRAME COMMITTED — BUILD NOT STARTED
+**Status:** COMPLETE — PR AND EXACT-MERGE-SHA D6 GREEN
 **Date:** 2026-08-16
 **Packet:** P-004 — admission bench harness
 **Lane:** AUTO
@@ -449,3 +449,81 @@ embedded in the committed lock.
 
 No Critical remains. The open legacy dependency warning is quarantined and disclosed;
 the branch is eligible for origin verification, not yet for merge.
+
+## 5. MERGE
+
+- Feature commit: `06decc277bedf42ae753024ec0dacf7b08afdec8`.
+- Pull request: [#7 — P-004: add legacy-class admission bench](https://github.com/Quigles1337/COINjecture3.0/pull/7).
+- Exact-head D6: [run 31954357570](https://github.com/Quigles1337/COINjecture3.0/actions/runs/31954357570), success on
+  `06decc277bedf42ae753024ec0dacf7b08afdec8`; all eleven jobs succeeded.
+- Guarded merge commit: `4644374f5073a929bf5ecc88c0e191f0d9bab1be`.
+- Exact-merge-SHA mainline D6:
+  [run 31954588282](https://github.com/Quigles1337/COINjecture3.0/actions/runs/31954588282), success on
+  `4644374f5073a929bf5ecc88c0e191f0d9bab1be`; all eleven jobs succeeded.
+
+Immediately before merge, GitHub reported PR #7 `MERGEABLE`/`CLEAN`, the repository
+`PRIVATE`, the head SHA unchanged, and every required check successful. A fresh D11
+readback still showed 2.0 `CAPACITY_FLAG: none` with GATE-1/GATE-2 under awaiting
+ownership. The five D17 AUTO conditions remained true: the packet was approved and
+unblocked; the diff stayed within the bounded bench/report surface; no Lean/vector
+content changed; no decision or consensus parameter was invented; and no Al- or
+Sarah-owned TBD was filled.
+
+## 6. CALIBRATE
+
+### Predictions versus outcomes
+
+- **Diff surface:** the prediction held. The implementation touched the dedicated
+  `bench/p004-admission` tree, the root workspace manifest/lock, and this report. It
+  did not need a CI-workflow hook, consensus/runtime source, protocol/spec edit,
+  registry change, class ID, or 2.0 mutation.
+- **Risk materialization:** all three top risks appeared in useful form. Semantic
+  laundering was prevented by explicit rejection/unknown states; benchmark-category
+  error appeared as sub-clock-resolution zero observations and was fixed
+  fail-closed; reproducibility/hostile-state risk appeared in lock bootstrap,
+  PowerShell environment rendering, exact source pins, and the inherited legacy
+  dependency warning.
+- **Confidence:** MEDIUM was calibrated correctly. A reusable bounded controller and
+  faithful three-class driver were tractable, while four legacy surfaces proved
+  structurally unmeasurable and no legacy class cleared the evidence contract.
+- **Surprise:** every executable happy-path checker was far below provisional P-3 on
+  its fixture, yet every executable class still failed admission evidence. That is a
+  strong empirical demonstration that checker speed and solve/check asymmetry cannot
+  substitute for a hard sampled distribution or a strict checker contract.
+
+### Final VERIFIED / ASSUMED / UNKNOWN ledger
+
+**VERIFIED**
+
+- The generic controller, exact legacy inventory, raw results, generated report,
+  environment seal, and pinned driver lock are committed at the merge SHA above.
+- Three executable legacy paths were measured; all three are `reject`. Three
+  descriptor-only paths are `insufficient_evidence`; Custom is `reject` and is not a
+  concrete class. Evidence: committed JSONL and generated Markdown under
+  `bench/p004-admission/evidence/`.
+- Both exact-head and exact-merge-SHA hosted D6 runs passed all eleven jobs. Evidence:
+  the two CI URLs above.
+
+**ASSUMED**
+
+- `C:\Users\LEET\COINjecture2.0-network` remains the operational local 2.0
+  source/state checkout. This was safe for P-004 because the defining code and lock
+  were independently pinned by revision and SHA-256, the checkout remained clean,
+  and Al's live D11 ruling independently supplied the capacity branch.
+
+**UNKNOWN**
+
+- Fixture timings do not establish active-generator timing distributions or
+  security floors. Resolving that would require a separately approved generator-
+  sampled study plus published attack analysis; P-004 does not infer either.
+- Whether a maintained replacement for legacy `bincode 1.3.3` preserves exact 2.0
+  semantics is unknown. Resolving it requires a 2.0-owned dependency migration and
+  equivalence evidence; CJ3 does not waive or silently upgrade the calibration graph.
+- Descriptor-only GraphColoring, Factorization, and SVP remain unmeasurable until
+  real generator, solver, checker, and parameter-floor implementations exist. Their
+  names and empirical registry exponents are not substitutes.
+
+**One process improvement for the next measurement packet:** run a timer-resolution
+probe and audit every auxiliary lockfile before the first sealed capture. This turns
+quantization and inherited-dependency surprises into FRAME-time constraints rather
+than late adversary findings.
