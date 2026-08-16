@@ -255,7 +255,11 @@ and a crash-consistency test that kills the process mid-block-apply and requires
 validation, fork choice, difficulty retarget per P-006's ratified model.
 **Gate G2:** two-node deterministic replay test (same blocks → same state root);
 adversarial block corpus (malformed solutions, wrong-instance solutions, replayed
-solutions, overflow txs, future nonces) all rejected with typed errors, zero panics.
+solutions, overflow txs, future nonces) all rejected with typed errors, zero panics;
+and a C2 provenance check proves the reward input is exactly the output of
+`check(derive_instance(instance_seed, size_param), solution)` for the validated block.
+The G2 corpus MUST attempt to spoof a block-supplied quality value and verify that no
+such field can influence `Context.rewardInputs` or the credited reward.
 
 **Phase 3 — Network & RPC (P-301…P-304).**
 `cj3-net` bounded ingress (size/rate caps, typed decode errors), `cj3-rpc` with

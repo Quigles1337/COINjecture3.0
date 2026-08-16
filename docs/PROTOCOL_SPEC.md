@@ -220,6 +220,17 @@ Lean V-rules before any Rust implementation exists. There is no Rust-first excep
   issuance ceiling, not a target: realized issuance may be lower, and the unminted
   remainder is never minted. Fees transfer, never mint. No treasury, reserve,
   premium account, or insufficient-funds branch exists for reward issuance.
+- **P-101 binding state-store laws:** the concrete authenticated store MUST instantiate
+  the Lean `LawfulStateOps` contract and prove, without axioms or admitted premises:
+  1. read-after-write at the written address;
+  2. reads at every other address are unchanged; and
+  3. replacing account `a` with `new` obeys the additive balance equation
+     `totalBalances(setAccount(state,a,new)) + balance(account(state,a)) =
+     totalBalances(state) + balance(new)`.
+  These laws bind nonce-only updates to preserve total balances and must hold for every
+  address-aliasing case among sender, recipient, and miner. P-005 proves transaction
+  and successful-block conservation from this contract; P-101 must discharge the
+  contract for its concrete store before claiming Lean conformance.
 
 ## §9 Instance derivation — grinding and theft analysis
 
@@ -262,6 +273,16 @@ checker's Q, never read from the block. `R_MAX ≥ 1`, and
 threshold solution (`Q = SCALE`) earns `floor(subsidy/R_MAX)`; a solution at or beyond
 `R_MAX·SCALE` earns the full subsidy. `R_MAX = 1` degenerates to `reward = subsidy`
 for every valid block.
+
+`Context.rewardInputs` MUST be instantiated from the checker output over the derived
+instance for that same validated block:
+`check(derive_instance(instance_seed, size_param), solution) = Ok(Q)`. It MUST NOT
+read `Q`, quality, work score, timing, or any equivalent reward input from a block-
+supplied field. This is the C2 structural boundary: miners supply a solution, while
+validators derive the instance and recompute the only quality value that may enter
+reward calculation. Concrete P-101 wiring is bound to this provenance rule, and Gate
+G2 MUST exercise it explicitly, including a block-supplied-quality spoof attempt and a
+wrong-instance solution.
 
 `R_MAX` is a quality span divisor, not a maximum inflation multiple. Its value and the
 curve shaping, including any μ-balance normalization, remain P-7 owner-controlled and

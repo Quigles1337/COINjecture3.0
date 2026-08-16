@@ -766,3 +766,74 @@ seams, are visible to Al's mandatory line-by-line review, and do not authorize P
 its version check from the directory containing that packet's committed toolchain file,
 and fail before the build if the exact version is not observed. This turns ambient
 developer state into a mechanically excluded input.
+
+## SECOND HUMAN REVIEW RESUME — F1/F2/F3 — 2026-08-16
+
+Al completed the first line-by-line review without merging PR #9 and returned three
+binding findings. This section resumes the same HUMAN packet under all six standing
+constraints; it does not erase the earlier build, adversary record, or review tail.
+
+### 1. FRAME — written before remediation
+
+#### Restated work and done-condition
+
+- **F1:** replace the undischarged `ConservationTarget` boundary with a
+  `LawfulStateOps` contract containing the exact balance-replacement and account-read
+  laws, then prove transaction conservation and successful block-candidate conservation.
+  The transaction theorem must visibly partition sender/recipient/miner aliasing into
+  all-distinct, sender=recipient, sender=miner, recipient=miner, and all-three-equal
+  cases. Every law becomes a named P-101 concrete-store conformance obligation.
+- **F2:** remove the `unreachable!` from `Tx.validate`; V9 remains documented by
+  `v9_allows_self_send`, but no validation-path branch may panic.
+- **F3:** bind `Context.rewardInputs` at P-101 to the checker output from
+  `check(derive_instance(instance_seed, size_param), solution)`. A block-supplied
+  quality field is forbidden. Record this as the C2 structural boundary and an explicit
+  G2 check, without changing or concretizing the abstract P-005 checker interface.
+
+The resumed builder tail is complete only when those changes compile without `axiom`,
+`sorry`, or another proof placeholder; the full local Lake/D6 suite and a new exact-
+delta adversary/security pass are green; the exact pushed PR head passes hosted D6; and
+PR #9 remains open, ready-for-review, and unmerged for Al's second review.
+
+#### Lane and authority
+
+**HUMAN — explicitly resumed by Al.** F1 changes the formal STF theorem surface, F2
+changes the normative validation function, and F3 adds a binding consensus provenance
+obligation. The live ruling supplies the semantics and exact required cases; it does
+not authorize any owner value, canonical encoding, SI-001/2/3 choice, Sarah contact,
+kernel implementation, reviewer request, or merge.
+
+#### Predicted diff surface
+
+- Formal model: `spec/Spec/Stf.lean` and `spec/Spec/Tx.lean`.
+- Binding prose/governance: `docs/PROTOCOL_SPEC.md`, `docs/ENGINEERING_PLAN.md`,
+  `loop/LEDGER.md`, and `loop/PACKETS.md`.
+- Verification/evidence only if mechanically required: the active Lean gate plus this
+  report, `loop/STATE.md`, `loop/reports/BATCH-LOG.md`, and a durable second-review
+  security-diff report. The symbolic vector definitions are predicted unchanged.
+
+#### Top risks, falsifier, and confidence
+
+1. **Vacuous store law:** a balance law that assumes the desired global conservation
+   result, or omits the replaced account's old balance, would merely rename F1.
+2. **Aliasing sleight of hand:** a proof for pairwise-distinct addresses would not cover
+   the sequential-read semantics already accepted by Al; the public theorem must case-
+   split on all five realizable equality partitions.
+3. **Success-only mismatch:** proving helper updates while failing to connect them to
+   the actual `Except` results of `applyTransaction` and `applyBlockCandidate` would
+   leave the executable model undischarged.
+
+**Falsifier:** this approach is wrong if any theorem imports conservation as a premise,
+if any alias partition is absent, if the validation path retains a panic, if reward
+quality can be sourced independently of the derived-instance checker, or if the proof
+needs an axiom, `sorry`, or owner-controlled instantiation.
+
+**Confidence: MED.** The additive accounting argument is straightforward, but exact
+Lean reduction through checked arithmetic and `Except` sequencing is proof-engineering
+sensitive. Any law that cannot be stated constructively inside the authorized interface
+will trigger the required stop rather than an inferred semantic choice.
+
+Al also accepted V1–V9 independence/order, V3 binding, V4 strict equality, evolving-
+state revalidation, sequential alias handling, atomic rejection, and the Model 4 reward
+theorems. Those surfaces are held fixed except where F1/F2 mechanically require proof
+support.

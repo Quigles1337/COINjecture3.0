@@ -1,15 +1,14 @@
 # COINjecture 3.0 Packet Queue
 
-**Queue status:** APPROVED WITH RATIFIED P-005 REVIEW TAIL; SI-004 MODEL 4 RATIFIED —
+**Queue status:** APPROVED WITH RATIFIED P-005 REVIEW TAIL; SECOND-REVIEW REMEDIATION —
 Al live rulings, 2026-08-15 through 2026-08-16. P-005 implementation is HUMAN-
 authorized under the exact constraints in `loop/LEDGER.md`; the §8/§11 ambiguity is
-resolved by bounded-above quality normalization. P-005 is builder-complete, its hosted
-content/report head is green, and PR #9 is handed to Al ready-for-review. It MUST NOT
-auto-merge. Although the earlier out-of-order P-006/P-007/P-009 review-tail exception
-exists while PR #9 awaits Al, Al's latest live P-005 instruction says STOP for review,
-so no later packet is picked up in this turn. P-008 remains blocked on the exact
-frontend URL. P-101 remains blocked on both Gate G0 and the merged, human-reviewed
-P-005.
+resolved by bounded-above quality normalization. Al completed the first review without
+merging and returned F1/F2/F3 for remediation on the same branch. PR #9 remains ready-
+for-review and MUST NOT auto-merge; it returns to Al after exact-head D6 for a second
+review. P-006/P-007/P-009 remain permitted in parallel, but are not part of the P-005
+review head. P-008 remains blocked on the exact frontend URL. P-101 remains blocked on
+both Gate G0 and the merged, human-reviewed P-005.
 
 | Packet | Phase | Queue status | Blocking condition |
 |--------|-------|--------------|--------------------|
@@ -17,7 +16,7 @@ P-005.
 | P-002 | Phase 0 | COMPLETE — `7ecba896` | PR #3 and exact-merge-SHA D6 CI green |
 | P-003 | Phase 0 | COMPLETE — `e0056157` | PR #5 and exact-merge-SHA D6 CI green |
 | P-004 | Phase 0 | COMPLETE — `4644374f` | PR #7 and exact-merge-SHA D6 CI green |
-| P-005 | Phase 0 | READY FOR AL REVIEW — HUMAN / BUILDER COMPLETE | Al line-by-line review and merge; no builder merge |
+| P-005 | Phase 0 | HUMAN — SECOND-REVIEW REMEDIATION F1/F2/F3 | Exact-head D6, Al second review, and Al merge; no builder merge |
 | P-006 | Phase 0 | QUEUED — APPROVED / REVIEW-TAIL EXCEPTION | Future pickup after current live STOP and a fresh D11 check |
 | P-007 | Phase 0 | QUEUED — APPROVED / REVIEW-TAIL EXCEPTION | Future pickup after current live STOP and a fresh D11 check; its own tripwires remain armed |
 | P-008 | Phase 0 / Phase 4 seam input | BLOCKED | Exact public frontend repository URL supplied by Al; URL MUST NOT be guessed |
@@ -121,7 +120,11 @@ standing rule in `loop/LEDGER.md`.
 ### P-101 — Kernel
 
 Phase 1 head, blocked on G0 **and** a merged, human-reviewed P-005: V1–V9 + STF versus
-Lean vectors.
+Lean vectors. Its concrete authenticated store MUST discharge every `LawfulStateOps`
+law from Protocol Spec §8. Its `Context.rewardInputs` wiring MUST consume only the Q
+returned by `check(derive_instance(instance_seed, size_param), solution)` for the
+validated block and MUST expose no block-supplied quality path; this is the binding C2
+structural boundary and is re-checked at Gate G2.
 
 ## Pickup guard
 

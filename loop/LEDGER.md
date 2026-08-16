@@ -303,3 +303,65 @@ for my review. Do not merge.
 - **P-005 tail:** all six standing HUMAN constraints remain binding. PR #9 is marked
   ready only after full local verification, adversary review, and exact-head D6; the
   builder never merges it.
+
+## P-005 first-review findings — BINDING (Al, 2026-08-16)
+
+Al completed the first mandatory line-by-line review of PR #9 without merging it and
+returned the following live ruling. It resumes the same HUMAN lane; every earlier
+ownership, SI, capacity, phase-gate, no-Sarah-contact, and no-auto-merge control remains
+in force.
+
+```text
+P-005 REVIEW COMPLETE — NOT MERGED. Three findings; resume under the
+standing HUMAN-LANE AUTHORIZATION (all six constraints still bind).
+
+F1 (blocking merge) — ConservationTarget is stated but undischarged and
+unprovable against abstract StateOps. Add a LawfulStateOps structure with
+the state-ops laws (totalBalances/setAccount additive law, read-after-write,
+read-other-address), then PROVE conservation for applyTransaction and
+applyBlockCandidate under it, with explicit case analysis over the aliasing
+cases: sender=recipient, sender=miner, recipient=miner, and all three equal.
+Record the laws in the spec as P-101 conformance obligations. Do not
+introduce any axiom or sorry — if a law cannot be stated without one, STOP
+and report.
+
+F2 (blocking merge) — remove the `unreachable!` from Tx.validate. A panic
+on the validation path violates SPEC §12 even when provably dead. Keep
+v9_allows_self_send as the documenting theorem.
+
+F3 (obligation, not a code change) — record in PROTOCOL_SPEC §11 and the
+LEDGER: Context.rewardInputs MUST be instantiated as the checker output
+over the derived instance — check(derive_instance(instance_seed,
+size_param), solution) — and MUST NOT read any block-supplied quality
+field. Cite it as the C2 structural boundary. This becomes a P-101 binding
+obligation and a G2 gate check.
+
+Accepted as correct, no change needed: V1–V9 independence and ordering, V3
+binding at the validation site, V4 strict equality, per-transaction
+revalidation against evolving state, sequential-read aliasing handling,
+atomic rejection, and the Model 4 reward theorem surface.
+
+Work on feat/p005-lean-scaffold. Keep PR #9 open, ready-for-review, UNMERGED
+— return to me for a second review after F1/F2/F3. Batch P-006, P-007, and
+P-009 may run in parallel with this work.
+```
+
+### Effective first-review controls
+
+- **Lawful store boundary:** P-005 defines and reasons from exactly three classes of
+  concrete-store law: read-after-write, read-other-address, and the additive
+  `totalBalances/setAccount` replacement equation. P-101 MUST prove those laws for its
+  authenticated store; an axiom, `sorry`, or assumed conservation result is forbidden.
+- **Conservation discharge:** successful `applyTransaction` preserves total balances
+  in every realizable sender/recipient/miner alias partition. Successful
+  `applyBlockCandidate` increases total balances by exactly the derived Model 4 reward.
+- **Panic-free validation:** `Tx.validate` has no panic path. V9 remains the theorem-
+  documented always-allow rule.
+- **C2 reward provenance:** P-101 MUST instantiate `Context.rewardInputs` only from
+  `check(derive_instance(instance_seed, size_param), solution)` for the validated
+  derived instance. It MUST NOT read block-supplied quality, work score, timing, or an
+  equivalent miner-controlled field. Gate G2 checks this structural boundary with
+  wrong-instance and quality-spoof adversarial cases.
+- **Second review tail:** PR #9 stays open, ready-for-review, and unmerged throughout
+  remediation. After full adversary review and exact-head D6, it returns to Al; only
+  Al's merge can complete P-005 or help unblock P-101.
