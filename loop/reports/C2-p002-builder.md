@@ -1,6 +1,6 @@
 # Cycle 2 — P-002 Builder Report
 
-**Status:** ORIGIN CI GREEN — FINAL EVIDENCE HEAD PENDING
+**Status:** COMPLETE — MERGED AND MAINLINE GREEN
 **Date:** 2026-08-15
 **Packet:** P-002 — beacon spike
 **Lane:** AUTO
@@ -400,11 +400,85 @@ CI must still verify the final exact head.
 
 ## 5. MERGE
 
-Pending.
+At merge time, the five D17 AUTO conditions were re-derived from current state:
+
+1. P-002 remained approved and D11 remained clear; CJ3 still recorded COINjecture 2.0
+   blocked pending Sarah's GATE-1/GATE-2 answers, with no contrary capacity signal.
+2. The diff contained only four `cj3-beacon` files and this report. It added the
+   selected construction's abstraction and authorized devnet placeholder, not a
+   production VDF, consensus integration, or another crate's semantics.
+3. No Lean file, vector, or formal-spec path changed.
+4. `loop/LEDGER.md` and the governing documents were unchanged. Selecting
+   class-group Wesolowski executed D14's explicit P-002 delegation and did not
+   ratify an additional decision.
+5. No Al- or Sarah-owned TBD, timing value, security parameter, domain byte, wire
+   encoding, or economics value was filled.
+
+The same gate re-read repository visibility as `PRIVATE`, confirmed identical
+canonical fetch/push remotes, found a clean working tree, matched local branch,
+origin branch, and PR head at
+`63d5d66acda01ab7e2435468a17640f2f0a77981`, matched PR base and merge base to
+`ad480d620e881ea2fc16bd4415c7120b0411afef`, observed exactly eleven successful
+checks, and read the PR as `CLEAN` and `MERGEABLE`.
+
+- PR: <https://github.com/Quigles1337/COINjecture3.0/pull/3>
+- Final exact-head PR CI:
+  <https://github.com/Quigles1337/COINjecture3.0/actions/runs/31923425941>
+- Exact PR head: `63d5d66acda01ab7e2435468a17640f2f0a77981`
+- PR CI interval: 2026-08-16 03:05:51Z–03:08:28Z
+- Merge time: 2026-08-16 03:10:16Z
+- Merge SHA: `7ecba896c33c5a003bd6a9424f6742cd69c1156c`
+- Post-merge `main` CI:
+  <https://github.com/Quigles1337/COINjecture3.0/actions/runs/31923608134>
+- Main CI interval: 2026-08-16 03:10:19Z–03:12:43Z
+
+Both final-head and exact-merge-SHA runs passed all eleven jobs, and all three audit-
+tool install steps were skipped on verified cache hits in both runs. The merge used a
+head-SHA match guard. As with P-001, the merge SHA and future mainline run could not be
+contained in the commit they describe; this final record is being ferried through the
+evidence-only `feat/p002-closeout` branch.
 
 ## 6. CALIBRATE
 
-Pending.
+### Predictions versus outcomes
+
+- **Diff surface:** the prediction held. The implementation changed the beacon
+  manifest and crate root, added one devnet module and one dependency-free build
+  script for the compile tag, and added this report. `Cargo.lock`, governing docs,
+  LEDGER, formal spec, types, and all other crates stayed untouched. Packet-boundary
+  STATE/PACKETS/BATCH updates are isolated to this closeout.
+- **Risk 1 — hidden native/unsafe boundary:** materialized across the apparently
+  Rust-facing candidates. Chia/POA/vdf-rs use C++ or GMP; `fastcrypto-vdf` pulls a
+  broad package with native-backed crypto. The risk was closed by admitting no
+  dependency, not by weakening A9.
+- **Risk 2 — premature semantic freeze:** materialized as the governing spec's
+  32-byte-output/proof-carrier ambiguity. Associated `Parent`/`Output` types and a
+  prepared-parent seam preserved P-007/G0 ownership instead of guessing a header or
+  witness encoding.
+- **Risk 3 — placeholder escape/overclaim:** the custom testnet tag, compile error,
+  exact banner, no-default feature, and documentation worked as predicted. The
+  positive/negative build matrix passed. The residual requirement that future
+  testnet profiles actually set the tag remains explicit.
+- **Falsifier outcome:** the strongest version of the falsifier partially fired: no
+  complete production crate cleared all required bars. It did not defeat the selected
+  construction because primary-source, deployed Chia, and emerging safe-verifier
+  evidence provide a credible A9 implementation path. The response was to defer the
+  production implementation while still selecting the construction and shipping the
+  authorized interface/placeholder.
+- **Confidence calibration:** MEDIUM was appropriate. The bounded Rust work was
+  straightforward, but current ecosystem claims required source-level skepticism and
+  the wire-proof ambiguity could not be safely resolved inside P-002.
+- **Surprise:** two pure-Rust Chia-compatible verifier efforts appeared in 2026, but
+  neither supplies the complete admitted evaluator/prover path. Separately, a newly
+  published “pure Rust VDF” exposed a direct closed-form shortcut in its own source,
+  demonstrating why language purity and cryptographic validity are independent
+  gates.
+
+**One process improvement for P-003:** build a provenance matrix before parameter
+search or dependency admission: every `(n, m, q, beta)` candidate, hardness claim,
+solver boundary, and reference implementation must point to its primary source and a
+specific falsification test. Package labels and benchmark success alone are not
+evidence that a sampled distribution meets A2/A11.
 
 ## VERIFIED
 
@@ -467,6 +541,17 @@ Pending.
   audit-tool install steps skipped on verified cache hits.
   Evidence: <https://github.com/Quigles1337/COINjecture3.0/actions/runs/31923287404>
   on exact head `8b1c8d601629a499b47ae4ab9e904dd0949fcd65`.
+- The final report-bearing PR head passed all eleven origin D6 jobs with the three
+  cache hits.
+  Evidence: <https://github.com/Quigles1337/COINjecture3.0/actions/runs/31923425941>
+  on exact head `63d5d66acda01ab7e2435468a17640f2f0a77981`.
+- PR #3 merged that exact head into `main` as
+  `7ecba896c33c5a003bd6a9424f6742cd69c1156c`.
+  Evidence: <https://github.com/Quigles1337/COINjecture3.0/pull/3> and matching GitHub
+  API/local remote readback.
+- The post-merge `main` pipeline passed all eleven jobs on the exact merge SHA, with
+  all three default-branch audit-tool cache hits.
+  Evidence: <https://github.com/Quigles1337/COINjecture3.0/actions/runs/31923608134>.
 
 ## ASSUMED
 

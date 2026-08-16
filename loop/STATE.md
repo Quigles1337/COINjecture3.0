@@ -1,13 +1,13 @@
 # COINjecture 3.0 Loop State
 
-CYCLE: 1
+CYCLE: 2
 PHASE: Phase 0 — Foundations and spikes
-PACKET: P-001 — COMPLETE; P-002 NEXT
+PACKET: P-002 — COMPLETE; P-003 NEXT
 BRANCH: main
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-blocked-on-external
 CAPACITY_OBSERVED_AT: 2026-08-15 live ruling
-STATUS: P001_COMPLETE_P002_READY
+STATUS: P002_COMPLETE_P003_READY
 
 ## Ground-truth state
 
@@ -19,6 +19,15 @@ STATUS: P001_COMPLETE_P002_READY
   `8367de08bb3d3766bf49b9970eb3109fd1af4389`; exact-head PR CI and exact-merge-SHA
   mainline CI both passed all eleven jobs. Its ten crates remain empty boundaries with
   no protocol behavior.
+- P-002 selected Wesolowski repeated squaring in a transparently derived imaginary-
+  quadratic class group under D14. No production VDF crate or security/timing
+  parameter was admitted; current pure-Rust options do not yet clear the full A9,
+  evaluator, maturity, audit, and packaging bar.
+- P-002 merged through PR #3 at
+  `7ecba896c33c5a003bd6a9424f6742cd69c1156c`; exact-head PR CI and exact-merge-SHA
+  mainline CI both passed all eleven jobs. `cj3-beacon` now exposes the bounded trait
+  plus an opt-in iterated-hash devnet placeholder that compile-fails under the
+  `cj3_testnet` tag.
 - The three pinned audit-tool caches are established on `main`; subsequent packet PRs
   can use the verified cache-hit path.
 - GitHub reports `main` is not currently protected. P-001 documents the required
@@ -33,11 +42,11 @@ STATUS: P001_COMPLETE_P002_READY
 
 ## Next action
 
-1. Ferry this P-001 merge/calibration record to `main` through the evidence-only
+1. Ferry this P-002 merge/calibration record to `main` through the evidence-only
    closeout PR.
-2. At P-002 pickup, re-check D11, D17, PRIVATE visibility, canonical remotes, and the
+2. At P-003 pickup, re-check D11, D17, PRIVATE visibility, canonical remotes, and the
    approved queue.
-3. Create `feat/p002-beacon-spike` and write P-002 FRAME before research or code.
+3. Create `feat/p003-sis-genesis-class` and write P-003 FRAME before research or code.
 
 No frontend URL may be inferred for P-008, and no Al- or Sarah-owned TBD may be
 filled.
