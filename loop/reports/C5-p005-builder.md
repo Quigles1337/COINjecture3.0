@@ -1,6 +1,6 @@
 # Cycle 5 — P-005 Builder Report
 
-**Status:** STOP — HUMAN LANE; IMPLEMENTATION NOT STARTED
+**Status:** STOP — HUMAN LANE; CHECKPOINT D6 GREEN; IMPLEMENTATION NOT STARTED
 **Date:** 2026-08-16
 **Packet:** P-005 — Lean scaffold
 **Lane:** HUMAN
@@ -186,10 +186,14 @@ vector definition, dependency, CI gate, or runtime source was created or edited.
 
 - FRAME-first commit: `89bd450afa704aad69b70dd8ea6f3bea192faac0`.
 - Draft pull request: [#9 — P-005 HUMAN-lane stop](https://github.com/Quigles1337/COINjecture3.0/pull/9).
-- This checkpoint changes only the P-005 report and loop bookkeeping. The hosted D6
-  run on this checkpoint head is pending; its immutable URL will be written in a
-  follow-up evidence commit and the final evidence-only head will be read back from
-  the PR check rollup. This avoids representing the base-main run as branch proof.
+- Stop-checkpoint content commit:
+  `1268f3acd74af0208b3dc033be27c3071150c03c`.
+- Exact checkpoint-content D6:
+  [run 31955875423](https://github.com/Quigles1337/COINjecture3.0/actions/runs/31955875423),
+  success on `1268f3acd74af0208b3dc033be27c3071150c03c`; all eleven jobs succeeded.
+- This evidence-only update records that immutable run and changes no lane,
+  implementation, or protocol claim. Its own exact-head check rollup will be attached
+  to draft PR #9 rather than recursively creating another commit to embed its run ID.
 - No Lean toolchain is invoked and the existing phase gate remains an explicit
   `NOT_YET_ADMITTED` deferral. This is intentionally not evidence that P-005 formal
   content exists or passes.
@@ -223,7 +227,7 @@ attack.
 | A8 | PASS: formal/state-machine ordering is preserved by stopping before both formal content and Rust implementation. |
 | A9 | PASS: no dependency, executable, FFI, or trusted-computing-base surface changed. |
 | A10 | PASS: the packet is reported as unimplemented/HUMAN, not scaffolded, reviewed, or green. |
-| A11 | PASS at checkpoint scope: authority, base SHA/run, preflight readbacks, FRAME commit, branch, and draft PR are explicit evidence pointers; branch-head D6 remains pending rather than inferred. |
+| A11 | PASS at checkpoint scope: authority, base SHA/run, preflight readbacks, FRAME commit, branch, draft PR, and exact checkpoint-content D6 are explicit evidence pointers. The final evidence-only head is verified through the PR check rollup rather than inferred. |
 
 No Critical exists on the docs-only stop surface. P-005 remains ineligible for merge
 because HUMAN-lane authorization/content—not a defect fix—is absent.
@@ -257,8 +261,9 @@ content completes the full six-move protocol.
 
 - P-005 is approved but HUMAN, and draft PR #9 contains no Lean/vector content.
 - The exact base-main boundary passed all eleven D6 jobs in run 31955437332.
-- The stop checkpoint is committed and pushed; hosted branch-head D6 remains pending
-  at this commit and will be recorded without claiming it early.
+- The stop-checkpoint content commit passed all eleven hosted D6 jobs in run
+  31955875423. The follow-up commit changes evidence pointers only; its exact-head
+  rollup is recorded on draft PR #9.
 
 **ASSUMED**
 

@@ -63,7 +63,10 @@ STATUS: P005_HUMAN_STOP_AWAITING_AL
   definitions, and its V-rule/STF surface independently trips D17's consensus-
   semantic scope guard. Draft PR #9 contains only the FRAME/STOP checkpoint; no Lean
   file, vector, CI admission change, Rust source, normative rule, or owned TBD was
-  created or edited.
+  created or edited. Stop-checkpoint content commit
+  `1268f3acd74af0208b3dc033be27c3071150c03c` passed all eleven D6 jobs in run
+  `31955875423`; the final evidence-only head is verified in draft PR #9's check
+  rollup.
 - `loop/reports/SPEC-ISSUES.md` keeps three G0/HUMAN interpretation issues open:
   conditional SIS-hardness wording, undefined `s_max`, and the missing normative
   SHAKE candidate-byte convention.
