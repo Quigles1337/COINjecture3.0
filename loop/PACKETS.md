@@ -18,7 +18,7 @@ work, or on any autonomous-builder tripwire.
 | P-007 | Phase 0 | QUEUED — APPROVED | P-006 complete and D11 re-check |
 | P-008 | Phase 0 / Phase 4 seam input | BLOCKED | Exact public frontend repository URL supplied by Al; URL MUST NOT be guessed |
 | P-009 | Phase 0 / audit traceability | QUEUED — APPROVED / UNBLOCKED | Source evidence copied durably at the P-004 boundary; execute after earlier approved packets |
-| P-010 | Phase 0 / documentation | IN PROGRESS — APPROVED / AUTO | Live next-boundary ruling; root README and loop evidence only |
+| P-010 | Phase 0 / documentation | COMPLETE — `3b43cca4` | PR #10 and exact-merge-SHA D6 CI green |
 | P-101 | Phase 1 head | BLOCKED | Gate G0 |
 
 ## Seed packet definitions
