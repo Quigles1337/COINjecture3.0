@@ -1,0 +1,29 @@
+[workspace]
+members = [
+    "crates/cj3-beacon",
+    "crates/cj3-classes",
+    "crates/cj3-consensus",
+    "crates/cj3-kernel",
+    "crates/cj3-net",
+    "crates/cj3-node",
+    "crates/cj3-rpc",
+    "crates/cj3-solver-sis",
+    "crates/cj3-store",
+    "crates/cj3-types",
+]
+resolver = "3"
+
+[workspace.package]
+version = "0.0.0"
+edition = "2024"
+rust-version = "1.97"
+publish = false
+license = "LicenseRef-Proprietary"
+repository = "https://github.com/Quigles1337/COINjecture3.0"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+all = { level = "deny", priority = -1 }
+pedantic = { level = "deny", priority = -1 }

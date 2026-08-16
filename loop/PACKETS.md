@@ -6,7 +6,7 @@ Gate G0, on HUMAN-lane work, or on any autonomous-builder tripwire.
 
 | Packet | Phase | Queue status | Blocking condition |
 |--------|-------|--------------|--------------------|
-| P-001 | Phase 0 | NEXT — APPROVED | Governance commit, autonomy preflight, and D11 re-check |
+| P-001 | Phase 0 | IN PROGRESS — LOCAL GREEN | Origin D6 CI, adversary pass, and merge-time D17/D11 re-check |
 | P-002 | Phase 0 | QUEUED — APPROVED | P-001 complete and D11 re-check |
 | P-003 | Phase 0 | QUEUED — APPROVED | P-002 complete and D11 re-check |
 | P-004 | Phase 0 | QUEUED — APPROVED | P-003 complete and D11 re-check |

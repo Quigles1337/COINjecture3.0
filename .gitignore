@@ -1,0 +1,8 @@
+/target/
+/.cargo/
+/.idea/
+/.vscode/
+*.profraw
+*.swp
+fuzz/artifacts/
+fuzz/corpus/
