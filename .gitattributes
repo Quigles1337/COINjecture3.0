@@ -1,3 +1,5 @@
 # Preserve binary audit evidence byte-for-byte on every platform.
 *.docx binary
 *.pdf binary
+spec/vectors/p005-draft.json text eol=lf
+bench/p006-difficulty/** text eol=lf
