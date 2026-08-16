@@ -1,0 +1,9 @@
+{"beta_squared":288,"default_attack_dimension":62,"default_block_size":40,"default_log2_rop":37.54832211652371,"m":288,"n":16,"q":257,"rough_attack_dimension":62,"rough_block_size":40,"rough_log2_rop":11.68}
+{"beta_squared":480,"default_attack_dimension":98,"default_block_size":40,"default_log2_rop":38.94687234486876,"m":480,"n":24,"q":577,"rough_attack_dimension":98,"rough_block_size":40,"rough_log2_rop":11.68}
+{"beta_squared":704,"default_attack_dimension":135,"default_block_size":47,"default_log2_rop":41.67009190585826,"m":704,"n":32,"q":1031,"rough_attack_dimension":135,"rough_block_size":47,"rough_log2_rop":13.723999999999998}
+{"beta_squared":880,"default_attack_dimension":174,"default_block_size":88,"default_log2_rop":53.16115747499085,"m":880,"n":40,"q":1601,"rough_attack_dimension":174,"rough_block_size":88,"rough_log2_rop":25.695999999999998}
+{"beta_squared":1152,"default_attack_dimension":210,"default_block_size":121,"default_log2_rop":62.29095292926984,"m":1152,"n":48,"q":2309,"rough_attack_dimension":210,"rough_block_size":121,"rough_log2_rop":35.332}
+{"beta_squared":1664,"default_attack_dimension":287,"default_block_size":190,"default_log2_rop":81.39458209870502,"m":1664,"n":64,"q":4099,"rough_attack_dimension":287,"rough_block_size":190,"rough_log2_rop":55.48}
+{"beta_squared":2080,"default_attack_dimension":367,"default_block_size":267,"default_log2_rop":102.68640784856731,"m":2080,"n":80,"q":6421,"rough_attack_dimension":367,"rough_block_size":267,"rough_log2_rop":77.964}
+{"beta_squared":2688,"default_attack_dimension":443,"default_block_size":339,"default_log2_rop":122.67299947434469,"m":2688,"n":96,"q":9221,"rough_attack_dimension":443,"rough_block_size":339,"rough_log2_rop":98.988}
+{"beta_squared":3840,"default_attack_dimension":602,"default_block_size":493,"default_log2_rop":165.52035644596074,"m":3840,"n":128,"q":16411,"rough_attack_dimension":602,"rough_block_size":493,"rough_log2_rop":143.956}

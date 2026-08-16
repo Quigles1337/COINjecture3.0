@@ -7,5 +7,9 @@ rust-version.workspace = true
 publish.workspace = true
 repository.workspace = true
 
+[dependencies]
+cj3-classes = { version = "=0.0.0", path = "../cj3-classes" }
+puremp = { version = "0.2.4", default-features = false, features = ["std", "lattice"] }
+
 [lints]
 workspace = true

@@ -1,0 +1,115 @@
+# P-003 sampled-SIS evidence
+
+This directory separates three different kinds of evidence that must not be
+conflated: asymptotic reductions, heuristic attack-cost models, and local wall-clock
+measurements. None proves a particular matrix is hard, and a failed solver run is a
+censored or algorithm-specific observation rather than proof of hardness.
+
+## Candidate family
+
+The studied family is generated rather than hand-picked:
+
+```text
+q(n) = the first prime strictly greater than n^2
+m(n) = 2 * n * ceil(log2(q(n)))
+beta_squared(n) = m(n)
+```
+
+This family supplies two auditable structural properties.
+
+First, `m > n log2(q)`, so the `2^m` binary vectors have more than `q^n` syndromes.
+Two collide; their nonzero difference is in `{-1, 0, 1}^m`, lies in the kernel, and
+has squared norm at most `m = beta_squared`. This is an existence argument, not an
+efficient solving algorithm.
+
+Second, `q / (beta * sqrt(n ln n))` grows asymptotically like `n / ln n`, matching the
+growth direction in the GPV/Micciancio-Regev average-case SIS reduction regime. The
+finite ratios rise from 2.27 at `n=16` to 10.63 at `n=128`. That does not make a finite
+tuple a theorem of concrete security: reduction loss, the hardness of the source
+worst-case problem, attack models, and implementation cost remain assumptions.
+
+## Estimator evidence
+
+[`estimator.sage`](./estimator.sage) is pinned to `malb/lattice-estimator` commit
+`3e48ef421ec256afddb3e7d2249a77eab6e9ba12`. The runner refuses another commit or an
+`estimator/sis_lattice.py` SHA-256 other than
+`d68ec5d0f471cf4904126211d8b2579186fa6dce645ac7339e95bd621a505be1`, refuses a
+dirty or untracked estimator worktree, and executes the exact Euclidean (`norm=2`)
+mapping with `length_bound = sqrt(beta_squared)`. It does not execute the checkout's
+Dockerfile or requirements: the Sage runtime is selected by an immutable OCI manifest
+digest, the checkout and script are mounted read-only, the container root is read-
+only, temporary storage is bounded, and networking is disabled.
+
+The default model and `estimate.rough` model differ by roughly 22–30 log2 operations
+across much of this range. The upstream estimator explicitly says the rough
+Core-SVP/ADPS16 values are not directly comparable to the default API. For Euclidean
+SIS, its LGSA shape selection is ignored; the runner preserves that upstream warning.
+Both columns are therefore reported, not averaged or selectively quoted.
+
+[`estimator-results.jsonl`](./estimator-results.jsonl) is the raw output. The first
+sampled tuple for which both reported models exceed an explicitly assumed 128-bit
+operation threshold is `(128, 3840, 16411, 3840)` (rough 143.956, default 165.520).
+The 128-bit threshold is an engineering assumption for G0 review, not an existing CJ3
+constant and not a claim of 128-bit end-to-end protocol security.
+
+## External solver evidence
+
+`cj3-solver-sis` is an untrusted executable. It builds an exact modular-kernel basis,
+runs pure-Rust integral LLL (`puremp` 0.2.4, `delta=99/100`), converts only
+representable rows to decoded vectors, and sends every candidate through the same
+safe-Rust checker before output. The text output is explicitly noncanonical benchmark
+data; P-007 owns bytes. No node, kernel, consensus, or beacon crate depends on this
+binary.
+
+[`solver-results.jsonl`](./solver-results.jsonl) contains deterministic repeated-byte
+seeds, output hashes, and every negative result. Release-build medians were 0.244 s at
+`n=8` (5/5 solved), 1.184 s at `n=12` (5/5), and 3.897 s at `n=16` (3/3). At `n=24`,
+LLL completed in 19.752 s but none of its returned basis rows met the admitted bound.
+That is a limitation of this demonstrator, not evidence the instance has no solution.
+No production-floor tuple was solved by this experiment, and no cadence inference is
+made from it.
+
+## Verifier evidence and P-3 recommendation
+
+The release checker fixture uses an explicit all-zero matrix and unit vector so that a
+valid check visits every coefficient of every row. It measures checker work only;
+the fixture is not sampled from the protocol distribution and says nothing about
+hardness. Each tuple has 200 samples in
+[`verifier-results.jsonl`](./verifier-results.jsonl).
+
+On the host in [`ENVIRONMENT.md`](./ENVIRONMENT.md), the `(128, 3840, 16411, 3840)`
+fixture measured 4.366 ms median, 5.589 ms p95, and 7.818 ms maximum. P-003 therefore
+recommends a provisional `VALIDATION_BUDGET` (P-3) of **15 ms** on that named reference
+hardware: 2.68 times the measured p95 and 1.92 times the observed maximum. G0 should
+ratify both the host definition and budget; CI should fail if a target-class fixture
+exceeds it. This single-host result is not a cross-platform latency guarantee.
+
+## P-4 recommendation and unresolved dependency
+
+P-003 recommends `(n, m, q, beta_squared) = (128, 3840, 16411, 3840)` as the
+**provisional minimum candidate** for G0 because it is generated by the reduction-
+compatible family, guarantees existence of a binary witness, excludes trivial `q e_i`
+vectors, is the first sampled point above the assumed 128-bit threshold under both
+reported estimator models, and remains below the measured P-3 verifier budget.
+
+This is not yet a cadence-compatible final P-4. `TARGET_BLOCK_TIME` is deliberately
+TBD(P-006), and the bundled LLL demonstrator does not solve this tuple. P-006/G0 must
+either show an independently reproducible solver envelope compatible with the target
+cadence, adjust the family while preserving the reduction and security conditions, or
+reject the candidate. The packet does not invent P-1 to manufacture that conclusion.
+
+## Reproduction
+
+```powershell
+pwsh -NoProfile -File bench/p003-sis/run-verifier.ps1 -Samples 200
+pwsh -NoProfile -File bench/p003-sis/run-solver.ps1 -TimeoutSeconds 30
+pwsh -NoProfile -File bench/p003-sis/run-estimator.ps1 `
+  -EstimatorCheckout C:\path\to\lattice-estimator-at-3e48ef42
+```
+
+Primary anchors: Ajtai, *Generating Hard Instances of Lattice Problems* (ECCC
+TR96-007); Micciancio-Regev, *Worst-case to Average-case Reductions based on Gaussian
+Measures*; Gentry-Peikert-Vaikuntanathan, *Trapdoors for Hard Lattices and New
+Cryptographic Constructions* (STOC 2008/ECCC TR07-096); NIST FIPS 202 for SHAKE; and
+the pinned estimator's own Euclidean-SIS documentation. Exact URLs and claim mapping
+are preserved in `loop/reports/C3-p003-builder.md`.
