@@ -237,6 +237,11 @@ quality does not weight the chain, an instance that drifts too easy degrades use
 work adequacy rather than granting additional chain weight. G0 remains HOLD while
 G0-B through G0-E await normative text.
 
+**G0-A P-2 follow-up (Al, 2026-08-16).** The hash-target controller is provisionally
+`W=32`, gain `1/8`, clamp `[8/9,9/8]`, selected as a conservative interior point of
+P-006's 36/36 passing hash-only region rather than a tuned optimum. It must be
+re-derived when P-1 is ratified. P-1 remains unfilled and receives no builder proposal.
+
 ---
 
 ## §4 Phase plan
@@ -270,7 +275,8 @@ and a crash-consistency test that kills the process mid-block-apply and requires
 
 **Phase 2 — Consensus (P-201…P-205).**
 `cj3-beacon` (ratified tech), instance derivation, `cj3-classes` SIS wiring, block
-validation, fork choice, hash-target retarget under later-ratified P-1/P-2, and B3
+validation, fork choice, hash-target retarget under provisional P-2 and a later-
+ratified P-1 cadence, and B3
 validation of the static active `size_param`. No dynamic size retarget exists on the
 consensus/runtime path; P-006's sealed offline simulator remains rejection evidence.
 **Gate G2:** two-node deterministic replay test (same blocks → same state root);

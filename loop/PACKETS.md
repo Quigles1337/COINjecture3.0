@@ -1,11 +1,12 @@
 # COINjecture 3.0 Packet Queue
 
 **Queue status:** STOPPED / IDLE AT GATE G0 HOLD — G0-A is RATIFIED: `size_param` is a
-static human-upgraded protocol constant, P-11 is struck as moot, and P-1/P-2 are hash-
-target-only proposals awaiting Al's review. G0-B through G0-E remain held. P-007 is
-HUMAN / INCOMPLETE at the canonical-codec and open-SI tripwire; its checked-amount
-checkpoint remains draft PR #14 and MUST NOT merge. P-008 remains blocked on the
-exact frontend URL. P-101 is blocked on Gate G0 only. No held or owner-controlled
+static human-upgraded protocol constant, P-11 is struck as moot, P-1 remains unfilled
+with no proposal, and P-2 is provisionally ratified as `W=32`, gain `1/8`, clamp
+`[8/9,9/8]`, subject to re-derivation when P-1 is ratified. G0-B through G0-E remain
+held. P-007 is HUMAN / INCOMPLETE at the canonical-codec and open-SI tripwire; its
+checked-amount checkpoint remains draft PR #14 and MUST NOT merge. P-008 remains
+blocked on the exact frontend URL. P-101 is blocked on Gate G0 only. No held or owner-controlled
 value was inferred.
 
 | Packet | Phase | Queue status | Blocking condition |
@@ -15,7 +16,7 @@ value was inferred.
 | P-003 | Phase 0 | COMPLETE — `e0056157` | PR #5 and exact-merge-SHA D6 CI green |
 | P-004 | Phase 0 | COMPLETE — `4644374f` | PR #7 and exact-merge-SHA D6 CI green |
 | P-005 | Phase 0 | COMPLETE — HUMAN-RATIFIED — `916e5027` | PR #9 and exact-merge-SHA D6 green |
-| P-006 | Phase 0 | COMPLETE — `7244f094`; G0-A applied | PR #16 exact-merge D6 green; static `size_param` ratified, P-11 moot, P-1/P-2 review-only |
+| P-006 | Phase 0 | COMPLETE — `7244f094`; G0-A applied | PR #16 exact-merge D6 green; static `size_param` ratified, P-11 moot, P-1 unfilled, P-2 provisional |
 | P-007 | Phase 0 | HUMAN STOP / INCOMPLETE — draft PR #14, `9acea83c` | G0 must rule canonical codec/hash/domain/P-8/SI-002/SI-003/strict Ed25519; SI-001 also remains open |
 | P-008 | Phase 0 / Phase 4 seam input | BLOCKED | Exact public frontend repository URL supplied by Al; URL MUST NOT be guessed |
 | P-009 | Phase 0 / audit traceability | COMPLETE — `ce0b9752` | PR #15 and exact-merge-SHA D6 green; GAP-7–13 remain non-ratified |
@@ -80,10 +81,10 @@ matrix found 0/36 full honest/unmanipulated-quality passes and 0/36 full adversa
 passes. All 6/6 unique isolated hash-loop settings passed, but no tested size-window
 setting survived the solve-power/interaction sensitivities. G0-A subsequently
 ratified the static human-upgraded `size_param` option and struck P-11 as moot. P-1
-and P-2 now apply only to the hash-target controller and remain unfilled pending Al's
-review. The non-normative review candidate is `W=32`, gain `1/8`, clamp `[8/9,9/8]`;
-P-006 did not distinguish it from the other five passing hash-only coordinates, and
-it is not implemented or ratified.
+and P-2 now apply only to the hash-target controller. P-1 remains unfilled and no
+absolute cadence is proposed. P-2 is provisionally ratified as `W=32`, gain `1/8`,
+clamp `[8/9,9/8]`: a conservative interior point, not a tuned optimum, which MUST be
+re-derived when P-1 is ratified. It is not yet implemented.
 
 ### P-007 — `cj3-types`
 

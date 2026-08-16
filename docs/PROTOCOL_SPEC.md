@@ -45,8 +45,8 @@ bytes and in instance seeds ⇒ no cross-network replay of transactions or solut
 
 | ID | Parameter | Value | Source |
 |----|-----------|-------|--------|
-| P-1 | `TARGET_BLOCK_TIME` — hash-target cadence only | TBD — P-006 normalized to `1.0` and cannot derive seconds | G0-A; proposal review required |
-| P-2 | `RETARGET_WINDOW_W` — hash-target controller only | TBD — review candidate below is NOT RATIFIED | G0-A; P-006 hash-only envelope |
+| P-1 | `TARGET_BLOCK_TIME` — hash-target cadence only | **UNFILLED; no builder proposal** — P-006 normalized to `1.0` and cannot derive seconds | G0-A follow-up ruling |
+| P-2 | Hash-target EMA controller | **PROVISIONAL:** `W = 32`, gain `1/8`, multiplicative clamp `[8/9, 9/8]`; re-derive when P-1 is ratified | G0-A follow-up; P-006 hash-only envelope |
 | P-3 | `VALIDATION_BUDGET` — max checker cost per block (ms, reference hardware) | TBD(P-003) | asymmetry bench; gates Tier-1 trigger (plan D4) |
 | P-4 | SIS `(n, m, q, β²)` | TBD(P-003) | parameter search |
 | P-5 | `θ` threshold quality (see §5.3) | `SCALE` (i.e. ‖s‖² ≤ β²) | definitional |
@@ -63,13 +63,13 @@ ratifies its static status, not its numeric value: the value remains unfilled wh
 the held class/parameter surface is unresolved. It changes only through an explicit
 human-ratified protocol upgrade, never through block history or miner observations.
 
-**P-1/P-2 proposal for Al review — non-normative:** P-006 supports the broad hash-only
-region `W ∈ {16, 32, 64}` blocks and multiplicative upper cap
-`c ∈ {9/8, 5/4}` under fixed gain `1/8`; all six unique coordinates passed. The
-builder review candidate is `W = 32`, gain `1/8`, clamp `[8/9, 9/8]`, chosen as the
-interior window and conservative passing cap. P-006 did not distinguish it from the
-other five coordinates, so P-2 remains TBD pending Al's review. No absolute P-1 is
-proposed because P-006 contains only normalized time and cannot justify seconds.
+**P-2 provisional ratification / P-1 evidence boundary:** P-006 supports the broad
+hash-only region `W ∈ {16, 32, 64}` blocks and multiplicative upper cap
+`c ∈ {9/8, 5/4}` under fixed gain `1/8`; all six unique coordinates passed. Al has
+provisionally ratified `W = 32`, gain `1/8`, and clamp `[8/9, 9/8]` as a conservative
+interior point, not a tuned or statistically preferred optimum. P-2 MUST be re-derived
+when P-1 is ratified. P-1 remains unfilled and proposal-free because P-006 contains
+only normalized time and cannot justify an absolute cadence.
 
 ## §4 Beacon
 
@@ -279,7 +279,9 @@ Lean V-rules before any Rust implementation exists. There is no Rust-first excep
   `H(header)` wins. **Quality Q appears nowhere in this section (A4).**
 - **Retarget — hash target only:**
   - `hash_target`: clamped EMA on inter-block times over `W` (P-2), targeting P-1.
-    P-1/P-2 remain unfilled pending Al's review of the non-normative proposal in §3.
+    P-2 is provisionally `W=32`, gain `1/8`, clamp `[8/9,9/8]`; P-1 remains unfilled,
+    so no complete retarget implementation is admitted. P-2 MUST be re-derived when
+    P-1 is ratified.
   - `size_param`: exactly `ACTIVE_SIZE_PARAM`, a human-governed protocol constant.
     There is no on-chain size controller, no dynamic size-retarget function, and no
     aggregation of published quality margins for instance-size adjustment. P-11 is
@@ -369,8 +371,10 @@ otherwise pretrusted divisor is non-conforming.
 
 ## §15 Open-TBD index
 
-P-1/P-2 hash-target constants → P-006 proposal, Al review · P-11 → struck as moot by
-G0-A · `ACTIVE_SIZE_PARAM` value → held class/parameter ruling plus explicit human
+P-1 hash-target cadence → UNFILLED, no builder proposal · P-2 hash-target controller →
+provisionally ratified (`W=32`, gain `1/8`, clamp `[8/9,9/8]`), re-derive when P-1 is
+ratified · P-11 → struck as moot by G0-A · `ACTIVE_SIZE_PARAM` value → held
+class/parameter ruling plus explicit human
 upgrade · P-3 validation budget + P-4 SIS parameters → P-003 · P-7 quality-span
 value/curve and P-9/P-12 economics → Al (+ Sarah for P-7;
 Ken for P-12) · P-8/P-10 ingress/drift defaults
