@@ -2,12 +2,12 @@
 
 CYCLE: 7
 PHASE: Phase 0 — Foundations and spikes
-PACKET: P-005 — HUMAN SECOND REVIEW APPROVED; RATIFICATION/MERGE CLOSEOUT
-BRANCH: feat/p005-lean-scaffold
+PACKET: P-006 / P-007 / P-009 — CONTINUOUS BATCH READY
+BRANCH: main
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-blocked-on-external
-CAPACITY_OBSERVED_AT: 2026-08-16 P-005 approved-merge preflight; no evidence that CJ2 GATE-1/GATE-2 cleared
-STATUS: P005_SECOND_REVIEW_APPROVED_MERGE_AUTHORIZED
+CAPACITY_OBSERVED_AT: 2026-08-16 P-005 exact-merge-SHA boundary; targeted CJ2 search found no evidence that GATE-1/GATE-2 cleared
+STATUS: P005_COMPLETE_BATCH_READY
 
 ## Ground-truth state
 
@@ -157,16 +157,22 @@ STATUS: P005_SECOND_REVIEW_APPROVED_MERGE_AUTHORIZED
 - CJ3 pins Lean 4.33.0 while the COINjecture 2.0 Lean project is recorded by Al as
   Lean 4.28.0 plus Mathlib 4.28.0. The compatibility gap is reserved for the D16
   reveal and MUST NOT be resolved beforehand.
+- P-005 is COMPLETE. PR #9's final reviewed head
+  `8d8ec440f86cbe06fc30eff78f9cfcc6076c0180` passed all eleven D6 jobs in run
+  `31967696333`; the expected-head guarded merge produced
+  `916e5027f0918973bf45d6a2bf90abd2ae253197`; and exact-merge-SHA mainline run
+  `31968030240` passed all eleven jobs. The Lean V1–V9/STF encoding is therefore
+  HUMAN-RATIFIED as of that merge. P-101 is blocked on Gate G0 only.
 
 ## Next action
 
-1. Require all eleven D6 jobs green on the exact ratification-closeout PR head.
-2. Merge PR #9 with an expected-head guard, then require all eleven D6 jobs green on
-   the exact merge SHA. If either run is red, diagnose, report, and stop before any
-   subsequent packet.
-3. Record the immutable merge SHA/run in a docs-only closeout, re-check D11, and resume
-   P-006, P-007, and P-009 under D17. P-008 remains blocked on the exact frontend URL;
-   P-101 remains blocked on Gate G0 only after the P-005 merge.
+1. Merge this docs-only P-005 evidence closeout after exact-head D6, then verify its
+   exact merge-SHA D6 before treating the durable boundary as sealed.
+2. Re-check D11 at each pickup and execute P-006, P-007, and P-009 under their own
+   FRAME/tripwire/CI/adversary/merge/calibration protocols. Stop an individual packet
+   on any HUMAN ambiguity without inventing an SI or owner-controlled value.
+3. P-008 remains blocked on the exact frontend URL. P-101 remains blocked on Gate G0
+   only; stop at G0 after the Phase 0 queue is drained.
 
 No frontend URL may be inferred for P-008, and no Al- or Sarah-owned TBD may be
 filled.

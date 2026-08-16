@@ -1262,3 +1262,76 @@ more to `.github/workflows/ci.yml` for that display-name replacement only. No tr
 permission, action, command, dependency, or gate behavior may change. The run on
 `06df7e2d...` is therefore superseded as merge evidence; a fresh full D6 run on the
 new immutable head remains mandatory.
+
+## IMMUTABLE MERGE CLOSEOUT — FRAME
+
+### 1. FRAME — DOCS-ONLY AUTO CLOSEOUT
+
+**Packet and done-condition.** Preserve PR #9's exact ratification head, exact-head D6,
+merge commit, and exact-merge-SHA D6 after those immutable identifiers exist; mark
+P-005 COMPLETE; append its final BATCH-LOG heartbeat; and record that P-101 is now
+blocked on Gate G0 only. This closeout is done when its own docs-only head and merge
+both pass all eleven D6 jobs, leaving `main` and the durable loop state reconstructable
+without relying on mutable PR metadata.
+
+**Lane classification: AUTO.** The HUMAN action is already complete at reviewed merge
+`916e5027f0918973bf45d6a2bf90abd2ae253197`. This branch records immutable evidence
+and queue/capacity state only; it has no authority to alter formal source, vectors,
+protocol semantics, workflows, code, dependencies, owned values, or SI status.
+
+**Predicted diff surface.** Only `loop/reports/C5-p005-builder.md`,
+`loop/reports/BATCH-LOG.md`, `loop/PACKETS.md`, and `loop/STATE.md`.
+
+**Top risks.** (1) transcribing a SHA/run that does not correspond to the same GitHub
+object; (2) marking P-101 singly blocked before the reviewed merge and merge-SHA CI
+are real; (3) resuming the queue under stale D11 capacity. Controls are direct GitHub
+readback, `origin/main` equality, the 11-job rollup check, and a fresh targeted CJ2
+capacity search.
+
+**Falsifier.** This closeout is wrong if run `31968030240` is not a successful push
+run on merge SHA `916e5027f0918973bf45d6a2bf90abd2ae253197`, if `origin/main` moved before
+the evidence readback, if any job was non-success, or if CJ2 exposes evidence that
+GATE-1/GATE-2 cleared. **Confidence: HIGH** after mechanical readback; the subsequent
+packets receive fresh independent FRAME/confidence records.
+
+### 2. VERIFY — IMMUTABLE HOSTED EVIDENCE
+
+- PR #9 final head: `8d8ec440f86cbe06fc30eff78f9cfcc6076c0180`.
+- Exact-head D6: run `31967696333`, pull-request event, SUCCESS, all eleven jobs.
+- Expected-head merge result: PR #9 MERGED at
+  `916e5027f0918973bf45d6a2bf90abd2ae253197` on 2026-08-16.
+- Exact-merge-SHA D6: run `31968030240`, push event, head SHA exactly
+  `916e5027f0918973bf45d6a2bf90abd2ae253197`, SUCCESS, all eleven jobs.
+- `origin/main` matched the merge SHA at readback; repository visibility remained
+  `PRIVATE`; the canonical checkout fast-forwarded cleanly to that exact commit.
+- Packet-boundary D11 check: CJ3 remains `cj2-blocked-on-external`; a targeted search
+  of the canonical CJ2 checkout excluding dependencies, build outputs, and auxiliary
+  worktrees found zero `GATE-1`, `GATE-2`, `remediation-priority`, or capacity markers.
+  No evidence contradicts the live authorization that CJ3 may proceed while Sarah's
+  gate answers remain outstanding.
+
+### 3. ADVERSARY AND CALIBRATE — IMMUTABLE CLOSEOUT
+
+The closeout diff is restricted to four loop documents. The SHA/run pairs were read
+from GitHub after completion rather than predicted; P-101's block was reduced only
+after both reviewed merge and merge-SHA CI existed; the historical STOP/READY rows in
+BATCH-LOG remain intact and a new final row records the terminal state. No protocol,
+formal, vector, source, workflow, dependency, visibility, external-contact, SI, or TBD
+surface is reachable from this diff.
+
+- **Prediction versus outcome:** exact. The four predicted files are the complete
+  surface, and direct readback supplied all immutable identifiers.
+- **Risks:** none materialized. Main did not move between merge and run verification;
+  all eleven jobs succeeded; D11 remains clear.
+- **Confidence:** HIGH held for the evidence closeout. Confidence does not transfer to
+  the unexecuted P-006/P-007/P-009 implementations.
+- **VERIFIED:** P-005 reviewed merge, both exact-SHA D6 runs, HUMAN-RATIFIED headers,
+  unchanged symbolic-vector boundary, Gate-G0-only P-101 status, and D11 capacity.
+- **ASSUMED:** no external Sarah response exists outside the canonical project state
+  and live ruling surfaces available to this session; any new contrary signal pauses
+  CJ3 immediately.
+- **UNKNOWN:** the results of P-006/P-007/P-009 and Al's eventual Gate G0 ruling.
+
+**Process improvement:** treat mutable PR metadata as a convenience index only; always
+copy terminal head/merge/run tuples into the next immutable docs-only commit before
+advancing the queue.
