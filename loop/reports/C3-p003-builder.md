@@ -1,6 +1,6 @@
 # Cycle 3 — P-003 Builder Report
 
-**Status:** ADVERSARY + LOCAL VERIFY COMPLETE — ORIGIN REVERIFY PENDING
+**Status:** COMPLETE — MERGED AND MAINLINE GREEN
 **Date:** 2026-08-16
 **Packet:** P-003 — SIS genesis class
 **Lane:** AUTO
@@ -326,7 +326,8 @@ The complete local D6 sequence passed after the hardening edits:
   owner rather than claiming an unimplemented test ran; and
 - `cargo build --workspace --all-targets --all-features --locked`.
 
-The post-hardening commit still requires exact-head origin D6 before merge.
+Post-hardening commit `70278e4826b5f021f42e50dbc33e5268b8f88ef5` passed every
+origin D6 job in run `31926469157` before merge.
 
 ## 4. ADVERSARY
 
@@ -336,8 +337,9 @@ Codex Security scan `aabd95d5-7900-4200-96f5-86f9d8810b31` reviewed the exact
 P-003 range
 `4b0102b8e03a1701d2196ed758aeff768b984ef3..4516d6bc71612c1b64ec6fb662d61082b0fffb77`
 under a repository-specific threat model. It sealed with complete coverage and zero
-reportable findings. The generated report is at
-`C:\Users\LEET\AppData\Local\Temp\codex-security-scans-SsNfZL\COINjecture3.0\4516d6bc71612c1b64ec6fb662d61082b0fffb77_20260816T040609Z_gzdaun4s\report.md`.
+reportable findings. Its readable report is preserved byte-for-byte at
+[`P-003-security-scan.md`](./P-003-security-scan.md), SHA-256
+`9C2E0C5FC428139D266174BB573EA6183BEE600C6A044874199BC557239F00BC`.
 
 Two plausible source-level candidates were validated and rejected as current
 security findings, while their boundary-change conditions remain explicit:
@@ -379,11 +381,85 @@ P-3/P-4 claims stay qualified; and no Critical finding remains.
 
 ## 5. MERGE
 
-Pending.
+At merge time, all five D17 AUTO conditions were re-derived from current evidence:
+
+1. P-003 remained approved and unblocked. P-002 and its closeout were on `main`; the
+   CJ2 capacity scan found neither answered-gate evidence nor a
+   `remediation-priority` signal.
+2. The diff stayed within the authorized class/checker, external solver, research
+   evidence, dependency manifests/lockfile, and packet-report surfaces. No block,
+   fork-choice, retarget, state-transition, beacon-verification, or reward behavior
+   was added.
+3. No `Spec/*.lean` content or vector definition changed.
+4. The provisional P-3/P-4 recommendations remained evidence for G0, not ratified
+   constants. `Sis<const ID: u16>` left the numeric registry value unassigned, and
+   `SI-001` through `SI-003` preserved specification decisions for HUMAN owners.
+5. No Al- or Sarah-owned cadence, economics, reward curve, margin hook, class ID,
+   domain bytes, or canonical codec value was filled.
+
+The merge gate also re-read the repository as `PRIVATE`, confirmed exact canonical
+fetch/push remotes, found a clean worktree, matched local/origin/PR head at
+`70278e4826b5f021f42e50dbc33e5268b8f88ef5`, matched PR base and merge base to
+`4b0102b8e03a1701d2196ed758aeff768b984ef3`, observed all eleven checks successful,
+and read PR #5 as mergeable.
+
+- PR: <https://github.com/Quigles1337/COINjecture3.0/pull/5>
+- Final exact-head PR CI:
+  <https://github.com/Quigles1337/COINjecture3.0/actions/runs/31926469157>
+- Exact PR head: `70278e4826b5f021f42e50dbc33e5268b8f88ef5`
+- PR CI interval: 2026-08-16 04:22:10Z–04:25:05Z
+- Merge time: 2026-08-16 04:26:40Z
+- Merge SHA: `e00561572c48137d535a44bcce55c04ad7db732b`
+- Post-merge `main` CI:
+  <https://github.com/Quigles1337/COINjecture3.0/actions/runs/31926645964>
+- Main CI interval: 2026-08-16 04:26:42Z–04:29:26Z
+
+Both the final feature head and exact merge SHA passed all eleven D6 jobs. The first
+session was interrupted while watching the mainline run, so the resumed session read
+the completed run directly from GitHub and verified its `headSha`, conclusion, and
+every job before recording success. The merge SHA and mainline result necessarily
+postdate the implementation commit; this record and the durable security report are
+being ferried through evidence-only branch `feat/p003-closeout`.
 
 ## 6. CALIBRATE
 
-Pending.
+### Predictions versus outcomes
+
+- **Diff surface:** the prediction substantially held. P-003 changed the two expected
+  crates, added the benchmark/evidence directory, updated `Cargo.lock`, and wrote the
+  packet report. The only re-framed expansion was `SPEC-ISSUES.md`; governing spec,
+  LEDGER, formal-spec, consensus, kernel, beacon, and types files stayed untouched.
+- **Risk 1 — estimator/model mismatch:** materialized. Default and rough estimator
+  models diverged by tens of log2 operations, and the conditional reduction lineage
+  did not prove concrete hardness. Pinning the exact estimator source, retaining both
+  outputs, and labeling the 128-bit target as an assumption contained the claim.
+- **Risk 2 — benchmark/cadence category error:** materialized. The exact LLL
+  demonstrator solved only toy tuples and did not solve the provisional P-4 point;
+  P-1 remains P-006-owned. The packet therefore reports a provisional minimum and an
+  unresolved cadence dependency instead of claiming a deployable floor.
+- **Risk 3 — checker/sampler edge failure:** the implementation itself survived the
+  deterministic, rejection, norm, modular, overflow, and zero-vector tests. The
+  adversary pass instead exposed the adjacent consensus ambiguity: word width and
+  byte order were not normative. `SI-003` and a nonnormative fixture preserved G0 and
+  P-007 ownership.
+- **Falsifier outcome:** the cadence portion partially fired because the target tuple
+  lacks a demonstrated witness-generation envelope. That did not defeat the safe
+  checker or evidence packet; it prevented final P-4 ratification and remains an
+  explicit P-006/G0 dependency.
+- **Confidence calibration:** MEDIUM-LOW was appropriate. The bounded safe-Rust
+  implementation and verifier budget were reproducible, while concrete hardness,
+  solver cadence, and specification conventions retained material uncertainty.
+- **Surprise:** the estimator commit pin and core-source hash were insufficient for
+  reproducibility while the runner still executed a dirty-capable Docker build from
+  a mutable base tag. The digest-pinned, networkless, read-only replay produced the
+  same nine records and showed that environment provenance belongs inside the
+  evidence claim, not beside it.
+
+**One process improvement for P-004:** establish the generic harness's evidence
+envelope before its first calibration run: exact source commit, complete clean-tree
+check, immutable runtime digest, disabled network, bounded temporary resources, and a
+machine-readable input/output receipt must be mandatory runner behavior rather than
+post-benchmark documentation.
 
 ## VERIFIED
 
@@ -403,13 +479,32 @@ Pending.
 - P-002's evidence-only closeout passed all eleven mainline D6 jobs on the exact
   starting SHA.
   Evidence: <https://github.com/Quigles1337/COINjecture3.0/actions/runs/31923976170>.
+- The final P-003 feature head passed every origin D6 job.
+  Evidence: <https://github.com/Quigles1337/COINjecture3.0/actions/runs/31926469157>
+  on `70278e4826b5f021f42e50dbc33e5268b8f88ef5`.
+- PR #5 merged that exact head as
+  `e00561572c48137d535a44bcce55c04ad7db732b`.
+  Evidence: <https://github.com/Quigles1337/COINjecture3.0/pull/5> and matching local
+  `origin/main` readback.
+- The exact-merge-SHA mainline pipeline passed all eleven jobs.
+  Evidence: <https://github.com/Quigles1337/COINjecture3.0/actions/runs/31926645964>.
+- The sealed zero-finding security report is durable and byte-identical to the
+  generated artifact.
+  Evidence: [`P-003-security-scan.md`](./P-003-security-scan.md) and matching source/
+  destination SHA-256
+  `9C2E0C5FC428139D266174BB573EA6183BEE600C6A044874199BC557239F00BC`.
+- The 2026-08-16 D11 resume check found GATE-1 and GATE-2 still listed under
+  `Blocked / awaiting` in the CJ2 network loop state and found no answer, capacity-
+  release, or `remediation-priority` signal.
+  Evidence: `C:\Users\LEET\COINjecture2.0-network\loop\STATE.md:73-83` plus the
+  bounded two-checkout search performed at closeout.
 
 ## ASSUMED
 
-- The 2026-08-15 live D11 ruling remains current because `loop/STATE.md` repeats it,
-  no later live instruction supersedes it, the local COINjecture 2.0 checkout exposes
-  no `loop/STATE.md`, and a read-only scan found no `remediation-priority` capacity
-  flag. This is re-checked at every packet boundary and immediately before merge.
+- The current CJ2 loop files are an accurate reflection of whether Sarah's answers
+  have arrived. This is safe only as a packet-boundary capacity observation and is
+  re-checked before P-004; any contrary live instruction or gate-clear evidence wins
+  immediately under D11.
 - A prepared `[u8; 32]` input to `ProblemClass::derive_instance` is the instance seed,
   not the place to assign `D_INST` bytes. This follows Protocol Spec §5.1's trait
   signature and preserves P-007's canonical-domain ownership.
