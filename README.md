@@ -1,5 +1,6 @@
 # COINjecture 3.0
 
+
 [![D6 CI](https://github.com/Quigles1337/COINjecture3.0/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Quigles1337/COINjecture3.0/actions/workflows/ci.yml)
 
 COINjecture 3.0 specifies a derive-don't-trust redesign of proof-of-useful-work
