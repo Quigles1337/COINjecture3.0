@@ -20,7 +20,7 @@ enforces the complete design ([audit mapping](docs/AUDIT_TRACEABILITY.md#1-third
 
 ## Status
 
-> Refreshed 2026-11-22 for the Gate G0 ruling on G0-B through G0-E. This is the repository's single current-status
+> Refreshed 2026-11-22 for the Gate G0 ruling on G0-B through G0-E and for the resumed P-007. This is the repository's single current-status
 > block; its refresh is required at every gate closeout
 > ([standing rule](loop/LEDGER.md#standing-readme-drift-control-rule--ratified-al-2026-08-16)).
 >
@@ -29,10 +29,10 @@ enforces the complete design ([audit mapping](docs/AUDIT_TRACEABILITY.md#1-third
 > | Scope | Public repository; pre-testnet; no running testnet, production node, or mainnet configuration | [2026-11-22 ruling, Part 0.1](loop/LEDGER.md#gate-g0-ruling-overlay--g0-b-to-g0-e-ruled--g0-f-held-al-2026-11-22), [D12](loop/LEDGER.md#d1d15-seed-from-engineering-plan-3), [source-policy gate](scripts/ci/check-source-policy.ps1) |
 > | Phase | **Phase 0 — Gate G0 HOLD** | [phase plan](docs/ENGINEERING_PLAN.md#4-phase-plan), [packet queue](loop/PACKETS.md) |
 > | Last phase gate | None of G0–G4 has passed; G0-A through G0-E are ruled, G0-F is held, and G0 remains HOLD | [2026-11-22 ruling](loop/LEDGER.md#gate-g0-ruling-overlay--g0-b-to-g0-e-ruled--g0-f-held-al-2026-11-22), [G0-A ruling](loop/LEDGER.md#gate-g0-partial-ruling-overlay--g0-a-ratified--g0-hold-al-2026-08-16), [queue state](loop/PACKETS.md) |
-> | Completed packet evidence | P-001 through P-006, P-009, and P-010 are merged with exact-mainline CI records; P-005's Lean V1–V9/STF is HUMAN-RATIFIED; PR #14 merged on 2026-10-12 as `35811404` and carried only P-007's checked `Amount` boundary and stop report, so P-007 remains INCOMPLETE | [batch log](loop/reports/BATCH-LOG.md), [G0 handoff](loop/reports/C7-phase0-g0-handoff.md), [PR #14](https://github.com/Quigles1337/COINjecture3.0/pull/14), [D6 run 38323998550](https://github.com/Quigles1337/COINjecture3.0/actions/runs/38323998550) |
-> | Current stop | The 2026-11-22 ruling fixes CJ3 Encoding v1, the SIS claim language, a provisional validation budget and the size limits, and rejects the proposed SIS tuple. P-007 is ready to resume in the HUMAN lane and is not merged by the builder; P-101 stays blocked on Gate G0 | [2026-11-22 ruling](loop/LEDGER.md#gate-g0-ruling-overlay--g0-b-to-g0-e-ruled--g0-f-held-al-2026-11-22), [packet queue](loop/PACKETS.md#p-007--cj3-types), [loop state](loop/STATE.md) |
-> | Implemented surfaces | D6 CI and source policy; trait-gated beacon boundary; sampled-SIS derivation/checking and external demonstrator; checked `Amount(u64)` boundary; admission and difficulty benches; HUMAN-ratified Lean V1–V9/STF; symbolic non-normative vectors; source-verified audit matrix v0.2 | [workflow](.github/workflows/ci.yml), [amount type](crates/cj3-types/src/lib.rs), [formal project](spec/README.md), [P-006 bench](bench/p006-difficulty/README.md), [audit matrix](docs/AUDIT_TRACEABILITY.md) |
-> | Planned or absent | Rust codecs, `addr()` and domain tags for CJ3 Encoding v1, and codec fuzzing (specified in Protocol Spec v0.2-DRAFT, not implemented); a ratified SIS tuple; kernel, storage, consensus, networking, RPC, node behavior; production VDF; testnet | [P-007 queue entry](loop/PACKETS.md#p-007--cj3-types), [encoding v1](docs/PROTOCOL_SPEC.md#11-cj3-encoding-v1--grammar-g0-c1), [explicit phase deferrals](scripts/ci/check-phase-gate.ps1), [roadmap](docs/ENGINEERING_PLAN.md#4-phase-plan) |
+> | Completed packet evidence | P-001 through P-006, P-009, and P-010 are merged with exact-mainline CI records; P-005's Lean V1–V9/STF is HUMAN-RATIFIED; PR #14 merged on 2026-10-12 as `35811404` and carried only P-007's checked `Amount` boundary and stop report; the rest of P-007 is built in PR #21 and awaits Al's review, so P-007 remains INCOMPLETE until he merges it | [batch log](loop/reports/BATCH-LOG.md), [G0 handoff](loop/reports/C7-phase0-g0-handoff.md), [PR #14](https://github.com/Quigles1337/COINjecture3.0/pull/14), [D6 run 38323998550](https://github.com/Quigles1337/COINjecture3.0/actions/runs/38323998550), [PR #21](https://github.com/Quigles1337/COINjecture3.0/pull/21) |
+> | Current stop | The 2026-11-22 ruling fixes CJ3 Encoding v1, the SIS claim language, a provisional validation budget and the size limits, and rejects the proposed SIS tuple. P-007 is built to it in the HUMAN lane and stops at PR #21 for Al's review; the builder does not merge it. Al rules G0-F after that merge, and P-101 stays blocked on Gate G0 | [2026-11-22 ruling](loop/LEDGER.md#gate-g0-ruling-overlay--g0-b-to-g0-e-ruled--g0-f-held-al-2026-11-22), [P-007 resume ruling](loop/LEDGER.md#p-007-resume-ruling-overlay--pr-20-confirmed--report-c9-points-ruled--p-007-resumed-al-2026-11-22), [P-007 report](loop/reports/C10-p007-builder.md), [loop state](loop/STATE.md) |
+> | Implemented surfaces | D6 CI and source policy; trait-gated beacon boundary; sampled-SIS derivation/checking and external demonstrator; CJ3 Encoding v1 in `cj3-types` (grammar, domain tags, preimages, the single `addr()`, transaction, header and block layouts, the §1.3 Ed25519 verification) with the SIS solution encoding in `cj3-classes`; worked vectors derived twice; six live fuzz targets; checked `Amount(u64)`; admission and difficulty benches; HUMAN-ratified Lean V1–V9/STF; symbolic non-normative vectors; source-verified audit matrix v0.2 | [workflow](.github/workflows/ci.yml), [`cj3-types`](crates/cj3-types/src/lib.rs), [vectors](bench/p007-vectors/README.md), [fuzz properties](fuzz/src/lib.rs), [formal project](spec/README.md), [P-006 bench](bench/p006-difficulty/README.md), [audit matrix](docs/AUDIT_TRACEABILITY.md) |
+> | Planned or absent | A ratified SIS tuple, block cadence, timestamp unit and drift bound; how `tx_root` and the state commitment are built; the genesis layout; kernel, storage, consensus, networking, RPC, node behavior; production VDF; a nightly long fuzz run; testnet | [open-TBD index](docs/PROTOCOL_SPEC.md#15-open-tbd-index), [explicit phase deferrals](scripts/ci/check-phase-gate.ps1), [roadmap](docs/ENGINEERING_PLAN.md#4-phase-plan) |
 
 ## Contents
 
@@ -144,7 +144,7 @@ D17 permits autonomous merge only while all AUTO conditions and the D11 capacity
 
 ## Verification and evidence
 
-A reader can audit a claim through four layers:
+A reader can audit a claim through five layers:
 
 1. **Hosted execution.** The [D6 workflow](.github/workflows/ci.yml) defines
    formatting, Clippy, dependency policy/audit, zero-unsafe checks, tests, four named
@@ -152,13 +152,16 @@ A reader can audit a claim through four layers:
    the [batch log](loop/reports/BATCH-LOG.md).
 2. **Deferral inspection.** A green phase job is not automatically proof that its
    future test ran: absent handlers emit `NOT_YET_ADMITTED` with an owner through
-   [`check-phase-gate.ps1`](scripts/ci/check-phase-gate.ps1). Conservation, codec
-   fuzz smoke, and the genesis spend test are currently in that explicit deferral
-   state. Lean conformance is not: its
+   [`check-phase-gate.ps1`](scripts/ci/check-phase-gate.ps1). Conservation and the
+   genesis spend test are currently in that explicit deferral state, and so is the
+   nightly long fuzz run. Two gates are live. Lean conformance: its
    [active handler](scripts/ci/active/lean-conformance.ps1) builds the ratified Lean
    project and regenerates the symbolic vectors, and it still reports the Rust kernel
    conformance test as `NOT_YET_ADMITTED`
-   ([P-005 merge](https://github.com/Quigles1337/COINjecture3.0/pull/9)).
+   ([P-005 merge](https://github.com/Quigles1337/COINjecture3.0/pull/9)). Codec fuzz
+   smoke: its [active handler](scripts/ci/active/codec-fuzz-smoke.ps1) runs the six
+   cargo-fuzz targets under [`fuzz/`](fuzz/src/lib.rs) for a fixed number of runs from
+   a fixed seed. That is a bounded smoke run, not evidence that no defect exists.
 3. **Packet evidence.** P-003 preserves the pinned estimator model, environment,
    solver observations, and checker observations under
    [`bench/p003-sis/`](bench/p003-sis/README.md); the packet report labels P-3/P-4 as
@@ -168,6 +171,12 @@ A reader can audit a claim through four layers:
    insufficient evidence, and no class was admitted
    ([calibration report](bench/p004-admission/evidence/LEGACY-CALIBRATION.md),
    [raw JSONL](bench/p004-admission/evidence/legacy-results.jsonl)).
+5. **Double derivation.** Every layout, preimage, expansion vector and Ed25519 verdict
+   of CJ3 Encoding v1 is derived by a script that uses only the Python standard
+   library and again by the Rust code, and D6 runs both. The two share no code and no
+   library; they do share an author. The worked vectors claim no status: that is part
+   of Al's review of P-007 ([vectors guide](bench/p007-vectors/README.md),
+   [P-007 report](loop/reports/C10-p007-builder.md)).
 
 When checking any result, use the exact SHA and CI URL from the packet report rather
 than assuming the current branch reproduces an earlier observation
@@ -177,9 +186,11 @@ than assuming the current branch reproduces an earlier observation
 
 | Path | Current role | Depth pointer |
 |---|---|---|
-| `crates/` | Rust workspace boundaries; P-002/P-003 contain the current protocol-adjacent spike code | [crate sources](crates/), [workspace manifest](Cargo.toml) |
+| `crates/` | Rust workspace: `cj3-types` (CJ3 Encoding v1), `cj3-classes` (SIS derivation, checker and solution encoding), the beacon trait and the external solver; the other crates are empty boundaries | [crate sources](crates/), [workspace manifest](Cargo.toml) |
 | `bench/p003-sis/` | Reproducible estimator, solver, and verifier records for provisional SIS candidates | [bench guide](bench/p003-sis/README.md) |
 | `bench/p004-admission/` | Bounded admission controller and read-only legacy calibration evidence | [bench guide](bench/p004-admission/README.md) |
+| `bench/p007-vectors/` | Standard-library derivation of the Encoding v1 vectors; the pinned C2SP CCTV ed25519 vectors with their licence | [vectors guide](bench/p007-vectors/README.md) |
+| `fuzz/` | cargo-fuzz harness for the Encoding v1 codecs: its own workspace, linked into no `cj3-*` crate and outside the graph `cargo deny` checks | [properties](fuzz/src/lib.rs), [gate handler](scripts/ci/active/codec-fuzz-smoke.ps1) |
 | `spec/` | HUMAN-lane Lean 4 project: the HUMAN-RATIFIED V1–V9/STF encoding, with conservation proved under `LawfulStateOps`, and 27 symbolic, non-normative vectors | [formal project](spec/README.md), [vector artifact](spec/vectors/p005-draft.json) |
 | `docs/` | Governing plan, draft protocol, audit traceability, and research caveats | [Engineering Plan](docs/ENGINEERING_PLAN.md), [Protocol Spec](docs/PROTOCOL_SPEC.md), [audit matrix](docs/AUDIT_TRACEABILITY.md), [research survey](docs/RESEARCH_SURVEY.md) |
 | `loop/` | Decisions, queue, state, prompts, reports, and durable audit-source custody | [ledger](loop/LEDGER.md), [queue](loop/PACKETS.md), [reports](loop/reports/) |
@@ -200,6 +211,10 @@ pwsh -NoProfile -File scripts/ci/check-source-policy.ps1
 cargo test --workspace --all-targets --all-features --locked
 cargo build --workspace --all-targets --all-features --locked
 ```
+
+The P-007 vectors are re-derived, outside cargo, by
+`python -I -B bench/p007-vectors/derive.py --check`
+([vectors guide](bench/p007-vectors/README.md)).
 
 The full dependency and unsafe-code toolchain is defined by the hosted workflow; use
 its immutable run rather than treating an unpinned local installation as equivalent
@@ -236,6 +251,15 @@ its immutable run rather than treating an unpinned local installation as equival
   ruling resolved SI-001/SI-002/SI-003 without changing any Lean file or vector), and
   no Rust kernel conformance claim exists yet
   ([formal boundary](spec/README.md), [P-005 merge](https://github.com/Quigles1337/COINjecture3.0/pull/9)).
+- CJ3 Encoding v1 is implemented and awaits Al's review; it is not yet used by a
+  kernel or a node. `cj3-types` hashes with `sha2` and verifies Ed25519 with arithmetic
+  from `curve25519-dalek`. Both are pure Rust and both contain `unsafe` code: the
+  zero-unsafe gate covers the `cj3-*` crates, not their dependencies, and Al accepts or
+  refuses each dependency at review. No SIS tuple, network identifier, fee floor or
+  timestamp unit is compiled in; the two tuples in the tests and vectors are
+  non-normative stand-ins. The fuzz job is a bounded smoke run on a nightly toolchain
+  pinned by date ([P-007 report](loop/reports/C10-p007-builder.md),
+  [vectors guide](bench/p007-vectors/README.md)).
 - P-004 measured fixture behavior but admitted no legacy class; checker speed does not
   establish a hard sampled distribution
   ([P-004 report](loop/reports/C4-p004-builder.md),
@@ -264,7 +288,7 @@ Material unfilled values remain visible:
 | P-10 — timestamp drift, and the timestamp unit | **UNFILLED** — Al rules both together with P-1 | [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
 | P-9 — minimum fee | **TBD** — owner: Al | [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
 | P-12 — subsidy schedule | Placeholder only; owner: Al + Ken | [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
-| Codec/domain bytes, strict Ed25519, SIS coefficient encoding, and SHAKE candidate convention | **RULED 2026-11-22, not implemented** — CJ3 Encoding v1 is in Protocol Spec v0.2-DRAFT; P-007 owes the Rust codecs, worked vectors and fuzz targets. PR #14, merged 2026-10-12, carried only the checked `Amount` boundary | [Spec §1](docs/PROTOCOL_SPEC.md#1-notation-and-cryptographic-primitives), [P-007 queue entry](loop/PACKETS.md#p-007--cj3-types), [SI-002/SI-003](loop/reports/SPEC-ISSUES.md) |
+| Codec/domain bytes, strict Ed25519, SIS coefficient encoding, and SHAKE candidate convention | **RULED 2026-11-22; implemented in PR #21, awaiting Al's review** — the Rust codecs, the worked vectors and the live fuzz targets that P-007 owed. The worked vectors claim no status until that review. PR #14, merged 2026-10-12, carried only the checked `Amount` boundary | [Spec §1](docs/PROTOCOL_SPEC.md#1-notation-and-cryptographic-primitives), [P-007 report](loop/reports/C10-p007-builder.md), [vectors guide](bench/p007-vectors/README.md), [SI-002/SI-003](loop/reports/SPEC-ISSUES.md) |
 | Audit matrix v0.2 reconciliation | **COMPLETE** — 33 security findings, 25 Lean claims, R1–R8; GAP-7–13 were ratified on 2026-11-22 as requirements for later packets and none is implemented | [audit matrix](docs/AUDIT_TRACEABILITY.md), [P-009 report](loop/reports/C7-p009-builder.md) |
 
 ## Roadmap
@@ -274,7 +298,7 @@ The phase gates are evidence thresholds, not calendar or deployment promises
 
 | Gate | Planned phase outcome | Current position |
 |---|---|---|
-| **G0 — Foundations and spikes** | P-001–P-007 reports complete; D1/D2/D14/D15 and open interpretation issues resolved with spike evidence | **▶ CURRENT — HOLD; G0-A through G0-E are ruled; G0-F is held until P-007 is merged with exact-merge-SHA D6 green** ([2026-11-22 ruling](loop/LEDGER.md#gate-g0-ruling-overlay--g0-b-to-g0-e-ruled--g0-f-held-al-2026-11-22), [G0 handoff](loop/reports/C7-phase0-g0-handoff.md)) |
+| **G0 — Foundations and spikes** | P-001–P-007 reports complete; D1/D2/D14/D15 and open interpretation issues resolved with spike evidence | **▶ CURRENT — HOLD; G0-A through G0-E are ruled; P-007 is built and awaits Al's review in PR #21; G0-F is held until P-007 is merged with exact-merge-SHA D6 green** ([2026-11-22 ruling](loop/LEDGER.md#gate-g0-ruling-overlay--g0-b-to-g0-e-ruled--g0-f-held-al-2026-11-22), [G0 handoff](loop/reports/C7-phase0-g0-handoff.md)) |
 | **G1 — Kernel** | Lean-vector conformance, conservation properties, mutation spot-check, genesis spend, and crash consistency | Planned after G0 ([Plan G1](docs/ENGINEERING_PLAN.md#4-phase-plan)) |
 | **G2 — Consensus** | Deterministic two-node replay and typed rejection of the adversarial block corpus | Planned after G1 ([Plan G2](docs/ENGINEERING_PLAN.md#4-phase-plan)) |
 | **G3 — Network and RPC** | Three-node devnet adversarial replay and complete fail-closed auth matrix | Planned after G2 ([Plan G3](docs/ENGINEERING_PLAN.md#4-phase-plan)) |

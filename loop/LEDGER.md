@@ -971,3 +971,42 @@ PART 4 - P-007
 4.8 Finish as the HUMAN lane requires: adversary pass, exact-head D6 green, pull request
     marked ready, and STOP. Do not merge. I review and merge, and then I rule G0-F.
 ```
+
+### Effective record of the P-007 resume ruling
+
+The verbatim text above governs. This index only names what the ruling confirms, what
+it supersedes, and where it is applied. On any difference, the verbatim text wins.
+
+- **Clause names.** Other documents cite a clause of this ruling as "resume" plus its
+  number ("resume 2.2", "resume 4.5"). A clause of the 2026-11-22 Gate G0 ruling keeps
+  its `G0-` prefix.
+- **Confirmed by clause 1.1:** PR #20 merged at `2026-11-23T03:51:34Z` as
+  `f601224db855e6cc69e840fb169d85df22c547b8`, and exact-merge-SHA D6 run `45108419759`
+  on that commit concluded success in all eleven jobs. Both were read on GitHub before
+  the branch was cut.
+- **Confirmed by clause 1.2:** the admission condition in Protocol Spec §5.1, GAP-9 in
+  §12, the README rows and roadmap marker, and the name "packet P-011".
+- **Ruled by Part 2:** the eight points of report C9 §4.2. Clause 2.1 limits the
+  statement of G0-C2d to encoding v1 with its one registered class and sets the bar for
+  a second class. Clause 2.2 gives the transaction count no limit of its own and leaves
+  the order of checks to the P-007 FRAME, where it is fixed (report C10 §1.5). Clause
+  2.3 separates the stand-in tuples, whose choice is non-normative, from the expansion
+  vectors, which are normative for the expansion rule. Clause 2.4 fixes the five D17
+  conditions, recorded beside D17 in this ledger. Clause 2.6 keeps V7 in the rule set.
+  Clause 2.7 keeps the P-005 vectors symbolic and non-normative and reserves the status
+  of P-007's worked vectors to Al's review.
+- **Superseded by Part 3:** the statements that SI-001, SI-002 or SI-003 are open in
+  `spec/Spec/Tx.lean`, `spec/Spec.lean`, `spec/Main.lean` and `spec/README.md`; the
+  nonnormative label in `bench/p003-sis/SHAKE-VECTOR.md`; and three older README drifts.
+  Clause 3.5 leaves the BOOTSTRAP paragraph of the builder prompt and the audit matrix's
+  §1 rows and A8 conclusion as written.
+- **Not ruled here:** D10 and D16; G0-F, which Al rules after P-007 is merged; P-1, P-4,
+  P-10, `ACTIVE_SIZE_PARAM` and every owner value (clause 4.7); the dependencies P-007
+  proposes, which Al accepts or refuses at review (clause 4.4); and the status of
+  P-007's worked vectors (clause 2.7).
+- **Applied in:** the text-only commit of Part 3; `crates/cj3-types`,
+  `crates/cj3-classes`, `bench/p007-vectors`, `fuzz`, `scripts/ci` and
+  `.github/workflows` for Part 4; and `README.md`, `loop/PACKETS.md`, `loop/STATE.md`
+  and `loop/reports/BATCH-LOG.md`. The builder's report is
+  `loop/reports/C10-p007-builder.md`. The pull request is PR #21, which the builder does
+  not merge.

@@ -281,8 +281,7 @@ identifier P-003 left unbound.
   rejected group is used up whole: the next candidate starts at the next four-byte
   boundary. Accepted values fill the matrix column by column, rows 0 to n-1 within a
   column, until n * m are placed. The existing q = 17 fixture in
-  `bench/p003-sis/SHAKE-VECTOR.md` is now normative (G0-C8b); the note in that file
-  that calls it nonnormative predates the ruling.
+  `bench/p003-sis/SHAKE-VECTOR.md` is now normative (G0-C8b).
 - **Size parameter layout (G0-C3c).** 20 bytes: `n u32`, `m u32`, `q u32`,
   `beta_squared u64`.
 - **Solution.** `s ∈ Z^m`, `s ≠ 0`. Its encoding is `2 * m` bytes: the m coefficients in

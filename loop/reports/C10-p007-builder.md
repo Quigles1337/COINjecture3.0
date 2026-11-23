@@ -281,3 +281,351 @@ the fuzz job, which cannot be linked on this Windows host.
 | f. Capacity | PASS | `loop/STATE.md` carries the condition of Part 0.3 of the 2026-11-22 ruling; `C:\Users\LEET\COINjecture2.0-network\loop\STATE.md` reads `CAPACITY_FLAG: none`, not `remediation-priority` |
 | g. Survey and P-008 | PASS | `docs/RESEARCH_SURVEY.md` present; the P-008 URL is still `TBD(Al-supplied frontend URL)`, so P-008 stays blocked |
 | Resume 1.1 | PASS | `gh pr view 20`: state `MERGED`, merged at `2026-11-23T03:51:34Z`, merge commit `f601224db855e6cc69e840fb169d85df22c547b8`, head `debf20192f63816a58a0458a490a40c2600833bb`. `gh run view 45108419759`: workflow `D6 CI`, event `push`, that same commit, conclusion `success`, eleven jobs each `success` with five to nine steps (<https://github.com/Quigles1337/COINjecture3.0/actions/runs/45108419759>). The run was still in progress when first read; nothing was written to the repository until it concluded. |
+
+## 2. BUILD
+
+### 2.1 What was built
+
+- **`crates/cj3-types`** — `codec` (reader, writers, `DecodeError`), `domain` (the seven
+  tags), `hash` (`H`, six preimages, `addr`), `keys`, `class` (`ClassId`,
+  `SisSizeParam`, `SizeParam`), `tx`, `header`, `block`, `ed25519`. `Amount` is
+  unchanged. Sixty unit tests.
+- **`crates/cj3-classes`** — `Sis` reads its identifier from `ClassId::Sis`;
+  `SisParameters::from_layout` and `layout`; `ParameterError::NormBoundExceedsEncoding`
+  for `beta_squared` above `32767^2`; `SisSolution` holds 16-bit coefficients with
+  `encode` and `decode`. `derive_instance` and the body of `check_sis` are byte for byte
+  as P-003 left them. Seven new unit tests.
+- **`bench/p007-vectors`** — the standard-library derivation, the five generated vector
+  files, the RFC 8032 transcription and its extractor, the CCTV copy and licence, the
+  solver output, a README.
+- **`fuzz`** — its own workspace: six properties in a library, six targets, eleven seed
+  inputs, a lockfile and the toolchain pin.
+- **CI** — `scripts/ci/active/codec-fuzz-smoke.ps1`; the `codec-fuzz-smoke` job
+  installs cargo-fuzz 0.13.2 and `nightly-2026-11-15`; `unit-and-property-tests` runs
+  `derive.py --check`; `dependency-audit` audits `fuzz/Cargo.lock`; the D6 Nightly
+  `full-fuzz-corpus` job calls a gate of its own that has no handler.
+- **Follow-through** — `cj3-solver-sis` and `examples/p003_check_bench.rs` build 16-bit
+  coefficient vectors; the admission bench's test names `Sis` without a parameter.
+
+### 2.2 Tripwires
+
+- **SCOPE: held.** The 76 files of `git diff --name-only main` are all inside the
+  predicted surface of §1.9. No file of `cj3-beacon`, `cj3-kernel`, `cj3-consensus`,
+  `cj3-net`, `cj3-rpc`, `cj3-store` or `cj3-node` changed; `deny.toml` and
+  `rust-toolchain.toml` did not change.
+- **INVENTION: held.** Values this change writes, and where each comes from:
+  `TX_MAX_BYTES = 188` and `BLOCK_MAX_BYTES = 1,048,576` (G0-C6, the second labeled
+  provisional); class identifier 1 (G0-C3b); `32767^2` (G0-C4); the tag bytes (G0-C2b).
+  Values I chose, none of them a protocol value: the fixture field values, the modulus
+  2147483659 (the first prime above 2^31), the fuzz run counts and the libFuzzer seed,
+  the nightly date, and the tool versions.
+- **REPETITION: not tripped.** No failure repeated three times.
+- **INTERPRETATION: not tripped.** No conflict between the plan and the spec blocked
+  the packet. The places where I had to settle how clauses fit together are in §1.2 and
+  §4.2, and none changes a set of consensus-valid inputs.
+- **ENVIRONMENT: held.** Visibility read `PUBLIC` again before the first push, and the
+  COINjecture 2.0 loop still read `CAPACITY_FLAG: none`.
+- **DEGRADATION: one slip, caught.** While diagnosing the unsafe scan (§3.3) I moved
+  `fuzz/` out of the repository to rule it out, and the first move back failed with a
+  transient "Permission denied". The second succeeded. Nothing was committed in
+  between; afterwards `derive.py --check` passed on all sixteen generated files and the
+  fuzz properties passed, which is how I know the directory came back whole. I should
+  have tested on a copy.
+
+### 2.3 What changed on this machine outside the repository
+
+Recorded because Al should not find these by surprise:
+
+- WSL Ubuntu: `rustup toolchain install nightly-2026-11-15 --profile minimal` and
+  `cargo install cargo-fuzz --version 0.13.2 --locked`, so the fuzz targets could run
+  on Linux before the first push. Build output is in `~/cj3-fuzz-target` there.
+- Windows: rustup installed `nightly-2026-11-15` on demand when the first draft of the
+  gate handler asked that toolchain for its version. I had not meant to install it. The
+  handler now reads `rustup toolchain list` instead.
+- Read-only fetches: a clone of `C2SP/CCTV` and a download of `rfc8032.txt`, both into
+  the session's scratch directory. Nothing was sent to either.
+
+## 3. VERIFY
+
+### 3.1 The two derivations agree
+
+- `python -I -B bench/p007-vectors/derive.py --check` → `P007_VECTORS=PASS files=16`,
+  on Windows with Python 3.11.9 and again on Linux (WSL) with Python 3.12.3 against the
+  same files.
+- `crates/cj3-types/tests/p007_worked_vectors.rs` (9 tests) builds every value from the
+  `in.` lines with the Rust code and requires every `out.` line: the seven tags; three
+  `addr` preimages and digests; two signing preimages, digests, signatures and
+  188-byte transactions; the 20-byte size parameter; `instance_seed`; the beacon input;
+  `sol_commit`; the 306-byte header and its hash; the 914-byte block. The signatures
+  are derived twice too: by the script's RFC 8032 code and by a test-only signer.
+- `crates/cj3-classes/tests/p007_vectors.rs` (6 tests): `derive_instance` reproduces
+  all five expansion vectors; the solver's solution encodes to the script's bytes,
+  decodes back, and `check_sis` gives the quality the script computed (7,000,000, from
+  squared norm 16 under `beta_squared = 112`).
+- `crates/cj3-types/tests/p007_ed25519_vectors.rs` (4 tests): for all 932 lines the
+  Rust verification returns the verdict the script derived. By source:
+
+  | Source | Vectors | Accepted | Rejected by (a) | by (b) | by (c) | by (e) |
+  |---|---:|---:|---:|---:|---:|---:|
+  | RFC 8032 §7.1 | 5 | 5 | 0 | 0 | 0 | 0 |
+  | C2SP CCTV | 914 | 43 | 490 | 318 | 0 | 63 |
+  | builder-authored | 13 | 0 | 4 | 3 | 3 | 3 |
+
+- The agreement was reached at the first comparison. No vector, test or line of
+  verification code was changed to obtain it.
+- The CCTV copy is verbatim: its git blob ids in this repository,
+  `ebb2192a14d88c26979c40be0aff4cfba6892ed3` and
+  `1888ba4ebd623386ca4b43ff8dc2fe3a9aeb22ed`, equal the upstream ones.
+
+### 3.2 `spec/vectors/p005-draft.json` (resume 3.1)
+
+Git blob `cc0c3f71c3f7af7db50287f4f56e526bbc56d831` at `main` (`f601224`) and at the
+head of this branch. SHA-256 of that blob, before and after:
+`30CABF852D623549CD5293628D5B3899BE805D543B537CB223F1B6FAB5C324E1`. After the Part 3
+edits the Lean gate rebuilt `Spec.Tx`, `Spec.Stf`, `Spec.Vectors` and `Main` and
+regenerated the same 27 vectors:
+`P005_RATIFIED_SPEC_BUILD=PASS LEAN=4.33.0 VECTORS=27 SHA256=30CABF85…C324E1`. The
+working-tree copy in this checkout had CRLF line endings from before the `eol=lf`
+attribute existed (SHA-256 `b45d9472…`); I re-checked it out so the gate could run
+here. That changed no tracked content.
+
+### 3.3 Local checks at the code head
+
+| Check | Result |
+|---|---|
+| `cargo fmt --all -- --check`; the same for `fuzz/` | PASS |
+| `cargo clippy --workspace --all-targets --all-features --locked -- -D warnings` | PASS |
+| `cargo test --workspace --all-targets --all-features --locked` | PASS, 104 tests (22 before this packet) |
+| `cargo build --workspace --all-targets --all-features --locked` | PASS |
+| `cargo deny --locked --all-features check`, `deny.toml` unchanged | `advisories ok, bans ok, licenses ok, sources ok` |
+| `cargo audit --deny warnings`; the same with `--file fuzz/Cargo.lock` | PASS, 34 and 33 crates |
+| `scripts/ci/check-source-policy.ps1` | `SOURCE_POLICY=PASS files=28 crates=10` |
+| `scripts/ci/verify-geiger.ps1`, in a fresh target directory | `GEIGER_POLICY=PASS packages=11 unsafe_count=0` |
+| Lean gate (`check-phase-gate.ps1 -Gate lean-conformance`) | PASS, 27 vectors, digest above |
+| `cargo test --lib --locked` in `fuzz/` (the properties, on stable) | PASS, 7 tests |
+| cargo-fuzz on Linux (WSL), ASan, `nightly-2026-11-15`, cargo-fuzz 0.13.2 | every target exit 0: 500,000 runs each of `transaction_codec`, `header_codec`, `block_codec`; 20,000 each of `sis_solution_codec`, `ed25519_verify`; 300 of `length_limits` |
+| `cj3-solver-sis` against four output hashes of `bench/p003-sis/solver-results.jsonl` | all four reproduced, so the 16-bit conversion did not change what the solver prints |
+
+The unsafe scan first failed in the shared `target/` of this checkout:
+`cargo-geiger` read a dependency record dated 2026-08-15 for a crate that is in no
+lockfile here and whose source the registry no longer holds. It is a local leftover,
+not a property of this change: the same scan passes in a fresh target directory and on
+an untouched checkout of `main`, and a hosted runner starts clean.
+
+On this Windows host the fuzz binaries build but do not run (the ASan runtime is
+missing), and the gate handler stops there on purpose, because cargo-fuzz here is
+0.13.1 and it requires 0.13.2. The handler's own run is therefore evidenced by the
+hosted job, not locally.
+
+### 3.4 Origin D6
+
+The exact-head run for the final head is recorded on
+[PR #21](https://github.com/Quigles1337/COINjecture3.0/pull/21). This file cannot hold
+the run of the commit that contains it, so it makes no green claim for that head.
+
+An earlier head can be cited. Commit `02ec4ffbd2f8918bd302bb1743ea377ba611b509` is the
+last commit that changes code, vectors, fuzz targets or CI; the commits after it change
+documentation only. D6 run `45114338427` on that commit
+(<https://github.com/Quigles1337/COINjecture3.0/actions/runs/45114338427>, event
+`pull_request`) concluded success in all eleven jobs, each with five to ten steps. Read
+from its log with `gh run view --log`:
+
+- `dependency-policy`: `advisories ok, bans ok, licenses ok, sources ok`, with
+  `deny.toml` unchanged;
+- `unsafe-audit`: `GEIGER_POLICY=PASS packages=11 unsafe_count=0`;
+- `unit-and-property-tests`: `P007_VECTORS=PASS files=16`, then the workspace tests;
+- `lean-conformance`: `P005_RATIFIED_SPEC_BUILD=PASS LEAN=4.33.0 VECTORS=27
+  SHA256=30CABF852D623549CD5293628D5B3899BE805D543B537CB223F1B6FAB5C324E1`;
+- `codec-fuzz-smoke`: `STATUS=ACTIVE`, `FUZZ_TOOLCHAIN=rustc 1.102.0-nightly
+  (5f4effd57 2026-11-13)`, `FUZZ_DRIVER=cargo-fuzz 0.13.2`, each of the six targets
+  `RESULT=PASS`, and `CODEC_FUZZ_SMOKE=PASS TOOLCHAIN=nightly-2026-11-15 TARGETS=6
+  TOTAL_RUNS=740300 SEED=20261122`;
+- `conservation-invariant` and `genesis-spend-test`: still `NOT_YET_ADMITTED`. Their
+  green is a deferral marker, not a test result.
+
+## 4. ADVERSARY PASS
+
+Seat switched. I re-read the whole diff as someone trying to make two honest nodes
+disagree, make a node panic, or make this record claim more than it shows.
+
+### 4.1 Findings
+
+1. **A hole in the evidence, closed.** RFC 8032 and CCTV give no vector for a
+   non-canonical encoding of a point of *large* order. `y = 3` is on the curve and not
+   of small order, so the bytes of `3 + p` are such an encoding: the arithmetic library
+   alone decodes them, and a small-order test does not reject them. Only the test
+   "y not below p" does. I added that vector for `A` and for `R`; the Rust code rejects
+   both by clause (a), and a test shows the library alone would not. Neither source
+   exercises clause (c) either, so there are builder-authored vectors for `S = L`,
+   `S + L`, `S = 2^256 - 1` and `S = L - 1`.
+2. **The trusted base grew, and the unsafe gate does not see it.** `sha2` and
+   `curve25519-dalek` contain `unsafe` code and pick a back end by CPU.
+   `cargo geiger` counts `unsafe` in the `cj3-*` crates only. A9's "zero in consensus
+   crates" still holds as written; "no unsafe on the verification path" does not, and
+   the README says so.
+3. **`ed25519::verify` takes a message of any length.** It has to, for the G0-C8c
+   vectors. A caller in another crate could pass it something other than a signing
+   digest. Controls: `Transaction::verify_signature` is the only path that builds the
+   message, and only `cj3-types` can construct a `SigningDigest`.
+4. **The domain tags are public constants.** Another crate could build a tagged
+   preimage of its own, which §2 forbids for addresses. Nothing but review prevents it.
+   They are public because the tests outside the crate compare them with the ruled
+   bytes and because `D_GENESIS` has no user yet.
+5. **The block decoder does not enforce B3.** A block whose header carries a tuple
+   other than `active` decodes when its lengths are consistent and within the limit.
+   That is by design and is tested; the consensus packet must apply B3 and must not read
+   a successful decode as "the size parameter is the active one".
+6. **A transaction with a key that is not a point decodes.** It fails V2. The Lean
+   `Error` type distinguishes V1 from V2, so P-101's conformance test has to expect
+   `v2Signature` for such inputs.
+7. **No well-formed block is exactly `BLOCK_MAX_BYTES` long at a stand-in tuple.** A
+   block is `314 + 2m + 188k` bytes, always even, and neither `m = 112` nor `m = 288`
+   reaches 1,048,576. So "holds at the boundary" is shown three ways instead: a block
+   accepted against its own length as the limit and rejected against one less; the
+   largest block that fits the real limit round-trips and one more transaction has no
+   encoding; and any input of 1,048,577 bytes is rejected for its length before a field
+   is read while inputs of 1,048,576 and 1,048,575 bytes never are.
+8. **The fuzz job is a smoke run.** 740,300 runs from a fixed seed. Valid signatures
+   and valid blocks reach the fuzzer only through the seed inputs and through values
+   built from the input; libFuzzer will not find a valid signature by mutation.
+9. **The two derivations share an author.** They share no code and no library, so they
+   check implementation. They do not check my reading of the specification; Al's review
+   does.
+10. **A behaviour change for existing tools.** `SisParameters::new` now rejects a
+    `beta_squared` above `32767^2`. Every tuple in `bench/p003-sis` and
+    `bench/p004-admission` is far below it.
+11. **Overflow and allocation.** `188 * count` and `2 * m` are computed in 64 bits and
+    cannot wrap; every `usize` conversion is checked; the solution and the transaction
+    list are allocated only after their lengths are known to fit the input, which is at
+    most `BLOCK_MAX_BYTES`. A count of `u32::MAX` is tested.
+12. **Panic paths.** Outside test modules, `cj3-types` has no `unwrap`, `expect` or
+    `panic!`; one `debug_assert!` in the fixed-array writer, which every layout's unit
+    test exercises; and two constant-index reads of a `[u8; 32]`. The new code in
+    `cj3-classes` has none.
+
+No Critical. Nothing found needed a STOP.
+
+### 4.2 Points for Al — noticed, recorded, not decided
+
+1. **The two dependencies** (resume 4.4): `sha2 =0.10.9` and `curve25519-dalek =4.1.3`.
+   The alternative to the second is field and group arithmetic written in `cj3-types`:
+   no dependency and no `unsafe`, and several hundred lines of new arithmetic that only
+   the vectors would vouch for.
+2. **`libfuzzer-sys`**: `(MIT OR Apache-2.0) AND NCSA`, C++ inside, outside the
+   workspace and outside `cargo deny`'s graph. With it the fuzz lockfile also carries
+   `arbitrary`, `cc`, `find-msvc-tools`, `getrandom`, `jobserver`, `shlex`
+   (MIT OR Apache-2.0) and `r-efi` (MIT OR Apache-2.0 OR LGPL-2.1-or-later).
+3. **The nightly long fuzz run stays a deferral.** Resume 4.5 allows a nightly
+   toolchain to the D6 job alone. One line re-points the D6 Nightly job at the live gate
+   if Al wants it.
+4. **The status of the worked vectors and of the Ed25519 verdict file** (resume 2.7).
+5. **`active` in the block codec.** I read G0-C1d, G0-C6b and G0-C8e together as: the
+   block codec takes the tuple that stands for the active one and uses it for
+   `SOL_MAX_BYTES`, and takes the exact length from the header's own size parameter
+   (§1.5). The other reading gives the codec no argument and leaves `SOL_MAX_BYTES` to
+   B3. Both accept the same consensus-valid blocks.
+6. **Typed errors I fixed** (resume 2.2): the full order is §1.5. Two that may
+   surprise: a 189-byte transaction is `WholeExceedsLimit`, never `TrailingBytes`; and a
+   solution length above the limit is `CountExceedsLimit` even when it is also not the
+   exact length.
+7. **Layout tests with arbitrary bytes.** Where a tuple plays the active tuple (the
+   block codec's argument, the solution codec, every block), the tests use the two
+   measured stand-ins. The tests of the 20-byte layout itself, and the header fuzz
+   target, put arbitrary values in those 20 bytes, because a layout has to be tested
+   over all its values. They are labeled as layout bytes that stand in for no tuple. If
+   resume 2.3 reaches them, they change to the stand-ins and lose that coverage.
+8. **Edits no clause named.** One half-sentence left Protocol Spec §5.2 (it said the
+   bench file still calls the q = 17 fixture nonnormative, which resume 3.2 made
+   false). `unit-and-property-tests` gained the step that re-derives the vectors, and
+   `dependency-audit` the audit of the fuzz lockfile. The README gained a limitation
+   about the dependencies and rows for `bench/p007-vectors` and `fuzz`.
+9. **Stale text I left, because resume 3.1 says "and no others".**
+   `spec/Spec/Tx.lean` line 119 still calls the strict canonical decoder "unresolved"
+   without naming an SI. The README's architecture diagram still labels `spec/` as
+   "planned Lean rules and vectors".
+10. **`cj3-classes` API changes**: `Sis` lost its const generic, and a `SisSolution` is
+    16-bit coefficients. Both follow from the ruling; both touch the solver and one
+    bench test.
+
+### 4.3 A1–A11, banned identifiers, unsafe, TBD integrity
+
+| Axiom | What I looked for | Result |
+|---|---|---|
+| A1 | A self-reported field in a layout | None. The header and transaction carry exactly the fields of §6.1 and §7. |
+| A2 | A miner-chosen input to the instance | None. The `instance_seed` preimage is `network_id`, `height`, `parent_hash`, `beacon_out`; a test changes nothing else. |
+| A3 | A clock or metadata reaching the checker | None. `check_sis` is unchanged; the solution decoder takes bytes and a tuple. |
+| A4 | Quality entering fork choice | Nothing here touches fork choice. |
+| A5 | A float, or a signed or wrapping amount | None. Amounts are `u64` in `Amount`; the only signed integers are SIS coefficients. The source-policy gate found no `f32` or `f64`. |
+| A6 | A check smuggled into another | `verify_signature` does not test `from == addr(pubkey)`; V3 stays a separate check, and its doc says so. |
+| A7 | A panic or a fail-open path on input | None found (finding 12). The one arm that cannot run in `verify` rejects. |
+| A8 | Rust deciding what Lean owns | No Lean definition, theorem, vector or exported string changed. The decoder's size-test-first order mirrors the Lean `v1`. |
+| A9 | Foreign code on a trusted path | No C or C++ in any `cj3-*` crate. libFuzzer's C++ is in fuzz binaries only. Finding 2 states the limit. |
+| A10 | A claim beyond the evidence | The README calls the fuzz job a bounded smoke run and the dependencies' `unsafe` by name; the vector files state their status, or that they claim none. |
+| A11 | A verification claim without a pointer | Each claim in §3 names its command; the hosted run is on the PR. |
+
+The source-policy gate passed over 28 Rust files, so none of `solve_time`,
+`work_score`, `reported_*` or `self_reported` is present. `unsafe` in `cj3-*` crates is
+zero in 11 packages. P-1, P-4, P-7, P-9, P-10, P-12 and `ACTIVE_SIZE_PARAM` are
+unfilled: no library names a tuple, a network identifier, a fee or a timestamp unit,
+and the two stand-in tuples appear only in test modules, the fuzz crate and `bench/`.
+
+## 5. HANDOFF — no MERGE
+
+[PR #21](https://github.com/Quigles1337/COINjecture3.0/pull/21) carries this change.
+Its description holds the exact-head D6 run. It is marked ready and left unmerged.
+Resume 4.8 keeps the review and the merge with Al, and then the G0-F ruling.
+
+## 6. CALIBRATE
+
+- **Diff surface:** as predicted. 76 files, all inside §1.9.
+- **Risk 1, a verification that is almost §1.3:** did not materialize in the code. It
+  did show up as a hole in the vectors (finding 1), which is the same risk one step
+  earlier, and the adversary pass closed it.
+- **Risk 2, a second encoding or a panic:** did not materialize. The fuzz targets and
+  the truncation tests found nothing.
+- **Risk 3, a fixture becoming a parameter:** held. The one judgment call is §4.2
+  point 7.
+- **Confidence against result:** MED-HIGH on the codecs was a little low: both
+  derivations agreed on every byte and every verdict at the first comparison. MED on
+  the fuzz job was about right, for a different reason than I gave: the targets ran on
+  Linux at the first attempt, and the time went to tooling around them.
+- **Surprises:** the stale record that broke the unsafe scan; rustup installing a
+  toolchain because a script asked for its version; and that no block at a stand-in
+  tuple can be exactly `BLOCK_MAX_BYTES` long.
+- **One process improvement:** before the first local run of any tool that reads the
+  build directory, point it at a fresh target directory. A shared `target/` carries
+  three months of history that a hosted runner never sees.
+
+## VERIFIED
+
+- Preflight steps a–g and resume 1.1: the table above.
+- The two derivations agree on every worked vector, every expansion vector and all 932
+  Ed25519 verdicts: §3.1.
+- `spec/vectors/p005-draft.json` is byte-identical before and after, and the Lean gate
+  regenerates it: §3.2.
+- Format, lints, tests, locked build, dependency policy and audit, source policy,
+  unsafe count, fuzz properties on stable and fuzz targets on Linux: §3.3.
+- The CCTV licence permits the copy, and the copy is verbatim: §1.8 and §3.1.
+- No file outside the predicted surface changed: `git diff --name-only main`.
+
+## ASSUMED
+
+- The fuzz crate may be its own workspace, outside `cargo deny`'s graph. Safe: it is the
+  cargo-fuzz layout, resume 4.5 orders cargo-fuzz targets, `deny.toml` is untouched, and
+  the fact is stated wherever the crate is described so that Al can refuse it.
+- A message of any length may reach `ed25519::verify`. Safe: G0-C8c cannot be met
+  otherwise, and the consensus path passes the 32-byte digest only.
+- `active` supplies only `SOL_MAX_BYTES` to the block codec (§4.2 point 5). Safe: the
+  two readings accept the same consensus-valid blocks.
+- Installing a toolchain and cargo-fuzz in WSL was within the task. Safe to undo:
+  `rustup toolchain uninstall nightly-2026-11-15` and `cargo uninstall cargo-fuzz`.
+- The report number is C10, after C9.
+
+## UNKNOWN
+
+- Whether Al accepts each proposed dependency. His review resolves it.
+- The status of the worked vectors and of the Ed25519 verdict file. His review resolves
+  it (resume 2.7).
+- Whether the nightly long fuzz run may use a nightly toolchain (§4.2 point 3).
+- Whether resume 2.3 reaches the arbitrary-byte layout tests (§4.2 point 7).
+- The D6 result for the final head: recorded on PR #21 once the run completes.
