@@ -205,7 +205,9 @@ is new; MED on the FRAME's completeness, which Al judges.
 | `64e6b92` | launch 3.3f | `bench/p101-roots`: the standard-library script and the two files it writes; one line in `.gitattributes`. |
 | `c1673fa` | launch 4.6 | P-101's FRAME, `loop/reports/C12-p101-builder.md`. |
 | `0ab81e9` | launch 4.3b | A second, small commit for item (b), from the adversary pass (§4.1, finding 3). |
-| the closing commit | prompt | The index after the verbatim text in the LEDGER; `loop/PACKETS.md`, `loop/STATE.md`; the README rows this ruling makes false; this report from §2 on; two new BATCH-LOG lines. |
+| `422029b` | prompt | The index after the verbatim text in the LEDGER; `loop/PACKETS.md`, `loop/STATE.md`; the README rows this ruling makes false; this report from §2 on; two new BATCH-LOG lines. |
+| `2be66e6` | launch 4.6 | Four corrections to the FRAME from a last re-read (§2.2, slip 4). No proposal changes. |
+| the last commit | prompt | This table's last three rows and slip 4 of §2.2, in this report. Nothing else. |
 
 Item (b) is in two commits, not one, as item (c) was in the last session (launch 2.11).
 No commit holds work of two items.
@@ -232,7 +234,7 @@ No commit holds work of two items.
   I read it directly after: `PUBLIC`, and the COINjecture 2.0 loop still read
   `CAPACITY_FLAG: none`. Nothing was exposed that should not have been, but the prompt
   asks for the reading before the push, and I had it in the wrong order.
-- **DEGRADATION: three slips, each caught, none shipped as wrong.**
+- **DEGRADATION: four slips, each caught, none left standing.**
   1. In the FRAME I typed one number, a nonce in the state example, from memory of the
      script's output. It was wrong. I then checked every hex string of eight or more
      digits and every number of ten or more digits in the FRAME against the script's
@@ -247,6 +249,15 @@ No commit holds work of two items.
      path with backslashes was mangled on its way in, and the check passed. The pass
      was suspicious on its face, the printed manifest showed the plant had not happened,
      and the test was redone (§3.2).
+  4. A last re-read of the FRAME, after it was committed and pushed, found four
+     statements wrong or overstated. One misattributed a quotation: D5 calls
+     Lean-to-Rust extraction "not production-ready", and I had applied those words to
+     the Rust-to-Lean tool it only names. One said `cj3-classes` depends on `cj3-types`
+     only, when it also depends on `sha3`, which matters to decision K-10. One "settled"
+     row claimed more than its ruling settles. One pointed at the wrong section. All
+     four are corrected in `2be66e6`, and no proposal changed. The first two would have
+     misled Al on the evidence for two decisions, so the lesson is the same as slip 1's:
+     check a quotation against its source, not against memory of it.
 
 ### 2.3 What changed on this machine outside the repository
 
