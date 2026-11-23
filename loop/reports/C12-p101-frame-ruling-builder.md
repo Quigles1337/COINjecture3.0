@@ -207,7 +207,7 @@ is new; MED on the FRAME's completeness, which Al judges.
 | `0ab81e9` | launch 4.3b | A second, small commit for item (b), from the adversary pass (§4.1, finding 3). |
 | `422029b` | prompt | The index after the verbatim text in the LEDGER; `loop/PACKETS.md`, `loop/STATE.md`; the README rows this ruling makes false; this report from §2 on; two new BATCH-LOG lines. |
 | `2be66e6` | launch 4.6 | Four corrections to the FRAME from a last re-read (§2.2, slip 4). No proposal changes. |
-| the last commit | prompt | This table's last three rows and slip 4 of §2.2, in this report. Nothing else. |
+| the commits after it | prompt | Edits to this report only: this table's last three rows, slip 4 of §2.2, and the citation of D6 run `45184376452` in §3.6. |
 
 Item (b) is in two commits, not one, as item (c) was in the last session (launch 2.11).
 No commit holds work of two items.
