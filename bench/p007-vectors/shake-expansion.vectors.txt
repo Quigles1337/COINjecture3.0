@@ -1,11 +1,18 @@
 # CJ3 Encoding v1: vectors for the expansion rule of Protocol Spec section 5.2
 # (ruling G0-C5; evidence of ruling G0-C8b).
 #
-# STATUS: these vectors are normative for the expansion rule (ruling G0-C8b;
-# P-007 resume ruling, clause 2.3). They test the rule itself. They may use any
-# valid modulus and they make no tuple a candidate for P-4. That includes the
-# vector at each stand-in tuple: the choice of the tuple is non-normative, and
-# the expansion it yields is a normative vector of the rule.
+# STATUS: NORMATIVE conformance vectors for the expansion rule, from the merge
+# of PR #21 (Gate G0-F ruling, clause 2.4; before it, ruling G0-C8b and P-007
+# resume ruling, clause 2.3). What is normative is the relation: these inputs
+# give these bytes and these verdicts, and every implementation reproduces
+# them. The input values assign nothing: no network identifier, fee, target,
+# root, timestamp unit or tuple. If the text of the specification and a vector
+# ever disagree, that is a STOP and a ruling. Neither wins by default.
+#
+# They test the rule itself. They may use any valid modulus and they make no
+# tuple a candidate for P-4. That includes the vector at each stand-in tuple:
+# the choice of the tuple is non-normative, and the expansion it yields is a
+# normative vector of the rule.
 #
 # The rule: SHAKE-256 absorbs the 32 seed bytes and nothing else. Its output is
 # read four bytes at a time, each group a little-endian u32. A group is accepted

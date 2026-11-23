@@ -110,7 +110,7 @@ flowchart TB
     Beacon["cj3-beacon<br/>trait-gated randomness"]
     Kernel["cj3-kernel<br/>transaction validity · STF"]
     Types["cj3-types<br/>canonical encodings · addr · amounts"]
-    Lean["spec/<br/>planned Lean rules and vectors"]
+    Lean["spec/<br/>ratified Lean rules · symbolic vectors"]
     Bench["bench/<br/>non-consensus evidence"]
 
     Node --> RPC
