@@ -1,13 +1,13 @@
 # COINjecture 3.0 Loop State
 
-CYCLE: 11
+CYCLE: 12
 PHASE: Phase 1 — open; Gate G0 PASS with items carried
-PACKET: none in flight — the Gate G0 closeout (HUMAN) is on `feat/g0f-gate-record`; PR #22 awaits Al's review and merge; P-101 and packet P-011 are unblocked and not started
+PACKET: P-101 (HUMAN) — at its FRAME and stopped for Al's ruling; no kernel code exists; the record of the launch ruling is on `feat/p101-frame`, PR #23, which awaits Al's review and merge; packet P-011 is unblocked and not started
 BRANCH: main
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-no-remediation-queued-or-running
 CAPACITY_OBSERVED_AT: 2026-11-22, Al's ruling Part 0.3 — no COINjecture 2.0 remediation work is queued or running; CJ3 may proceed until Al states another condition
-STATUS: G0_PASS — CLOSEOUT READY FOR AL'S REVIEW IN PR #22; THE BUILDER DOES NOT MERGE IT; AL NAMES WHICH OF P-101 AND PACKET P-011 RUNS FIRST
+STATUS: P101_FRAME_STOP — P-101'S FRAME AND THE RECORD OF THE LAUNCH RULING ARE READY FOR AL'S REVIEW IN PR #23; THE BUILDER DOES NOT MERGE IT AND DOES NOT BEGIN P-101'S BUILD; AL RULES THE FRAME'S TWELVE DECISIONS
 
 ## Ground-truth state
 
@@ -228,7 +228,7 @@ STATUS: G0_PASS — CLOSEOUT READY FOR AL'S REVIEW IN PR #22; THE BUILDER DOES N
 - Visibility: the repository is PUBLIC by Al's decision, and D9's "private through the
   build" is superseded (Part 0.1). Preflight step (d) now requires `PUBLIC` and stops on
   any other value. "No visibility changes" stays a standing prohibition. D10 and D16
-  are not ruled; every value and seat they reserve stays reserved and UNFILLED, and
+  are not ruled in that ruling (they stand as ruled on 2026-08-15; launch 2.1); every value and seat they reserve stays reserved and UNFILLED, and
   every prohibition on contacting or notifying anyone stays in force (Part 0.2).
 - G0-B: SI-001 is resolved by the supplied "Hardness basis" text. P-3 is accepted as
   provisional at `VALIDATION_BUDGET = 15 ms` over `derive_instance` plus `check`; the
@@ -342,9 +342,9 @@ STATUS: G0_PASS — CLOSEOUT READY FOR AL'S REVIEW IN PR #22; THE BUILDER DOES N
   themselves, and the crate refuses to compile unless the setting is exactly `serial`.
   D6 proves the refusal on every run. Before this, on x86_64, the library chose a back
   end that picks vector code by processor at run time. It is not a claim that no unsafe
-  code remains on the path: the README limitation says what remains, that the serial
-  back end is two bodies of code chosen by pointer width, and that `sha2` still chooses
-  an implementation by processor.
+  code remains on the path: the README limitation said then what remained, that the serial
+  back end is two bodies of code chosen by pointer width, and that `sha2` still chose
+  an implementation by processor. Launch 4.3 has since pinned both (below).
 - Pass 4.5d. The source-policy gate fails on a domain tag constant named in any Rust
   source outside `crates/cj3-types`, and proves the rule on planted sources every run.
   One doc comment in `crates/cj3-beacon/src/devnet.rs` named a tag and is reworded.
@@ -356,23 +356,79 @@ STATUS: G0_PASS — CLOSEOUT READY FOR AL'S REVIEW IN PR #22; THE BUILDER DOES N
   ruling nor the gate ruling revisited them.
 - The builder report is `loop/reports/C11-g0f-gate-builder.md`. Its §4.2 lists the
   points left for Al.
+- Al reviewed and merged PR #22 at `2026-11-23T12:44:59Z` as
+  `d2c5f75985c776ce1c9ef204c02481715f6fac99`, and exact-merge-SHA D6 run `45177244858`
+  on that commit passed all eleven jobs (launch 1.1).
+- Al's ruling "LIVE CJ3 RULING - P-101 TO ITS FRAME" of 2026-11-23 is recorded verbatim
+  in `loop/LEDGER.md` as the first commit of `feat/p101-frame`. Its clauses are cited as
+  "launch 2.1" and so on, because it is the message that launches P-101 (pass 3.6).
+- It rules the points of report C11 §4.2 (launch Part 2). The word size is pinned and
+  `sha2` runs its portable code (2.2, 2.3; built as 4.3a and 4.3b). The slower signature
+  checks are noted and measured when Al re-rules `BLOCK_MAX_BYTES` (2.4). The domain-tag
+  rule, the nightly job's operating choices, the licence exception pinned to a version,
+  the unnamed edits and item (c) in two commits stand or are accepted (2.5 to 2.8,
+  2.11). Packet P-011 measures and reports costs and judges nothing: what is worth
+  calling useful work is Al's judgment when he rules P-1 and P-4 (2.10).
+- Launch 4.3a. Every build of `cj3-types` in this repository sets
+  `curve25519_dalek_bits` to exactly 64, beside the serial back end: `.cargo/config.toml`
+  passes both settings, the fuzz gates pass both themselves, and the crate refuses to
+  compile unless each is exactly its pinned value. The D6 check of the back end also
+  builds with the word size absent, set to 32 and doubled, and requires each of those
+  builds to fail. Before this, a build with the setting at 32 compiled on a 64-bit host.
+- Launch 4.3b. `cj3-types` enables `sha2`'s `force-soft` feature, so SHA-256, and the
+  SHA-512 inside Ed25519 verification, run the library's portable code on every
+  processor. A D6 check fails unless what `cj3-types` asks for, what cargo resolved for
+  the workspace and for the fuzz workspace, and every `sha2` that the build of the tests
+  compiles, has the feature and lacks `force-soft-compact`, which would override it.
+  Neither lockfile changed, and every vector file is unchanged.
+- The README limitation says what is now true of the curve arithmetic, of SHA-2 and of
+  SHA-3 (launch 4.3). SHA-3 runs one body of code on every processor as built, because
+  `keccak`'s `asm` feature is not enabled; no D6 check enforces that.
+- Launch 4.4. The builder prompt has preflight step h: every session reads the result of
+  the latest completed D6 Nightly run on `main` and reports it. A fuzz target that
+  failed in it is a STOP; a failure before any target ran is reported and is not.
+- The latest completed D6 Nightly run on `main` when this session began was `45117443199`
+  (schedule, commit `f601224d`, success). That commit is from before PR #22, so its long
+  fuzz job was still the deferral marker: no target ran and none failed. The long fuzz
+  job has not yet run on `main`; its first scheduled run there is that of 2026-11-24.
+- **P-101 runs first (launch 3.1) and is at its FRAME.** The FRAME is
+  `loop/reports/C12-p101-builder.md`. It puts twelve decisions to Al (K-1 to K-12): how
+  `tx_root` is built; how the state commitment is built and what an empty account is;
+  six domain tags, proposed by name and bytes; how the store discharges the three
+  `LawfulStateOps` laws; how the kernel is tested against the symbolic Lean cases;
+  whether Lean also exports cases it has computed; where the first half of B9 is
+  checked; who computes Q; the Rust types of the unfilled inputs; two new edges between
+  crates; what P-101 leaves to the other Phase 1 packets; and a split into three pull
+  requests. It lists twenty decisions that are already settled, with the place that
+  settles each. **None of it is ruled, and no tag is assigned.**
+- The FRAME's worked examples are under `bench/p101-roots`, derived by a script that
+  uses only the Python standard library. They are proposed, not ruled, and are not
+  conformance vectors. The script is not wired into D6 (launch 3.3f).
+- No kernel code exists. `crates/cj3-kernel`, `crates/cj3-store` and `spec/` are
+  unchanged. P-1, P-4, P-7, P-9, P-10, P-12 and `ACTIVE_SIZE_PARAM` are unfilled.
+- This session's report is `loop/reports/C12-p101-frame-ruling-builder.md`; its §4.2
+  lists the points left for Al. The pull request is PR #23, in the HUMAN lane. The
+  builder does not merge it.
 
 ## Next action
 
-1. Al reviews PR #22 and merges it. The builder does not.
-2. Al says which of P-101 and packet P-011 runs first, in the message that launches it
-   (pass 3.6). Both are unblocked. The builder starts neither before that message.
-   Packet P-011 blocks Phase 2 and does not block P-101.
-3. Carried, each to the boundary where Al rules it (pass 3.5): P-1, P-4, P-10,
+1. Al reviews PR #23 and merges it. The builder does not.
+2. Al rules P-101's FRAME: the twelve decisions K-1 to K-12 of
+   `loop/reports/C12-p101-builder.md`, the six proposed domain tags among them. P-101's
+   build does not begin before that ruling (launch 4.7). The FRAME proposes that the
+   build be three pull requests, in the HUMAN lane, none merged by the builder.
+3. Packet P-011 is unblocked and not started. Al says when it runs. It blocks Phase 2
+   and does not block P-101.
+4. Carried, each to the boundary where Al rules it (pass 3.5): P-1, P-4, P-10,
    `ACTIVE_SIZE_PARAM`, the re-derived P-2, the re-measured P-3, the re-ruled
    `BLOCK_MAX_BYTES` and the timestamp unit (from packet P-011's report; they block
-   Phase 2); how `tx_root` and the state commitment are built (P-101 proposes both in
-   its FRAME and stops there for Al's ruling); the byte order in which a 32-byte value
+   Phase 2); how `tx_root` and the state commitment are built (P-101 has proposed both
+   in its FRAME, and Al's ruling is awaited); the byte order in which a 32-byte value
    is read as a number (the first Phase 2 FRAME); the genesis layout and its preimage
    (the Phase 1 genesis packet); P-7, P-9 and P-12 (their owners).
-4. P-008 remains blocked on the exact frontend URL, and is carried.
-5. On any resume, run the preflight and re-check D11 before touching the repository.
-   `remediation-priority` in either project pauses CJ3.
+5. P-008 remains blocked on the exact frontend URL, and is carried.
+6. On any resume, run the preflight, step h included, and re-check D11 before touching
+   the repository. `remediation-priority` in either project pauses CJ3.
 
 No frontend URL may be inferred for P-008, and no Al- or Sarah-owned TBD may be
 filled.

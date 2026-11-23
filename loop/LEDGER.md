@@ -1296,3 +1296,57 @@ PART 4 - THIS SESSION
 4.7 Adversary pass over the whole diff. Exact-head D6 green. Pull request marked ready.
     STOP. Do not merge, and do not begin P-101's build. I review, merge and rule.
 ```
+
+### Effective record of the P-101 FRAME ruling
+
+The verbatim text above governs. This index only names what the ruling confirms, what
+it gives meaning to, what it leaves unruled, and where it is applied. On any difference,
+the verbatim text wins. No line of an earlier index in this ledger is changed (clause
+2.1).
+
+- **Clause names.** Other documents cite a clause of this ruling as "launch" plus its
+  number ("launch 2.1", "launch 4.3a"), because it is the message that launches P-101
+  (pass 3.6). A clause of the Gate G0-F ruling is still "pass" plus its number, a clause
+  of the P-007 resume ruling "resume" plus its number, and the prefix `G0-` stays with
+  the 2026-11-22 ruling.
+- **Confirmed by clause 1.1:** PR #22 merged at `2026-11-23T12:44:59Z` as
+  `d2c5f75985c776ce1c9ef204c02481715f6fac99`, and exact-merge-SHA D6 run `45177244858`
+  on that commit concluded success in all eleven jobs. Both were read on GitHub before
+  the branch was cut.
+- **Given its meaning by clause 2.1:** the last sentence of clause 3.5 of the Gate G0-F
+  ruling, "D10 and D16 are still not ruled". It means that D10 and D16 stand as ruled on
+  2026-08-15, and that neither the 2026-11-22 ruling nor the gate ruling revisited
+  them. The fault was in that ruling's wording, not in the record. The index lines above
+  that quote the sentence are left as they are, as the clause orders; this entry is
+  where the ledger carries the meaning.
+- **Ruled by Part 2:** the points of report C11 §4.2. The word size of the curve
+  arithmetic is pinned (2.2, 4.3a). `sha2` runs its portable code on every processor,
+  for the reason clause 4.5c of the gate ruling gave for the curve library; code that
+  mines may hash as it likes when it comes, because every node checks the result with
+  this code (2.3, 4.3b). The slower signature checks are noted and measured when Al
+  re-rules `BLOCK_MAX_BYTES` (2.4). The domain-tag rule is accepted as built: names,
+  comments included (2.5). The nightly job's operating choices are accepted, and every
+  session reads its latest result (2.6, 4.4). The licence exception pinned to a version
+  is accepted (2.7). The edits no clause named stand (2.8). One stale bullet of
+  `loop/STATE.md` gains its date (2.9). Packet P-011 measures and reports costs and
+  judges nothing: what is worth calling useful work is Al's judgment when he rules P-1
+  and P-4 (2.10). Item (c) in two commits is accepted (2.11).
+- **Order of work (Part 3):** P-101 runs first (3.1). This ruling takes it to its FRAME
+  and no further: the FRAME lists every decision P-101 needs from Al, proposes how
+  `tx_root` and the state commitment are built, and stops for Al's ruling. No kernel
+  code is written under this ruling.
+- **Discharged:** in the Gate G0-F ruling, "I say which runs first in the message that
+  launches it" (3.6), which clause 3.1 now says.
+- **Not ruled:** every decision P-101's FRAME puts to Al, the six domain tags it
+  proposes among them (clause 3.3b: "I assign tags. The FRAME does not."); when packet
+  P-011 runs; and every item clause 3.5 of the gate ruling carries, which stay carried.
+  D10 and D16 are not revisited (2.1).
+- **Applied in:** the text commit of clause 4.5 (`loop/PACKETS.md`, `loop/STATE.md`);
+  step h of `loop/PROMPTS/AUTONOMOUS_BUILDER.md` (4.4); the two build items of clause
+  4.3, each in a commit of its own (`.cargo/config.toml`, `crates/cj3-types`,
+  `scripts/ci`, `.github/workflows/ci.yml`), and the README limitation after them;
+  P-101's FRAME, `loop/reports/C12-p101-builder.md` (4.6), with its worked examples
+  under `bench/p101-roots`; and `README.md`, `loop/PACKETS.md`, `loop/STATE.md` and
+  `loop/reports/BATCH-LOG.md`. The session's report is
+  `loop/reports/C12-p101-frame-ruling-builder.md`. The pull request is PR #23, which the
+  builder does not merge.
