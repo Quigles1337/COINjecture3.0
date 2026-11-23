@@ -345,7 +345,7 @@ Why this one:
   above it. Adding or removing one adds or removes one leaf and one node. So a short
   proof can show the commitment before and after a change, and a store can update the
   commitment without touching the rest. P-101's first implementation would not use this:
-  it would recompute from the definition at each block (section 7.2). The structure
+  it would recompute from the definition at each block (section 7.1). The structure
   leaves the door open and costs nothing for doing so.
 - **One path proves presence and one path proves absence** (section 5.5).
 - **There is no "empty" value inside the tree.** Every child of every node is a leaf or
@@ -734,7 +734,7 @@ replace the copy with something cheaper, under the same laws and the same tests.
 
 | Alternative | Why not, or not now |
 |---|---|
-| Translate the Rust store to Lean with a tool (Aeneas) and prove the laws about the translation | It would be a proof about the code itself. It adds a research tool to the chain of trust, restricts the Rust that can be written, and D5 already records that this route "is not production-ready". If Al reads §8 as requiring a proof about the Rust code, this is the route, and it is a packet of its own. |
+| Translate the Rust store to Lean with a tool (Aeneas) and prove the laws about the translation | It would be a proof about the code itself. It adds a research tool to the chain of trust and restricts the Rust that can be written. D5 names the tool ("Aeneas runs the other direction") and chose conformance by vectors; it does not weigh this route. If Al reads §8 as requiring a proof about the Rust code, this is the route, and it is a packet of its own. |
 | A model checker or verifier for Rust (Kani, Creusot) | Bounded or annotation-heavy; a new tool in D6; and the result is not a Lean theorem, which is what `LawfulStateOps` is. |
 | Tests only, no Lean model | Then `LawfulStateOps` is never instantiated, which §8 requires. |
 | A trait in the kernel that any store may implement | Flexible, but every implementation would owe the laws, and a trait invites a second write path. §8 forbids an "alternate write path, cache, or adapter". |
@@ -960,9 +960,11 @@ block validation. Cheap before P-201 exists, a rewrite of both sides after.
 each need one more edge.
 
 **Proposal.** `cj3-kernel` → `cj3-store`, for the one concrete store, and `cj3-kernel` →
-`cj3-classes`, for the checker. Neither adds a dependency from outside the workspace or
-a cycle: `cj3-store` and `cj3-classes` depend on `cj3-types` only. The plan's diagram
-would gain the two edges in the same pull request, text only.
+`cj3-classes`, for the checker. Neither adds a package to the lockfile or a cycle.
+`cj3-store` would depend on `cj3-types`. `cj3-classes` depends on `cj3-types` and on
+`sha3`, so the kernel's own dependency graph would gain `sha3` and `keccak`, which the
+workspace already builds for `cj3-classes`. The plan's diagram would gain the two edges
+in the same pull request, text only.
 
 **Weighed.** The alternatives are the ones K-4 and K-8 rejected: a store trait in the
 kernel, and Q as an argument.
@@ -988,7 +990,7 @@ dependencies today; `cj3-classes` has `cj3-types` and `sha3`.
 | S-10 | Amounts are `u64` with checked arithmetic; no float anywhere near one | D7, A5 |
 | S-11 | Conformance is by vectors in CI, not by extraction | D5, A8 |
 | S-12 | The state is `account(addr) -> { balance u64, nonce u64 }` | Protocol Spec §8 |
-| S-13 | `tx_root` and `state_root` are 32 bytes at fixed places in the header, and so each is a SHA-256 output | G0-C3d |
+| S-13 | `tx_root` and `state_root` are 32 bytes at fixed places in the header. With S-8, each commitment therefore has to be one output of `H` | G0-C3d |
 | S-14 | The P-005 vectors stay symbolic and non-normative | pass 2.4, resume 2.7 |
 | S-15 | No `axiom`, `sorry` or `admit` in a Lean file | the first-review ruling, F1; the Lean gate |
 | S-16 | The state root is compared after the reward is credited | `Stf.lean`, `applyBlockCandidate`; Protocol Spec §8 steps 3 and 4 |
