@@ -1136,3 +1136,59 @@ PART 4 - THIS SESSION
 4.6 Adversary pass over the whole diff. Exact-head D6 green. Pull request marked ready.
     STOP. Do not merge. I review and merge.
 ```
+
+### Effective record of the Gate G0-F ruling
+
+The verbatim text above governs. This index only names what the ruling confirms, what
+it supersedes, what it leaves unruled, and where it is applied. On any difference, the
+verbatim text wins.
+
+- **Clause names.** Other documents cite a clause of this ruling as "pass" plus its
+  number ("pass 2.4", "pass 4.5c"). The prefix `G0-` stays with the 2026-11-22 ruling,
+  so `G0-F1` and `G0-F3` are still clauses F1 and F3 of that ruling. A clause of the
+  P-007 resume ruling is still "resume" plus its number.
+- **Confirmed by clause 1.1:** PR #21 merged at `2026-11-23T05:36:52Z` as
+  `333c67086012d03f3c654cba20526e5c0f5e6b4d`, and exact-merge-SHA D6 run `45118879871`
+  on that commit concluded success in all eleven jobs. Both were read on GitHub before
+  the branch was cut. P-007 is COMPLETE.
+- **Ruled by Part 2:** the points of report C10 §4.2. `sha2 =0.10.9` and
+  `curve25519-dalek =4.1.3` are accepted as pinned, the second on the condition of
+  clause 4.5c, and arithmetic written in `cj3-types` is refused (2.1). `libfuzzer-sys`
+  is accepted for the fuzz crate alone, on the condition of clause 4.5b (2.2). The
+  nightly long fuzz job may use the pinned nightly toolchain (2.3). Three files are
+  NORMATIVE conformance vectors from the merge of PR #21 (2.4). The builder's reading
+  of the active tuple in the block codec, its order of checks, its layout tests over
+  arbitrary bytes, its unnamed edits, the `cj3-classes` API and the three ways of
+  showing the `BLOCK_MAX_BYTES` boundary stand or are accepted (2.5 to 2.8, 2.10,
+  2.11). Two stale statements are ordered corrected (2.9).
+- **Gate disposition (Part 3):** Gate G0 is **PASS**, with the items of clause 3.5
+  carried, and Phase 1 is open (3.1). D1, D2, D14 and D15 are confirmed, D2 as G0-A
+  amended it and D1 on the condition of clause 3.3. The Protocol Specification is v0.2
+  and NORMATIVE, except for every value marked UNFILLED or PROVISIONAL and every
+  carried item (3.4). P-101 and packet P-011 are both unblocked (3.6).
+- **Superseded:** "G0 stays HOLD" in clause F1 of the 2026-11-22 ruling and the HOLD
+  dispositions before it; and, in the P-007 resume ruling, "That job alone may use a
+  nightly toolchain" (4.5), which clause 2.3 extends to the D6 Nightly long fuzz job.
+- **Discharged:** in the P-007 resume ruling, "their status is part of my review of
+  P-007" (2.7), which clause 2.4 now rules, and "I accept or refuse them at review"
+  (4.4), which clauses 2.1 and 2.2 now rule. In clause F3 of the 2026-11-22 ruling, "at
+  the P-101 FRAME" is made exact by clause 3.5: P-101 proposes both in its FRAME and
+  stops there for Al's ruling.
+- **Size adequacy at this gate (the standing item of G0-A).** There is no active
+  `size_param` to retain or to change: `ACTIVE_SIZE_PARAM` and P-4 are UNFILLED. Clause
+  3.3 is the gate's word on adequacy: it is not yet measured whether the family has a
+  size that miners can solve at a cost worth calling useful work, and packet P-011
+  measures that.
+- **Not ruled:** which of P-101 and packet P-011 runs first, which Al says in the
+  message that launches it (3.6); and every item clause 3.5 carries. In the ruling's
+  words, "D10 and D16 are still not ruled"; every value and seat they reserve stays
+  reserved and UNFILLED, and every prohibition on contacting or notifying anyone stays
+  in force, as Part 0.2 of the 2026-11-22 ruling left them.
+- **Applied in:** the text-only commit of clause 4.4 (`spec/Spec/Tx.lean`, `README.md`,
+  `bench/p007-vectors`); the four build items of clause 4.5, each in a commit of its
+  own (`.github/workflows`, `scripts/ci`, `fuzz/deny.toml`, `.cargo/config.toml`,
+  `crates/cj3-types`, and one doc comment in `crates/cj3-beacon`); and the gate record
+  of clause 4.3 (`docs/PROTOCOL_SPEC.md`, `docs/ENGINEERING_PLAN.md`, `README.md`,
+  `loop/PACKETS.md`, `loop/STATE.md`, `loop/reports/BATCH-LOG.md`). The builder's report
+  is `loop/reports/C11-g0f-gate-builder.md`. The pull request is PR #22, which the
+  builder does not merge.

@@ -20,19 +20,19 @@ enforces the complete design ([audit mapping](docs/AUDIT_TRACEABILITY.md#1-third
 
 ## Status
 
-> Refreshed 2026-11-22 for the Gate G0 ruling on G0-B through G0-E and for the resumed P-007. This is the repository's single current-status
+> Refreshed 2026-11-23 for Gate G0 PASS and the opening of Phase 1. This is the repository's single current-status
 > block; its refresh is required at every gate closeout
 > ([standing rule](loop/LEDGER.md#standing-readme-drift-control-rule--ratified-al-2026-08-16)).
 >
 > | Field | Current record | Evidence |
 > |---|---|---|
 > | Scope | Public repository; pre-testnet; no running testnet, production node, or mainnet configuration | [2026-11-22 ruling, Part 0.1](loop/LEDGER.md#gate-g0-ruling-overlay--g0-b-to-g0-e-ruled--g0-f-held-al-2026-11-22), [D12](loop/LEDGER.md#d1d15-seed-from-engineering-plan-3), [source-policy gate](scripts/ci/check-source-policy.ps1) |
-> | Phase | **Phase 0 — Gate G0 HOLD** | [phase plan](docs/ENGINEERING_PLAN.md#4-phase-plan), [packet queue](loop/PACKETS.md) |
-> | Last phase gate | None of G0–G4 has passed; G0-A through G0-E are ruled, G0-F is held, and G0 remains HOLD | [2026-11-22 ruling](loop/LEDGER.md#gate-g0-ruling-overlay--g0-b-to-g0-e-ruled--g0-f-held-al-2026-11-22), [G0-A ruling](loop/LEDGER.md#gate-g0-partial-ruling-overlay--g0-a-ratified--g0-hold-al-2026-08-16), [queue state](loop/PACKETS.md) |
-> | Completed packet evidence | P-001 through P-006, P-009, and P-010 are merged with exact-mainline CI records; P-005's Lean V1–V9/STF is HUMAN-RATIFIED; PR #14 merged on 2026-10-12 as `35811404` and carried only P-007's checked `Amount` boundary and stop report; the rest of P-007 is built in PR #21 and awaits Al's review, so P-007 remains INCOMPLETE until he merges it | [batch log](loop/reports/BATCH-LOG.md), [G0 handoff](loop/reports/C7-phase0-g0-handoff.md), [PR #14](https://github.com/Quigles1337/COINjecture3.0/pull/14), [D6 run 38323998550](https://github.com/Quigles1337/COINjecture3.0/actions/runs/38323998550), [PR #21](https://github.com/Quigles1337/COINjecture3.0/pull/21) |
-> | Current stop | The 2026-11-22 ruling fixes CJ3 Encoding v1, the SIS claim language, a provisional validation budget and the size limits, and rejects the proposed SIS tuple. P-007 is built to it in the HUMAN lane and stops at PR #21 for Al's review; the builder does not merge it. Al rules G0-F after that merge, and P-101 stays blocked on Gate G0 | [2026-11-22 ruling](loop/LEDGER.md#gate-g0-ruling-overlay--g0-b-to-g0-e-ruled--g0-f-held-al-2026-11-22), [P-007 resume ruling](loop/LEDGER.md#p-007-resume-ruling-overlay--pr-20-confirmed--report-c9-points-ruled--p-007-resumed-al-2026-11-22), [P-007 report](loop/reports/C10-p007-builder.md), [loop state](loop/STATE.md) |
-> | Implemented surfaces | D6 CI and source policy; trait-gated beacon boundary; sampled-SIS derivation/checking and external demonstrator; CJ3 Encoding v1 in `cj3-types` (grammar, domain tags, preimages, the single `addr()`, transaction, header and block layouts, the §1.3 Ed25519 verification) with the SIS solution encoding in `cj3-classes`; worked vectors derived twice; six live fuzz targets; checked `Amount(u64)`; admission and difficulty benches; HUMAN-ratified Lean V1–V9/STF; symbolic non-normative vectors; source-verified audit matrix v0.2 | [workflow](.github/workflows/ci.yml), [`cj3-types`](crates/cj3-types/src/lib.rs), [vectors](bench/p007-vectors/README.md), [fuzz properties](fuzz/src/lib.rs), [formal project](spec/README.md), [P-006 bench](bench/p006-difficulty/README.md), [audit matrix](docs/AUDIT_TRACEABILITY.md) |
-> | Planned or absent | A ratified SIS tuple, block cadence, timestamp unit and drift bound; how `tx_root` and the state commitment are built; the genesis layout; kernel, storage, consensus, networking, RPC, node behavior; production VDF; a nightly long fuzz run; testnet | [open-TBD index](docs/PROTOCOL_SPEC.md#15-open-tbd-index), [explicit phase deferrals](scripts/ci/check-phase-gate.ps1), [roadmap](docs/ENGINEERING_PLAN.md#4-phase-plan) |
+> | Phase | **Phase 1 — open.** Gate G0 is PASS, with items carried. No Phase 1 packet has started | [Gate G0 ruling of 2026-11-23](loop/LEDGER.md#gate-g0-f-ruling-overlay--gate-g0-pass--pr-21-confirmed--report-c10-points-ruled--phase-1-open-al-2026-11-23), [phase plan](docs/ENGINEERING_PLAN.md#4-phase-plan), [packet queue](loop/PACKETS.md) |
+> | Last phase gate | **G0 — PASS on 2026-11-23**, with items carried to the boundaries where Al rules them. G1–G4 have not passed | [Gate G0 ruling of 2026-11-23](loop/LEDGER.md#gate-g0-f-ruling-overlay--gate-g0-pass--pr-21-confirmed--report-c10-points-ruled--phase-1-open-al-2026-11-23), [gate report](loop/reports/C11-g0f-gate-builder.md), [queue state](loop/PACKETS.md) |
+> | Completed packet evidence | P-001 through P-007, P-009 and P-010 are merged with exact-mainline CI records. P-005's Lean V1–V9/STF is HUMAN-RATIFIED. P-007 is COMPLETE: Al merged PR #21 on 2026-11-23 as `333c6708`, and D6 run 45118879871 on that commit passed all eleven jobs. PR #14, merged on 2026-10-12 as `35811404`, had carried only the checked `Amount` boundary and the stop report | [batch log](loop/reports/BATCH-LOG.md), [gate report, evidence for clause 3.2](loop/reports/C11-g0f-gate-builder.md#32-evidence-for-pass-32), [PR #21](https://github.com/Quigles1337/COINjecture3.0/pull/21), [D6 run 45118879871](https://github.com/Quigles1337/COINjecture3.0/actions/runs/45118879871), [PR #14](https://github.com/Quigles1337/COINjecture3.0/pull/14) |
+> | Current stop | The Gate G0 ruling passes the gate, makes Protocol Spec v0.2 normative except for its unfilled, provisional and carried items, makes three vector files normative conformance vectors and orders four build items. Its record is PR #22, which stops for Al's review; the builder does not merge it. P-101 and packet P-011 are both unblocked, and Al says which runs first in the message that launches it. Neither has started | [Gate G0 ruling of 2026-11-23](loop/LEDGER.md#gate-g0-f-ruling-overlay--gate-g0-pass--pr-21-confirmed--report-c10-points-ruled--phase-1-open-al-2026-11-23), [gate report](loop/reports/C11-g0f-gate-builder.md), [PR #22](https://github.com/Quigles1337/COINjecture3.0/pull/22), [loop state](loop/STATE.md) |
+> | Implemented surfaces | D6 CI and source policy, including the rule that no Rust source outside `cj3-types` names a domain tag; dependency policy over the workspace and, under a policy of its own, over the fuzz workspace; trait-gated beacon boundary; sampled-SIS derivation/checking and external demonstrator; CJ3 Encoding v1 in `cj3-types` (grammar, domain tags, preimages, the single `addr()`, transaction, header and block layouts, the §1.3 Ed25519 verification on one arithmetic back end) with the SIS solution encoding in `cj3-classes`; three normative conformance-vector files, each derived twice; six fuzz targets, run as a D6 smoke job and as a nightly long job; checked `Amount(u64)`; admission and difficulty benches; HUMAN-ratified Lean V1–V9/STF with symbolic non-normative vectors; source-verified audit matrix v0.2 | [workflow](.github/workflows/ci.yml), [nightly workflow](.github/workflows/nightly.yml), [`cj3-types`](crates/cj3-types/src/lib.rs), [vectors](bench/p007-vectors/README.md), [fuzz properties](fuzz/src/lib.rs), [formal project](spec/README.md), [P-006 bench](bench/p006-difficulty/README.md), [audit matrix](docs/AUDIT_TRACEABILITY.md) |
+> | Planned or absent | A ratified SIS tuple, block cadence, timestamp unit and drift bound; how `tx_root` and the state commitment are built; the genesis layout; kernel, storage, consensus, networking, RPC, node behavior; production VDF; testnet | [open-TBD index](docs/PROTOCOL_SPEC.md#15-open-tbd-index), [explicit phase deferrals](scripts/ci/check-phase-gate.ps1), [roadmap](docs/ENGINEERING_PLAN.md#4-phase-plan) |
 
 ## Contents
 
@@ -153,15 +153,18 @@ A reader can audit a claim through five layers:
 2. **Deferral inspection.** A green phase job is not automatically proof that its
    future test ran: absent handlers emit `NOT_YET_ADMITTED` with an owner through
    [`check-phase-gate.ps1`](scripts/ci/check-phase-gate.ps1). Conservation and the
-   genesis spend test are currently in that explicit deferral state, and so is the
-   nightly long fuzz run. Two gates are live. Lean conformance: its
+   genesis spend test are currently in that explicit deferral state. Three gates are
+   live. Lean conformance: its
    [active handler](scripts/ci/active/lean-conformance.ps1) builds the ratified Lean
    project and regenerates the symbolic vectors, and it still reports the Rust kernel
    conformance test as `NOT_YET_ADMITTED`
    ([P-005 merge](https://github.com/Quigles1337/COINjecture3.0/pull/9)). Codec fuzz
    smoke: its [active handler](scripts/ci/active/codec-fuzz-smoke.ps1) runs the six
    cargo-fuzz targets under [`fuzz/`](fuzz/src/lib.rs) for a fixed number of runs from
-   a fixed seed. That is a bounded smoke run, not evidence that no defect exists.
+   a fixed seed. That is a bounded smoke run, not evidence that no defect exists. The
+   nightly long run: its [active handler](scripts/ci/active/full-fuzz-corpus.ps1) runs
+   the same six targets, on the same pinned nightly toolchain, for a fixed time each in
+   the D6 Nightly workflow. A long run that finds nothing is not that evidence either.
 3. **Packet evidence.** P-003 preserves the pinned estimator model, environment,
    solver observations, and checker observations under
    [`bench/p003-sis/`](bench/p003-sis/README.md); the packet report labels P-3/P-4 as
@@ -174,8 +177,10 @@ A reader can audit a claim through five layers:
 5. **Double derivation.** Every layout, preimage, expansion vector and Ed25519 verdict
    of CJ3 Encoding v1 is derived by a script that uses only the Python standard
    library and again by the Rust code, and D6 runs both. The two share no code and no
-   library; they do share an author. The worked vectors claim no status: that is part
-   of Al's review of P-007 ([vectors guide](bench/p007-vectors/README.md),
+   library; they do share an author. Three of the vector files are NORMATIVE conformance
+   vectors by Al's ruling of 2026-11-23. What is normative is the relation: these inputs
+   give these bytes and these verdicts, and every implementation reproduces them. The
+   input values assign nothing ([vectors guide](bench/p007-vectors/README.md),
    [P-007 report](loop/reports/C10-p007-builder.md)).
 
 When checking any result, use the exact SHA and CI URL from the packet report rather
@@ -189,12 +194,12 @@ than assuming the current branch reproduces an earlier observation
 | `crates/` | Rust workspace: `cj3-types` (CJ3 Encoding v1), `cj3-classes` (SIS derivation, checker and solution encoding), the beacon trait and the external solver; the other crates are empty boundaries | [crate sources](crates/), [workspace manifest](Cargo.toml) |
 | `bench/p003-sis/` | Reproducible estimator, solver, and verifier records for provisional SIS candidates | [bench guide](bench/p003-sis/README.md) |
 | `bench/p004-admission/` | Bounded admission controller and read-only legacy calibration evidence | [bench guide](bench/p004-admission/README.md) |
-| `bench/p007-vectors/` | Standard-library derivation of the Encoding v1 vectors; the pinned C2SP CCTV ed25519 vectors with their licence | [vectors guide](bench/p007-vectors/README.md) |
-| `fuzz/` | cargo-fuzz harness for the Encoding v1 codecs: its own workspace, linked into no `cj3-*` crate and outside the graph `cargo deny` checks | [properties](fuzz/src/lib.rs), [gate handler](scripts/ci/active/codec-fuzz-smoke.ps1) |
+| `bench/p007-vectors/` | Standard-library derivation of the Encoding v1 vectors, three of whose files are normative conformance vectors; the pinned C2SP CCTV ed25519 vectors with their licence | [vectors guide](bench/p007-vectors/README.md) |
+| `fuzz/` | cargo-fuzz harness for the Encoding v1 codecs: its own workspace, linked into no `cj3-*` crate, and checked by `cargo deny` under a policy of its own, which is the root policy plus one licence term for `libfuzzer-sys` alone | [properties](fuzz/src/lib.rs), [shared gate script](scripts/ci/codec-fuzz-common.ps1), [fuzz policy](fuzz/deny.toml) |
 | `spec/` | HUMAN-lane Lean 4 project: the HUMAN-RATIFIED V1–V9/STF encoding, with conservation proved under `LawfulStateOps`, and 27 symbolic, non-normative vectors | [formal project](spec/README.md), [vector artifact](spec/vectors/p005-draft.json) |
-| `docs/` | Governing plan, draft protocol, audit traceability, and research caveats | [Engineering Plan](docs/ENGINEERING_PLAN.md), [Protocol Spec](docs/PROTOCOL_SPEC.md), [audit matrix](docs/AUDIT_TRACEABILITY.md), [research survey](docs/RESEARCH_SURVEY.md) |
+| `docs/` | Governing plan, Protocol Specification v0.2 (normative, except for its unfilled, provisional and carried items), audit traceability, and research caveats | [Engineering Plan](docs/ENGINEERING_PLAN.md), [Protocol Spec](docs/PROTOCOL_SPEC.md), [audit matrix](docs/AUDIT_TRACEABILITY.md), [research survey](docs/RESEARCH_SURVEY.md) |
 | `loop/` | Decisions, queue, state, prompts, reports, and durable audit-source custody | [ledger](loop/LEDGER.md), [queue](loop/PACKETS.md), [reports](loop/reports/) |
-| `scripts/ci/` | Source policy, zero-unsafe enforcement, and fail-explicit phase dispatch | [source policy](scripts/ci/check-source-policy.ps1), [phase dispatcher](scripts/ci/check-phase-gate.ps1) |
+| `scripts/ci/` | Source policy, zero-unsafe enforcement, the arithmetic back-end check, the fuzz policy check, the fuzz gates, and fail-explicit phase dispatch | [source policy](scripts/ci/check-source-policy.ps1), [back-end check](scripts/ci/check-arithmetic-backend.ps1), [phase dispatcher](scripts/ci/check-phase-gate.ps1) |
 | `.github/` | D6/nightly workflows, PR evidence template, and the documented branch-protection contract | [D6 workflow](.github/workflows/ci.yml), [branch-protection contract](.github/BRANCH_PROTECTION.md) |
 
 ## Quickstart
@@ -241,6 +246,12 @@ its immutable run rather than treating an unpinned local installation as equival
   ([ruling clauses B3 and B4](loop/LEDGER.md#gate-g0-ruling-overlay--g0-b-to-g0-e-ruled--g0-f-held-al-2026-11-22),
   [estimator results](bench/p003-sis/estimator-results.jsonl),
   [solver results](bench/p003-sis/solver-results.jsonl)).
+- **D1 stands on a condition.** SIS remains the genesis anchor class. No tuple is
+  ratified, and it is not yet measured whether the family has a size that miners can
+  solve at a cost worth calling useful work. Packet P-011 measures that. If it finds no
+  such size, D1 returns to Al
+  ([Gate G0 ruling of 2026-11-23, clause 3.3](loop/LEDGER.md#gate-g0-f-ruling-overlay--gate-g0-pass--pr-21-confirmed--report-c10-points-ruled--phase-1-open-al-2026-11-23),
+  [packet P-011](loop/PACKETS.md#p-011--sis-solver-envelope)).
 - The selected production beacon construction has no admitted implementation or
   security/timing parameter set; the present iterated-hash implementation is explicitly
   devnet-only and compile-rejected for testnet-tagged builds
@@ -304,7 +315,7 @@ Material unfilled values remain visible:
 | P-10 — timestamp drift, and the timestamp unit | **UNFILLED** — Al rules both together with P-1 | [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
 | P-9 — minimum fee | **TBD** — owner: Al | [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
 | P-12 — subsidy schedule | Placeholder only; owner: Al + Ken | [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
-| Codec/domain bytes, strict Ed25519, SIS coefficient encoding, and SHAKE candidate convention | **RULED 2026-11-22; implemented in PR #21, awaiting Al's review** — the Rust codecs, the worked vectors and the live fuzz targets that P-007 owed. The worked vectors claim no status until that review. PR #14, merged 2026-10-12, carried only the checked `Amount` boundary | [Spec §1](docs/PROTOCOL_SPEC.md#1-notation-and-cryptographic-primitives), [P-007 report](loop/reports/C10-p007-builder.md), [vectors guide](bench/p007-vectors/README.md), [SI-002/SI-003](loop/reports/SPEC-ISSUES.md) |
+| Codec/domain bytes, strict Ed25519, SIS coefficient encoding, and SHAKE candidate convention | **RULED 2026-11-22; implemented and merged in PR #21 (`333c6708`)** — the Rust codecs, the vectors and the fuzz targets that P-007 owed. Three vector files are NORMATIVE conformance vectors by the ruling of 2026-11-23. PR #14, merged 2026-10-12, carried only the checked `Amount` boundary | [Spec §1](docs/PROTOCOL_SPEC.md#1-notation-and-cryptographic-primitives), [P-007 report](loop/reports/C10-p007-builder.md), [vectors guide](bench/p007-vectors/README.md), [SI-002/SI-003](loop/reports/SPEC-ISSUES.md) |
 | Audit matrix v0.2 reconciliation | **COMPLETE** — 33 security findings, 25 Lean claims, R1–R8; GAP-7–13 were ratified on 2026-11-22 as requirements for later packets and none is implemented | [audit matrix](docs/AUDIT_TRACEABILITY.md), [P-009 report](loop/reports/C7-p009-builder.md) |
 
 ## Roadmap
@@ -314,8 +325,8 @@ The phase gates are evidence thresholds, not calendar or deployment promises
 
 | Gate | Planned phase outcome | Current position |
 |---|---|---|
-| **G0 — Foundations and spikes** | P-001–P-007 reports complete; D1/D2/D14/D15 and open interpretation issues resolved with spike evidence | **▶ CURRENT — HOLD; G0-A through G0-E are ruled; P-007 is built and awaits Al's review in PR #21; G0-F is held until P-007 is merged with exact-merge-SHA D6 green** ([2026-11-22 ruling](loop/LEDGER.md#gate-g0-ruling-overlay--g0-b-to-g0-e-ruled--g0-f-held-al-2026-11-22), [G0 handoff](loop/reports/C7-phase0-g0-handoff.md)) |
-| **G1 — Kernel** | Lean-vector conformance, conservation properties, mutation spot-check, genesis spend, and crash consistency | Planned after G0 ([Plan G1](docs/ENGINEERING_PLAN.md#4-phase-plan)) |
+| **G0 — Foundations and spikes** | P-001–P-007 reports complete; D1/D2/D14/D15 and open interpretation issues resolved with spike evidence | **PASSED on 2026-11-23, with items carried.** D1 stands on a condition, and packet P-011 measures what that condition asks ([Gate G0 ruling of 2026-11-23](loop/LEDGER.md#gate-g0-f-ruling-overlay--gate-g0-pass--pr-21-confirmed--report-c10-points-ruled--phase-1-open-al-2026-11-23), [gate report](loop/reports/C11-g0f-gate-builder.md)) |
+| **G1 — Kernel** | Lean-vector conformance, conservation properties, mutation spot-check, genesis spend, and crash consistency | **▶ CURRENT — Phase 1 is open; P-101 is unblocked and has not started** ([Plan G1](docs/ENGINEERING_PLAN.md#4-phase-plan), [packet queue](loop/PACKETS.md)) |
 | **G2 — Consensus** | Deterministic two-node replay and typed rejection of the adversarial block corpus | Planned after G1 ([Plan G2](docs/ENGINEERING_PLAN.md#4-phase-plan)) |
 | **G3 — Network and RPC** | Three-node devnet adversarial replay and complete fail-closed auth matrix | Planned after G2 ([Plan G3](docs/ENGINEERING_PLAN.md#4-phase-plan)) |
 | **G4 — Testnet and integration seam** | Testnet operations, external solver fleet, adversarial replay, and stable frontend read/event surface | Planned after G3 ([Plan G4](docs/ENGINEERING_PLAN.md#4-phase-plan)) |

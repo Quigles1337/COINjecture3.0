@@ -2,8 +2,9 @@
 
 Python standard library only. Nothing here is imported by, linked into or generated
 from any Rust crate; it exists so that every layout, preimage, expansion and signature
-verdict of Protocol Spec v0.2-DRAFT sections 1.1 to 1.3, 5.2, 6.1, 6.3 and 7 is derived
-twice. D8 permits Python only under bench/, never in the node.
+verdict of Protocol Spec v0.2 sections 1.1 to 1.3, 5.2, 6.1, 6.3 and 7 is derived twice
+(v0.2-DRAFT when this was written; the same text became v0.2, normative, on
+2026-11-23). D8 permits Python only under bench/, never in the node.
 
 The functions follow the specification text, not the Rust code.
 """

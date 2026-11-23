@@ -1,7 +1,8 @@
 # P-007 vectors for CJ3 Encoding v1
 
 This directory holds the evidence that ruling clause G0-C8 says P-007 owes for Protocol
-Spec v0.2-DRAFT §1.1–§1.3, §5.2, §6.1, §6.3 and §7. Everything here is derived twice,
+Spec §1.1–§1.3, §5.2, §6.1, §6.3 and §7 (v0.2-DRAFT when P-007 was built; the same text
+is v0.2, normative, since 2026-11-23). Everything here is derived twice,
 independently: by a script that uses only the Python standard library, and by the Rust
 code. D8 permits Python only under `bench/`; nothing here is part of the node.
 

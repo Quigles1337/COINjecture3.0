@@ -45,6 +45,7 @@ The non-normative vector source labels every `input_bytes` value as a noncanonic
 interface. It does not define transaction wire bytes, populate a protocol TBD, or
 instantiate a subsidy, fee, network, `R_MAX`, or μ-balance value.
 
-After P-005's reviewed merge, P-101 remains blocked on Gate G0 only. Its concrete
+After P-005's reviewed merge, P-101 was blocked on Gate G0 only. Gate G0 passed on
+2026-11-23, so P-101 is unblocked; it has not started. Its concrete
 kernel/store implementation must still discharge every binding conformance obligation
 recorded in Protocol Spec §§8 and 11 and `loop/LEDGER.md`.

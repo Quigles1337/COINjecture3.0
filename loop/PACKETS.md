@@ -1,27 +1,33 @@
 # COINjecture 3.0 Packet Queue
 
-**Queue status:** GATE G0 HOLD — P-007 BUILT, AWAITING AL'S REVIEW IN PR #21 (HUMAN).
-Al's ruling "LIVE CJ3 RULING - P-007 RESUME", recorded verbatim in `loop/LEDGER.md`,
-resumed it; its clauses are cited below as "resume 2.2" and so on. G0-A is RATIFIED:
+**Queue status:** GATE G0 PASS — PHASE 1 OPEN. P-007 IS COMPLETE. P-101 AND PACKET
+P-011 ARE BOTH UNBLOCKED; NEITHER HAS STARTED, AND AL SAYS WHICH RUNS FIRST.
+Al's ruling "LIVE CJ3 RULING - GATE G0-F" of 2026-11-23, recorded verbatim in
+`loop/LEDGER.md`, passes the gate with items carried; its clauses are cited below as
+"pass 3.5" and so on. Its record is PR #22, which Al reviews and merges; the builder
+does not. Al's ruling "LIVE CJ3 RULING - P-007 RESUME", also recorded verbatim, resumed
+P-007; its clauses are cited below as "resume 2.2" and so on. G0-A is RATIFIED:
 `size_param` is a static human-upgraded protocol constant, P-11 is struck as moot, P-1
 remains unfilled with no proposal, and P-2 is provisionally ratified as `W=32`, gain
 `1/8`, clamp `[8/9,9/8]`, subject to re-derivation when P-1 is ratified. Al's ruling of
-2026-11-22, recorded verbatim in `loop/LEDGER.md`, rules G0-B, G0-C, G0-D and G0-E and
-holds G0-F. PR #14 was merged by Al on 2026-10-12 as
+2026-11-22, recorded verbatim in `loop/LEDGER.md`, ruled G0-B, G0-C, G0-D and G0-E and
+held G0-F. PR #14 was merged by Al on 2026-10-12 as
 `358114048c3a38f4821b88fce8dffd14abbd42a1`; it carried only the checked `Amount`
-boundary and the P-007 stop report, so P-007 remains INCOMPLETE until Al merges PR #21.
-PR #20, the ruling's record, was merged by Al as
-`f601224db855e6cc69e840fb169d85df22c547b8`. P-008 remains blocked
-on the exact frontend URL. P-101 is blocked on Gate G0 only. No held or owner-controlled
-value was inferred.
+boundary and the P-007 stop report. PR #20, the 2026-11-22 ruling's record, was merged
+by Al as `f601224db855e6cc69e840fb169d85df22c547b8`. PR #21, the rest of P-007, was
+merged by Al on 2026-11-23 as `333c67086012d03f3c654cba20526e5c0f5e6b4d`, and P-007 is
+COMPLETE (pass 1.1). P-008 remains blocked on the exact frontend URL. No held or
+owner-controlled value was inferred.
 
-**Order of work (ruling F2):** the ruling's record (done: PR #20, merged); then P-007,
-resumed on a new branch in the HUMAN lane and not merged by the builder (built: PR #21,
-awaiting Al); then Al's G0-F ruling; then P-101 and packet P-011, in the order Al
-approves.
+**Order of work.** Ruling F2 of 2026-11-22 is carried out as far as the gate: the
+ruling's record (PR #20, merged); P-007 (PR #21, merged); Al's G0-F ruling (given:
+PASS). What remains of it is P-101 and packet P-011. Both are unblocked, and Al says
+which runs first in the message that launches it (pass 3.6). The builder starts neither
+before that message.
 
-Clauses of the 2026-11-22 ruling are cited below as `G0-` plus their label. Packet
-P-011 is not parameter P-11 (`SIZE_RETARGET_WINDOW`, struck).
+Clauses of the 2026-11-22 ruling are cited below as `G0-` plus their label, so `G0-F3`
+is clause F3 of that ruling and "pass 3.5" is a clause of the ruling of 2026-11-23.
+Packet P-011 is not parameter P-11 (`SIZE_RETARGET_WINDOW`, struck).
 
 | Packet | Phase | Queue status | Blocking condition |
 |--------|-------|--------------|--------------------|
@@ -31,12 +37,12 @@ P-011 is not parameter P-11 (`SIZE_RETARGET_WINDOW`, struck).
 | P-004 | Phase 0 | COMPLETE — `4644374f` | PR #7 and exact-merge-SHA D6 CI green |
 | P-005 | Phase 0 | COMPLETE — HUMAN-RATIFIED — `916e5027` | PR #9 and exact-merge-SHA D6 green |
 | P-006 | Phase 0 | COMPLETE — `7244f094`; G0-A applied | PR #16 exact-merge D6 green; static `size_param` ratified, P-11 moot, P-1 unfilled, P-2 provisional |
-| P-007 | Phase 0 | HUMAN — BUILT, READY FOR AL'S REVIEW in PR #21 (`feat/p007-encoding-v1`); PR #14 merged as `35811404` (checked amounts and stop report only) | Al's review and merge of PR #21. The builder does not merge it. The review covers the code, the two proposed dependencies, the status of the worked vectors and the points of report C10 §4.2 |
+| P-007 | Phase 0 | COMPLETE — HUMAN — `333c6708` (PR #21); PR #14 merged earlier as `35811404` (checked amounts and stop report only) | PR #21 exact-head D6 run `45114968343` and exact-merge-SHA D6 run `45118879871` green; Al reviewed and merged it, and ruled the points of report C10 §4.2 (pass Part 2) |
 | P-008 | Phase 0 / Phase 4 seam input | BLOCKED | Exact public frontend repository URL supplied by Al; URL MUST NOT be guessed |
 | P-009 | Phase 0 / audit traceability | COMPLETE — `ce0b9752` | PR #15 and exact-merge-SHA D6 green; GAP-7–13 were proposals at merge and were ruled on 2026-11-22 (G0-E) |
 | P-010 | Phase 0 / documentation | COMPLETE — `1e986cb2` | Feature PR #10 and closeout PR #11; both exact-merge-SHA D6 runs green |
-| P-011 | Phase 0 / SIS solver envelope | QUEUED after P-007 — commissioned by G0-B4 | Pickup follows Al's G0-F ruling, in the order Al approves (F2). Blocks Phase 2; does not block P-007 or P-101 |
-| P-101 | Phase 1 head | BLOCKED | Gate G0 only (G0-F is held); then the order Al approves (F2) |
+| P-011 | Phase 0 / SIS solver envelope | UNBLOCKED (pass 3.6) — not started; commissioned by G0-B4 | Al says which of P-101 and packet P-011 runs first in the message that launches it. Blocks Phase 2; does not block P-101. D1 stands on what it finds (pass 3.3) |
+| P-101 | Phase 1 head | UNBLOCKED by Gate G0 PASS (pass 3.1, 3.6) — not started | Al says which of P-101 and packet P-011 runs first in the message that launches it. Its FRAME proposes how `tx_root` and the state commitment are built and stops there for Al's ruling (pass 3.5) |
 
 ## Seed packet definitions
 
@@ -107,7 +113,13 @@ re-derived when P-1 is ratified. It is not yet implemented.
 Canonical encodings, domain tags, the single `addr()`, amount newtypes, codec fuzz
 targets wired into CI.
 
-**Outcome so far:** INCOMPLETE. PR #14's exact head
+**Outcome:** COMPLETE (pass 1.1). Al reviewed and merged PR #21 at
+`2026-11-23T05:36:52Z` as `333c67086012d03f3c654cba20526e5c0f5e6b4d`. Its exact head
+`92f9be92265c83c5f0b3e27acd3311027d910c56` passed all eleven D6 jobs in run
+`45114968343`, and exact-merge-SHA run `45118879871` passed all eleven. The history of
+the packet follows as it was recorded.
+
+**The first part, PR #14.** PR #14's exact head
 `9acea83ca17d67a19e0d41aeb5e7275666a54013` passed all eleven jobs in run
 `31969740766`. Al merged it on 2026-10-12 as
 `358114048c3a38f4821b88fce8dffd14abbd42a1`, and D6 run `38323998550` on that commit
@@ -121,11 +133,12 @@ fuzz-success claim; the resumed build below makes it live.
 preimages (G0-C2); the layouts (G0-C3); the SI-002 signed-coefficient representation
 and guard (G0-C3e, G0-C4); the SI-003 SHAKE consumption (G0-C5); the P-8 byte limits
 (G0-C6); and GAP-12 strict Ed25519 behavior (G0-C7). The applied text is Protocol Spec
-v0.2-DRAFT §1.1–§1.3, §5.2, §6.1, §6.3 and §7.
+§1.1–§1.3, §5.2, §6.1, §6.3 and §7, v0.2-DRAFT when P-007 was built and v0.2, normative,
+since the ruling of 2026-11-23 (pass 3.4).
 
 **Resume (ruling F2):** on a new branch, in the HUMAN lane, not merged by the builder.
-Al rules G0-F after P-007 is merged with exact-merge-SHA D6 green (F1). P-007 carries
-`tx_root` and `state_root` as 32 opaque bytes (F3).
+Al was to rule G0-F after P-007 was merged with exact-merge-SHA D6 green (F1), and has.
+P-007 carries `tx_root` and `state_root` as 32 opaque bytes (F3).
 
 **Resumed build (2026-11-22):** PR #21 from `feat/p007-encoding-v1`, under the P-007
 resume ruling. The builder report is `loop/reports/C10-p007-builder.md`.
@@ -142,11 +155,34 @@ resume ruling. The builder report is `loop/reports/C10-p007-builder.md`.
   codecs take the tuple as an argument and the stand-in tuples are `(8, 112, 67, 112)`
   and `(16, 288, 257, 288)`, both measured in `bench/p003-sis` and labeled
   non-normative.
-- For Al at review: the two proposed dependencies (`sha2 =0.10.9`,
-  `curve25519-dalek =4.1.3`); the fuzz harness's `libfuzzer-sys`, whose licence includes
-  NCSA and which sits outside the workspace; the status of the worked vectors (resume
-  2.7); and the points of report C10 §4.2.
-- P-007 is complete only when Al merges PR #21 with exact-merge-SHA D6 green.
+- What was left for Al at review, and how he ruled it (pass Part 2):
+  - `sha2 =0.10.9` and `curve25519-dalek =4.1.3` are accepted as pinned, the second on
+    the condition of pass 4.5c: one arithmetic back end. Arithmetic written in
+    `cj3-types` is refused (pass 2.1).
+  - `libfuzzer-sys` is accepted for the fuzz crate alone, as test tooling outside the
+    graph the node is built from, on the condition of pass 4.5b: `cargo deny` over the
+    fuzz workspace with a policy of its own (pass 2.2).
+  - The nightly long fuzz job may use the same pinned nightly toolchain and the same
+    targets, and is made live (pass 2.3, 4.5a).
+  - Three files are NORMATIVE conformance vectors from the merge of PR #21:
+    `bench/p007-vectors/encoding-v1.vectors.txt`,
+    `bench/p007-vectors/shake-expansion.vectors.txt` and
+    `bench/p007-vectors/ed25519/c7-expected.vectors.txt`, the thirteen builder-authored
+    vectors included. What is normative is the relation: these inputs give these bytes
+    and these verdicts, and every implementation reproduces them. The input values
+    assign nothing. If the text of the specification and a vector ever disagree, that
+    is a STOP and a ruling; neither wins by default. The P-005 vectors stay symbolic
+    and non-normative (pass 2.4).
+  - The block codec's use of the active tuple for `SOL_MAX_BYTES` alone stands, and B3
+    is a block rule that a successful decode never implies (pass 2.5). The order of
+    checks of report C10 §1.5 stands (pass 2.6). The layout tests over arbitrary bytes
+    stay (pass 2.7). The edits no clause named stand (pass 2.8). The `cj3-classes` API
+    is accepted (pass 2.10), and so are the three ways of showing the `BLOCK_MAX_BYTES`
+    boundary (pass 2.11).
+  - The two stale statements report C10 left are corrected in the text-only commit of
+    the Gate G0 closeout (pass 2.9, 4.4).
+- The conditions of pass 4.5 are built in the Gate G0 closeout, PR #22, each in a commit
+  of its own. `loop/reports/C11-g0f-gate-builder.md` is its report.
 
 **Evidence P-007 owes for Part 2 (G0-C8, quoted from the ruling):**
 
@@ -222,9 +258,17 @@ standing rule in `loop/LEDGER.md`.
 ### P-011 — SIS solver envelope
 
 Commissioned by G0-B4 as the cadence link, under the next free packet identifier.
-Queued after P-007. Lane AUTO if the five D17 conditions hold at pickup. It measures
-and reports. It proposes no value for P-1, P-4, P-10 or `ACTIVE_SIZE_PARAM`. Its terms,
-quoted from the ruling:
+Unblocked by pass 3.6 and not started: Al says which of P-101 and packet P-011 runs
+first in the message that launches it. Lane AUTO if the five D17 conditions hold at
+pickup. It measures and reports. It proposes no value for P-1, P-4, P-10 or
+`ACTIVE_SIZE_PARAM`.
+
+**D1 stands on what this packet finds (pass 3.3).** SIS remains the genesis anchor
+class. No tuple is ratified, and it is not yet measured whether the family has a size
+that miners can solve at a cost worth calling useful work. This packet measures that. If
+it finds no such size, D1 returns to Al.
+
+Its terms, quoted from the 2026-11-22 ruling:
 
 > a. For family points from n = 16 upward, in steps the report justifies, until two
 > consecutive points fail: instances come from derive_instance on distinct recorded
@@ -255,11 +299,14 @@ The family is the candidate family of G0-B3c: `q(n)` = first prime above `n^2`,
 The packet also carries the P-3 measurement of G0-B2d: reference host v0 is the machine
 in `bench/p003-sis/ENVIRONMENT.md`, and the `derive_instance` plus `check` measurement
 is repeated with derivation included, on that host and on one other class of machine.
-Al re-rules the budget and the hardware definition from that.
+Al re-rules the budget and the hardware definition from that. Pass 3.5 lists it among
+what the report carries, as "the re-measured P-3".
 
 ### P-101 — Kernel
 
-Phase 1 head, blocked on G0 only: V1–V9 + STF versus Lean vectors. Its concrete
+Phase 1 head, unblocked by Gate G0 PASS (pass 3.1, 3.6) and not started: Al says which
+of P-101 and packet P-011 runs first in the message that launches it. V1–V9 + STF
+versus Lean vectors. Its concrete
 authenticated store MUST discharge all three
 `LawfulStateOps` laws from Protocol Spec §8 and prove that the kernel's actual storage
 reads and writes are coherent with them. Its `Context.rewardInputs` wiring MUST
@@ -268,25 +315,35 @@ consume only the Q returned by
 and MUST expose no block-supplied quality path; this is the binding C2 structural
 boundary and is re-checked at Gate G2. The concrete `R_MAX·SCALE` divisor MUST be
 constructed with checked u128 multiplication, proved nonzero before floor division,
-and the result checked back to u64. At the P-101 FRAME, Al rules how `tx_root` and the
-state commitment are built (ruling F3).
+and the result checked back to u64. P-101 proposes how `tx_root` and the state
+commitment are built in its FRAME and stops there for Al's ruling (pass 3.5).
 
-## Carried to later packets and gates (ruling Part 4 and F3)
+The P-005 vectors stay symbolic and non-normative (pass 2.4).
 
-- From the packet P-011 report, ruled together by Al: P-1, P-4, P-10,
-  `ACTIVE_SIZE_PARAM`, the re-derived P-2, the re-ruled `BLOCK_MAX_BYTES` and the
-  timestamp unit. They block Phase 2.
-- At the P-101 FRAME: how `tx_root` and the state commitment are built.
-- At the first Phase 2 FRAME: the byte order in which a 32-byte value is read as a
-  number (B8, and the weight formula and tie-break of Protocol Spec §10). G0-C1a does
-  not decide it.
-- With the Phase 1 genesis packet: the genesis layout and its preimage.
+## Carried to later packets and gates (pass 3.5; G0 ruling Part 4)
+
+Gate G0 is PASS with these carried, each to the boundary where Al rules it. Protocol
+Spec v0.2 is normative except for every value marked UNFILLED or PROVISIONAL and every
+item of pass 3.5, and no implementation may assume a value for one (pass 3.4).
+
+- From packet P-011's report (pass 3.5): P-1, P-4, P-10, `ACTIVE_SIZE_PARAM`, the
+  re-derived P-2, the re-measured P-3, the re-ruled `BLOCK_MAX_BYTES` and the timestamp
+  unit. They block Phase 2.
+- How `tx_root` and the state commitment are built (pass 3.5): P-101 proposes both in
+  its FRAME and stops there for Al's ruling.
+- At the first Phase 2 FRAME (pass 3.5): the byte order in which a 32-byte value is
+  read as a number (B8, and the weight formula and tie-break of Protocol Spec §10).
+  G0-C1a does not decide it.
+- With the Phase 1 genesis packet (pass 3.5): the genesis layout and its preimage.
 - On the packet that introduces the mempool: GAP-9, tested at Gate G3 (G0-E3).
 - On Phase 3: GAP-7, GAP-8, GAP-10, GAP-11 and GAP-13, each tested at Gate G3 (G0-E2).
   For these and for GAP-9, the builder proposes each operating default with its
   reasoning in the packet report, and Al reviews them at G3 (G0-E4).
-- With their owners: P-7, P-9 and P-12 (ruling Part 0.2).
-- P-008: still blocked on the URL.
+- With their owners (pass 3.5): P-7, P-9 and P-12. In the ruling's words, "D10 and D16
+  are still not ruled"; every value and seat they reserve stays reserved and UNFILLED,
+  and every prohibition on contacting or notifying anyone stays in force (Part 0.2 of
+  the 2026-11-22 ruling).
+- P-008 (pass 3.2, 3.5): blocked on the URL, and carried.
 
 ## Pickup guard
 
