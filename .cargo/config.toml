@@ -1,0 +1,19 @@
+# One arithmetic back end (Gate G0-F ruling, clause 4.5c).
+#
+# Every build of cj3-types in this repository uses curve25519-dalek's serial back end.
+# The library chooses its back end from the configuration value set below. Without it,
+# on x86_64, it chooses a back end that picks vector code by the processor's features at
+# run time. The value is pinned so that every node runs the same arithmetic whatever its
+# processor. That is not a claim that no unsafe code remains on the path.
+#
+# cargo reads this file for every build started inside the repository. A RUSTFLAGS
+# environment variable replaces these flags; it does not add to them. A build that sets
+# RUSTFLAGS must therefore repeat the flag, as the fuzz gates do, because cargo-fuzz
+# sets RUSTFLAGS (scripts/ci/codec-fuzz-common.ps1).
+#
+# cj3-types refuses to compile unless the value is exactly `serial`
+# (crates/cj3-types/build.rs and crates/cj3-types/src/lib.rs). A build that loses the
+# flag fails. It never falls back to another back end silently.
+[build]
+rustflags = ["--cfg", "curve25519_dalek_backend=\"serial\""]
+rustdocflags = ["--cfg", "curve25519_dalek_backend=\"serial\""]

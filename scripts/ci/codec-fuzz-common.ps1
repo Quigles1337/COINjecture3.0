@@ -25,6 +25,10 @@ $script:CodecFuzzTargets = @(
 # The driver version the workflow jobs install. A different one fails either gate.
 $script:RequiredCargoFuzz = 'cargo-fuzz 0.13.2'
 
+# The arithmetic back end every build of cj3-types uses (Gate G0-F ruling, clause 4.5c).
+# The same flag as in .cargo/config.toml.
+$script:SerialBackendFlags = '--cfg curve25519_dalek_backend="serial"'
+
 function Invoke-CodecFuzzGate {
     <#
     .SYNOPSIS
@@ -125,6 +129,17 @@ function Invoke-CodecFuzzGate {
             throw "Fuzz target list mismatch. Under fuzz/: $($listed -join ', '). In the shared list: $($shared -join ', ')."
         }
 
+        # One arithmetic back end (Gate G0-F ruling, clause 4.5c). cargo-fuzz sets
+        # RUSTFLAGS for its own flags, and a RUSTFLAGS variable replaces the flags of
+        # .cargo/config.toml. cargo-fuzz appends the caller's RUSTFLAGS to its own, so
+        # the setting is passed here. Without it cj3-types refuses to compile, so a fuzz
+        # build that loses the setting fails; it does not fuzz another back end.
+        if (Test-Path -LiteralPath Env:RUSTFLAGS) {
+            throw 'RUSTFLAGS is set in this environment. The fuzz gates set it themselves.'
+        }
+        $env:RUSTFLAGS = $script:SerialBackendFlags
+        Write-Output "FUZZ_RUSTFLAGS=$($env:RUSTFLAGS)"
+
         $total = 0
         foreach ($target in $script:CodecFuzzTargets) {
             $amount = [int] $Budget[$target]
@@ -176,6 +191,7 @@ function Invoke-CodecFuzzGate {
         Write-Output "$SummaryName=PASS TOOLCHAIN=$channel TARGETS=$($script:CodecFuzzTargets.Count) $totalLabel=$total SEED=$Seed"
     }
     finally {
+        Remove-Item -LiteralPath Env:RUSTFLAGS -ErrorAction SilentlyContinue
         Pop-Location
     }
 }

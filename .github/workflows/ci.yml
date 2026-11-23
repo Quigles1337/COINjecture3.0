@@ -134,6 +134,13 @@ jobs:
       # the same files and derive them again with the Rust code.
       - name: Re-derive the P-007 vectors with the standard-library script
         run: python3 -I -B bench/p007-vectors/derive.py --check
+      # One arithmetic back end (Gate G0-F ruling, clause 4.5c). .cargo/config.toml
+      # makes every build in this workflow use curve25519-dalek's serial back end, the
+      # tests below included. This step builds cj3-types that way, then with the setting
+      # absent, wrong and doubled, and requires each of those builds to fail to compile.
+      - name: Prove that cj3-types compiles with the serial back end and no other
+        shell: pwsh
+        run: ./scripts/ci/check-arithmetic-backend.ps1
       - name: Run admitted tests
         run: cargo test --workspace --all-targets --all-features --locked
 

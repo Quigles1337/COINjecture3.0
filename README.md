@@ -251,15 +251,31 @@ its immutable run rather than treating an unpinned local installation as equival
   ruling resolved SI-001/SI-002/SI-003 without changing any Lean file or vector), and
   no Rust kernel conformance claim exists yet
   ([formal boundary](spec/README.md), [P-005 merge](https://github.com/Quigles1337/COINjecture3.0/pull/9)).
-- CJ3 Encoding v1 is implemented and awaits Al's review; it is not yet used by a
-  kernel or a node. `cj3-types` hashes with `sha2` and verifies Ed25519 with arithmetic
-  from `curve25519-dalek`. Both are pure Rust and both contain `unsafe` code: the
-  zero-unsafe gate covers the `cj3-*` crates, not their dependencies, and Al accepts or
-  refuses each dependency at review. No SIS tuple, network identifier, fee floor or
-  timestamp unit is compiled in; the two tuples in the tests and vectors are
-  non-normative stand-ins. The fuzz job is a bounded smoke run on a nightly toolchain
-  pinned by date ([P-007 report](loop/reports/C10-p007-builder.md),
+- CJ3 Encoding v1 is implemented and merged; it is not yet used by a kernel or a node.
+  `cj3-types` hashes with `sha2 =0.10.9` and verifies Ed25519 with arithmetic from
+  `curve25519-dalek =4.1.3`. Al accepted both as pinned on 2026-11-23. No SIS tuple,
+  network identifier, fee floor or timestamp unit is compiled in; the two tuples in the
+  tests and vectors are non-normative stand-ins. The D6 fuzz job is a bounded smoke run
+  and the nightly job fuzzes each target for a fixed time, both on a nightly toolchain
+  pinned by date; neither is evidence that no defect exists
+  ([P-007 report](loop/reports/C10-p007-builder.md),
   [vectors guide](bench/p007-vectors/README.md)).
+- **One arithmetic back end, and what that does not cover.** Every build of `cj3-types`
+  in this repository uses `curve25519-dalek`'s serial back end, and a build that does
+  not fails to compile; D6 proves the refusal on every run. The reason is that every
+  node should run the same curve arithmetic whatever its processor. It is not a claim
+  that no `unsafe` code remains on the path, and three things stay true. First, both
+  dependencies contain `unsafe` code, and the zero-unsafe gate covers the `cj3-*`
+  crates, not their dependencies: under the serial back end the library still compiles
+  one `unsafe` volatile read in its scalar arithmetic, its dependency `subtle` has two
+  `unsafe` blocks, and `sha2` has `unsafe` processor intrinsics. Second, the serial back
+  end is two bodies of code, one for 64-bit targets and one for 32-bit targets, chosen
+  by pointer width; D6 builds and tests only the 64-bit one. Third, the setting covers
+  the curve arithmetic alone: on x86 processors `sha2` still chooses between its
+  portable code and processor extensions when it runs
+  ([cargo configuration](.cargo/config.toml),
+  [the refusal](crates/cj3-types/build.rs),
+  [back-end check](scripts/ci/check-arithmetic-backend.ps1)).
 - P-004 measured fixture behavior but admitted no legacy class; checker speed does not
   establish a hard sampled distribution
   ([P-004 report](loop/reports/C4-p004-builder.md),

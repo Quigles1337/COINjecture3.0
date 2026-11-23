@@ -14,6 +14,23 @@
 
 #![forbid(unsafe_code)]
 
+// One arithmetic back end (Gate G0-F ruling, clause 4.5c). Every build of this crate
+// uses `curve25519-dalek`'s serial back end, and a build that does not fails here. The
+// first test covers a build without cargo. The second is set by `build.rs`, which
+// compares the whole value exactly, because the value can hold several values at once.
+// The reason is that every node should run the same arithmetic whatever its processor.
+// It is not a claim that no unsafe code remains on the path.
+#[cfg(any(
+    not(curve25519_dalek_backend = "serial"),
+    cj3_arithmetic_backend_not_serial
+))]
+compile_error!(
+    "cj3-types must be built with exactly `--cfg curve25519_dalek_backend=\"serial\"` \
+     (Gate G0-F ruling, clause 4.5c). The repository's .cargo/config.toml passes the flag \
+     to every build started inside the repository. A RUSTFLAGS environment variable \
+     replaces that file's flags and must repeat the flag."
+);
+
 pub mod block;
 pub mod class;
 pub mod codec;
