@@ -143,6 +143,14 @@ jobs:
       - name: Prove that cj3-types compiles with the serial back end at 64 bits and no other
         shell: pwsh
         run: ./scripts/ci/check-arithmetic-backend.ps1
+      # The portable hash (ruling "P-101 TO ITS FRAME", clauses 2.3 and 4.3b). cj3-types
+      # enables sha2's force-soft feature, so that its portable code runs on every
+      # processor. This step fails if the feature is missing from what cj3-types asks
+      # for, from what cargo resolved for the workspace or for the fuzz workspace, or
+      # from any sha2 that the build of the tests below compiles.
+      - name: Prove that every sha2 in the build is compiled with its portable code
+        shell: pwsh
+        run: ./scripts/ci/check-sha2-portable.ps1
       - name: Run admitted tests
         run: cargo test --workspace --all-targets --all-features --locked
 
