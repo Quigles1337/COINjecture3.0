@@ -396,14 +396,15 @@ The exact-head run for the final head is recorded on
 [PR #23](https://github.com/Quigles1337/COINjecture3.0/pull/23). This file cannot hold
 the run of the commit that contains it, so it makes no green claim for that head.
 
-One earlier head can be cited:
+Two earlier heads can be cited:
 
 | Commit | Run | Result |
 |---|---|---|
 | `39a080f` (both build items and the README limitation) | D6 [`45179918980`](https://github.com/Quigles1337/COINjecture3.0/actions/runs/45179918980) | **Success**, all eleven jobs, each with five to eleven steps, at its first attempt. |
+| `422029b` (the closing commit: the final code, with `0ab81e9`) | D6 [`45184376452`](https://github.com/Quigles1337/COINjecture3.0/actions/runs/45184376452) | **Success**, all eleven jobs, each with five to eleven steps. Its log has the same summary lines, and the hash check passes with every feature resolved. The two commits after it change this report and P-101's FRAME only. |
 
-Read from its log with `gh run view --log`: the lines of §3.1 and §3.2 exactly as
-above; `P007_VECTORS=PASS files=16`;
+Read from the log of the first with `gh run view --log`: the lines of §3.1 and §3.2
+exactly as above; `P007_VECTORS=PASS files=16`;
 `FUZZ_DENY_POLICY=PASS root_lines=37 fuzz_lines=38 added=1 exception=libfuzzer-sys@0.4.13:NCSA`;
 `DOMAIN_TAG_POLICY=PASS tags=7 read_outside_cj3_types=24 planted_flagged=4 planted_passed=3`;
 `SOURCE_POLICY=PASS files=29 crates=10`; `GEIGER_POLICY=PASS packages=11 unsafe_count=0`;
