@@ -112,6 +112,11 @@ continuous-batch mode. STOP at Gate G0.
   event is organization migration, Sarah invite, and handoff of Sarah-owned TBDs.
 - **D17 — RATIFIED:** autonomous continuous-batch mode is authorized under
   `loop/PROMPTS/AUTONOMOUS_BUILDER.md` and every guard named in the live ruling.
+  - **The five D17 conditions (Al, P-007 resume ruling, clause 2.4).** They are the five
+    that report C1 names: approved and unblocked; bounded non-semantic surface; no
+    formal-spec content; no decision invention; no owned-TBD fill. This is the list
+    that `loop/PROMPTS/AUTONOMOUS_BUILDER.md` means by "all five D17 conditions". Each
+    packet's FRAME still argues them for itself.
 - **D9/D10 — CONFIRMED:** the prior effective rulings remain unchanged.
 
 ### Effective queue and capacity ruling
