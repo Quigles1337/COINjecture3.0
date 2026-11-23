@@ -342,7 +342,10 @@ item of pass 3.5, and no implementation may assume a value for one (pass 3.4).
 - With their owners (pass 3.5): P-7, P-9 and P-12. In the ruling's words, "D10 and D16
   are still not ruled"; every value and seat they reserve stays reserved and UNFILLED,
   and every prohibition on contacting or notifying anyone stays in force (Part 0.2 of
-  the 2026-11-22 ruling).
+  the 2026-11-22 ruling). The meaning of the quoted sentence, as Al gives it in clause
+  2.1 of his ruling "LIVE CJ3 RULING - P-101 TO ITS FRAME" of 2026-11-23 (cited as
+  "launch 2.1"): D10 and D16 stand as ruled on 2026-08-15, and neither the 2026-11-22
+  ruling nor the gate ruling revisited them.
 - P-008 (pass 3.2, 3.5): blocked on the URL, and carried.
 
 ## Pickup guard

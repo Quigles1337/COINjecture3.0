@@ -55,7 +55,7 @@ STATUS: G0_PASS — CLOSEOUT READY FOR AL'S REVIEW IN PR #22; THE BUILDER DOES N
   ruling now authorizes implementation strictly from Protocol Spec §§7–8 and §14,
   keeps every owned/G0 TBD symbolic or absent, keeps SI-001/2/3 abstract and
   unresolved, and makes any new semantic ambiguity a fresh stop.
-- P-005's builder tail is now explicit: complete the adversary pass and exact-head CI,
+- P-005's builder tail is now explicit, as of 2026-08-16: complete the adversary pass and exact-head CI,
   mark PR #9 ready-for-review, and do not merge it. Al's line-by-line review and merge
   are the packet done-condition. P-101 remains blocked on both Gate G0 and that merged,
   human-reviewed P-005. While review is pending, P-006, P-007, P-009, and P-010 (if
@@ -350,7 +350,10 @@ STATUS: G0_PASS — CLOSEOUT READY FOR AL'S REVIEW IN PR #22; THE BUILDER DOES N
   One doc comment in `crates/cj3-beacon/src/devnet.rs` named a tag and is reworded.
 - In the ruling's words, "D10 and D16 are still not ruled" (pass 3.5). Every value and
   seat they reserve stays reserved and UNFILLED, and every prohibition on contacting or
-  notifying anyone stays in force.
+  notifying anyone stays in force. The meaning of the quoted sentence, as Al gives it in
+  clause 2.1 of his ruling "LIVE CJ3 RULING - P-101 TO ITS FRAME" of 2026-11-23 (cited
+  as "launch 2.1"): D10 and D16 stand as ruled on 2026-08-15, and neither the 2026-11-22
+  ruling nor the gate ruling revisited them.
 - The builder report is `loop/reports/C11-g0f-gate-builder.md`. Its §4.2 lists the
   points left for Al.
 
