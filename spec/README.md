@@ -5,7 +5,8 @@ Its governing sources are Protocol Spec §§7–8, §11's ratified Model 4 formu
 §14 vector case list. Al's completed second review ratifies the V1–V9/STF semantics,
 including conservation under `LawfulStateOps`, effective with PR #9's merge. Formal-
 verification ownership remains reserved per LEDGER D16. The vector artifact remains
-non-normative and symbolic pending SI-001/SI-002/SI-003.
+non-normative and symbolic; Al's ruling of 2026-11-22 resolved SI-001, SI-002 and SI-003
+without changing it.
 
 The model deliberately leaves these surfaces abstract:
 
@@ -21,8 +22,8 @@ floor-divided Model 4 reward, proves its mathematical numerator fits u128, prove
 credited result fits u64, and proves `reward ≤ subsidy` without taking that inequality
 as an assumption. The STF credit and conservation target both use that exact function.
 
-SI-001, SI-002, and SI-003 remain unresolved in
-`loop/reports/SPEC-ISSUES.md`. They are not instantiated by this project. In
+SI-001, SI-002, and SI-003 were resolved by Al's ruling of 2026-11-22
+(`loop/reports/SPEC-ISSUES.md`). They are not instantiated by this project. In
 particular, the exported `input_bytes` values are symbolic expressions, not a
 transaction wire encoding or SIS byte convention.
 

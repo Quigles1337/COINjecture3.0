@@ -112,6 +112,11 @@ continuous-batch mode. STOP at Gate G0.
   event is organization migration, Sarah invite, and handoff of Sarah-owned TBDs.
 - **D17 — RATIFIED:** autonomous continuous-batch mode is authorized under
   `loop/PROMPTS/AUTONOMOUS_BUILDER.md` and every guard named in the live ruling.
+  - **The five D17 conditions (Al, P-007 resume ruling, clause 2.4).** They are the five
+    that report C1 names: approved and unblocked; bounded non-semantic surface; no
+    formal-spec content; no decision invention; no owned-TBD fill. This is the list
+    that `loop/PROMPTS/AUTONOMOUS_BUILDER.md` means by "all five D17 conditions". Each
+    packet's FRAME still argues them for itself.
 - **D9/D10 — CONFIRMED:** the prior effective rulings remain unchanged.
 
 ### Effective queue and capacity ruling
@@ -860,3 +865,148 @@ wins.
   Gate G0 line), `README.md`, `loop/PACKETS.md`, `loop/STATE.md`,
   `loop/reports/BATCH-LOG.md` and step (d) of `loop/PROMPTS/AUTONOMOUS_BUILDER.md`. The
   builder's report is `loop/reports/C9-g0-bcde-ruling-builder.md`.
+
+## P-007 resume ruling overlay — PR #20 confirmed / report C9 points ruled / P-007 resumed (Al, 2026-11-22)
+
+The following live ruling is preserved verbatim. It was received on 2026-11-22 (local
+time), after Al merged PR #20. It confirms that merge, rules the eight points of report
+C9 section 4.2, orders one text-only commit for stale statements, and resumes P-007 in
+the HUMAN lane. Where it differs from an earlier entry in this ledger, it supersedes
+that entry without rewriting it.
+
+```text
+LIVE CJ3 RULING - P-007 RESUME
+
+Read loop/PROMPTS/AUTONOMOUS_BUILDER.md, loop/LEDGER.md, loop/STATE.md, loop/PACKETS.md and
+loop/reports/C9-g0-bcde-ruling-builder.md first. Then act as the BUILDER seat. This session
+resumes P-007 in the HUMAN lane. Record this ruling verbatim in loop/LEDGER.md as the first
+commit of the P-007 branch. If any clause below is ambiguous, or conflicts with an axiom, the
+Lean files, the 2026-11-22 Gate G0 ruling or another clause, STOP and name the clause. Do not
+choose a reading.
+
+PART 1 - PR #20
+
+1.1 I reviewed and merged PR #20. In the preflight, verify the merge and its exact-merge-SHA
+    D6 run on GitHub. A missing or red run is a STOP.
+1.2 The four edits no clause named stand: the admission condition in Protocol Spec 5.1, GAP-9
+    in section 12, the README rows and roadmap marker, and the name "packet P-011".
+
+PART 2 - THE POINTS OF REPORT C9 SECTION 4.2
+
+2.1 (C2d with C3d) C2d stands as a statement about encoding v1 with its one registered class.
+    A second class is admitted only by an ADR, and that ADR must show that header preimages
+    stay unambiguous.
+2.2 (the transaction count) It has no limit of its own. The whole length is tested against
+    BLOCK_MAX_BYTES before any field is read. After the count is read, the bytes that remain
+    must equal 188 times the count. If the count needs more bytes than remain, that is the
+    "shorter than required" rejection. If it needs fewer, that is the "bytes remain"
+    rejection. Which typed error a doubly wrong input gets is not a consensus matter: fix
+    the order of checks in the FRAME and record it.
+2.3 (C8b with C8e) C8e governs the choice of a tuple that stands in for the active tuple in
+    codec, solution and block tests: such a tuple is one already measured in bench/p003-sis,
+    and the choice is labeled non-normative. The C8b vectors test the expansion rule itself.
+    They may use any valid modulus, they are normative for C5, and they make no tuple a
+    candidate for P-4. That includes the vector at each stand-in tuple: the choice of the
+    tuple is non-normative, and the expansion it yields is a normative vector of C5.
+2.4 (the five D17 conditions) They are the five that report C1 names: approved and unblocked;
+    bounded non-semantic surface; no formal-spec content; no decision invention; no
+    owned-TBD fill. Record the five once in the LEDGER, beside D17, so the prompt's
+    reference resolves. Each packet's FRAME still argues them for itself.
+2.5 (packet P-011) The name stands, always written "packet P-011".
+2.6 (V7) V7 stays in the rule set. Under encoding v1 no wire input can fail it. P-101's
+    conformance test supplies that case at the candidate level.
+2.7 (the P-005 vectors) They stay symbolic and non-normative. The worked vectors P-007 owes
+    are a separate artifact, and their status is part of my review of P-007.
+2.8 (the overlay) Putting the ruling on the branch as its first commit was right.
+
+PART 3 - STALE TEXT
+
+In one commit of its own, text only:
+
+3.1 spec/Spec/Tx.lean, spec/Spec.lean, spec/Main.lean and spec/README.md: the sentences that
+    say SI-001, SI-002 or SI-003 are open, unresolved or pending, and no others. Comments and
+    README prose only. No definition, theorem, vector or exported string changes. The
+    NORMATIVE STATUS lines stay as they are. spec/vectors/p005-draft.json must be
+    byte-identical before and after, and the report gives its digest both times.
+3.2 bench/p003-sis/SHAKE-VECTOR.md: the q = 17 fixture is normative for the expansion rule.
+    Keep the file's account of how the vector was derived.
+3.3 docs/ENGINEERING_PLAN.md: one pointer line under the D2 paragraph that says G0-B through
+    G0-E await normative text, as was done under D1. The header line on the repository home
+    and the D9 row stay as seed text; the ledger governs.
+3.4 README.md: the three older drifts the report lists (the repository-map row for spec/, the
+    sentence that calls Lean conformance deferred, and the two links to an anchor that does
+    not exist).
+3.5 Left as written: the BOOTSTRAP paragraph of the builder prompt, which describes the first
+    session, when the repository was private; and the audit matrix's section 1 rows and A8
+    conclusion, which are P-009's verified record and are governed by the note in section 5.
+
+The comment in crates/cj3-classes/src/lib.rs that calls the identifier unratified is corrected
+with the code that binds it, not in this commit.
+
+PART 4 - P-007
+
+4.1 Build what loop/PACKETS.md says P-007 owes, to Protocol Spec v0.2-DRAFT sections 1.1 to
+    1.3, 5.2, 6.1, 6.3 and 7, with the evidence of ruling clause C8.
+4.2 cj3-types owns bytes, and cj3-classes owns meaning. The grammar, the domain tags, H,
+    every preimage of section 1.2, addr(), the transaction, header and block layouts, the
+    class identifier table and the 20-byte SIS size-parameter layout live in cj3-types.
+    Derivation, checking and the validity rules of a tuple stay in cj3-classes, which
+    imports the layouts. The SIS solution encoding lives with the class. If this split
+    cannot be built without a dependency cycle or a second implementation of a layout, STOP
+    and say why.
+4.3 The verification of section 1.3 is part of P-007 and lives in cj3-types, beside addr()
+    and the signing digest: one implementation, imported everywhere.
+4.4 Dependencies. Propose each crate in the FRAME with its A9 case, its licence and its exact
+    pinned version. I accept or refuse them at review. deny.toml is not loosened. No
+    library's own notion of strict verification is taken as section 1.3: conformance is
+    shown by the C8c vectors.
+4.5 Fuzzing. The codec-fuzz-smoke job becomes live with cargo-fuzz targets, as section 5 of
+    the plan names. That job alone may use a nightly toolchain pinned by date. The workspace
+    and every other job stay on the pinned stable toolchain.
+4.6 Vectors. The standard-library scripts live under bench/, as D8 allows. For the C2SP CCTV
+    vectors, record the source commit, the file's digest and its licence. If the licence
+    does not allow a copy in this repository, STOP and say so.
+4.7 Nothing in this session fills P-1, P-4, P-10, ACTIVE_SIZE_PARAM or any owner value, and
+    no tuple is compiled in as active (C8e).
+4.8 Finish as the HUMAN lane requires: adversary pass, exact-head D6 green, pull request
+    marked ready, and STOP. Do not merge. I review and merge, and then I rule G0-F.
+```
+
+### Effective record of the P-007 resume ruling
+
+The verbatim text above governs. This index only names what the ruling confirms, what
+it supersedes, and where it is applied. On any difference, the verbatim text wins.
+
+- **Clause names.** Other documents cite a clause of this ruling as "resume" plus its
+  number ("resume 2.2", "resume 4.5"). A clause of the 2026-11-22 Gate G0 ruling keeps
+  its `G0-` prefix.
+- **Confirmed by clause 1.1:** PR #20 merged at `2026-11-23T03:51:34Z` as
+  `f601224db855e6cc69e840fb169d85df22c547b8`, and exact-merge-SHA D6 run `45108419759`
+  on that commit concluded success in all eleven jobs. Both were read on GitHub before
+  the branch was cut.
+- **Confirmed by clause 1.2:** the admission condition in Protocol Spec §5.1, GAP-9 in
+  §12, the README rows and roadmap marker, and the name "packet P-011".
+- **Ruled by Part 2:** the eight points of report C9 §4.2. Clause 2.1 limits the
+  statement of G0-C2d to encoding v1 with its one registered class and sets the bar for
+  a second class. Clause 2.2 gives the transaction count no limit of its own and leaves
+  the order of checks to the P-007 FRAME, where it is fixed (report C10 §1.5). Clause
+  2.3 separates the stand-in tuples, whose choice is non-normative, from the expansion
+  vectors, which are normative for the expansion rule. Clause 2.4 fixes the five D17
+  conditions, recorded beside D17 in this ledger. Clause 2.6 keeps V7 in the rule set.
+  Clause 2.7 keeps the P-005 vectors symbolic and non-normative and reserves the status
+  of P-007's worked vectors to Al's review.
+- **Superseded by Part 3:** the statements that SI-001, SI-002 or SI-003 are open in
+  `spec/Spec/Tx.lean`, `spec/Spec.lean`, `spec/Main.lean` and `spec/README.md`; the
+  nonnormative label in `bench/p003-sis/SHAKE-VECTOR.md`; and three older README drifts.
+  Clause 3.5 leaves the BOOTSTRAP paragraph of the builder prompt and the audit matrix's
+  §1 rows and A8 conclusion as written.
+- **Not ruled here:** D10 and D16; G0-F, which Al rules after P-007 is merged; P-1, P-4,
+  P-10, `ACTIVE_SIZE_PARAM` and every owner value (clause 4.7); the dependencies P-007
+  proposes, which Al accepts or refuses at review (clause 4.4); and the status of
+  P-007's worked vectors (clause 2.7).
+- **Applied in:** the text-only commit of Part 3; `crates/cj3-types`,
+  `crates/cj3-classes`, `bench/p007-vectors`, `fuzz`, `scripts/ci` and
+  `.github/workflows` for Part 4; and `README.md`, `loop/PACKETS.md`, `loop/STATE.md`
+  and `loop/reports/BATCH-LOG.md`. The builder's report is
+  `loop/reports/C10-p007-builder.md`. The pull request is PR #21, which the builder does
+  not merge.

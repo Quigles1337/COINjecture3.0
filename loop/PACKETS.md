@@ -1,19 +1,24 @@
 # COINjecture 3.0 Packet Queue
 
-**Queue status:** GATE G0 HOLD — P-007 READY TO RESUME (HUMAN). G0-A is RATIFIED:
+**Queue status:** GATE G0 HOLD — P-007 BUILT, AWAITING AL'S REVIEW IN PR #21 (HUMAN).
+Al's ruling "LIVE CJ3 RULING - P-007 RESUME", recorded verbatim in `loop/LEDGER.md`,
+resumed it; its clauses are cited below as "resume 2.2" and so on. G0-A is RATIFIED:
 `size_param` is a static human-upgraded protocol constant, P-11 is struck as moot, P-1
 remains unfilled with no proposal, and P-2 is provisionally ratified as `W=32`, gain
 `1/8`, clamp `[8/9,9/8]`, subject to re-derivation when P-1 is ratified. Al's ruling of
 2026-11-22, recorded verbatim in `loop/LEDGER.md`, rules G0-B, G0-C, G0-D and G0-E and
 holds G0-F. PR #14 was merged by Al on 2026-10-12 as
 `358114048c3a38f4821b88fce8dffd14abbd42a1`; it carried only the checked `Amount`
-boundary and the P-007 stop report, so P-007 remains INCOMPLETE. P-008 remains blocked
+boundary and the P-007 stop report, so P-007 remains INCOMPLETE until Al merges PR #21.
+PR #20, the ruling's record, was merged by Al as
+`f601224db855e6cc69e840fb169d85df22c547b8`. P-008 remains blocked
 on the exact frontend URL. P-101 is blocked on Gate G0 only. No held or owner-controlled
 value was inferred.
 
-**Order of work (ruling F2):** the ruling's record (this change); then P-007, resumed on
-a new branch in the HUMAN lane and not merged by the builder; then Al's G0-F ruling;
-then P-101 and packet P-011, in the order Al approves.
+**Order of work (ruling F2):** the ruling's record (done: PR #20, merged); then P-007,
+resumed on a new branch in the HUMAN lane and not merged by the builder (built: PR #21,
+awaiting Al); then Al's G0-F ruling; then P-101 and packet P-011, in the order Al
+approves.
 
 Clauses of the 2026-11-22 ruling are cited below as `G0-` plus their label. Packet
 P-011 is not parameter P-11 (`SIZE_RETARGET_WINDOW`, struck).
@@ -26,7 +31,7 @@ P-011 is not parameter P-11 (`SIZE_RETARGET_WINDOW`, struck).
 | P-004 | Phase 0 | COMPLETE — `4644374f` | PR #7 and exact-merge-SHA D6 CI green |
 | P-005 | Phase 0 | COMPLETE — HUMAN-RATIFIED — `916e5027` | PR #9 and exact-merge-SHA D6 green |
 | P-006 | Phase 0 | COMPLETE — `7244f094`; G0-A applied | PR #16 exact-merge D6 green; static `size_param` ratified, P-11 moot, P-1 unfilled, P-2 provisional |
-| P-007 | Phase 0 | HUMAN — INCOMPLETE, READY TO RESUME on a new branch; PR #14 merged as `35811404` (checked amounts and stop report only) | None: G0-C rules the codec, hash, domain tags, P-8, SI-002, SI-003 and strict Ed25519, and G0-B1 resolves SI-001. The builder does not merge it; Al reviews and merges |
+| P-007 | Phase 0 | HUMAN — BUILT, READY FOR AL'S REVIEW in PR #21 (`feat/p007-encoding-v1`); PR #14 merged as `35811404` (checked amounts and stop report only) | Al's review and merge of PR #21. The builder does not merge it. The review covers the code, the two proposed dependencies, the status of the worked vectors and the points of report C10 §4.2 |
 | P-008 | Phase 0 / Phase 4 seam input | BLOCKED | Exact public frontend repository URL supplied by Al; URL MUST NOT be guessed |
 | P-009 | Phase 0 / audit traceability | COMPLETE — `ce0b9752` | PR #15 and exact-merge-SHA D6 green; GAP-7–13 were proposals at merge and were ruled on 2026-11-22 (G0-E) |
 | P-010 | Phase 0 / documentation | COMPLETE — `1e986cb2` | Feature PR #10 and closeout PR #11; both exact-merge-SHA D6 runs green |
@@ -107,9 +112,9 @@ targets wired into CI.
 `31969740766`. Al merged it on 2026-10-12 as
 `358114048c3a38f4821b88fce8dffd14abbd42a1`, and D6 run `38323998550` on that commit
 concluded success. The merge stands (ruling Part 0.4). It carried only the
-independently specified checked `Amount(u64)` boundary and the P-007 stop report. The
-active codec-fuzz job still reports `NOT_YET_ADMITTED`; green is not a fuzz-success
-claim.
+independently specified checked `Amount(u64)` boundary and the P-007 stop report. At
+that merge the codec-fuzz job reported `NOT_YET_ADMITTED`, and its green was not a
+fuzz-success claim; the resumed build below makes it live.
 
 **What the stop needed, and where it is now ruled:** the canonical codec grammar
 (G0-C1); SHA-256 confirmation and the bytes of all seven domain tags, with their
@@ -121,6 +126,27 @@ v0.2-DRAFT §1.1–§1.3, §5.2, §6.1, §6.3 and §7.
 **Resume (ruling F2):** on a new branch, in the HUMAN lane, not merged by the builder.
 Al rules G0-F after P-007 is merged with exact-merge-SHA D6 green (F1). P-007 carries
 `tx_root` and `state_root` as 32 opaque bytes (F3).
+
+**Resumed build (2026-11-22):** PR #21 from `feat/p007-encoding-v1`, under the P-007
+resume ruling. The builder report is `loop/reports/C10-p007-builder.md`.
+
+- `cj3-types` owns bytes: the grammar and typed decode errors, the seven domain tags,
+  `H` and the six preimages, the single `addr()`, the transaction, header and block
+  layouts, the class identifier table, the 20-byte SIS size-parameter layout and the
+  §1.3 verification. `cj3-classes` owns meaning: it imports the layouts, binds SIS to
+  class identifier 1, holds the tuple rules and the SIS solution encoding (resume 4.2,
+  4.3).
+- The evidence quoted below exists: (a) and (b) and (c) under `bench/p007-vectors/`,
+  each derived by a standard-library script and by the Rust code; (d) as six cargo-fuzz
+  targets under `fuzz/`, live in the D6 `codec-fuzz-smoke` job; (e) by construction, the
+  codecs take the tuple as an argument and the stand-in tuples are `(8, 112, 67, 112)`
+  and `(16, 288, 257, 288)`, both measured in `bench/p003-sis` and labeled
+  non-normative.
+- For Al at review: the two proposed dependencies (`sha2 =0.10.9`,
+  `curve25519-dalek =4.1.3`); the fuzz harness's `libfuzzer-sys`, whose licence includes
+  NCSA and which sits outside the workspace; the status of the worked vectors (resume
+  2.7); and the points of report C10 §4.2.
+- P-007 is complete only when Al merges PR #21 with exact-merge-SHA D6 green.
 
 **Evidence P-007 owes for Part 2 (G0-C8, quoted from the ruling):**
 

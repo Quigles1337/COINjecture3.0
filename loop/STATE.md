@@ -1,13 +1,13 @@
 # COINjecture 3.0 Loop State
 
-CYCLE: 9
+CYCLE: 10
 PHASE: Phase 0 — Gate G0 HOLD
-PACKET: Gate G0 ruling record — G0-B, G0-C, G0-D, G0-E RULED; G0-F HELD; next packet P-007 (HUMAN)
+PACKET: P-007 (HUMAN) — built on `feat/p007-encoding-v1`; PR #21 awaits Al's review and merge; G0-F HELD
 BRANCH: main
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-no-remediation-queued-or-running
 CAPACITY_OBSERVED_AT: 2026-11-22, Al's ruling Part 0.3 — no COINjecture 2.0 remediation work is queued or running; CJ3 may proceed until Al states another condition
-STATUS: G0_HOLD — RULING RECORD AWAITING AL'S REVIEW AND MERGE; P-007 READY TO RESUME
+STATUS: G0_HOLD — P-007 READY FOR AL'S REVIEW IN PR #21; THE BUILDER DOES NOT MERGE IT
 
 ## Ground-truth state
 
@@ -187,7 +187,8 @@ STATUS: G0_HOLD — RULING RECORD AWAITING AL'S REVIEW AND MERGE; P-007 READY TO
   target controller. P-1 remains unfilled. P-2 is provisionally `W=32`, gain `1/8`,
   clamp `[8/9,9/8]`, subject to re-derivation when P-1 is ratified. No dynamic size
   retarget is selected or permitted.
-- P-007 is INCOMPLETE in the HUMAN lane and ready to resume. PR #14 preserved only the
+- P-007 was INCOMPLETE in the HUMAN lane until its resume on 2026-11-22; the resumed
+  build is described at the end of this list. PR #14 preserved only the
   independently specified checked `Amount(u64)` boundary and the P-007 stop report at
   exact head `9acea83ca17d67a19e0d41aeb5e7275666a54013`; run `31969740766` passed all
   eleven D6 jobs. Al merged PR #14 on 2026-10-12 as
@@ -250,29 +251,62 @@ STATUS: G0_HOLD — RULING RECORD AWAITING AL'S REVIEW AND MERGE; P-007 READY TO
   requirement on the packet that introduces the mempool. Gate G3 tests each. Their
   numbers are operating configuration that the builder proposes and Al reviews at G3.
   The original Codex report's inventory stays UNKNOWN and does not block G0.
-- This session wrote no protocol code and changed nothing under `crates/`, `spec/`,
-  `bench/`, `scripts/` or `.github/`. Its record is PR #20 from branch
-  `docs/g0-bcde-ruling-record`, with the builder report at
-  `loop/reports/C9-g0-bcde-ruling-builder.md`. The builder does not merge it.
+- The cycle 9 session wrote no protocol code. Its record was PR #20, with the builder
+  report at `loop/reports/C9-g0-bcde-ruling-builder.md`. Al reviewed and merged PR #20
+  at `2026-11-23T03:51:34Z` as `f601224db855e6cc69e840fb169d85df22c547b8`; exact-merge-SHA
+  D6 run `45108419759` passed all eleven jobs.
+- Al's ruling "LIVE CJ3 RULING - P-007 RESUME" is recorded verbatim in `loop/LEDGER.md`
+  as the first commit of the P-007 branch. Its clauses are cited as "resume 2.2" and so
+  on. It confirms PR #20 and its four unnamed edits; rules the eight points of report C9
+  §4.2; fixes the five D17 conditions, now recorded beside D17; orders one text-only
+  commit for stale statements; and resumes P-007 in the HUMAN lane.
+- Resume Part 3 is applied in one text-only commit. The sentences in `spec/Spec/Tx.lean`,
+  `spec/Spec.lean`, `spec/Main.lean` and `spec/README.md` that called SI-001, SI-002 or
+  SI-003 open, unresolved or pending are corrected; no definition, theorem, vector or
+  exported string changed; `spec/vectors/p005-draft.json` is byte-identical (SHA-256
+  `30CABF852D623549CD5293628D5B3899BE805D543B537CB223F1B6FAB5C324E1` before and after).
+  The q = 17 fixture is recorded as normative for the expansion rule. The P-005 vectors
+  stay symbolic and non-normative (resume 2.7).
+- P-007 is BUILT and awaits Al's review in PR #21 from branch `feat/p007-encoding-v1`.
+  `cj3-types` holds CJ3 Encoding v1: the grammar and the typed decode errors, the seven
+  domain tags, `H` and the six preimages, the single `addr()`, the transaction, header
+  and block layouts, the class identifier table, the 20-byte SIS size-parameter layout
+  and the §1.3 Ed25519 verification. `cj3-classes` imports those layouts, binds SIS to
+  class identifier 1, rejects a `beta_squared` above `32767^2`, and holds the SIS
+  solution encoding; `derive_instance` and `check_sis` are unchanged. No tuple is
+  compiled in as active, and P-1, P-4, P-10 and `ACTIVE_SIZE_PARAM` are unfilled.
+- P-007's evidence (G0-C8): worked vectors for every layout and preimage, the expansion
+  vectors, and 932 Ed25519 vectors (5 from RFC 8032 §7.1, the 914 of C2SP CCTV at commit
+  `b88c4b206254ac543df240097e0f1fcc6a664821`, 13 builder-authored), each derived by a
+  standard-library script under `bench/p007-vectors/` and again by the Rust code. The
+  worked vectors claim no status; that is part of Al's review (resume 2.7). The CCTV
+  copy is under a three-clause BSD licence kept beside it.
+- The D6 `codec-fuzz-smoke` job is LIVE: six cargo-fuzz targets under `fuzz/`, run for a
+  fixed number of runs on `nightly-2026-11-15`, which that job alone uses (resume 4.5).
+  It is a bounded smoke run. The D6 Nightly `full-fuzz-corpus` job stays an explicit
+  deferral, because 4.5 allows a nightly toolchain to the D6 job alone.
+- Two dependencies are proposed for Al to accept or refuse at review (resume 4.4):
+  `sha2 =0.10.9` and `curve25519-dalek =4.1.3`. `deny.toml` is unchanged. The fuzz
+  harness depends on `libfuzzer-sys =0.4.13`, whose licence includes NCSA; it is outside
+  the workspace, linked into no `cj3-*` crate, and outside the graph `cargo deny` checks.
+- The builder report is `loop/reports/C10-p007-builder.md`. Its §4.2 lists the points
+  left for Al.
 
 ## Next action
 
-1. Al reviews and merges PR #20. Until he does, `main` still carries the
-   record as it stood before the ruling.
-2. Then P-007 resumes on a new branch in the HUMAN lane under Protocol Spec v0.2-DRAFT
-   and G0-C8. The builder does not merge it. The green `codec-fuzz-smoke` job is still
-   a deferral marker, not a fuzz-success claim, until P-007 makes the fuzz targets live.
-3. Then Al rules G0-F, after P-007 is merged with exact-merge-SHA D6 green.
-4. Then P-101 and packet P-011, in the order Al approves. P-101 remains blocked on Gate
+1. Al reviews PR #21: the code, the proposed dependencies, the status of the worked
+   vectors, and the points of report C10 §4.2. He merges it; the builder does not.
+2. Then Al rules G0-F, after P-007 is merged with exact-merge-SHA D6 green.
+3. Then P-101 and packet P-011, in the order Al approves. P-101 remains blocked on Gate
    G0 only. Packet P-011 blocks Phase 2.
-5. Carried, each to the boundary where Al rules it: P-1, P-4, P-10,
+4. Carried, each to the boundary where Al rules it: P-1, P-4, P-10,
    `ACTIVE_SIZE_PARAM`, the re-derived P-2, the re-ruled `BLOCK_MAX_BYTES` and the
    timestamp unit (from the packet P-011 report); how `tx_root` and the state commitment
    are built (the P-101 FRAME); the byte order in which a 32-byte value is read as a
    number (the first Phase 2 FRAME); the genesis layout and its preimage (the Phase 1
    genesis packet); P-7, P-9 and P-12 (their owners).
-6. P-008 remains blocked on the exact frontend URL.
-7. On any resume, run the preflight and re-check D11 before touching the repository.
+5. P-008 remains blocked on the exact frontend URL.
+6. On any resume, run the preflight and re-check D11 before touching the repository.
    `remediation-priority` in either project pauses CJ3.
 
 No frontend URL may be inferred for P-008, and no Al- or Sarah-owned TBD may be

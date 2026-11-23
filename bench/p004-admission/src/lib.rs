@@ -895,7 +895,7 @@ mod tests {
 
     struct NoSolution;
 
-    impl ProblemClassSolver<Sis<0>> for NoSolution {
+    impl ProblemClassSolver<Sis> for NoSolution {
         fn solve(&self, _instance: &SisInstance) -> Result<SisSolution, String> {
             Err("fixture intentionally has no solver".to_owned())
         }
@@ -904,7 +904,7 @@ mod tests {
     #[test]
     fn accepts_any_existing_problem_class_through_the_generic_adapter() {
         let parameters = SisParameters::new(1, 2, 17, 2).expect("valid tiny tuple");
-        let candidate = ProblemClassCandidate::<Sis<0>, _>::new(
+        let candidate = ProblemClassCandidate::<Sis, _>::new(
             metadata("sis-generic-shape"),
             "compile-only",
             [0_u8; 32],

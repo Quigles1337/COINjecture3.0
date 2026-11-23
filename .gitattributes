@@ -3,3 +3,8 @@
 *.pdf binary
 spec/vectors/p005-draft.json text eol=lf
 bench/p006-difficulty/** text eol=lf
+# P-007 vectors are compared byte for byte with what their script derives.
+bench/p007-vectors/** text eol=lf
+# Verbatim third-party copies and binary fuzz seeds are never converted.
+bench/p007-vectors/ed25519/cctv/** -text
+fuzz/seeds/** -text

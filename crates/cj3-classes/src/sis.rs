@@ -1,15 +1,30 @@
 //! Sampled Short Integer Solution (SIS) instance derivation and checking.
 //!
 //! Concrete hardness is an assumption supported by reductions, estimator models,
-//! and measurements; it is not a per-instance proof. P-003 intentionally leaves the
-//! production class identifier and canonical solution codec to their owning gates.
+//! and measurements; it is not a per-instance proof.
+//!
+//! This module holds the validity rules of a SIS tuple, the derivation, the checker
+//! and the SIS solution encoding. The 20-byte size-parameter layout and the class
+//! identifier are imported from `cj3-types`. No tuple is named here: every function
+//! that needs one takes it as an argument (ruling G0-C8e).
 
+use cj3_types::{
+    ClassId, DecodeError, SisSizeParam,
+    codec::{Reader, len_u64},
+};
 use sha3::{
     Shake256,
     digest::{ExtendableOutput, Update, XofReader},
 };
 
 use crate::{Invalid, ProblemClass, QUALITY_SCALE, Quality};
+
+/// The largest squared norm bound that encoding v1 admits: `32767^2`.
+///
+/// A coefficient is a 16-bit two's-complement integer. The checker rejects a
+/// coefficient whose square exceeds the bound, so under a larger bound some valid
+/// solutions could not be written (Protocol Spec §5.2, ruling G0-C4).
+pub const MAX_BETA_SQUARED: u64 = 1_073_676_289;
 
 /// Parameter validation failures.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -26,6 +41,9 @@ pub enum ParameterError {
     TrivialModulusVector,
     /// `beta_squared * QUALITY_SCALE` would not fit in the quality result type.
     QualityRangeOverflow,
+    /// `beta_squared` is above `32767^2`, so the tuple is not admissible under
+    /// encoding v1.
+    NormBoundExceedsEncoding,
     /// The matrix entry count is not representable on this target.
     DimensionOverflow,
 }
@@ -45,8 +63,9 @@ impl SisParameters {
     /// # Errors
     ///
     /// Returns [`ParameterError`] if dimensions are invalid, `q` is not prime, the
-    /// norm admits the trivial modulus vector, quality cannot fit, or allocation
-    /// dimensions cannot be represented on the current target.
+    /// norm admits the trivial modulus vector, quality cannot fit, the bound is above
+    /// [`MAX_BETA_SQUARED`], or allocation dimensions cannot be represented on the
+    /// current target.
     pub fn new(n: u32, m: u32, q: u32, beta_squared: u64) -> Result<Self, ParameterError> {
         if n == 0 || m == 0 {
             return Err(ParameterError::ZeroDimension);
@@ -66,6 +85,9 @@ impl SisParameters {
         if beta_squared.checked_mul(QUALITY_SCALE).is_none() {
             return Err(ParameterError::QualityRangeOverflow);
         }
+        if beta_squared > MAX_BETA_SQUARED {
+            return Err(ParameterError::NormBoundExceedsEncoding);
+        }
         let entries = u64::from(n)
             .checked_mul(u64::from(m))
             .ok_or(ParameterError::DimensionOverflow)?;
@@ -77,6 +99,28 @@ impl SisParameters {
             q,
             beta_squared,
         })
+    }
+
+    /// Validates the tuple that a 20-byte size-parameter layout carries.
+    ///
+    /// The layout is bytes; this is where its four values are judged.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`ParameterError`] exactly as [`Self::new`] does.
+    pub fn from_layout(layout: SisSizeParam) -> Result<Self, ParameterError> {
+        Self::new(layout.n, layout.m, layout.q, layout.beta_squared)
+    }
+
+    /// Returns the tuple as the 20-byte layout carries it.
+    #[must_use]
+    pub const fn layout(self) -> SisSizeParam {
+        SisSizeParam {
+            n: self.n,
+            m: self.m,
+            q: self.q,
+            beta_squared: self.beta_squared,
+        }
     }
 
     /// Returns the row count `n`.
@@ -205,31 +249,72 @@ pub enum InstanceError {
 
 /// Decoded SIS coefficient vector.
 ///
-/// This is deliberately not a wire codec. P-007 owns the canonical byte format and
-/// strict decoding rules.
+/// A coefficient is a 16-bit two's-complement integer, which is exactly what the
+/// encoding carries. Every value of this type therefore has one encoding, and every
+/// input of the right length has one value (Protocol Spec §5.2, ruling G0-C3e).
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub struct SisSolution(Box<[i64]>);
+pub struct SisSolution(Box<[i16]>);
 
 impl SisSolution {
-    /// Wraps an already decoded coefficient vector.
+    /// Bytes per coefficient.
+    pub const COEFFICIENT_LEN: usize = 2;
+
+    /// Wraps a coefficient vector.
     #[must_use]
-    pub fn new(coefficients: Vec<i64>) -> Self {
+    pub fn new(coefficients: Vec<i16>) -> Self {
         Self(coefficients.into_boxed_slice())
     }
 
-    /// Returns the decoded signed coefficients.
+    /// Returns the signed coefficients in index order.
     #[must_use]
-    pub fn coefficients(&self) -> &[i64] {
+    pub fn coefficients(&self) -> &[i16] {
         &self.0
+    }
+
+    /// Encodes the coefficients in index order, each a 16-bit two's-complement
+    /// integer, little-endian.
+    ///
+    /// The result is the solution bytes of a block when the vector has `m`
+    /// coefficients for the block's tuple; [`Self::decode`] accepts no other length.
+    #[must_use]
+    pub fn encode(&self) -> Vec<u8> {
+        let mut bytes = Vec::with_capacity(self.0.len().saturating_mul(Self::COEFFICIENT_LEN));
+        for coefficient in &self.0 {
+            bytes.extend_from_slice(&coefficient.to_le_bytes());
+        }
+        bytes
+    }
+
+    /// Decodes solution bytes for the tuple given as an argument.
+    ///
+    /// The input must be exactly `2 * m` bytes; that length comes from the imported
+    /// size-parameter layout. Every such input decodes. Whether the vector is a
+    /// solution is [`check_sis`]'s question, not the decoder's.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`DecodeError::SolutionLengthMismatch`] when the length is not `2 * m`.
+    pub fn decode(input: &[u8], parameters: SisParameters) -> Result<Self, DecodeError> {
+        let expected = parameters.layout().solution_len();
+        let actual = len_u64(input.len());
+        if actual != expected {
+            return Err(DecodeError::SolutionLengthMismatch { expected, actual });
+        }
+        let mut reader = Reader::new(input);
+        let mut coefficients = Vec::with_capacity(input.len() / Self::COEFFICIENT_LEN);
+        while reader.remaining() != 0 {
+            coefficients.push(i16::from_le_bytes(reader.array()?));
+        }
+        Ok(Self::new(coefficients))
     }
 }
 
-/// SIS class marker whose numeric registry identifier remains an explicit binding.
+/// The SIS class, bound to the identifier that `cj3-types` assigns it.
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
-pub struct Sis<const ID: u16>;
+pub struct Sis;
 
-impl<const ID: u16> ProblemClass for Sis<ID> {
-    const CLASS_ID: u16 = ID;
+impl ProblemClass for Sis {
+    const CLASS_ID: u16 = ClassId::Sis.to_u16();
     type SizeParam = SisParameters;
     type Instance = SisInstance;
     type Solution = SisSolution;
@@ -421,7 +506,7 @@ mod tests {
         assert_eq!(instance.get(0, 3), None);
         assert_eq!(
             instance,
-            <Sis<42> as ProblemClass>::derive_instance([0_u8; 32], parameters(2, 3, 3))
+            <Sis as ProblemClass>::derive_instance([0_u8; 32], parameters(2, 3, 3))
         );
     }
 
@@ -484,5 +569,152 @@ mod tests {
             check_sis(&instance, &SisSolution::new(vec![1, -1, 1])),
             Err(Invalid::NormTooLarge)
         );
+    }
+
+    /// NON-NORMATIVE stand-ins for the active tuple (ruling G0-C8e; P-007 resume
+    /// ruling, clause 2.3). Both are tuples already measured in `bench/p003-sis`. The
+    /// choice makes neither a candidate for P-4, and no library code names a tuple.
+    fn non_normative_stand_ins() -> [SisParameters; 2] {
+        [
+            SisParameters::new(8, 112, 67, 112).expect("measured tuple is valid"),
+            SisParameters::new(16, 288, 257, 288).expect("measured tuple is valid"),
+        ]
+    }
+
+    #[test]
+    fn sis_is_bound_to_the_identifier_the_class_table_assigns() {
+        assert_eq!(<Sis as ProblemClass>::CLASS_ID, 1);
+        assert_eq!(<Sis as ProblemClass>::CLASS_ID, ClassId::Sis.to_u16());
+    }
+
+    #[test]
+    fn a_norm_bound_above_32767_squared_is_not_admissible() {
+        assert_eq!(MAX_BETA_SQUARED, 32_767 * 32_767);
+        let q = 4_294_967_291;
+        assert!(SisParameters::new(1, 2, q, MAX_BETA_SQUARED).is_ok());
+        assert_eq!(
+            SisParameters::new(1, 2, q, MAX_BETA_SQUARED + 1),
+            Err(ParameterError::NormBoundExceedsEncoding)
+        );
+    }
+
+    #[test]
+    fn a_tuple_and_its_layout_convert_both_ways_and_the_layout_is_judged() {
+        for parameters in non_normative_stand_ins() {
+            let layout = parameters.layout();
+            assert_eq!(layout.n, parameters.n());
+            assert_eq!(layout.m, parameters.m());
+            assert_eq!(layout.q, parameters.q());
+            assert_eq!(layout.beta_squared, parameters.beta_squared());
+            assert_eq!(SisParameters::from_layout(layout), Ok(parameters));
+
+            let mut not_prime = layout;
+            not_prime.q += 1;
+            assert_eq!(
+                SisParameters::from_layout(not_prime),
+                Err(ParameterError::NonPrimeModulus)
+            );
+        }
+    }
+
+    #[test]
+    fn solution_bytes_are_sixteen_bit_twos_complement_little_endian_in_index_order() {
+        let solution = SisSolution::new(vec![1, -1, 0, i16::MAX, i16::MIN, 258, -2]);
+        assert_eq!(
+            solution.encode(),
+            [
+                0x01, 0x00, 0xff, 0xff, 0x00, 0x00, 0xff, 0x7f, 0x00, 0x80, 0x02, 0x01, 0xfe, 0xff
+            ]
+        );
+    }
+
+    #[test]
+    fn solution_codec_round_trips_at_each_stand_in_tuple() {
+        for parameters in non_normative_stand_ins() {
+            let m = usize::try_from(parameters.m()).expect("small");
+            let coefficients = (0..m)
+                .map(|index| match index % 5 {
+                    0 => i16::MAX,
+                    1 => i16::MIN,
+                    2 => -1,
+                    3 => 0,
+                    _ => i16::try_from(index).expect("small"),
+                })
+                .collect::<Vec<_>>();
+            let solution = SisSolution::new(coefficients);
+            let bytes = solution.encode();
+            assert_eq!(bytes.len(), 2 * m);
+            let decoded = SisSolution::decode(&bytes, parameters).expect("exact length decodes");
+            assert_eq!(decoded, solution);
+            assert_eq!(decoded.encode(), bytes);
+        }
+    }
+
+    #[test]
+    fn solution_length_holds_at_the_boundary_one_below_and_one_above() {
+        for parameters in non_normative_stand_ins() {
+            let exact = 2 * usize::try_from(parameters.m()).expect("small");
+            let bytes = vec![0_u8; exact + 1];
+            assert!(SisSolution::decode(&bytes[..exact], parameters).is_ok());
+            for wrong in [0, 1, exact - 2, exact - 1, exact + 1] {
+                assert_eq!(
+                    SisSolution::decode(&bytes[..wrong], parameters),
+                    Err(DecodeError::SolutionLengthMismatch {
+                        expected: u64::try_from(exact).expect("small"),
+                        actual: u64::try_from(wrong).expect("small"),
+                    })
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn a_decoded_vector_goes_to_the_checker_which_applies_the_coefficient_guard() {
+        // Every 2 * m bytes decode; the checker, not the decoder, judges the vector.
+        let [parameters, _] = non_normative_stand_ins();
+        let m = usize::try_from(parameters.m()).expect("small");
+        let instance = SisInstance::from_column_major(
+            parameters,
+            vec![0_u32; usize::try_from(parameters.n()).expect("small") * m],
+        )
+        .expect("zero matrix is in range");
+
+        let mut bytes = vec![0_u8; 2 * m];
+        assert_eq!(
+            check_sis(
+                &instance,
+                &SisSolution::decode(&bytes, parameters).expect("decodes")
+            ),
+            Err(Invalid::ZeroVector)
+        );
+
+        // 11 * 11 = 121 exceeds beta_squared = 112: rejected before it adds to the norm.
+        bytes[2..4].copy_from_slice(&11_i16.to_le_bytes());
+        assert_eq!(
+            check_sis(
+                &instance,
+                &SisSolution::decode(&bytes, parameters).expect("decodes")
+            ),
+            Err(Invalid::CoefficientOutOfRange { index: 1 })
+        );
+
+        // The most negative coefficient has no positive counterpart in 16 bits and is
+        // still judged by its square.
+        bytes[2..4].copy_from_slice(&i16::MIN.to_le_bytes());
+        assert_eq!(
+            check_sis(
+                &instance,
+                &SisSolution::decode(&bytes, parameters).expect("decodes")
+            ),
+            Err(Invalid::CoefficientOutOfRange { index: 1 })
+        );
+
+        bytes[2..4].copy_from_slice(&(-10_i16).to_le_bytes());
+        let quality = check_sis(
+            &instance,
+            &SisSolution::decode(&bytes, parameters).expect("decodes"),
+        )
+        .expect("the zero matrix accepts any short nonzero vector");
+        assert_eq!(quality.get(), 112 * QUALITY_SCALE / 100);
     }
 }

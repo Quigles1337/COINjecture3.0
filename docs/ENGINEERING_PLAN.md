@@ -239,6 +239,8 @@ quality does not weight the chain, an instance that drifts too easy degrades use
 work adequacy rather than granting additional chain weight. G0 remains HOLD while
 G0-B through G0-E await normative text.
 
+**G0-B to G0-E pointer (Al, 2026-11-22).** The paragraph above is kept as the record of the G0-A amendment; its last sentence describes the gate before the ruling of 2026-11-22, which ruled G0-B, G0-C, G0-D and G0-E, held G0-F and left G0 at HOLD (`loop/LEDGER.md`).
+
 **G0-A P-2 follow-up (Al, 2026-08-16).** The hash-target controller is provisionally
 `W=32`, gain `1/8`, clamp `[8/9,9/8]`, selected as a conservative interior point of
 P-006's 36/36 passing hash-only region rather than a tuned optimum. It must be

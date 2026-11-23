@@ -17,7 +17,7 @@ fn main() -> ExitCode {
             let line = solution
                 .coefficients()
                 .iter()
-                .map(i64::to_string)
+                .map(i16::to_string)
                 .collect::<Vec<_>>()
                 .join(" ");
             println!("{line}");
@@ -87,7 +87,12 @@ fn solve(instance: &SisInstance) -> Option<SisSolution> {
     let reduced = lll_reduce_delta(&integer_basis, &delta);
 
     reduced.into_iter().find_map(|row| {
-        let coefficients = row.iter().map(Int::to_i64).collect::<Option<Vec<_>>>()?;
+        // A row with a coefficient outside 16 bits is not encodable and is skipped,
+        // exactly as a row with any other unrepresentable entry is.
+        let coefficients = row
+            .iter()
+            .map(|entry| entry.to_i64().and_then(|value| i16::try_from(value).ok()))
+            .collect::<Option<Vec<_>>>()?;
         let candidate = SisSolution::new(coefficients);
         check_sis(instance, &candidate).ok().map(|_| candidate)
     })

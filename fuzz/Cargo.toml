@@ -1,0 +1,73 @@
+# Fuzz harness for CJ3 Encoding v1 (ruling G0-C8d; P-007 resume ruling, clause 4.5).
+#
+# This is its own cargo workspace, as cargo-fuzz lays it out. It is not a member of the
+# repository workspace, it is linked into no cj3-* crate, and nothing here ships in a
+# node. Its lockfile is `fuzz/Cargo.lock`, which the D6 dependency-audit job audits.
+#
+# `libfuzzer-sys` is licensed `(MIT OR Apache-2.0) AND NCSA` and bundles LLVM's
+# libFuzzer, which is C++. NCSA is not on the allow-list of the repository's
+# `deny.toml`, and that file is not loosened: this crate is outside the graph it checks.
+[package]
+name = "cj3-fuzz"
+description = "Fuzz properties and cargo-fuzz targets for CJ3 Encoding v1"
+version = "0.0.0"
+edition = "2024"
+rust-version = "1.97"
+publish = false
+repository = "https://github.com/Quigles1337/COINjecture3.0"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+cj3-classes = { version = "=0.0.0", path = "../crates/cj3-classes" }
+cj3-types = { version = "=0.0.0", path = "../crates/cj3-types" }
+libfuzzer-sys = "=0.4.13"
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+name = "transaction_codec"
+path = "fuzz_targets/transaction_codec.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "header_codec"
+path = "fuzz_targets/header_codec.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "block_codec"
+path = "fuzz_targets/block_codec.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "sis_solution_codec"
+path = "fuzz_targets/sis_solution_codec.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "length_limits"
+path = "fuzz_targets/length_limits.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "ed25519_verify"
+path = "fuzz_targets/ed25519_verify.rs"
+test = false
+doc = false
+bench = false
+
+[workspace]
+members = ["."]

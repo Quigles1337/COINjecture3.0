@@ -8,6 +8,7 @@ publish.workspace = true
 repository.workspace = true
 
 [dependencies]
+cj3-types = { version = "=0.0.0", path = "../cj3-types" }
 sha3 = { version = "=0.10.9", default-features = false }
 
 [lints]

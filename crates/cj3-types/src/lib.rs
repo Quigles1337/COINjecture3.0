@@ -1,18 +1,66 @@
-//! Canonical shared-type boundary.
+//! Canonical shared-type boundary: the bytes of CJ3 Encoding v1.
 //!
-//! P-007 currently admits only the representation-independent checked amount
-//! boundary. Canonical codecs, domain-separation bytes, and `addr()` remain absent
-//! until their G0/HUMAN semantics are ratified; this crate must not make those
-//! choices by convention.
+//! This crate owns bytes, and `cj3-classes` owns meaning. Here live the grammar
+//! ([`codec`]), the seven domain tags ([`domain`]), `H` and every preimage of Protocol
+//! Spec §1.2 ([`hash`]), the single [`addr`], the transaction, header and block layouts
+//! ([`tx`], [`header`], [`block`]), the class identifier table and the 20-byte SIS
+//! size-parameter layout ([`class`]), the Ed25519 verification of §1.3 ([`ed25519`]),
+//! and the checked [`Amount`].
+//!
+//! Nothing here is a protocol parameter that a ruling has left unfilled. No SIS tuple
+//! is compiled in as active: every codec that needs one takes it as an argument. No
+//! network identifier, fee floor or timestamp unit is named. `BLOCK_MAX_BYTES` is the
+//! provisional figure of ruling G0-C6c and is labeled so.
 
 #![forbid(unsafe_code)]
+
+pub mod block;
+pub mod class;
+pub mod codec;
+pub mod domain;
+pub mod ed25519;
+pub mod hash;
+pub mod header;
+pub mod keys;
+pub mod tx;
+
+pub use block::{BLOCK_MAX_BYTES, Block, EncodeError};
+pub use class::{ClassId, SisSizeParam, SizeParam};
+pub use codec::DecodeError;
+pub use ed25519::SignatureError;
+pub use hash::{Digest, addr};
+pub use header::Header;
+pub use keys::{Address, PublicKey, Signature, SigningDigest};
+pub use tx::{TX_MAX_BYTES, Transaction};
+
+#[cfg(test)]
+pub(crate) mod test_support {
+    use core::fmt::Write as _;
+
+    /// Lowercase hex of `bytes`.
+    pub(crate) fn hex(bytes: &[u8]) -> String {
+        bytes.iter().fold(String::new(), |mut text, byte| {
+            write!(text, "{byte:02x}").expect("writing to a String cannot fail");
+            text
+        })
+    }
+
+    /// The `N` bytes that `text` spells in hex.
+    pub(crate) fn unhex<const N: usize>(text: &str) -> [u8; N] {
+        assert_eq!(text.len(), 2 * N, "hex length");
+        let mut out = [0_u8; N];
+        for (index, byte) in out.iter_mut().enumerate() {
+            *byte = u8::from_str_radix(&text[2 * index..2 * index + 2], 16).expect("hex digit");
+        }
+        out
+    }
+}
 
 /// An integer monetary amount.
 ///
 /// The inner `u64` is deliberately opaque so value-changing code goes through
-/// [`Self::checked_add`] or [`Self::checked_sub`]. This type does not define a wire
-/// encoding; converting a value for a future canonical codec is a separate P-007/G0
-/// concern.
+/// [`Self::checked_add`] or [`Self::checked_sub`]. In CJ3 Encoding v1 an amount is a
+/// `u64` field: eight bytes, little-endian (Protocol Spec §1.1(a), §7).
 #[derive(Clone, Copy, Debug, Default, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Amount(u64);
 
