@@ -75,7 +75,9 @@ function Assert-Sha2 {
 
 function Get-CargoMetadata {
     param([string] $ManifestPath)
-    $arguments = @('metadata', '--format-version', '1', '--locked')
+    # Every feature of every workspace member is switched on, as in the D6 builds, so
+    # that a feature which would bring `force-soft-compact` in is resolved here too.
+    $arguments = @('metadata', '--format-version', '1', '--locked', '--all-features')
     if ($ManifestPath) {
         $arguments += @('--manifest-path', $ManifestPath)
     }
