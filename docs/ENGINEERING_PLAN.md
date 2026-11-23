@@ -188,6 +188,8 @@ Harder: community story ("why lattices first") — mitigated by the registry fra
 D13 honesty. Revisit: if P-004 shows a planted class clearing the bench with margin,
 promote it to co-anchor via ADR.
 
+**SI-001 resolution pointer (Al, 2026-11-22).** The D1 text above is kept as the record of the decision; its hardness wording is resolved by ruling G0-B1, which states the SIS hardness basis as an assumption in Protocol Spec §5.2 (`loop/LEDGER.md`, `loop/reports/SPEC-ISSUES.md` SI-001).
+
 ### D2 (ADR) — Consensus skeleton
 
 **Context.** RS §5 compares (a) longest-chain by deterministic work, (b) useful work as
@@ -262,8 +264,9 @@ Lean spec of Tx validity with vector exporter; difficulty two-knob simulation;
 `cj3-types` with the single `addr()` derivation and codec fuzz targets.
 **Gate G0:** all spike reports in `loop/reports/`, PROPOSED decisions D1/D2/D14/D15
 ratified or revised with spike evidence, OPEN D9/D10 ruled. Current disposition:
-**HOLD**; G0-A is ratified as the static-`size_param` D2 amendment, while G0-B through
-G0-E remain held for human-supplied normative text.
+**HOLD**; G0-A is ratified as the static-`size_param` D2 amendment; G0-B, G0-C, G0-D
+and G0-E were ruled on 2026-11-22 (`loop/LEDGER.md`); G0-F is held, and Al rules it
+after P-007 is merged with exact-merge-SHA D6 green.
 
 **Phase 1 — Kernel (P-101…P-104).**
 `cj3-kernel`: tx validity V1–V9 and STF implemented against Lean vectors (conformance

@@ -825,3 +825,38 @@ PART 6 - THIS SESSION
 6. Open the pull request, get exact-head D6 green, mark it ready, and STOP. Do not merge. I
    review and merge.
 ```
+
+### Effective record of the 2026-11-22 ruling
+
+The verbatim text above governs. This index only names what the ruling supersedes,
+what it leaves unruled, and where it is applied. On any difference, the verbatim text
+wins.
+
+- **Clause names.** Other documents cite a clause of this ruling as `G0-` plus its
+  label (`G0-B3`, `G0-C7e`, `G0-D1`), and Parts 0, 5 and 6 as "Part 0.1", "F2" or
+  "Part 6 step 3". This keeps the ruling's clauses B1–B4 and D1–D3 apart from block
+  rules B1–B12 and from decisions D1–D17 in this ledger.
+- **Superseded by Part 0.1:** the words "(private) through the build" in the D9 ruling
+  of 2026-08-15, and "The repository remains private" in the P-010 overlay of
+  2026-08-16. The rest of D9 is not ruled here.
+- **Superseded by Part 0.3:** the capacity conditions of 2026-08-15 and after, which
+  tied CJ3 to Sarah's GATE-1/GATE-2 answers. D11 itself is unchanged.
+- **Superseded by Part 0.4 and Parts 1 to 4:** in the G0-A overlays of 2026-08-16,
+  "G0-B, G0-C, G0-D, G0-E: HOLD", "P-007/PR #14 stays draft and unmerged" and "PR #14
+  stays draft".
+- **Resolved:** SI-001 (clause B1), SI-002 (clause C4) and SI-003 (clause C5). Earlier
+  entries that call them unresolved describe the record before this ruling. The ruling
+  changes no Lean file and does not change the status of the P-005 vectors.
+- **D8, one use only:** clause B4d admits an external lattice-reduction tool, run in a
+  container pinned by digest, for the solver-envelope measurements. D8 is otherwise
+  unchanged.
+- **Not ruled:** D10 and D16 (Part 0.2), G0-F (clause F1), and every item clause F3
+  carries.
+- **Packet identifier:** the SIS solver envelope that clause B4 commissions is packet
+  P-011, the next free identifier after P-010. It is not parameter P-11
+  (`SIZE_RETARGET_WINDOW`), which G0-A struck.
+- **Applied in:** `docs/PROTOCOL_SPEC.md` v0.2-DRAFT, `loop/reports/SPEC-ISSUES.md`,
+  `docs/AUDIT_TRACEABILITY.md` §5, `docs/ENGINEERING_PLAN.md` (the D1 pointer and the
+  Gate G0 line), `README.md`, `loop/PACKETS.md`, `loop/STATE.md`,
+  `loop/reports/BATCH-LOG.md` and step (d) of `loop/PROMPTS/AUTONOMOUS_BUILDER.md`. The
+  builder's report is `loop/reports/C9-g0-bcde-ruling-builder.md`.

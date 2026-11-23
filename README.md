@@ -20,19 +20,19 @@ enforces the complete design ([audit mapping](docs/AUDIT_TRACEABILITY.md#1-findi
 
 ## Status
 
-> Refreshed 2026-08-16 for the partial Gate G0 ruling. This is the repository's single current-status
+> Refreshed 2026-11-22 for the Gate G0 ruling on G0-B through G0-E. This is the repository's single current-status
 > block; its refresh is required at every gate closeout
 > ([standing rule](loop/LEDGER.md#standing-readme-drift-control-rule--ratified-al-2026-08-16)).
 >
 > | Field | Current record | Evidence |
 > |---|---|---|
-> | Scope | Private repository; pre-testnet; no running testnet, production node, or mainnet configuration | [D9/D12 rulings](loop/LEDGER.md#effective-ratifications), [source-policy gate](scripts/ci/check-source-policy.ps1) |
+> | Scope | Public repository; pre-testnet; no running testnet, production node, or mainnet configuration | [2026-11-22 ruling, Part 0.1](loop/LEDGER.md#gate-g0-ruling-overlay--g0-b-to-g0-e-ruled--g0-f-held-al-2026-11-22), [D12](loop/LEDGER.md#d1d15-seed-from-engineering-plan-3), [source-policy gate](scripts/ci/check-source-policy.ps1) |
 > | Phase | **Phase 0 — Gate G0 HOLD** | [phase plan](docs/ENGINEERING_PLAN.md#4-phase-plan), [packet queue](loop/PACKETS.md) |
-> | Last phase gate | None of G0–G4 has passed; G0-A is ratified but G0 remains HOLD | [G0-A ruling](loop/LEDGER.md#gate-g0-partial-ruling-overlay--g0-a-ratified--g0-hold-al-2026-08-16), [queue state](loop/PACKETS.md) |
-> | Completed packet evidence | P-001 through P-006, P-009, and P-010 are merged with exact-mainline CI records; P-005's Lean V1–V9/STF is HUMAN-RATIFIED | [batch log](loop/reports/BATCH-LOG.md), [G0 handoff](loop/reports/C7-phase0-g0-handoff.md) |
-> | Current stop | G0-A ratifies static `size_param`; G0-B through G0-E remain held, so P-007 and P-101 cannot advance | [G0-A ruling](loop/LEDGER.md#gate-g0-partial-ruling-overlay--g0-a-ratified--g0-hold-al-2026-08-16), [draft P-007 PR #14](https://github.com/Quigles1337/COINjecture3.0/pull/14), [G0 handoff](loop/reports/C7-phase0-g0-handoff.md) |
-> | Implemented surfaces | D6 CI and source policy; trait-gated beacon boundary; sampled-SIS derivation/checking and external demonstrator; admission and difficulty benches; HUMAN-ratified Lean V1–V9/STF; symbolic non-normative vectors; source-verified audit matrix v0.2 | [workflow](.github/workflows/ci.yml), [formal project](spec/README.md), [P-006 bench](bench/p006-difficulty/README.md), [audit matrix](docs/AUDIT_TRACEABILITY.md) |
-> | Planned or absent | Canonical Rust codecs/domain bytes and codec fuzzing; kernel, storage, consensus, networking, RPC, node behavior; production VDF; testnet | [P-007 stop](loop/PACKETS.md#p-007--cj3-types), [explicit phase deferrals](scripts/ci/check-phase-gate.ps1), [roadmap](docs/ENGINEERING_PLAN.md#4-phase-plan) |
+> | Last phase gate | None of G0–G4 has passed; G0-A through G0-E are ruled, G0-F is held, and G0 remains HOLD | [2026-11-22 ruling](loop/LEDGER.md#gate-g0-ruling-overlay--g0-b-to-g0-e-ruled--g0-f-held-al-2026-11-22), [G0-A ruling](loop/LEDGER.md#gate-g0-partial-ruling-overlay--g0-a-ratified--g0-hold-al-2026-08-16), [queue state](loop/PACKETS.md) |
+> | Completed packet evidence | P-001 through P-006, P-009, and P-010 are merged with exact-mainline CI records; P-005's Lean V1–V9/STF is HUMAN-RATIFIED; PR #14 merged on 2026-10-12 as `35811404` and carried only P-007's checked `Amount` boundary and stop report, so P-007 remains INCOMPLETE | [batch log](loop/reports/BATCH-LOG.md), [G0 handoff](loop/reports/C7-phase0-g0-handoff.md), [PR #14](https://github.com/Quigles1337/COINjecture3.0/pull/14), [D6 run 38323998550](https://github.com/Quigles1337/COINjecture3.0/actions/runs/38323998550) |
+> | Current stop | The 2026-11-22 ruling fixes CJ3 Encoding v1, the SIS claim language, a provisional validation budget and the size limits, and rejects the proposed SIS tuple. P-007 is ready to resume in the HUMAN lane and is not merged by the builder; P-101 stays blocked on Gate G0 | [2026-11-22 ruling](loop/LEDGER.md#gate-g0-ruling-overlay--g0-b-to-g0-e-ruled--g0-f-held-al-2026-11-22), [packet queue](loop/PACKETS.md#p-007--cj3-types), [loop state](loop/STATE.md) |
+> | Implemented surfaces | D6 CI and source policy; trait-gated beacon boundary; sampled-SIS derivation/checking and external demonstrator; checked `Amount(u64)` boundary; admission and difficulty benches; HUMAN-ratified Lean V1–V9/STF; symbolic non-normative vectors; source-verified audit matrix v0.2 | [workflow](.github/workflows/ci.yml), [amount type](crates/cj3-types/src/lib.rs), [formal project](spec/README.md), [P-006 bench](bench/p006-difficulty/README.md), [audit matrix](docs/AUDIT_TRACEABILITY.md) |
+> | Planned or absent | Rust codecs, `addr()` and domain tags for CJ3 Encoding v1, and codec fuzzing (specified in Protocol Spec v0.2-DRAFT, not implemented); a ratified SIS tuple; kernel, storage, consensus, networking, RPC, node behavior; production VDF; testnet | [P-007 queue entry](loop/PACKETS.md#p-007--cj3-types), [encoding v1](docs/PROTOCOL_SPEC.md#11-cj3-encoding-v1--grammar-g0-c1), [explicit phase deferrals](scripts/ci/check-phase-gate.ps1), [roadmap](docs/ENGINEERING_PLAN.md#4-phase-plan) |
 
 ## Contents
 
@@ -89,7 +89,7 @@ exist ([D3 and effective rulings](loop/LEDGER.md#effective-ratifications)).
 | A7 — Fail closed | Require authenticated mutation, startup refusal on empty secrets, and typed malformed-input errors. | [Plan A7](docs/ENGINEERING_PLAN.md#1-axioms-binding-on-every-packet-violations-are-criticals), [planned Phase 3 rules](docs/PROTOCOL_SPEC.md#12-networking-and-rpc--baseline-requirements-normative-for-phase-3) |
 | A8 — Spec before state-machine code | Require Lean transaction/STF semantics before Rust kernel conformance. | [Plan D5](docs/ENGINEERING_PLAN.md#3-decision-log), [current formal boundary](spec/README.md) |
 | A9 — Minimal trusted base | Keep consensus crates in safe Rust and heavy solvers external and untrusted. | [workspace lint](Cargo.toml), [zero-unsafe gate](scripts/ci/verify-geiger.ps1), [solver boundary](crates/cj3-solver-sis/src/main.rs) |
-| A10 — Honest claims | Label hardness as an assumption and retain PoUW's usefulness ceiling. | [open hardness wording issue](loop/reports/SPEC-ISSUES.md#si-001--sis-reduction-described-as-unconditional-proof), [survey caveats](docs/RESEARCH_SURVEY.md#caveats-and-honest-disagreements-in-the-literature) |
+| A10 — Honest claims | Label hardness as an assumption and retain PoUW's usefulness ceiling. | [hardness wording issue SI-001, resolved](loop/reports/SPEC-ISSUES.md#si-001--sis-reduction-described-as-unconditional-proof), [survey caveats](docs/RESEARCH_SURVEY.md#caveats-and-honest-disagreements-in-the-literature) |
 | A11 — Evidence or it did not happen | Require a run, artifact, or committed report for verification statements. | [batch log](loop/reports/BATCH-LOG.md), [autonomy protocol](loop/PROMPTS/AUTONOMOUS_BUILDER.md) |
 
 ## Architecture
@@ -212,14 +212,25 @@ its immutable run rather than treating an unpinned local installation as equival
   models and measurements, not unconditional or per-instance proofs
   ([SI-001](loop/reports/SPEC-ISSUES.md#si-001--sis-reduction-described-as-unconditional-proof),
   [P-003 evidence](loop/reports/C3-p003-builder.md)).
+- **No SIS tuple is ratified, and the one proposed could not be mined.** P-003 proposed
+  `(n, m, q, beta_squared) = (128, 3840, 16411, 3840)`. Al rejected it on 2026-11-22,
+  together with the 128-bit threshold as a way of choosing a tuple: the pinned estimator
+  puts the cost of finding a solution there at 2^143.956 to 2^165.520 operations, and
+  the bundled demonstrator solved n = 16 and returned no solution at n = 24 in its one
+  recorded run, so a chain with that tuple would never produce a block. P-4 and
+  `ACTIVE_SIZE_PARAM` stay UNFILLED until Al rules them from a measured solver envelope
+  ([ruling clauses B3 and B4](loop/LEDGER.md#gate-g0-ruling-overlay--g0-b-to-g0-e-ruled--g0-f-held-al-2026-11-22),
+  [estimator results](bench/p003-sis/estimator-results.jsonl),
+  [solver results](bench/p003-sis/solver-results.jsonl)).
 - The selected production beacon construction has no admitted implementation or
   security/timing parameter set; the present iterated-hash implementation is explicitly
   devnet-only and compile-rejected for testnet-tagged builds
   ([P-002 report](loop/reports/C2-p002-builder.md),
   [beacon source](crates/cj3-beacon/src/lib.rs)).
 - The Lean V1–V9/STF encoding is HUMAN-RATIFIED and proves conservation under
-  `LawfulStateOps`; its JSON vectors remain symbolic and non-normative pending
-  SI-001/SI-002/SI-003, and no Rust kernel conformance claim exists yet
+  `LawfulStateOps`; its JSON vectors remain symbolic and non-normative (the 2026-11-22
+  ruling resolved SI-001/SI-002/SI-003 without changing any Lean file or vector), and
+  no Rust kernel conformance claim exists yet
   ([formal boundary](spec/README.md), [P-005 merge](https://github.com/Quigles1337/COINjecture3.0/pull/9)).
 - P-004 measured fixture behavior but admitted no legacy class; checker speed does not
   establish a hard sampled distribution
@@ -242,13 +253,15 @@ Material unfilled values remain visible:
 | P-1 — hash-target cadence only | **UNFILLED; no builder proposal** — P-006's normalized interval cannot justify an absolute cadence | [G0-A follow-up](loop/LEDGER.md#g0-a-integration-and-p-2-provisional-ratification-overlay-al-2026-08-16), [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
 | P-2 — hash-target controller | **RATIFIED AS PROVISIONAL** — `W=32`, gain `1/8`, clamp `[8/9,9/8]`; conservative interior point, not a tuned optimum; re-derive when P-1 is ratified | [effective disposition](loop/LEDGER.md#effective-p-1p-2-disposition), [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
 | P-11 — size-retarget window | **STRUCK — MOOT** — `size_param` is static and changed only by human-ratified protocol upgrade | [G0-A amendment](loop/LEDGER.md#effective-g0-a-amendment-to-d2), [Spec §10](docs/PROTOCOL_SPEC.md#10-fork-choice-and-difficulty) |
-| P-3/P-4 — validation budget and SIS tuple | **TBD at the normative layer** — provisional P-003 recommendations; owner: G0/HUMAN ratification | [P-003 report](loop/reports/C3-p003-builder.md), [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
+| P-3 — validation budget | **PROVISIONAL: 15 ms** for `derive_instance` plus `check` on reference host v0; the evidence so far times `check` alone; Al re-rules it from the solver-envelope packet's measurements | [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters), [verifier results](bench/p003-sis/verifier-results.jsonl) |
+| P-4 — SIS tuple, and `ACTIVE_SIZE_PARAM` | **UNFILLED** — the proposed tuple is rejected and the candidate family is not ratified; Al rules both from the solver-envelope report | [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters), [P-003 report](loop/reports/C3-p003-builder.md) |
 | P-7 — reward cap and reward curve | **TBD** — owner: Al + Sarah after the D16 reveal | [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters), [D16 ratification](loop/LEDGER.md#effective-ratifications) |
-| P-8/P-10 — ingress bounds and timestamp drift | **TBD** — owner: G0/HUMAN ratification | [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
+| P-8 — size limits | `TX_MAX_BYTES = 188`; `SOL_MAX_BYTES = 2 * m`, unfilled while P-4 is; `BLOCK_MAX_BYTES = 1,048,576` **PROVISIONAL**, with no evidence behind the number | [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
+| P-10 — timestamp drift, and the timestamp unit | **UNFILLED** — Al rules both together with P-1 | [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
 | P-9 — minimum fee | **TBD** — owner: Al | [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
 | P-12 — subsidy schedule | Placeholder only; owner: Al + Ken | [Spec §3](docs/PROTOCOL_SPEC.md#3-protocol-parameters) |
-| Codec/domain bytes, strict Ed25519, SIS coefficient encoding, and SHAKE candidate convention | **UNFILLED** — owner: P-007/G0 HUMAN; draft PR #14 remains unmerged | [P-007 stop](loop/PACKETS.md#p-007--cj3-types), [SI-002/SI-003](loop/reports/SPEC-ISSUES.md) |
-| Audit matrix v0.2 reconciliation | **COMPLETE** — 33 security findings, 25 Lean claims, R1–R8; GAP-7–13 remain proposals | [audit matrix](docs/AUDIT_TRACEABILITY.md), [P-009 report](loop/reports/C7-p009-builder.md) |
+| Codec/domain bytes, strict Ed25519, SIS coefficient encoding, and SHAKE candidate convention | **RULED 2026-11-22, not implemented** — CJ3 Encoding v1 is in Protocol Spec v0.2-DRAFT; P-007 owes the Rust codecs, worked vectors and fuzz targets. PR #14, merged 2026-10-12, carried only the checked `Amount` boundary | [Spec §1](docs/PROTOCOL_SPEC.md#1-notation-and-cryptographic-primitives), [P-007 queue entry](loop/PACKETS.md#p-007--cj3-types), [SI-002/SI-003](loop/reports/SPEC-ISSUES.md) |
+| Audit matrix v0.2 reconciliation | **COMPLETE** — 33 security findings, 25 Lean claims, R1–R8; GAP-7–13 were ratified on 2026-11-22 as requirements for later packets and none is implemented | [audit matrix](docs/AUDIT_TRACEABILITY.md), [P-009 report](loop/reports/C7-p009-builder.md) |
 
 ## Roadmap
 
@@ -257,7 +270,7 @@ The phase gates are evidence thresholds, not calendar or deployment promises
 
 | Gate | Planned phase outcome | Current position |
 |---|---|---|
-| **G0 — Foundations and spikes** | P-001–P-007 reports complete; D1/D2/D14/D15 and open interpretation issues resolved with spike evidence | **▶ CURRENT — HOLD; G0-A static size is ratified, G0-B through G0-E await normative text** ([G0-A ruling](loop/LEDGER.md#gate-g0-partial-ruling-overlay--g0-a-ratified--g0-hold-al-2026-08-16), [G0 handoff](loop/reports/C7-phase0-g0-handoff.md)) |
+| **G0 — Foundations and spikes** | P-001–P-007 reports complete; D1/D2/D14/D15 and open interpretation issues resolved with spike evidence | **▶ CURRENT — HOLD; G0-A through G0-E are ruled; G0-F is held until P-007 is merged with exact-merge-SHA D6 green** ([2026-11-22 ruling](loop/LEDGER.md#gate-g0-ruling-overlay--g0-b-to-g0-e-ruled--g0-f-held-al-2026-11-22), [G0 handoff](loop/reports/C7-phase0-g0-handoff.md)) |
 | **G1 — Kernel** | Lean-vector conformance, conservation properties, mutation spot-check, genesis spend, and crash consistency | Planned after G0 ([Plan G1](docs/ENGINEERING_PLAN.md#4-phase-plan)) |
 | **G2 — Consensus** | Deterministic two-node replay and typed rejection of the adversarial block corpus | Planned after G1 ([Plan G2](docs/ENGINEERING_PLAN.md#4-phase-plan)) |
 | **G3 — Network and RPC** | Three-node devnet adversarial replay and complete fail-closed auth matrix | Planned after G2 ([Plan G3](docs/ENGINEERING_PLAN.md#4-phase-plan)) |
