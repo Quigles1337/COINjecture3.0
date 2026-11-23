@@ -11,10 +11,9 @@ $owners = @{
     'lean-conformance' = 'P-101 after P-005 vectors'
     'codec-fuzz-smoke' = 'P-007 canonical codecs'
     'genesis-spend-test' = 'Phase 1 genesis packet'
-    # The nightly long fuzz run needs a nightly toolchain. The P-007 resume ruling
-    # (clause 4.5) allows one to the D6 codec-fuzz-smoke job alone, so this gate has no
-    # handler until Al rules otherwise.
-    'full-fuzz-corpus' = "Al's ruling on a nightly-toolchain job outside D6 (P-007 resume ruling, clause 4.5)"
+    # The D6 Nightly long fuzz run. Its handler is live (Gate G0-F ruling, clauses 2.3
+    # and 4.5a).
+    'full-fuzz-corpus' = 'P-007 canonical codecs, long run'
 }
 
 $handler = Join-Path $PSScriptRoot "active\$Gate.ps1"

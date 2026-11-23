@@ -34,16 +34,33 @@ jobs:
       - name: Audit current lockfile
         run: cargo audit --deny warnings
 
+  # The long fuzz run (Gate G0-F ruling, clauses 2.3 and 4.5a): the same cargo-fuzz
+  # targets as the D6 codec-fuzz-smoke job, on the same nightly toolchain pinned by date
+  # in fuzz/rust-toolchain.toml. Its steps install what that job installs. The handler
+  # fuzzes for one hour in all; the limit below leaves room for the build.
   full-fuzz-corpus:
     name: full-fuzz-corpus
     runs-on: ubuntu-latest
+    timeout-minutes: 120
     steps:
       - name: Check out source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      # The D6 codec-fuzz-smoke gate is live and needs a nightly Rust toolchain, which
-      # the P-007 resume ruling (clause 4.5) allows to that D6 job alone. This job
-      # therefore calls its own gate, which has no handler and reports an explicit
-      # deferral, not a fuzz result.
+      - name: Select pinned Rust toolchain
+        run: rustup show active-toolchain
+      - name: Restore pinned cargo-fuzz binary
+        id: cache-cargo-fuzz
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cargo/bin/cargo-fuzz
+          key: ${{ runner.os }}-cargo-fuzz-0.13.2-rust-1.97.1
+      - name: Install cargo-fuzz
+        if: steps.cache-cargo-fuzz.outputs.cache-hit != 'true'
+        run: cargo install cargo-fuzz --version 0.13.2 --locked
+      - name: Install the date-pinned nightly toolchain for the fuzz targets
+        run: |
+          channel="$(sed -n 's/^channel = "\(nightly-[0-9-]*\)"$/\1/p' fuzz/rust-toolchain.toml)"
+          test -n "$channel"
+          rustup toolchain install "$channel" --profile minimal --no-self-update
       - name: Run or explicitly defer gate
         shell: pwsh
         run: ./scripts/ci/check-phase-gate.ps1 -Gate full-fuzz-corpus

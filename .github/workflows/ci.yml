@@ -179,9 +179,11 @@ jobs:
       - name: Install cargo-fuzz
         if: steps.cache-cargo-fuzz.outputs.cache-hit != 'true'
         run: cargo install cargo-fuzz --version 0.13.2 --locked
-      # This job alone uses a nightly toolchain, pinned by date in
-      # fuzz/rust-toolchain.toml (P-007 resume ruling, clause 4.5). The workspace and
-      # every other job stay on the stable toolchain pinned in rust-toolchain.toml.
+      # In D6 this job alone uses a nightly toolchain, pinned by date in
+      # fuzz/rust-toolchain.toml (P-007 resume ruling, clause 4.5). The D6 Nightly
+      # full-fuzz-corpus job uses the same one (Gate G0-F ruling, clause 2.3). The
+      # workspace and every other job stay on the stable toolchain pinned in
+      # rust-toolchain.toml.
       - name: Install the date-pinned nightly toolchain for the fuzz targets
         run: |
           channel="$(sed -n 's/^channel = "\(nightly-[0-9-]*\)"$/\1/p' fuzz/rust-toolchain.toml)"
