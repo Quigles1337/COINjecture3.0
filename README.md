@@ -14,7 +14,7 @@ committed chain data, `check(instance, solution)` derives integer `Quality` with
 clock or miner metadata, and fork choice excludes quality. The first two boundaries
 exist in the P-003 Rust trait and SIS prototype; Phase 2 block validation and fork
 choice remain planned, so this is not a claim that a consensus implementation already
-enforces the complete design ([audit mapping](docs/AUDIT_TRACEABILITY.md#1-finding-class-matrix),
+enforces the complete design ([audit mapping](docs/AUDIT_TRACEABILITY.md#1-third-party-security-audit--complete-33-finding-matrix),
 [`ProblemClass`](crates/cj3-classes/src/lib.rs),
 [phase plan](docs/ENGINEERING_PLAN.md#4-phase-plan)).
 
@@ -54,7 +54,7 @@ COINjecture 2.0's README presented a work-score formula containing self-reported
 the same miner-controlled values affected fork choice and rewards. The CJ3 traceability
 matrix retains that failure beside C1's miner-authored instance and the apply-path
 findings rather than replacing them with a clean-slate narrative
-([C1–C7 matrix](docs/AUDIT_TRACEABILITY.md#1-finding-class-matrix),
+([C1–C7 matrix](docs/AUDIT_TRACEABILITY.md#1-third-party-security-audit--complete-33-finding-matrix),
 [preserved source manifest](loop/evidence/P-009-SOURCE-MANIFEST.md)).
 
 The response is structural, not testimonial. The specified submission/checking path
@@ -152,9 +152,13 @@ A reader can audit a claim through four layers:
    the [batch log](loop/reports/BATCH-LOG.md).
 2. **Deferral inspection.** A green phase job is not automatically proof that its
    future test ran: absent handlers emit `NOT_YET_ADMITTED` with an owner through
-   [`check-phase-gate.ps1`](scripts/ci/check-phase-gate.ps1). Lean conformance,
-   conservation, codec fuzz smoke, and the genesis spend test are currently in that
-   explicit deferral state ([P-005 stop evidence](https://github.com/Quigles1337/COINjecture3.0/pull/9)).
+   [`check-phase-gate.ps1`](scripts/ci/check-phase-gate.ps1). Conservation, codec
+   fuzz smoke, and the genesis spend test are currently in that explicit deferral
+   state. Lean conformance is not: its
+   [active handler](scripts/ci/active/lean-conformance.ps1) builds the ratified Lean
+   project and regenerates the symbolic vectors, and it still reports the Rust kernel
+   conformance test as `NOT_YET_ADMITTED`
+   ([P-005 merge](https://github.com/Quigles1337/COINjecture3.0/pull/9)).
 3. **Packet evidence.** P-003 preserves the pinned estimator model, environment,
    solver observations, and checker observations under
    [`bench/p003-sis/`](bench/p003-sis/README.md); the packet report labels P-3/P-4 as
@@ -176,7 +180,7 @@ than assuming the current branch reproduces an earlier observation
 | `crates/` | Rust workspace boundaries; P-002/P-003 contain the current protocol-adjacent spike code | [crate sources](crates/), [workspace manifest](Cargo.toml) |
 | `bench/p003-sis/` | Reproducible estimator, solver, and verifier records for provisional SIS candidates | [bench guide](bench/p003-sis/README.md) |
 | `bench/p004-admission/` | Bounded admission controller and read-only legacy calibration evidence | [bench guide](bench/p004-admission/README.md) |
-| `spec/` | Reserved HUMAN-lane Lean/vector boundary; no formal rule or vector is defined | [boundary statement](spec/README.md) |
+| `spec/` | HUMAN-lane Lean 4 project: the HUMAN-RATIFIED V1–V9/STF encoding, with conservation proved under `LawfulStateOps`, and 27 symbolic, non-normative vectors | [formal project](spec/README.md), [vector artifact](spec/vectors/p005-draft.json) |
 | `docs/` | Governing plan, draft protocol, audit traceability, and research caveats | [Engineering Plan](docs/ENGINEERING_PLAN.md), [Protocol Spec](docs/PROTOCOL_SPEC.md), [audit matrix](docs/AUDIT_TRACEABILITY.md), [research survey](docs/RESEARCH_SURVEY.md) |
 | `loop/` | Decisions, queue, state, prompts, reports, and durable audit-source custody | [ledger](loop/LEDGER.md), [queue](loop/PACKETS.md), [reports](loop/reports/) |
 | `scripts/ci/` | Source policy, zero-unsafe enforcement, and fail-explicit phase dispatch | [source policy](scripts/ci/check-source-policy.ps1), [phase dispatcher](scripts/ci/check-phase-gate.ps1) |

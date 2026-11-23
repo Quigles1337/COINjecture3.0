@@ -6,8 +6,8 @@ Human-ratified encoding of Protocol Spec §7 transaction-validity rules V1–V9.
 No canonical codec, signature implementation, address derivation, protocol maximum,
 fee floor, or chain identifier is selected here. Those values and operations are
 supplied through `ValidationContext`. This keeps every owner/G0-controlled TBD
-symbolic. SI-001, SI-002, and SI-003 remain OPEN in
-`loop/reports/SPEC-ISSUES.md`; this module neither instantiates nor resolves them.
+symbolic. SI-001, SI-002, and SI-003 were resolved by Al's ruling of 2026-11-22
+(`loop/reports/SPEC-ISSUES.md`); this module instantiates none of those resolutions.
 -/
 
 namespace Cj3.Spec.Tx
@@ -43,7 +43,8 @@ Abstract dependencies of V1–V8.
 
 `strictCanonicalDecode` owns strict decoding, field rejection, and canonical byte
 rules. It is intentionally not implemented by P-005. In particular, no byte-level
-choice from the unresolved SI-002/SI-003 family is smuggled through this interface.
+choice from the SI-002/SI-003 family, which Al's ruling of 2026-11-22 resolved, is
+smuggled through this interface.
 `signatureVerifies` represents precisely the V2 predicate over the specified
 domain-separated preimage, without choosing its byte construction here.
 -/
