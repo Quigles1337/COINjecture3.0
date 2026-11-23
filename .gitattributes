@@ -8,3 +8,5 @@ bench/p007-vectors/** text eol=lf
 # Verbatim third-party copies and binary fuzz seeds are never converted.
 bench/p007-vectors/ed25519/cctv/** -text
 fuzz/seeds/** -text
+# P-101 worked examples are compared byte for byte with what their script derives.
+bench/p101-roots/** text eol=lf
