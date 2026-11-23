@@ -1010,3 +1010,129 @@ it supersedes, and where it is applied. On any difference, the verbatim text win
   and `loop/reports/BATCH-LOG.md`. The builder's report is
   `loop/reports/C10-p007-builder.md`. The pull request is PR #21, which the builder does
   not merge.
+
+## Gate G0-F ruling overlay — GATE G0 PASS / PR #21 confirmed / report C10 points ruled / Phase 1 open (Al, 2026-11-23)
+
+The following live ruling is preserved verbatim. It was received on 2026-11-23 (local
+time), after Al merged PR #21. It confirms that merge and completes P-007, rules the
+points of report C10 section 4.2, passes Gate G0 with carried items, opens Phase 1, and
+orders this session's gate record, text corrections and four build items. Where it
+differs from an earlier entry in this ledger, it supersedes that entry without rewriting
+it.
+
+```text
+LIVE CJ3 RULING - GATE G0-F
+
+Read loop/PROMPTS/AUTONOMOUS_BUILDER.md, loop/LEDGER.md, loop/STATE.md, loop/PACKETS.md and
+loop/reports/C10-p007-builder.md first. Then act as the BUILDER seat. Record this ruling
+verbatim in loop/LEDGER.md as the first commit of a new branch. This session's whole scope is
+Part 4. If any clause below is ambiguous, or conflicts with an axiom, the Lean files, an
+earlier ruling or another clause, STOP and name the clause. Do not choose a reading.
+
+PART 1 - PR #21
+
+1.1 I reviewed and merged PR #21. In the preflight, verify the merge and its exact-merge-SHA
+    D6 run on GitHub. A missing or red run is a STOP. P-007 is COMPLETE.
+
+PART 2 - THE POINTS OF REPORT C10 SECTION 4.2
+
+2.1 (the two dependencies) sha2 =0.10.9 and curve25519-dalek =4.1.3 are accepted as pinned,
+    the second with the condition of 4.5c. Arithmetic written in cj3-types is refused:
+    several hundred lines of new field and group code that only the vectors vouch for is
+    the larger risk.
+2.2 (libfuzzer-sys) Accepted for the fuzz crate alone, as test tooling outside the graph
+    the node is built from, with the condition of 4.5b.
+2.3 (the nightly long fuzz run) The permission of resume clause 4.5 extends to the D6
+    Nightly long fuzz job: the same pinned nightly toolchain and the same targets. Make it
+    live (4.5a).
+2.4 (the status of the vectors) From the merge of PR #21, three files are NORMATIVE
+    conformance vectors: bench/p007-vectors/encoding-v1.vectors.txt for the layouts and
+    preimages of Encoding v1, bench/p007-vectors/shake-expansion.vectors.txt for the
+    expansion rule, and bench/p007-vectors/ed25519/c7-expected.vectors.txt for Protocol
+    Spec 1.3, the thirteen builder-authored vectors included. What is normative is the
+    relation: these inputs give these bytes and these verdicts, and every implementation
+    reproduces them. The input values assign nothing: no network identifier, fee, target,
+    root, timestamp unit or tuple. If the text of the specification and a vector ever
+    disagree, that is a STOP and a ruling. Neither wins by default. The P-005 vectors stay
+    symbolic and non-normative.
+2.5 (active in the block codec) The builder's reading stands. The codec takes the size
+    parameter that stands for the active tuple and uses it for SOL_MAX_BYTES alone. The
+    exact solution length comes from the header's own size parameter. B3 is a block rule:
+    consensus applies it, and a successful decode never implies it.
+2.6 (typed errors) The order of checks in report C10 section 1.5 stands. It is not a
+    consensus matter.
+2.7 (layout tests with arbitrary bytes) C8e and resume clause 2.3 do not reach them. A test
+    of a layout over arbitrary field values names no tuple. They stay.
+2.8 (edits no clause named) They stand.
+2.9 (stale text left) Correct both, text only: the comment in spec/Spec/Tx.lean that calls
+    the strict canonical decoder unresolved, and the README diagram label that calls the
+    Lean rules and vectors planned. The conditions of resume clause 3.1 apply to the Lean
+    file.
+2.10 (the cj3-classes API) Accepted.
+2.11 The three ways of showing the BLOCK_MAX_BYTES boundary (finding 7) are accepted.
+
+PART 3 - G0-F
+
+3.1 GATE G0: PASS, with the items of 3.5 carried. Phase 1 is open.
+3.2 The conditions of Engineering Plan section 4 are met as follows. The reports of P-001 to
+    P-007, P-009 and P-010 are in loop/reports and their work is merged. D1, D2, D14 and
+    D15 were ratified on 2026-08-15 and are confirmed here on the spike evidence since, D2
+    as G0-A amended it and D1 as 3.3 conditions it. D9 and D10 were ruled then, and D9 was
+    superseded on 2026-11-22. P-008 stays blocked and is carried.
+3.3 D1 stands on a condition. SIS remains the genesis anchor class. No tuple is ratified,
+    and it is not yet measured whether the family has a size that miners can solve at a
+    cost worth calling useful work. Packet P-011 measures that. If it finds no such size,
+    D1 returns to me. Say so in the README limitations.
+3.4 The Protocol Specification becomes v0.2 and is NORMATIVE from this ruling: its rules
+    and layouts bind every implementation and change only by my ruling. Excepted are every
+    value marked UNFILLED or PROVISIONAL and every carried item of 3.5. No implementation
+    may assume a value for one.
+3.5 Carried, each to the boundary where I rule it:
+    - P-1, P-4, P-10, ACTIVE_SIZE_PARAM, the re-derived P-2, the re-measured P-3, the
+      re-ruled BLOCK_MAX_BYTES and the timestamp unit: from packet P-011's report. They
+      block Phase 2.
+    - How tx_root and the state commitment are built: P-101 proposes both in its FRAME and
+      stops there for my ruling.
+    - The byte order in which a 32-byte value is read as a number: at the first Phase 2
+      FRAME.
+    - The genesis layout and its preimage: with the Phase 1 genesis packet.
+    - P-7, P-9 and P-12: with their owners. D10 and D16 are still not ruled.
+    - P-008: blocked on the URL.
+3.6 P-101 and packet P-011 are both unblocked. I say which runs first in the message that
+    launches it.
+
+PART 4 - THIS SESSION
+
+4.1 Run the preflight, with 1.1.
+4.2 Record this ruling verbatim, as the first commit of a new branch.
+4.3 The gate record, documentation only:
+    - docs/PROTOCOL_SPEC.md: its version line, its gate-status paragraph and any other
+      sentence that 3.1 or 3.4 makes false. No rule, layout or value changes.
+    - docs/ENGINEERING_PLAN.md: the Gate G0 line in section 4.
+    - README.md: the status block, and the limitation of 3.3.
+    - loop/PACKETS.md and loop/STATE.md: P-007 COMPLETE with its merge commit and runs,
+      Phase 1 open, P-101 and packet P-011 unblocked.
+    - loop/reports/BATCH-LOG.md: new lines only.
+    - This session's report under loop/reports carries the evidence for 3.2.
+4.4 Text, in a commit of its own: the stale text of 2.9; and the status lines of the three
+    vector files as 2.4 rules them, changed in derive.py and regenerated. Every vector value
+    stays byte-identical, and the report shows it.
+4.5 Four build items, each in a commit of its own. If one cannot be made green without
+    loosening a policy, leave it out of the pull request and report it. The gate record
+    does not wait for it.
+    a. The D6 Nightly long fuzz job is live on the pinned nightly toolchain (2.3).
+    b. cargo deny runs over the fuzz workspace with a configuration of its own: the root
+       policy, plus the one licence term libfuzzer-sys needs, for that crate alone. If it
+       needs any other exception, report which and why, and do not add it.
+    c. One arithmetic back end. Every build of cj3-types in this repository uses
+       curve25519-dalek's serial back end, and a build that does not fails to compile.
+       The tests, the vectors and the fuzz targets run under it in D6. The reason is that
+       every node should run the same arithmetic whatever its processor. It is not a
+       claim that no unsafe code remains on the path. Correct the README limitation to
+       say what is then true.
+    d. Source policy. No Rust source outside crates/cj3-types names a domain tag constant,
+       and the source-policy gate fails on one. The tests of cj3-types and the vector
+       scripts are exempt.
+4.6 Adversary pass over the whole diff. Exact-head D6 green. Pull request marked ready.
+    STOP. Do not merge. I review and merge.
+```
