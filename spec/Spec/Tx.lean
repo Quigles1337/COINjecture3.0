@@ -116,7 +116,9 @@ theorem checkedSub_eq_some_toNat
     exact Nat.sub_add_cancel ‹right.toNat ≤ left.toNat›
   · contradiction
 
-/-- V1: bounded input plus success of the unresolved strict canonical decoder. -/
+/-- V1: bounded input plus success of the abstract strict canonical decoder that
+`ValidationContext` supplies. Al's ruling of 2026-11-22 resolved that decoder as CJ3
+Encoding v1 (Protocol Spec §1.1 and §7); this module instantiates none of it. -/
 def v1 (context : ValidationContext State) (input : Bytes) : Option Candidate :=
   if input.size ≤ context.txMaxBytes then
     context.strictCanonicalDecode input

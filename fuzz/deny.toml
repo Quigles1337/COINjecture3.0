@@ -1,0 +1,53 @@
+# Dependency policy for the fuzz workspace (Gate G0-F ruling, clauses 2.2 and 4.5b).
+#
+# This is the repository's root deny.toml with one addition: the licence term NCSA is
+# allowed for libfuzzer-sys alone, which is licensed `(MIT OR Apache-2.0) AND NCSA`.
+# Nothing else differs, and scripts/ci/check-fuzz-deny-policy.ps1 fails D6 if anything
+# else does. The root deny.toml is not loosened: NCSA is on no allow-list, and no crate
+# the node is built from may carry it.
+#
+# libfuzzer-sys is test tooling. It is compiled only into fuzz binaries, outside the
+# graph the node is built from.
+
+[graph]
+all-features = true
+targets = [
+    "x86_64-unknown-linux-gnu",
+    "aarch64-unknown-linux-gnu",
+    "x86_64-apple-darwin",
+    "aarch64-apple-darwin",
+    "x86_64-pc-windows-msvc",
+]
+
+[advisories]
+unmaintained = "workspace"
+unsound = "all"
+yanked = "deny"
+ignore = []
+
+[bans]
+multiple-versions = "deny"
+wildcards = "deny"
+deny = []
+skip = []
+skip-tree = []
+
+[licenses]
+confidence-threshold = 0.93
+unused-allowed-license = "allow"
+allow = [
+    "Apache-2.0",
+    "Apache-2.0 WITH LLVM-exception",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "ISC",
+    "MIT",
+    "Unicode-3.0",
+    "Zlib",
+]
+private = { ignore = true }
+exceptions = [{ allow = ["NCSA"], crate = "libfuzzer-sys@0.4.13" }]
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"

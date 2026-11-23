@@ -62,6 +62,15 @@ jobs:
         run: cargo install cargo-deny --version 0.20.2 --locked
       - name: Check dependency policy
         run: cargo deny --locked --all-features check
+      # The fuzz harness is its own workspace under fuzz/, outside the graph the node is
+      # built from. It has a policy of its own: the root policy plus one licence term,
+      # NCSA, for libfuzzer-sys alone (Gate G0-F ruling, clause 4.5b). The first step
+      # fails if fuzz/deny.toml differs from deny.toml in anything but that exception.
+      - name: Check that the fuzz policy is the root policy plus one exception
+        shell: pwsh
+        run: ./scripts/ci/check-fuzz-deny-policy.ps1
+      - name: Check the fuzz workspace's dependency policy
+        run: cargo deny --manifest-path fuzz/Cargo.toml --config fuzz/deny.toml --locked --all-features check
 
   dependency-audit:
     name: dependency-audit
@@ -83,9 +92,8 @@ jobs:
         run: cargo install cargo-audit --version 0.22.2 --locked
       - name: Audit the committed lockfile
         run: cargo audit --deny warnings
-      # The fuzz harness is its own workspace under fuzz/, outside `cargo deny`'s
-      # graph. Its lockfile is audited here so that no lockfile in the repository goes
-      # unaudited.
+      # The fuzz harness is its own workspace under fuzz/, with a lockfile of its own.
+      # It is audited here so that no lockfile in the repository goes unaudited.
       - name: Audit the committed fuzz lockfile
         run: cargo audit --deny warnings --file fuzz/Cargo.lock
 
@@ -126,6 +134,13 @@ jobs:
       # the same files and derive them again with the Rust code.
       - name: Re-derive the P-007 vectors with the standard-library script
         run: python3 -I -B bench/p007-vectors/derive.py --check
+      # One arithmetic back end (Gate G0-F ruling, clause 4.5c). .cargo/config.toml
+      # makes every build in this workflow use curve25519-dalek's serial back end, the
+      # tests below included. This step builds cj3-types that way, then with the setting
+      # absent, wrong and doubled, and requires each of those builds to fail to compile.
+      - name: Prove that cj3-types compiles with the serial back end and no other
+        shell: pwsh
+        run: ./scripts/ci/check-arithmetic-backend.ps1
       - name: Run admitted tests
         run: cargo test --workspace --all-targets --all-features --locked
 
@@ -179,9 +194,11 @@ jobs:
       - name: Install cargo-fuzz
         if: steps.cache-cargo-fuzz.outputs.cache-hit != 'true'
         run: cargo install cargo-fuzz --version 0.13.2 --locked
-      # This job alone uses a nightly toolchain, pinned by date in
-      # fuzz/rust-toolchain.toml (P-007 resume ruling, clause 4.5). The workspace and
-      # every other job stay on the stable toolchain pinned in rust-toolchain.toml.
+      # In D6 this job alone uses a nightly toolchain, pinned by date in
+      # fuzz/rust-toolchain.toml (P-007 resume ruling, clause 4.5). The D6 Nightly
+      # full-fuzz-corpus job uses the same one (Gate G0-F ruling, clause 2.3). The
+      # workspace and every other job stay on the stable toolchain pinned in
+      # rust-toolchain.toml.
       - name: Install the date-pinned nightly toolchain for the fuzz targets
         run: |
           channel="$(sed -n 's/^channel = "\(nightly-[0-9-]*\)"$/\1/p' fuzz/rust-toolchain.toml)"

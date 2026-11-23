@@ -15,8 +15,8 @@ pub const SECURITY_BANNER: &str = "NOT-TESTNET-GRADE: sequentiality assumption o
 
 /// A 32-byte seed already derived from canonical parent data.
 ///
-/// This module does not derive `H(D_BEACON || parent_hash)`. P-007 remains the
-/// sole owner of that domain separation and canonical encoding.
+/// This module does not derive the beacon input of Protocol Spec §1.2. `cj3-types`
+/// is the sole owner of that domain separation and canonical encoding.
 pub type PreparedParent = [u8; 32];
 
 /// The devnet placeholder's fixed-width output.

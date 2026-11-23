@@ -1,13 +1,19 @@
 # COINjecture 3.0 — Protocol Specification
 
-**Version:** v0.2-DRAFT · becomes normative at Gate G0 ratification
+**Version:** v0.2 · NORMATIVE from Al's Gate G0 ruling of 2026-11-23
 **Authority:** subordinate to `docs/ENGINEERING_PLAN.md` axioms A1–A11 and decision log
 **Convention:** `TBD(P-xxx)` marks values discovered by the named packet — agents MUST
 NOT invent these (A11). "MUST/MUST NOT/SHOULD" per RFC 2119.
 
-**Gate status:** G0 is HOLD. G0-A is ratified and incorporated below. G0-B, G0-C, G0-D
-and G0-E were ruled on 2026-11-22 and are incorporated below. G0-F is held: Al rules it
-after P-007 is merged with exact-merge-SHA D6 green. This document remains draft.
+**Gate status:** Gate G0 is PASS, with items carried, and Phase 1 is open (Al's ruling of
+2026-11-23, recorded verbatim in `loop/LEDGER.md`). G0-A is ratified and incorporated
+below. G0-B, G0-C, G0-D and G0-E were ruled on 2026-11-22 and are incorporated below.
+
+**Normative status.** This document is v0.2 and is NORMATIVE from the ruling of
+2026-11-23: its rules and layouts bind every implementation and change only by Al's
+ruling. Excepted are every value marked UNFILLED or PROVISIONAL and every item that
+ruling carries (its clause 3.5; §15 indexes those that are values or constructions of
+this document). No implementation may assume a value for one.
 
 **Ruling citations:** `G0-` plus a label (for example `G0-C3d`) names a clause of the
 2026-11-22 ruling, recorded verbatim in `loop/LEDGER.md`. A bare B1–B12 is a block rule
@@ -604,7 +610,8 @@ otherwise pretrusted divisor is non-conforming.
 
 ## §15 Open-TBD index
 
-Status after the 2026-11-22 ruling. Still open, with the boundary where each is ruled:
+Status after the Gate G0 ruling of 2026-11-23, which passes the gate. Still open, with
+the boundary where each is ruled:
 
 - P-1 hash-target cadence → UNFILLED, no builder proposal. Al rules P-1, P-4, P-10,
   `ACTIVE_SIZE_PARAM` and the re-derived P-2 together, from the packet P-011 report
@@ -632,14 +639,13 @@ Status after the 2026-11-22 ruling. Still open, with the boundary where each is 
   in the packet report, reviewed by Al at G3 (G0-E4).
 - Beacon technology → P-002.
 - Reward curve shaping incl. μ-balance hook (§5.2) → Al + Sarah.
-- Gate disposition (G0-F) → held; Al rules it after P-007 is merged with
-  exact-merge-SHA D6 green (G0-F1).
 
-Closed: P-11 → struck as moot by G0-A · hash primitive → SHA-256 confirmed (G0-C2a) ·
+Closed: Gate G0 → PASS on 2026-11-23, with items carried · P-11 → struck as moot by
+G0-A · hash primitive → SHA-256 confirmed (G0-C2a) ·
 canonical encoding, domain-tag bytes and preimages → §1.1, §1.2 (G0-C1, G0-C2) ·
 Ed25519 verification → §1.3 (G0-C7) · class identifier → SIS is 1 (G0-C3b) ·
 `TX_MAX_BYTES = 188` (G0-C6a) · SIS coefficient encoding and guard, and the SHAKE
 expansion convention → §5.2 (G0-C3e, G0-C4, G0-C5).
 
 ---
-*CJ3 Protocol Specification v0.2-DRAFT — DARQ Labs LLC.*
+*CJ3 Protocol Specification v0.2 — DARQ Labs LLC.*

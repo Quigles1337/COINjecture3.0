@@ -1,13 +1,13 @@
 # COINjecture 3.0 Loop State
 
-CYCLE: 10
-PHASE: Phase 0 — Gate G0 HOLD
-PACKET: P-007 (HUMAN) — built on `feat/p007-encoding-v1`; PR #21 awaits Al's review and merge; G0-F HELD
+CYCLE: 11
+PHASE: Phase 1 — open; Gate G0 PASS with items carried
+PACKET: none in flight — the Gate G0 closeout (HUMAN) is on `feat/g0f-gate-record`; PR #22 awaits Al's review and merge; P-101 and packet P-011 are unblocked and not started
 BRANCH: main
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
 CAPACITY_FLAG: cj2-no-remediation-queued-or-running
 CAPACITY_OBSERVED_AT: 2026-11-22, Al's ruling Part 0.3 — no COINjecture 2.0 remediation work is queued or running; CJ3 may proceed until Al states another condition
-STATUS: G0_HOLD — P-007 READY FOR AL'S REVIEW IN PR #21; THE BUILDER DOES NOT MERGE IT
+STATUS: G0_PASS — CLOSEOUT READY FOR AL'S REVIEW IN PR #22; THE BUILDER DOES NOT MERGE IT; AL NAMES WHICH OF P-101 AND PACKET P-011 RUNS FIRST
 
 ## Ground-truth state
 
@@ -162,8 +162,8 @@ STATUS: G0_HOLD — P-007 READY FOR AL'S REVIEW IN PR #21; THE BUILDER DOES NOT 
   any Lean file or vector.
 - P-101 carries the three `LawfulStateOps` laws, checker-derived `rewardInputs`
   provenance, checked construction of the `R_MAX·SCALE` divisor, and concrete storage
-  read/write coherence. Effective with PR #9's merge, P-101 is blocked on Gate G0
-  only.
+  read/write coherence. Effective with PR #9's merge, P-101 was blocked on Gate G0
+  only, until the gate passed on 2026-11-23.
 - CJ3 pins Lean 4.33.0 while the COINjecture 2.0 Lean project is recorded by Al as
   Lean 4.28.0 plus Mathlib 4.28.0. The compatibility gap is reserved for the D16
   reveal and MUST NOT be resolved beforehand.
@@ -172,7 +172,7 @@ STATUS: G0_HOLD — P-007 READY FOR AL'S REVIEW IN PR #21; THE BUILDER DOES NOT 
   `31967696333`; the expected-head guarded merge produced
   `916e5027f0918973bf45d6a2bf90abd2ae253197`; and exact-merge-SHA mainline run
   `31968030240` passed all eleven jobs. The Lean V1–V9/STF encoding is therefore
-  HUMAN-RATIFIED as of that merge. P-101 is blocked on Gate G0 only.
+  HUMAN-RATIFIED as of that merge. P-101 was then blocked on Gate G0 only.
 - P-005's docs-only immutable closeout merged through PR #13 at
   `44ae3ae8807bc7ae594494870bffa96da6ea0ca1`; exact-head run `31968497094` and
   exact-merge-SHA run `31968806291` both passed all eleven D6 jobs.
@@ -205,8 +205,8 @@ STATUS: G0_HOLD — P-007 READY FOR AL'S REVIEW IN PR #21; THE BUILDER DOES NOT 
   surface-excluded third-party findings; tiers all 25 Lean claims without importing
   proof credit; and left GAP-7 through GAP-13 as proposals, which the 2026-11-22
   ruling then ruled (G0-E).
-- Al's 2026-08-16 partial Gate G0 ruling sets the gate disposition to **HOLD**, not
-  PASS. G0-A ratifies D2 Option 2: `size_param` is an active protocol constant changed
+- Al's 2026-08-16 partial Gate G0 ruling set the gate disposition to **HOLD**, not
+  PASS; the gate passed on 2026-11-23. G0-A ratifies D2 Option 2: `size_param` is an active protocol constant changed
   only by explicit human-ratified upgrade; B3 compares the header value to that
   constant; P-11 is struck as moot; and every phase gate re-reviews size adequacy.
 - G0-A merged through PR #18 at
@@ -222,9 +222,9 @@ STATUS: G0_HOLD — P-007 READY FOR AL'S REVIEW IN PR #21; THE BUILDER DOES NOT 
   miner-behavior control loop must evidence withholding resistance or be rejected.
   P-006 modeled equilibrium size retention of `0.423–0.806` at 35% strategic share
   and `0.240–0.700` at 51%.
-- Al's ruling of 2026-11-22 is recorded verbatim in `loop/LEDGER.md`. It rules G0-B,
-  G0-C, G0-D and G0-E, holds G0-F, and leaves the gate at **HOLD**. Its clauses are
-  cited here as `G0-` plus their label.
+- Al's ruling of 2026-11-22 is recorded verbatim in `loop/LEDGER.md`. It ruled G0-B,
+  G0-C, G0-D and G0-E, held G0-F, and left the gate at **HOLD**, where it stayed until
+  the ruling of 2026-11-23. Its clauses are cited here as `G0-` plus their label.
 - Visibility: the repository is PUBLIC by Al's decision, and D9's "private through the
   build" is superseded (Part 0.1). Preflight step (d) now requires `PUBLIC` and stops on
   any other value. "No visibility changes" stays a standing prohibition. D10 and D16
@@ -267,7 +267,10 @@ STATUS: G0_HOLD — P-007 READY FOR AL'S REVIEW IN PR #21; THE BUILDER DOES NOT 
   `30CABF852D623549CD5293628D5B3899BE805D543B537CB223F1B6FAB5C324E1` before and after).
   The q = 17 fixture is recorded as normative for the expansion rule. The P-005 vectors
   stay symbolic and non-normative (resume 2.7).
-- P-007 is BUILT and awaits Al's review in PR #21 from branch `feat/p007-encoding-v1`.
+- P-007 is COMPLETE (pass 1.1). Al reviewed and merged PR #21 at `2026-11-23T05:36:52Z`
+  as `333c67086012d03f3c654cba20526e5c0f5e6b4d`. Its exact head
+  `92f9be92265c83c5f0b3e27acd3311027d910c56` passed all eleven D6 jobs in run
+  `45114968343`, and exact-merge-SHA run `45118879871` passed all eleven.
   `cj3-types` holds CJ3 Encoding v1: the grammar and the typed decode errors, the seven
   domain tags, `H` and the six preimages, the single `addr()`, the transaction, header
   and block layouts, the class identifier table, the 20-byte SIS size-parameter layout
@@ -279,34 +282,93 @@ STATUS: G0_HOLD — P-007 READY FOR AL'S REVIEW IN PR #21; THE BUILDER DOES NOT 
   vectors, and 932 Ed25519 vectors (5 from RFC 8032 §7.1, the 914 of C2SP CCTV at commit
   `b88c4b206254ac543df240097e0f1fcc6a664821`, 13 builder-authored), each derived by a
   standard-library script under `bench/p007-vectors/` and again by the Rust code. The
-  worked vectors claim no status; that is part of Al's review (resume 2.7). The CCTV
-  copy is under a three-clause BSD licence kept beside it.
-- The D6 `codec-fuzz-smoke` job is LIVE: six cargo-fuzz targets under `fuzz/`, run for a
-  fixed number of runs on `nightly-2026-11-15`, which that job alone uses (resume 4.5).
-  It is a bounded smoke run. The D6 Nightly `full-fuzz-corpus` job stays an explicit
-  deferral, because 4.5 allows a nightly toolchain to the D6 job alone.
-- Two dependencies are proposed for Al to accept or refuse at review (resume 4.4):
-  `sha2 =0.10.9` and `curve25519-dalek =4.1.3`. `deny.toml` is unchanged. The fuzz
-  harness depends on `libfuzzer-sys =0.4.13`, whose licence includes NCSA; it is outside
-  the workspace, linked into no `cj3-*` crate, and outside the graph `cargo deny` checks.
-- The builder report is `loop/reports/C10-p007-builder.md`. Its §4.2 lists the points
-  left for Al.
+  CCTV copy is under a three-clause BSD licence kept beside it.
+- Al's ruling "LIVE CJ3 RULING - GATE G0-F" of 2026-11-23 is recorded verbatim in
+  `loop/LEDGER.md` as the first commit of `feat/g0f-gate-record`. Its clauses are cited
+  as "pass 3.5" and so on; `G0-F1` and `G0-F3` remain clauses of the 2026-11-22 ruling.
+- **Gate G0 is PASS, with the items of pass 3.5 carried, and Phase 1 is open** (pass
+  3.1). The conditions of Engineering Plan §4 are met as pass 3.2 states, and the
+  evidence for each is in `loop/reports/C11-g0f-gate-builder.md` §3.2. D1, D2, D14 and
+  D15 are confirmed, D2 as G0-A amended it.
+- D1 stands on a condition (pass 3.3). SIS remains the genesis anchor class. No tuple is
+  ratified, and it is not yet measured whether the family has a size that miners can
+  solve at a cost worth calling useful work. Packet P-011 measures that. If it finds no
+  such size, D1 returns to Al.
+- Size adequacy, the standing item of G0-A, at this gate: there is no active
+  `size_param` to retain or to change, because `ACTIVE_SIZE_PARAM` and P-4 are UNFILLED.
+  Pass 3.3 is the gate's word on adequacy.
+- The Protocol Specification is v0.2 and NORMATIVE from that ruling (pass 3.4): its
+  rules and layouts bind every implementation and change only by Al's ruling. Excepted
+  are every value marked UNFILLED or PROVISIONAL and every item pass 3.5 carries. No
+  implementation may assume a value for one.
+- Three files are NORMATIVE conformance vectors from the merge of PR #21 (pass 2.4):
+  `bench/p007-vectors/encoding-v1.vectors.txt` for the layouts and preimages of Encoding
+  v1, `bench/p007-vectors/shake-expansion.vectors.txt` for the expansion rule, and
+  `bench/p007-vectors/ed25519/c7-expected.vectors.txt` for Protocol Spec §1.3, the
+  thirteen builder-authored vectors included. What is normative is the relation: these
+  inputs give these bytes and these verdicts, and every implementation reproduces them.
+  The input values assign nothing. If the text of the specification and a vector ever
+  disagree, that is a STOP and a ruling; neither wins by default. The P-005 vectors stay
+  symbolic and non-normative.
+- The other points of report C10 §4.2 are ruled (pass Part 2). `sha2 =0.10.9` and
+  `curve25519-dalek =4.1.3` are accepted as pinned, the second on the condition of pass
+  4.5c, and arithmetic written in `cj3-types` is refused. `libfuzzer-sys` is accepted
+  for the fuzz crate alone, on the condition of pass 4.5b. The builder's reading of the
+  active tuple in the block codec, its order of checks, its layout tests over arbitrary
+  bytes, its unnamed edits, the `cj3-classes` API and the three ways of showing the
+  `BLOCK_MAX_BYTES` boundary stand or are accepted.
+- The Gate G0 closeout is PR #22 from `feat/g0f-gate-record`, in the HUMAN lane. It
+  holds the verbatim overlay; one text-only commit (pass 4.4); the four build items of
+  pass 4.5, each in a commit of its own, with one later fix to item (c); and the gate
+  record (pass 4.3). The builder does not merge it.
+- Pass 4.4, text only. The doc comment on `v1` in `spec/Spec/Tx.lean` no longer calls
+  the strict canonical decoder unresolved, and the README diagram no longer calls the
+  Lean rules and vectors planned. No Lean definition, theorem, vector or exported string
+  changed; `spec/vectors/p005-draft.json` is byte-identical (SHA-256
+  `30CABF852D623549CD5293628D5B3899BE805D543B537CB223F1B6FAB5C324E1` before and after).
+  The status lines of the three vector files say what pass 2.4 rules; they were changed
+  in `derive.py` and regenerated, and only comment lines differ.
+- Pass 4.5a. The D6 `codec-fuzz-smoke` job stays a bounded smoke run: six cargo-fuzz
+  targets, a fixed number of runs, a fixed seed. The D6 Nightly `full-fuzz-corpus` job
+  is LIVE: the same six targets on the same toolchain, `nightly-2026-11-15`, each for
+  600 seconds, from a seed that is the UTC date. One script holds the target list for
+  both. No corpus is kept from one night to the next.
+- Pass 4.5b. `cargo deny` runs over the fuzz workspace in the `dependency-policy` job
+  with `fuzz/deny.toml`: the root policy plus the licence term NCSA for
+  `libfuzzer-sys@0.4.13` alone. A check fails D6 if that file differs from `deny.toml`
+  in anything else. The root `deny.toml` is unchanged.
+- Pass 4.5c. Every build of `cj3-types` in this repository uses `curve25519-dalek`'s
+  serial back end: `.cargo/config.toml` passes the setting, the fuzz gates pass it
+  themselves, and the crate refuses to compile unless the setting is exactly `serial`.
+  D6 proves the refusal on every run. Before this, on x86_64, the library chose a back
+  end that picks vector code by processor at run time. It is not a claim that no unsafe
+  code remains on the path: the README limitation says what remains, that the serial
+  back end is two bodies of code chosen by pointer width, and that `sha2` still chooses
+  an implementation by processor.
+- Pass 4.5d. The source-policy gate fails on a domain tag constant named in any Rust
+  source outside `crates/cj3-types`, and proves the rule on planted sources every run.
+  One doc comment in `crates/cj3-beacon/src/devnet.rs` named a tag and is reworded.
+- In the ruling's words, "D10 and D16 are still not ruled" (pass 3.5). Every value and
+  seat they reserve stays reserved and UNFILLED, and every prohibition on contacting or
+  notifying anyone stays in force.
+- The builder report is `loop/reports/C11-g0f-gate-builder.md`. Its §4.2 lists the
+  points left for Al.
 
 ## Next action
 
-1. Al reviews PR #21: the code, the proposed dependencies, the status of the worked
-   vectors, and the points of report C10 §4.2. He merges it; the builder does not.
-2. Then Al rules G0-F, after P-007 is merged with exact-merge-SHA D6 green.
-3. Then P-101 and packet P-011, in the order Al approves. P-101 remains blocked on Gate
-   G0 only. Packet P-011 blocks Phase 2.
-4. Carried, each to the boundary where Al rules it: P-1, P-4, P-10,
-   `ACTIVE_SIZE_PARAM`, the re-derived P-2, the re-ruled `BLOCK_MAX_BYTES` and the
-   timestamp unit (from the packet P-011 report); how `tx_root` and the state commitment
-   are built (the P-101 FRAME); the byte order in which a 32-byte value is read as a
-   number (the first Phase 2 FRAME); the genesis layout and its preimage (the Phase 1
-   genesis packet); P-7, P-9 and P-12 (their owners).
-5. P-008 remains blocked on the exact frontend URL.
-6. On any resume, run the preflight and re-check D11 before touching the repository.
+1. Al reviews PR #22 and merges it. The builder does not.
+2. Al says which of P-101 and packet P-011 runs first, in the message that launches it
+   (pass 3.6). Both are unblocked. The builder starts neither before that message.
+   Packet P-011 blocks Phase 2 and does not block P-101.
+3. Carried, each to the boundary where Al rules it (pass 3.5): P-1, P-4, P-10,
+   `ACTIVE_SIZE_PARAM`, the re-derived P-2, the re-measured P-3, the re-ruled
+   `BLOCK_MAX_BYTES` and the timestamp unit (from packet P-011's report; they block
+   Phase 2); how `tx_root` and the state commitment are built (P-101 proposes both in
+   its FRAME and stops there for Al's ruling); the byte order in which a 32-byte value
+   is read as a number (the first Phase 2 FRAME); the genesis layout and its preimage
+   (the Phase 1 genesis packet); P-7, P-9 and P-12 (their owners).
+4. P-008 remains blocked on the exact frontend URL, and is carried.
+5. On any resume, run the preflight and re-check D11 before touching the repository.
    `remediation-priority` in either project pauses CJ3.
 
 No frontend URL may be inferred for P-008, and no Al- or Sarah-owned TBD may be

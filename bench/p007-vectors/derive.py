@@ -20,11 +20,17 @@ Outputs, all generated and never edited by hand:
                                          bytes above, so the fuzzers start from inputs
                                          that decode
 
-Every fixture value below is a NON-NORMATIVE test value. None of them assigns a network
-identifier, a fee, a timestamp unit, a hash target, a root or a tuple. The two SIS
-tuples are stand-ins for the active tuple (ruling G0-C8e; P-007 resume ruling, clause
-2.3): both were already measured in bench/p003-sis, the choice is non-normative, and it
-makes neither a candidate for P-4.
+Status (Gate G0-F ruling, clause 2.4). Three of the outputs are NORMATIVE conformance
+vectors from the merge of PR #21: encoding-v1.vectors.txt, shake-expansion.vectors.txt
+and ed25519/c7-expected.vectors.txt. What is normative is the relation: these inputs
+give these bytes and these verdicts, and every implementation reproduces them. The
+status text of each file is written below; a change to it changes no vector value.
+
+The input values assign nothing: no network identifier, fee, target, root, timestamp
+unit or tuple. Every fixture value below is a test value. The two SIS tuples are
+stand-ins for the active tuple (ruling G0-C8e; P-007 resume ruling, clause 2.3): both
+were already measured in bench/p003-sis, the choice is non-normative, and it makes
+neither a candidate for P-4.
 """
 
 import hashlib
@@ -163,12 +169,15 @@ def build_worked():
             "CJ3 Encoding v1: worked vectors for every layout of ruling G0-C3 and every",
             "preimage of ruling G0-C2c, with all bytes shown (ruling G0-C8a).",
             "",
-            "STATUS: this artifact claims no status. The P-005 vectors stay symbolic and",
-            "non-normative, these worked vectors are a separate artifact, and their status",
-            "is part of Al's review of P-007 (P-007 resume ruling, clause 2.7).",
+            "STATUS: NORMATIVE conformance vectors for the layouts and preimages of CJ3",
+            "Encoding v1, from the merge of PR #21 (Gate G0-F ruling, clause 2.4). What is",
+            "normative is the relation: these inputs give these bytes and these verdicts,",
+            "and every implementation reproduces them. If the text of the specification",
+            "and a vector ever disagree, that is a STOP and a ruling. Neither wins by",
+            "default. The P-005 vectors stay symbolic and non-normative.",
             "",
-            "Every `in.` value is a NON-NORMATIVE fixture value. None assigns a network",
-            "identifier, fee, timestamp unit, hash target, root or tuple. The tuple is a",
+            "The input values assign nothing: no network identifier, fee, target, root,",
+            "timestamp unit or tuple. Every `in.` value is a fixture value. The tuple is a",
             "stand-in for the active tuple, already measured in bench/p003-sis; the choice",
             "is non-normative and makes it no candidate for P-4 (ruling G0-C8e; resume 2.3).",
             "The three keys are the public test keys of RFC 8032 section 7.1, tests 1 to 3.",
@@ -190,9 +199,10 @@ def build_worked():
         "edit by hand. Every byte of every layout (ruling G0-C3) and of every preimage",
         "(ruling G0-C2c) is shown, field by field.",
         "",
-        "**Status.** This artifact claims no status. The P-005 vectors stay symbolic and",
-        "non-normative; these worked vectors are a separate artifact, and their status is part",
-        "of Al's review of P-007 (P-007 resume ruling, clause 2.7).",
+        "**Status.** The normative conformance vectors for the layouts and preimages of CJ3",
+        "Encoding v1 are in `encoding-v1.vectors.txt` (Gate G0-F ruling, clause 2.4). This",
+        "file renders the same values for reading. The ruling names that file, not this one.",
+        "The P-005 vectors stay symbolic and non-normative.",
         "",
         "**Fixtures.** Every input value is a non-normative fixture value. None assigns a",
         "network identifier, fee, timestamp unit, hash target, root or tuple. `hash_target`,",
@@ -542,11 +552,18 @@ def build_expansion(instance_seed):
             "CJ3 Encoding v1: vectors for the expansion rule of Protocol Spec section 5.2",
             "(ruling G0-C5; evidence of ruling G0-C8b).",
             "",
-            "STATUS: these vectors are normative for the expansion rule (ruling G0-C8b;",
-            "P-007 resume ruling, clause 2.3). They test the rule itself. They may use any",
-            "valid modulus and they make no tuple a candidate for P-4. That includes the",
-            "vector at each stand-in tuple: the choice of the tuple is non-normative, and",
-            "the expansion it yields is a normative vector of the rule.",
+            "STATUS: NORMATIVE conformance vectors for the expansion rule, from the merge",
+            "of PR #21 (Gate G0-F ruling, clause 2.4; before it, ruling G0-C8b and P-007",
+            "resume ruling, clause 2.3). What is normative is the relation: these inputs",
+            "give these bytes and these verdicts, and every implementation reproduces",
+            "them. The input values assign nothing: no network identifier, fee, target,",
+            "root, timestamp unit or tuple. If the text of the specification and a vector",
+            "ever disagree, that is a STOP and a ruling. Neither wins by default.",
+            "",
+            "They test the rule itself. They may use any valid modulus and they make no",
+            "tuple a candidate for P-4. That includes the vector at each stand-in tuple:",
+            "the choice of the tuple is non-normative, and the expansion it yields is a",
+            "normative vector of the rule.",
             "",
             "The rule: SHAKE-256 absorbs the 32 seed bytes and nothing else. Its output is",
             "read four bytes at a time, each group a little-endian u32. A group is accepted",
@@ -683,8 +700,13 @@ def build_ed25519(worked_text):
         "# Ed25519 verification vectors with the expected result of each derived from",
         "# Protocol Spec section 1.3 (ruling G0-C7) clause by clause (ruling G0-C8c).",
         "#",
-        "# STATUS: this artifact claims no status; it is part of Al's review of P-007",
-        "# (P-007 resume ruling, clause 2.7).",
+        "# STATUS: NORMATIVE conformance vectors for Protocol Spec section 1.3, the",
+        "# thirteen builder-authored (`extra`) vectors included, from the merge of PR #21",
+        "# (Gate G0-F ruling, clause 2.4). What is normative is the relation: these",
+        "# inputs give these bytes and these verdicts, and every implementation",
+        "# reproduces them. The input values assign nothing: no network identifier, fee,",
+        "# target, root, timestamp unit or tuple. If the text of the specification and a",
+        "# vector ever disagree, that is a STOP and a ruling. Neither wins by default.",
         "#",
         "# Sources: `rfc8032` is RFC 8032 section 7.1 (rfc8032-section-7.1.txt). `cctv` is",
         "# C2SP CCTV ed25519/ed25519vectors.json at commit",

@@ -1,7 +1,8 @@
 # P-007 vectors for CJ3 Encoding v1
 
 This directory holds the evidence that ruling clause G0-C8 says P-007 owes for Protocol
-Spec v0.2-DRAFT §1.1–§1.3, §5.2, §6.1, §6.3 and §7. Everything here is derived twice,
+Spec §1.1–§1.3, §5.2, §6.1, §6.3 and §7 (v0.2-DRAFT when P-007 was built; the same text
+is v0.2, normative, since 2026-11-23). Everything here is derived twice,
 independently: by a script that uses only the Python standard library, and by the Rust
 code. D8 permits Python only under `bench/`; nothing here is part of the node.
 
@@ -10,21 +11,29 @@ a check on implementation, not on the reading of the specification.
 
 ## Status of these vectors
 
-- **Worked vectors** (`encoding-v1.vectors.txt`, `WORKED-VECTORS.md`): they claim no
-  status. Their status is part of Al's review of P-007 (P-007 resume ruling, clause
-  2.7). The P-005 vectors under `spec/vectors/` stay symbolic and non-normative and are
-  a separate artifact.
-- **Expansion vectors** (`shake-expansion.vectors.txt`): normative for the expansion
-  rule of §5.2 (ruling G0-C8b; resume clause 2.3). They test the rule itself and make
-  no tuple a candidate for P-4.
-- **Ed25519 vectors** (`ed25519/c7-expected.vectors.txt`): they claim no status; part
-  of the same review.
+Al's Gate G0-F ruling, clause 2.4, makes three files NORMATIVE conformance vectors, from
+the merge of PR #21:
+
+- `encoding-v1.vectors.txt`, for the layouts and preimages of CJ3 Encoding v1;
+- `shake-expansion.vectors.txt`, for the expansion rule of §5.2. These were already
+  normative for that rule (ruling G0-C8b; resume clause 2.3). They test the rule itself
+  and make no tuple a candidate for P-4;
+- `ed25519/c7-expected.vectors.txt`, for Protocol Spec §1.3, the thirteen
+  builder-authored vectors included.
+
+What is normative is the relation: these inputs give these bytes and these verdicts, and
+every implementation reproduces them. If the text of the specification and a vector ever
+disagree, that is a STOP and a ruling. Neither wins by default.
+
+The ruling names those three files. `WORKED-VECTORS.md` and `ed25519/C7-SUMMARY.md`
+render them for reading and are not named. The P-005 vectors under `spec/vectors/` stay
+symbolic and non-normative and are a separate artifact.
 
 ## Fixture values are not parameters
 
-Every input value in the worked vectors is a non-normative fixture. None assigns a
-network identifier, a fee, a timestamp unit, a hash target, a root or a tuple.
-`hash_target`, `tx_root` and `state_root` are opaque byte patterns.
+The input values assign nothing: no network identifier, fee, target, root, timestamp
+unit or tuple (clause 2.4). `hash_target`, `tx_root` and `state_root` are opaque byte
+patterns.
 
 No SIS tuple is active (P-4 and `ACTIVE_SIZE_PARAM` are unfilled). Two tuples stand in
 for the active tuple, as ruling G0-C8e and resume clause 2.3 require: both were already

@@ -265,10 +265,15 @@ parameterization and asymmetry bench with *measured* numbers; admission bench ha
 Lean spec of Tx validity with vector exporter; difficulty two-knob simulation;
 `cj3-types` with the single `addr()` derivation and codec fuzz targets.
 **Gate G0:** all spike reports in `loop/reports/`, PROPOSED decisions D1/D2/D14/D15
-ratified or revised with spike evidence, OPEN D9/D10 ruled. Current disposition:
-**HOLD**; G0-A is ratified as the static-`size_param` D2 amendment; G0-B, G0-C, G0-D
-and G0-E were ruled on 2026-11-22 (`loop/LEDGER.md`); G0-F is held, and Al rules it
-after P-007 is merged with exact-merge-SHA D6 green.
+ratified or revised with spike evidence, OPEN D9/D10 ruled. Disposition: **PASS**, with
+items carried, and Phase 1 is open (Al, 2026-11-23, `loop/LEDGER.md`). That ruling
+states how the conditions are met: the reports of P-001 to P-007, P-009 and P-010 are
+in `loop/reports` and their work is merged; D1, D2, D14 and D15 were ratified on
+2026-08-15 and are confirmed on the spike evidence since, D2 as G0-A amended it and D1
+on a condition (no tuple is ratified, packet P-011 measures whether the family has a
+size that miners can solve at a cost worth calling useful work, and if it finds no such
+size D1 returns to Al); D9 and D10 were ruled on 2026-08-15, and D9 was superseded on
+2026-11-22. P-008 stays blocked and is carried.
 
 **Phase 1 — Kernel (P-101…P-104).**
 `cj3-kernel`: tx validity V1–V9 and STF implemented against Lean vectors (conformance

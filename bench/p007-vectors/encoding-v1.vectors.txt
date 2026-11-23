@@ -1,12 +1,15 @@
 # CJ3 Encoding v1: worked vectors for every layout of ruling G0-C3 and every
 # preimage of ruling G0-C2c, with all bytes shown (ruling G0-C8a).
 #
-# STATUS: this artifact claims no status. The P-005 vectors stay symbolic and
-# non-normative, these worked vectors are a separate artifact, and their status
-# is part of Al's review of P-007 (P-007 resume ruling, clause 2.7).
+# STATUS: NORMATIVE conformance vectors for the layouts and preimages of CJ3
+# Encoding v1, from the merge of PR #21 (Gate G0-F ruling, clause 2.4). What is
+# normative is the relation: these inputs give these bytes and these verdicts,
+# and every implementation reproduces them. If the text of the specification
+# and a vector ever disagree, that is a STOP and a ruling. Neither wins by
+# default. The P-005 vectors stay symbolic and non-normative.
 #
-# Every `in.` value is a NON-NORMATIVE fixture value. None assigns a network
-# identifier, fee, timestamp unit, hash target, root or tuple. The tuple is a
+# The input values assign nothing: no network identifier, fee, target, root,
+# timestamp unit or tuple. Every `in.` value is a fixture value. The tuple is a
 # stand-in for the active tuple, already measured in bench/p003-sis; the choice
 # is non-normative and makes it no candidate for P-4 (ruling G0-C8e; resume 2.3).
 # The three keys are the public test keys of RFC 8032 section 7.1, tests 1 to 3.
