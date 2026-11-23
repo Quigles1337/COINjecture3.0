@@ -120,3 +120,8 @@ finally {
 }
 
 Write-Output "ARITHMETIC_BACKEND=PASS backend=serial builds=$built refusals=$refused"
+
+# The last build above is one that must fail, so it leaves a failing exit code behind.
+# A workflow step ends with the exit code of the last program that ran, so the code is
+# cleared here: every case has been judged, and reaching this line is the pass.
+$global:LASTEXITCODE = 0
