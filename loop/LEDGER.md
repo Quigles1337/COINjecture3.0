@@ -532,3 +532,331 @@ resistance to strategic withholding or be rejected. P-006's persistent-selection
 model retained only `0.423–0.806` of honest equilibrium size at 35% strategic share
 and `0.240–0.700` at 51%; changing window speed delayed the drift but did not remove
 its direction.
+
+## Gate G0 ruling overlay — G0-B to G0-E RULED / G0-F HELD (Al, 2026-11-22)
+
+The following live ruling is preserved verbatim. It rules G0-B, G0-C, G0-D and G0-E,
+holds G0-F, and leaves the gate disposition at HOLD. Where it differs from an earlier
+entry in this ledger, it supersedes that entry without rewriting it.
+
+```text
+LIVE CJ3 RULING - 2026-11-22
+GATE G0: G0-B, G0-C, G0-D AND G0-E RULED. G0-F HELD. GATE DISPOSITION: HOLD (NOT PASS).
+
+Read loop/PROMPTS/AUTONOMOUS_BUILDER.md, loop/LEDGER.md and loop/STATE.md first. Then act as
+the BUILDER seat under that prompt, as Part 0 amends it. This session's whole scope is Part 6.
+Write no protocol code in this session. If any clause below is ambiguous, or conflicts with an
+axiom, the Lean files or another clause, STOP and name the clause. Do not choose a reading.
+
+PART 0 - THE STATE OF THE RECORD
+
+0.1 Visibility. The repository is PUBLIC, by my decision. D9's "private through the build" is
+    superseded. Preflight step (d) now requires the visibility query to return PUBLIC, and any
+    other value is a STOP. Change that step in loop/PROMPTS/AUTONOMOUS_BUILDER.md and nothing
+    else in that file. "No visibility changes" stays a standing prohibition.
+0.2 D10 and D16 are not ruled here. Every value and seat they reserve stays reserved and
+    UNFILLED. Every prohibition on contacting or notifying anyone stays in force.
+0.3 Capacity (D11). No COINjecture 2.0 remediation work is queued or running. CJ3 may proceed.
+    This is the capacity condition for preflight step (f) and for the pickup guard until I
+    state another.
+0.4 PR #14 was merged on 2026-10-12 as 358114048c3a38f4821b88fce8dffd14abbd42a1, and D6 CI run
+    38323998550 on that commit concluded success. The merge stands. It carried only the
+    checked Amount boundary and the P-007 stop report. P-007 remains INCOMPLETE. Correct every
+    line in STATE, PACKETS and README that calls PR #14 draft or unmerged, and add a line to
+    BATCH-LOG that records the merge. Earlier BATCH-LOG lines and reports stay as written.
+
+PART 1 - G0-B: SIS CLAIM LANGUAGE, P-3, P-4
+
+B1 (SI-001) RESOLVED. In Protocol Spec 5.2 replace the whole "Hardness basis" bullet with:
+
+      Hardness basis (an assumption, labeled as A10 requires). For uniformly sampled A, SIS
+      has a conditional worst-case-to-average-case reduction lineage (Ajtai 1996;
+      Micciancio-Regev 2007; surveyed in Peikert 2016). In parameter regimes that meet the
+      reductions' asymptotic conditions, an efficient solver for random instances would give
+      an efficient approximation algorithm for certain worst-case lattice problems. The
+      reductions do not prove those worst-case problems hard, do not by themselves cover any
+      concrete finite tuple, and say nothing about how long a solver takes on an instance. A
+      concrete tuple therefore rests on three separately labeled things: the assumption that
+      the worst-case problems are hard, estimator models at a pinned estimator commit, and
+      measured solver and checker cost. None of the three is a proof. Parameters are chosen
+      from a measured solver envelope (ruling G0-B4), with estimator output cited as a
+      consistency check.
+
+    Engineering Plan D1 keeps its text as the record of the decision; add one line under it
+    that points to this resolution. Mark SI-001 RESOLVED.
+
+B2 (P-3) ACCEPTED AS PROVISIONAL, with its scope corrected. VALIDATION_BUDGET = 15 ms.
+    a. It covers the whole per-block cost of validating one solution: derive_instance plus
+       check, single-threaded, release profile.
+    b. It is an admission ceiling measured on reference hardware (D4). It is never a run-time
+       check: no clock enters consensus (A3). At run time the tuple bounds the cost.
+    c. The evidence so far times check alone on a pre-built matrix
+       (crates/cj3-classes/examples/p003_check_bench.rs,
+       bench/p003-sis/verifier-results.jsonl). Derivation is not in it. P-003's margins of
+       2.68x and 1.92x describe check alone and are not to be quoted for the budget.
+    d. Reference host v0 is the machine in bench/p003-sis/ENVIRONMENT.md. The measurement is
+       repeated with derivation included, on that host and on one other class of machine,
+       inside the packet B4 commissions. I re-rule the budget and the hardware definition
+       from that.
+
+B3 (P-4) REJECTED: the tuple (n, m, q, beta_squared) = (128, 3840, 16411, 3840), and the
+    128-bit threshold as a way of choosing a tuple.
+    a. Every block must carry a valid solution (B6), so the active tuple has to be one that
+       miners can solve inside the block interval. bench/p003-sis/estimator-results.jsonl
+       puts the cost of finding a solution at this tuple at 2^143.956 (rough model) to
+       2^165.520 (default model) operations, at reduction block size 493.
+       bench/p003-sis/solver-results.jsonl shows the bundled demonstrator solving n = 16 and
+       returning no solution at n = 24 in its one recorded run. A chain with this tuple would
+       never produce a block. P-003's report says the tuple is "not a final
+       cadence-compatible P-4".
+    b. A 128-bit floor is the right test for a scheme that needs nobody to solve the problem.
+       A mined puzzle needs miners to solve it. Under D2 as G0-A amended it, chain weight
+       comes from the hash race alone: the tuple sets how much useful work a block carries.
+       It also sets the head start a faster solver gets in the hash race, which is why it has
+       to be chosen from measured solve times.
+    c. What stands from P-003: the checker, the derivation, the measurement harness, and the
+       family q(n) = first prime above n^2, m(n) = 2 n ceil(log2 q(n)), beta_squared(n) = m(n)
+       as the candidate family. The family is not ratified.
+    d. P-4 and ACTIVE_SIZE_PARAM stay UNFILLED. Record in the README limitations that no SIS
+       tuple is ratified and that the one proposed could not be mined.
+
+B4 (the cadence link) COMMISSIONED: one new Phase 0 packet, the SIS solver envelope, under
+    the next free packet identifier. Queue it after P-007. Lane AUTO if the five D17
+    conditions hold at pickup. It measures and reports. It proposes no value for P-1, P-4,
+    P-10 or ACTIVE_SIZE_PARAM.
+    a. For family points from n = 16 upward, in steps the report justifies, until two
+       consecutive points fail: instances come from derive_instance on distinct recorded
+       seeds; a reference solver using lattice reduction stronger than LLL runs out of
+       process and untrusted; every output is re-checked by check_sis; a run that reaches the
+       limit is recorded as censored and never dropped. The limit is 30 minutes per run. A
+       point fails when fewer than half of its runs succeed inside the limit.
+    b. At least 100 seeds per point while the median solve is under 60 seconds, and at least
+       20 beyond that. Report only the quantiles a sample supports.
+    c. Reported per point: success rate; solve-time quantiles; the quality Q of each
+       solution; peak memory; the estimator's block size and cost beside the measured cost,
+       with any point where measurement beats the model by more than a factor of ten called
+       out; and derive_instance plus check time on the same host (B2d).
+    d. D8 keeps other languages out unless a decision admits them. This clause is that
+       decision, for this use only: an external lattice-reduction tool may be run in a
+       container pinned by digest for these measurements, as the estimator was. Nothing of
+       the tool is linked into, or vendored beside, any cj3-* crate.
+    e. I rule P-1, P-4, P-10, ACTIVE_SIZE_PARAM and the re-derived P-2 together, from that
+       report. The packet blocks Phase 2. It does not block P-007 or P-101.
+
+PART 2 - G0-C: CJ3 ENCODING v1 (resolves SI-002 and SI-003; ratifies GAP-12)
+
+C1 Grammar.
+    a. Integers are fixed width and little-endian: u16 in 2 bytes, u32 in 4, u64 in 8. This
+       replaces "minimal-length integers" in Protocol Spec section 1. Zero is the all-zero
+       bytes of the field's width, and no value has a second encoding.
+    b. A fixed-length byte array [N] is its N bytes, with no length in front.
+    c. A structure is its fields concatenated in the order C3 gives. There are no tags,
+       names, padding, optional fields, version bytes or checksums. A change of layout is a
+       protocol upgrade with new domain-tag bytes. Nothing in band announces a version.
+    d. Two parts vary in length, both in the block: the solution bytes and the transaction
+       list. Each has a u32 count in front. A decoder checks a count against its limit and
+       against the bytes that remain before it allocates.
+    e. An input is valid only if it is exactly the encoding of a value. It is rejected, with
+       a distinct typed error per case and never a panic, when it is shorter than required,
+       when bytes remain after the last field, when a count or the whole exceeds its limit,
+       when the solution length is not the exact length C3 gives, or when class_id names no
+       registered class. Non-minimal, duplicated, missing and unknown fields cannot be
+       written in this grammar: every attempt at one is one of those rejections.
+    f. There is no envelope. Framing messages on the wire belongs to Phase 3.
+
+C2 Hash, tags and preimages.
+    a. H is SHA-256. Confirmed.
+    b. A domain tag is 16 bytes: the ASCII text below, padded on the right with 0x00.
+           D_ADDR     CJ3/v1/addr      434a332f76312f616464720000000000
+           D_TX       CJ3/v1/tx        434a332f76312f747800000000000000
+           D_HDR      CJ3/v1/header    434a332f76312f686561646572000000
+           D_INST     CJ3/v1/instance  434a332f76312f696e7374616e636500
+           D_SOL      CJ3/v1/solution  434a332f76312f736f6c7574696f6e00
+           D_BEACON   CJ3/v1/beacon    434a332f76312f626561636f6e000000
+           D_GENESIS  CJ3/v1/genesis   434a332f76312f67656e657369730000
+    c. A preimage is its tag, then fixed-width fields in this order, each encoded by C1.
+           addr(pk)       = H(D_ADDR || pk[32])                               48 bytes
+           signing digest = H(D_TX || network_id u32 || from[32] || to[32] ||
+                              amount u64 || fee u64 || nonce u64)            108 bytes
+           header hash    = H(D_HDR || Header)                               322 bytes
+           instance_seed  = H(D_INST || network_id u32 || height u64 ||
+                              parent_hash[32] || beacon_out[32])              92 bytes
+           sol_commit     = H(D_SOL || class_id u16 || instance_seed[32] ||
+                              SHA-256(solution bytes)[32] || miner_addr[32]) 114 bytes
+           beacon input   = H(D_BEACON || parent_hash[32])                    48 bytes
+       addr(pk) is the whole digest. In the signing digest, network_id is the transaction's
+       own field, and the Ed25519 message is the 32-byte digest. parent_hash is the header
+       hash of the parent. In sol_commit the inner hash is over the C3e solution bytes alone,
+       without the block's count in front; it is the only use of H without a tag in these
+       layouts.
+       D_GENESIS has its bytes now; the genesis layout and preimage are ruled with the
+       Phase 1 genesis packet.
+    d. Under one tag every preimage has the same length and the same field positions, and
+       preimages under different tags differ in their first 16 bytes. So two different
+       inputs never give the same preimage.
+
+C3 Layouts.
+    a. Transaction, 188 bytes: network_id u32, from [32], to [32], amount u64, fee u64,
+       nonce u64, pubkey [32], sig [64]. pubkey is the RFC 8032 public-key encoding, and sig
+       is R then S.
+    b. Class identifiers: SIS is 1. 0 is never assigned. This fills the identifier P-003
+       left unbound.
+    c. SIS size parameter, 20 bytes: n u32, m u32, q u32, beta_squared u64.
+    d. Header, 306 bytes with the SIS anchor: network_id u32, height u64, parent_hash [32],
+       beacon_out [32], instance_seed [32], class_id u16, size_param in the layout of the
+       class that class_id names, hash_target [32], tx_root [32], state_root [32],
+       sol_commit [32], timestamp u64, miner_addr [32], nonce u64.
+    e. SIS solution, 2 * m bytes: the m coefficients in index order, each a 16-bit
+       two's-complement integer, little-endian.
+    f. Block: the header, a u32 solution length, the solution bytes, a u32 transaction
+       count, the transactions. The solution length must equal 2 * m for the header's
+       size_param. The whole must not exceed BLOCK_MAX_BYTES.
+
+C4 (SI-002) RESOLVED. A coefficient is encoded as C3e says. The check rejects a coefficient
+    when its square exceeds beta_squared, before it adds to the norm. That guard replaces
+    "|s_i| <= s_max(P-4)" in Protocol Spec 5.2. It follows from the norm bound and changes
+    no set of valid solutions. A tuple with beta_squared above 32767^2 = 1,073,676,289 is
+    not admissible under encoding v1.
+
+C5 (SI-003) RESOLVED: the convention of crates/cj3-classes/src/sis.rs is ratified as it
+    stands. SHAKE-256 absorbs the 32 seed bytes and nothing else. Its output is read four
+    bytes at a time, each group a little-endian u32. A group is accepted when it is below
+    floor(2^32 / q) * q, and it yields its value modulo q. A rejected group is used up
+    whole: the next candidate starts at the next four-byte boundary. Accepted values fill
+    the matrix column by column, rows 0 to n-1 within a column, until n * m are placed.
+
+C6 (P-8) Size limits.
+    a. TX_MAX_BYTES = 188: the exact size of a transaction, so V1's bound and exact decode
+       agree.
+    b. SOL_MAX_BYTES = 2 * m for the active tuple. It is derived, and unfilled while P-4 is.
+    c. BLOCK_MAX_BYTES = 1,048,576, PROVISIONAL. No evidence stands behind this number. It
+       is a conservative round figure so that decoders have a bound, and I re-rule it with
+       P-1.
+
+C7 (GAP-12) Signatures. Ed25519 as RFC 8032 section 5.1, pure (no context, no prehash), with
+    exactly this verification. Inputs: public key A, 32 bytes; signature R || S, 32 and 32
+    bytes; message M, the 32-byte signing digest of C2c.
+    a. Decode A and R as points by RFC 8032 section 5.1.3 exactly. A y-coordinate not below
+       p = 2^255 - 19 fails. A y with no matching x fails. An x of zero with the sign bit
+       set fails.
+    b. Reject if A or R is one of the eight points whose order divides 8, the identity
+       included.
+    c. Read S as a little-endian integer. Reject unless S < L, the order of the base point.
+    d. k = SHA-512(R || A || M) over the bytes as received, read little-endian and reduced
+       modulo L.
+    e. Accept if and only if [S]B = R + [k]A. The form multiplied through by 8 is not a
+       substitute and must not be used. Batch verification is not used on a consensus path.
+    f. An all-zero signature and an all-zero key are rejected by (b).
+
+C8 Evidence that P-007 owes for Part 2.
+    a. For every layout in C3 and every preimage in C2c, at least one worked vector with all
+       of its bytes shown, derived twice independently: by the Rust code, and by a script
+       that uses only a standard library, as bench/p003-sis/SHAKE-VECTOR.md did.
+    b. For C5: the existing q = 17 fixture, now normative; one vector with a prime modulus
+       above 2^31, where candidates are rejected; and one at each tuple used as a fixture.
+    c. For C7: the RFC 8032 section 7.1 test vectors, and the C2SP CCTV ed25519 edge-case
+       vectors pinned by commit, with the expected result for each derived from C7 clause by
+       clause and recorded. Do not take expected results from the library under test.
+    d. Fuzz targets, live in D6: no input makes a decoder panic; decode then encode returns
+       the input; encode then decode returns the value; each length limit holds at the
+       boundary, one below it and one above it.
+    e. Until P-4 is ruled, no tuple is compiled in as active. Codecs take the tuple as an
+       argument. Fixtures use tuples already measured in bench/p003-sis and are labeled
+       non-normative.
+
+PART 3 - G0-D: THE REMAINING G0 VALUES
+
+D1 P-10 (TIMESTAMP_DRIFT) stays UNFILLED. No value can be evidenced while P-1 is unfilled. I
+   rule P-10, and the unit of the timestamp field, together with P-1 (B4e).
+D2 P-8 is ruled in C6.
+D3 P-7, P-9 and P-12 are unchanged: owner values, UNFILLED (0.2).
+
+PART 4 - G0-E: GAP-7 TO GAP-13
+
+E1 GAP-12 is RATIFIED by C7.
+E2 GAP-7, GAP-8, GAP-10, GAP-11 and GAP-13 are RATIFIED as Phase 3 requirements, as worded in
+   docs/AUDIT_TRACEABILITY.md section 5. Add them to Protocol Spec section 12. Gate G3 tests
+   each.
+E3 GAP-9 is RATIFIED as a requirement on the packet that introduces the mempool. Gate G3
+   tests it.
+E4 The numbers these need (peer and dial limits, timeouts, limiter sizes, per-sender mempool
+   limits) are operating configuration, not consensus parameters. The builder proposes each
+   default with its reasoning in the packet report, and I review them at G3.
+E5 The inventory of the original Codex report stays UNKNOWN and is recorded as unknown. It
+   does not block G0.
+
+PART 5 - G0-F HELD, AND WHAT IS CARRIED
+
+F1 G0 stays HOLD. I rule G0-F after P-007 is merged with exact-merge-SHA D6 green.
+F2 Order of work: this ruling's record (Part 6); then P-007, resumed on a new branch in the
+   HUMAN lane and not merged by the builder; then my G0-F ruling; then P-101 and the solver
+   envelope, in the order I approve.
+F3 Carried, each to the boundary where I rule it:
+   - P-1, P-4, P-10, ACTIVE_SIZE_PARAM, the re-derived P-2, the re-ruled BLOCK_MAX_BYTES and
+     the timestamp unit: from the solver-envelope report. They block Phase 2.
+   - How tx_root and the state commitment are built: at the P-101 FRAME. P-007 carries both
+     as 32 opaque bytes.
+   - The byte order in which a 32-byte value is read as a number (B8, and the weight formula
+     and tie-break of section 10): at the first Phase 2 FRAME. C1a does not decide it.
+   - The genesis layout and its preimage: with the Phase 1 genesis packet.
+   - P-7, P-9 and P-12: with their owners (0.2).
+   - P-008: still blocked on the URL.
+
+PART 6 - THIS SESSION
+
+1. Run the preflight as 0.1 and 0.3 amend it.
+2. Record this ruling verbatim in loop/LEDGER.md as a new overlay, before any other edit.
+3. On a new branch, one documentation-only change that applies it:
+   - docs/PROTOCOL_SPEC.md to v0.2-DRAFT, with every amendment in Parts 1 to 4 and its
+     open-TBD index brought up to date;
+   - loop/reports/SPEC-ISSUES.md: SI-001, SI-002 and SI-003 RESOLVED, each pointing here;
+   - docs/AUDIT_TRACEABILITY.md section 5: the status of GAP-7 to GAP-13;
+   - docs/ENGINEERING_PLAN.md: the line under D1, and the Gate G0 line in section 4;
+   - README.md: the status block (scope PUBLIC, PR #14 merged, this ruling) and the
+     limitation in B3d;
+   - loop/PACKETS.md and loop/STATE.md: brought to the truth, with P-007 ready to resume,
+     the solver envelope queued, and the pickup guard on 0.3;
+   - loop/reports/BATCH-LOG.md: new lines only, for the PR #14 merge and for this ruling;
+   - loop/PROMPTS/AUTONOMOUS_BUILDER.md: step (d) only.
+4. Change nothing under crates/, spec/, bench/, scripts/ or .github/.
+5. Adversary pass: read the diff against this ruling clause by clause, and against A1 to A11
+   and the Lean files. Report every place where an amended sentence says more or less than
+   its clause.
+6. Open the pull request, get exact-head D6 green, mark it ready, and STOP. Do not merge. I
+   review and merge.
+```
+
+### Effective record of the 2026-11-22 ruling
+
+The verbatim text above governs. This index only names what the ruling supersedes,
+what it leaves unruled, and where it is applied. On any difference, the verbatim text
+wins.
+
+- **Clause names.** Other documents cite a clause of this ruling as `G0-` plus its
+  label (`G0-B3`, `G0-C7e`, `G0-D1`), and Parts 0, 5 and 6 as "Part 0.1", "F2" or
+  "Part 6 step 3". This keeps the ruling's clauses B1–B4 and D1–D3 apart from block
+  rules B1–B12 and from decisions D1–D17 in this ledger.
+- **Superseded by Part 0.1:** the words "(private) through the build" in the D9 ruling
+  of 2026-08-15, and "The repository remains private" in the P-010 overlay of
+  2026-08-16. The rest of D9 is not ruled here.
+- **Superseded by Part 0.3:** the capacity conditions of 2026-08-15 and after, which
+  tied CJ3 to Sarah's GATE-1/GATE-2 answers. D11 itself is unchanged.
+- **Superseded by Part 0.4 and Parts 1 to 4:** in the G0-A overlays of 2026-08-16,
+  "G0-B, G0-C, G0-D, G0-E: HOLD", "P-007/PR #14 stays draft and unmerged" and "PR #14
+  stays draft".
+- **Resolved:** SI-001 (clause B1), SI-002 (clause C4) and SI-003 (clause C5). Earlier
+  entries that call them unresolved describe the record before this ruling. The ruling
+  changes no Lean file and does not change the status of the P-005 vectors.
+- **D8, one use only:** clause B4d admits an external lattice-reduction tool, run in a
+  container pinned by digest, for the solver-envelope measurements. D8 is otherwise
+  unchanged.
+- **Not ruled:** D10 and D16 (Part 0.2), G0-F (clause F1), and every item clause F3
+  carries.
+- **Packet identifier:** the SIS solver envelope that clause B4 commissions is packet
+  P-011, the next free identifier after P-010. It is not parameter P-11
+  (`SIZE_RETARGET_WINDOW`), which G0-A struck.
+- **Applied in:** `docs/PROTOCOL_SPEC.md` v0.2-DRAFT, `loop/reports/SPEC-ISSUES.md`,
+  `docs/AUDIT_TRACEABILITY.md` §5, `docs/ENGINEERING_PLAN.md` (the D1 pointer and the
+  Gate G0 line), `README.md`, `loop/PACKETS.md`, `loop/STATE.md`,
+  `loop/reports/BATCH-LOG.md` and step (d) of `loop/PROMPTS/AUTONOMOUS_BUILDER.md`. The
+  builder's report is `loop/reports/C9-g0-bcde-ruling-builder.md`.

@@ -29,7 +29,8 @@ any failure = STOP before touching anything):
      in which case resume per loop/STATE.md, never silently restart, and
      report the resume decision before proceeding.
   d. `gh repo view Quigles1337/COINjecture3.0 --json visibility` returns
-     PRIVATE. STOP if public — this is the D16 surprise protection.
+     PUBLIC. Any other value is a STOP — the repository is public by Al's
+     decision (LEDGER, 2026-11-22 ruling, Part 0.1).
      RE-VERIFY at the start of every session that will push.
   e. AUTONOMY AUTHORIZATION: loop/LEDGER.md must contain D17 with status
      RATIFIED. If Al's launch message ratifies D17 (and D16, and records the

@@ -1,13 +1,13 @@
 # COINjecture 3.0 Loop State
 
-CYCLE: 8
+CYCLE: 9
 PHASE: Phase 0 — Gate G0 HOLD
-PACKET: Gate G0-A integration closeout — P-2 PROVISIONAL; G0-B through G0-E HELD
+PACKET: Gate G0 ruling record — G0-B, G0-C, G0-D, G0-E RULED; G0-F HELD; next packet P-007 (HUMAN)
 BRANCH: main
 REMOTE: https://github.com/Quigles1337/COINjecture3.0
-CAPACITY_FLAG: cj2-blocked-on-external
-CAPACITY_OBSERVED_AT: 2026-08-16 G0-A closeout pickup; CJ2 operational state reports CAPACITY_FLAG none with surviving GATE-1/GATE-2 items blocked/awaiting
-STATUS: G0_HOLD_IDLE
+CAPACITY_FLAG: cj2-no-remediation-queued-or-running
+CAPACITY_OBSERVED_AT: 2026-11-22, Al's ruling Part 0.3 — no COINjecture 2.0 remediation work is queued or running; CJ3 may proceed until Al states another condition
+STATUS: G0_HOLD — RULING RECORD AWAITING AL'S REVIEW AND MERGE; P-007 READY TO RESUME
 
 ## Ground-truth state
 
@@ -121,13 +121,14 @@ STATUS: G0_HOLD_IDLE
   `loop/evidence/`. Source and durable-copy sizes/hashes are sealed in
   `loop/evidence/P-009-SOURCE-MANIFEST.md`. P-009 then completed the authorized
   source interpretation: matrix v0.2 accounts for all 33 third-party findings, all 25
-  Lean claim-points, and all eight Lean recommendations. GAP-7 through GAP-13 remain
-  proposals, not ratifications; the absent original Codex report's exact per-finding
-  inventory remains UNKNOWN.
+  Lean claim-points, and all eight Lean recommendations. GAP-7 through GAP-13 were
+  proposals in that matrix and were ruled on 2026-11-22 (G0-E); the absent original
+  Codex report's exact per-finding inventory remains UNKNOWN.
 - P-010 replaced the stale P-001 README with a 254-line evidence-linked repository
-  index. It records private/pre-testnet scope, the open G0 position, implemented versus
-  planned surfaces, audit lineage, A1–A11, the crate map, governance, evidence checks,
-  working commands, limitations/TBD ownership, and the exact TBD license line.
+  index. At its merge it recorded private/pre-testnet scope (the scope row now reads
+  public, per ruling Part 0.1), the open G0 position, implemented versus planned
+  surfaces, audit lineage, A1–A11, the crate map, governance, evidence checks, working
+  commands, limitations/TBD ownership, and the exact TBD license line.
 - P-010 merged through PR #10 at
   `3b43cca42e14e53412747fb2b559d6fc29c4ac9d`; final PR-head run `31957723975` and
   exact-merge-SHA mainline run `31957922841` both passed all eleven D6 jobs. Its
@@ -137,23 +138,28 @@ STATUS: G0_HOLD_IDLE
   exact-merge-SHA mainline run `31958393946` both passed all eleven D6 jobs.
 - The standing README drift-control rule is RATIFIED: every G0–G4 closeout refreshes
   the README status block and roadmap marker in the same closeout.
-- `loop/reports/SPEC-ISSUES.md` keeps three HUMAN interpretation issues open:
-  conditional SIS-hardness wording, undefined `s_max`, and the missing normative
-  SHAKE candidate-byte convention. SI-004 is resolved by the ratified Model 4 ruling.
+- `loop/reports/SPEC-ISSUES.md` has no open issue. The 2026-11-22 ruling resolved
+  SI-001 (conditional SIS-hardness wording, G0-B1), SI-002 (undefined `s_max`, G0-C4)
+  and SI-003 (the SHAKE candidate-byte convention, G0-C5). SI-004 is resolved by the
+  ratified Model 4 ruling.
 - The three pinned audit-tool caches are established on `main`; subsequent packet PRs
   can use the verified cache-hit path.
-- GitHub reports `main` is not currently protected. P-001 documents the required
-  contract in `.github/BRANCH_PROTECTION.md` and does not claim the setting is active.
-- The COINjecture 2.0 agent queue remains blocked pending Sarah's GATE-1/GATE-2 answers;
-  CJ3 may proceed only while that condition remains true. If those gates clear, the
-  capacity flag becomes `remediation-priority` and CJ3 pauses immediately.
+- GitHub reports `main` is not currently protected (read again on 2026-11-22:
+  `gh api repos/Quigles1337/COINjecture3.0/branches/main/protection` returned 404
+  "Branch not protected"). P-001 documents the required contract in
+  `.github/BRANCH_PROTECTION.md` and does not claim the setting is active.
+- Capacity (D11): Part 0.3 of Al's 2026-11-22 ruling states that no COINjecture 2.0
+  remediation work is queued or running and that CJ3 may proceed. That is the capacity
+  condition for preflight step (f) and for the pickup guard until Al states another.
+  `remediation-priority` in either project's loop still pauses CJ3 immediately.
 - `docs/RESEARCH_SURVEY.md` and
   `loop/PROMPTS/AUTONOMOUS_BUILDER.md` were supplied for the first governance commit.
 - P-008 remains blocked on the exact Al-supplied public frontend repository URL.
 - Al's second P-005 review accepts F1/F2/F3 as closed and authorizes PR #9 to merge.
   Effective with that merge, the Lean V1–V9/STF encoding, including conservation
   under `LawfulStateOps`, is HUMAN-RATIFIED. The symbolic vectors remain explicitly
-  non-normative pending SI-001/SI-002/SI-003.
+  non-normative; the 2026-11-22 ruling resolved SI-001/SI-002/SI-003 without changing
+  any Lean file or vector.
 - P-101 carries the three `LawfulStateOps` laws, checker-derived `rewardInputs`
   provenance, checked construction of the `R_MAX·SCALE` divisor, and concrete storage
   read/write coherence. Effective with PR #9's merge, P-101 is blocked on Gate G0
@@ -181,18 +187,23 @@ STATUS: G0_HOLD_IDLE
   target controller. P-1 remains unfilled. P-2 is provisionally `W=32`, gain `1/8`,
   clamp `[8/9,9/8]`, subject to re-derivation when P-1 is ratified. No dynamic size
   retarget is selected or permitted.
-- P-007 is STOPPED / INCOMPLETE in the HUMAN lane. Draft PR #14 preserves only the
-  independently specified checked `Amount(u64)` boundary at exact head
-  `9acea83ca17d67a19e0d41aeb5e7275666a54013`; run `31969740766` passed all eleven
-  D6 jobs. The PR remains draft and unmerged. Canonical codec grammar, hash/domain
-  bytes and framing, SI-002, SI-003, P-8 limits, strict Ed25519 semantics, and actual
-  codec-fuzz admission require G0/HUMAN rulings. SI-001 is an independent G0 issue.
+- P-007 is INCOMPLETE in the HUMAN lane and ready to resume. PR #14 preserved only the
+  independently specified checked `Amount(u64)` boundary and the P-007 stop report at
+  exact head `9acea83ca17d67a19e0d41aeb5e7275666a54013`; run `31969740766` passed all
+  eleven D6 jobs. Al merged PR #14 on 2026-10-12 as
+  `358114048c3a38f4821b88fce8dffd14abbd42a1`, and D6 run `38323998550` on that commit
+  concluded success; the merge stands (ruling Part 0.4). The rulings its stop needed
+  are now given: canonical codec grammar (G0-C1), hash, domain bytes and preimages
+  (G0-C2), layouts (G0-C3), SI-002 (G0-C4), SI-003 (G0-C5), P-8 limits (G0-C6), strict
+  Ed25519 semantics (G0-C7) and the evidence owed, including live codec fuzz targets
+  (G0-C8). SI-001 is resolved by G0-B1.
 - P-009 is COMPLETE. Refreshed PR #15 head
   `34ce596d0f1160b152a33d95b1f6ddf25e4111c4` passed all eleven D6 jobs in run
   `31971741833`; merge `ce0b9752c9101e89f93a90379cd9e5ac1a08842d` passed exact-
   merge-SHA run `31972017916`. Matrix v0.2 records 17 mapped, 10 partial, and six
   surface-excluded third-party findings; tiers all 25 Lean claims without importing
-  proof credit; and leaves GAP-7 through GAP-13 explicitly non-ratified.
+  proof credit; and left GAP-7 through GAP-13 as proposals, which the 2026-11-22
+  ruling then ruled (G0-E).
 - Al's 2026-08-16 partial Gate G0 ruling sets the gate disposition to **HOLD**, not
   PASS. G0-A ratifies D2 Option 2: `size_param` is an active protocol constant changed
   only by explicit human-ratified upgrade; B3 compares the header value to that
@@ -210,24 +221,59 @@ STATUS: G0_HOLD_IDLE
   miner-behavior control loop must evidence withholding resistance or be rejected.
   P-006 modeled equilibrium size retention of `0.423–0.806` at 35% strategic share
   and `0.240–0.700` at 51%.
-- G0-B, G0-C, G0-D, and G0-E remain held for Al's reviewer-assisted normative text.
-  Nothing on those surfaces was inferred, defaulted, or partially implemented. Draft
-  PR #14 remains unmerged.
+- Al's ruling of 2026-11-22 is recorded verbatim in `loop/LEDGER.md`. It rules G0-B,
+  G0-C, G0-D and G0-E, holds G0-F, and leaves the gate at **HOLD**. Its clauses are
+  cited here as `G0-` plus their label.
+- Visibility: the repository is PUBLIC by Al's decision, and D9's "private through the
+  build" is superseded (Part 0.1). Preflight step (d) now requires `PUBLIC` and stops on
+  any other value. "No visibility changes" stays a standing prohibition. D10 and D16
+  are not ruled; every value and seat they reserve stays reserved and UNFILLED, and
+  every prohibition on contacting or notifying anyone stays in force (Part 0.2).
+- G0-B: SI-001 is resolved by the supplied "Hardness basis" text. P-3 is accepted as
+  provisional at `VALIDATION_BUDGET = 15 ms` over `derive_instance` plus `check`; the
+  evidence so far times `check` alone. The proposed P-4 tuple
+  `(128, 3840, 16411, 3840)` and the 128-bit threshold as a way of choosing a tuple are
+  rejected; P-4 and `ACTIVE_SIZE_PARAM` stay UNFILLED and the candidate family is not
+  ratified. Packet P-011, the SIS solver envelope, is commissioned and queued after
+  P-007.
+- G0-C: CJ3 Encoding v1 is ruled — grammar, SHA-256, the seven domain tags and their
+  preimages, the transaction, size-parameter, header, solution and block layouts, the
+  SIS coefficient guard, the SHAKE expansion convention of
+  `crates/cj3-classes/src/sis.rs` as it stands, the P-8 limits (`TX_MAX_BYTES = 188`;
+  `SOL_MAX_BYTES = 2 * m`, unfilled while P-4 is; `BLOCK_MAX_BYTES = 1,048,576`
+  provisional) and the exact Ed25519 verification. SIS is class 1; 0 is never assigned.
+  None of it is implemented: P-007 owes the code and the G0-C8 evidence.
+- G0-D: P-10 and the timestamp unit stay UNFILLED and are ruled with P-1. P-7, P-9 and
+  P-12 are unchanged owner values.
+- G0-E: GAP-12 is ratified by G0-C7. GAP-7, GAP-8, GAP-10, GAP-11 and GAP-13 are
+  ratified as Phase 3 requirements and are in Protocol Spec §12. GAP-9 is ratified as a
+  requirement on the packet that introduces the mempool. Gate G3 tests each. Their
+  numbers are operating configuration that the builder proposes and Al reviews at G3.
+  The original Codex report's inventory stays UNKNOWN and does not block G0.
+- This session wrote no protocol code and changed nothing under `crates/`, `spec/`,
+  `bench/`, `scripts/` or `.github/`. Its record is PR #20 from branch
+  `docs/g0-bcde-ruling-record`, with the builder report at
+  `loop/reports/C9-g0-bcde-ruling-builder.md`. The builder does not merge it.
 
 ## Next action
 
-1. STOP and idle at Gate G0 HOLD. No queued packet qualifies without touching a held
-   surface; do not manufacture work.
-2. Await Al's normative G0-B through G0-E text. P-1 remains unfilled and proposal-
-   free; P-2 remains provisional and must be re-derived when P-1 is ratified.
-3. Keep draft PR #14 unmerged. Its green `codec-fuzz-smoke` job is a deferral marker,
-   not a fuzz-success claim.
-4. P-008 remains blocked on the exact frontend URL. P-101 remains blocked on Gate G0
-   only. Sarah-owned and Al-owned values remain unfilled under D16 and their existing
-   ownership rules.
-5. On any resume, re-check D11 before touching the repository. If COINjecture 2.0's
-   GATE-1/GATE-2 answers have arrived, 2.0 immediately reclaims capacity and CJ3
-   remains paused.
+1. Al reviews and merges PR #20. Until he does, `main` still carries the
+   record as it stood before the ruling.
+2. Then P-007 resumes on a new branch in the HUMAN lane under Protocol Spec v0.2-DRAFT
+   and G0-C8. The builder does not merge it. The green `codec-fuzz-smoke` job is still
+   a deferral marker, not a fuzz-success claim, until P-007 makes the fuzz targets live.
+3. Then Al rules G0-F, after P-007 is merged with exact-merge-SHA D6 green.
+4. Then P-101 and packet P-011, in the order Al approves. P-101 remains blocked on Gate
+   G0 only. Packet P-011 blocks Phase 2.
+5. Carried, each to the boundary where Al rules it: P-1, P-4, P-10,
+   `ACTIVE_SIZE_PARAM`, the re-derived P-2, the re-ruled `BLOCK_MAX_BYTES` and the
+   timestamp unit (from the packet P-011 report); how `tx_root` and the state commitment
+   are built (the P-101 FRAME); the byte order in which a 32-byte value is read as a
+   number (the first Phase 2 FRAME); the genesis layout and its preimage (the Phase 1
+   genesis packet); P-7, P-9 and P-12 (their owners).
+6. P-008 remains blocked on the exact frontend URL.
+7. On any resume, run the preflight and re-check D11 before touching the repository.
+   `remediation-priority` in either project pauses CJ3.
 
 No frontend URL may be inferred for P-008, and no Al- or Sarah-owned TBD may be
 filled.

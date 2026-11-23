@@ -230,7 +230,13 @@ committed cross-reference is dropped from the CJ3 controls above.
   reconciled. Packet CI/merge evidence belongs in the P-009 builder report and loop
   closeout, not in the source matrix.
 
-## §5 Known gaps and proposed follow-ups — not ratified
+## §5 Known gaps and follow-ups — status after the 2026-11-22 ruling
+
+GAP-7 to GAP-13 were proposals when P-009 wrote this section. Al ruled each of them on
+2026-11-22 in Part 4 (G0-E) of the ruling recorded verbatim in `loop/LEDGER.md`. The
+wording of each gap below is as P-009 wrote it; its status follows the wording. A
+ratified requirement is not an implemented control: GAP-1 still applies to every one of
+them.
 
 - **GAP-1 remains — doctrine is not shipped code.** Phase 1–3 controls become real
   only at their named implementations and gates. A green Phase 0 D6 run cannot close
@@ -239,26 +245,51 @@ committed cross-reference is dropped from the CJ3 controls above.
   transport/envelope model; never forward an unverified sender; define replay and
   freshness checks; forbid a configuration that silently disables authentication.
   Covers H1, H2, M8.
+  **Status: RATIFIED as a Phase 3 requirement (G0-E2); in Protocol Spec §12; Gate G3
+  tests it.**
 - **GAP-8 — peer-set resource and eclipse discipline.** Bound peer-exchange entries,
   total peers, concurrent dials, and address-class/subnet concentration. Covers H3,
   M9.
+  **Status: RATIFIED as a Phase 3 requirement (G0-E2); in Protocol Spec §12; Gate G3
+  tests it.**
 - **GAP-9 — per-principal mempool occupancy.** Define per-sender limits and an
   adversarially safe eviction rule in addition to global/per-peer bounds. Covers H5.
+  **Status: RATIFIED as a requirement on the packet that introduces the mempool
+  (G0-E3); Gate G3 tests it.**
 - **GAP-10 — authoritative client address.** Use the socket peer by default; honor
   forwarding headers only through an explicitly configured trusted-proxy boundary.
   Covers H10.
+  **Status: RATIFIED as a Phase 3 requirement (G0-E2); in Protocol Spec §12; Gate G3
+  tests it.**
 - **GAP-11 — public error hygiene.** Map internal errors to bounded typed public
   responses without filesystem, query, stack, or internal diagnostic disclosure.
   Covers M10's second half.
+  **Status: RATIFIED as a Phase 3 requirement (G0-E2); in Protocol Spec §12; Gate G3
+  tests it.**
 - **GAP-12 — strict Ed25519 semantics.** Before P-007/G0 fixes canonical signature
   bytes, specify strict verification, canonical encodings, and explicit rejection of
   invalid/zero signatures. Covers L2; this packet supplies no encoding choice.
+  **Status: RATIFIED by clause C7 of the ruling (G0-E1); the verification rule is
+  Protocol Spec §1.3.**
 - **GAP-13 — bounded limiter/TLS state.** Bound rate-limiter key cardinality and
   eviction; set handshake/idle/read timeouts and total/per-peer connection ceilings.
   Covers L5.
+  **Status: RATIFIED as a Phase 3 requirement (G0-E2); in Protocol Spec §12; Gate G3
+  tests it.**
 - **Codex source-level inventory remains unknown.** The committed P1–P5 root-cause
   cross-reference is sufficient to proceed, but only the original report can restore
   its exact per-finding IDs, titles, severities, and counts.
+  **Status: stays UNKNOWN and is recorded as unknown; it does not block G0 (G0-E5).**
+
+The numbers these requirements need (peer and dial limits, timeouts, limiter sizes,
+per-sender mempool limits) are operating configuration, not consensus parameters. The
+builder proposes each default with its reasoning in the packet report, and Al reviews
+them at G3 (G0-E4).
+
+Only this section was changed for the 2026-11-22 ruling. The §1 matrix rows and the §2
+A8 conclusion are as P-009 wrote them. Where they call GAP-7 to GAP-13 proposed, or
+SI-001, SI-002 and SI-003 unresolved, the statuses above and
+`loop/reports/SPEC-ISSUES.md` are the current record.
 
 ---
 *docs/AUDIT_TRACEABILITY.md — CJ3 program, DARQ Labs LLC. V0.2 is a P-009

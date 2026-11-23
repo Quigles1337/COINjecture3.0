@@ -5,10 +5,20 @@ conflicts discovered under the autonomous builder's INTERPRETATION tripwire. The
 builder proceeds on the stricter higher-authority reading; only the owning HUMAN gate
 may change normative specification text.
 
+No issue is open as of 2026-11-22: Al's ruling of that date resolved SI-001, SI-002
+and SI-003, and SI-004 was resolved on 2026-08-16.
+
 ## SI-001 — SIS reduction described as unconditional proof
 
 - **Discovered by:** P-003, 2026-08-15
-- **Status:** OPEN — G0/HUMAN
+- **Status:** RESOLVED — ruling G0-B1 (Al, 2026-11-22)
+- **Ratified resolution:** Protocol Spec §5.2's whole "Hardness basis" bullet is
+  replaced by the text Al supplied in clause B1 of the 2026-11-22 ruling, recorded
+  verbatim in
+  [`loop/LEDGER.md`](../LEDGER.md#gate-g0-ruling-overlay--g0-b-to-g0-e-ruled--g0-f-held-al-2026-11-22).
+  It labels the hardness basis as an assumption, as A10 requires. Engineering Plan D1
+  keeps its text as the record of the decision and carries a line that points here.
+  The entries below are the record as P-003 wrote it.
 - **Higher authority:** `docs/ENGINEERING_PLAN.md` A10 requires hardness assumptions
   to be labeled as assumptions in code, documentation, and public material.
 - **Conflicting text:** `docs/PROTOCOL_SPEC.md` §5.2 says the sampled SIS
@@ -35,7 +45,16 @@ may change normative specification text.
 ## SI-002 — SIS coefficient bound is referenced but not defined
 
 - **Discovered by:** P-003, 2026-08-15
-- **Status:** OPEN — G0/P-007 HUMAN
+- **Status:** RESOLVED — ruling G0-C4 (Al, 2026-11-22)
+- **Ratified resolution:** clause C4 of the 2026-11-22 ruling, recorded verbatim in
+  [`loop/LEDGER.md`](../LEDGER.md#gate-g0-ruling-overlay--g0-b-to-g0-e-ruled--g0-f-held-al-2026-11-22).
+  A coefficient is encoded as clause C3e says: a 16-bit two's-complement integer,
+  little-endian. The check rejects a coefficient when its square exceeds
+  `beta_squared`, before it adds to the norm. That guard replaces
+  `|s_i| <= s_max(P-4)` in Protocol Spec §5.2. It follows from the norm bound and
+  changes no set of valid solutions. A tuple with `beta_squared` above
+  `32767^2 = 1,073,676,289` is not admissible under encoding v1. The entries below are
+  the record as P-003 wrote it.
 - **Text:** `docs/PROTOCOL_SPEC.md` §5.2 requires every decoded coefficient to obey
   `|s_i| <= s_max(P-4)`, but P-4 contains only `(n, m, q, beta_squared)` and no
   definition of `s_max` appears elsewhere in the specification.
@@ -51,7 +70,13 @@ may change normative specification text.
 ## SI-003 — SIS SHAKE expansion lacks a normative candidate-byte convention
 
 - **Discovered by:** P-003 adversary pass, 2026-08-16
-- **Status:** OPEN — G0/P-007 HUMAN
+- **Status:** RESOLVED — ruling G0-C5 (Al, 2026-11-22)
+- **Ratified resolution:** clause C5 of the 2026-11-22 ruling, recorded verbatim in
+  [`loop/LEDGER.md`](../LEDGER.md#gate-g0-ruling-overlay--g0-b-to-g0-e-ruled--g0-f-held-al-2026-11-22).
+  The convention of `crates/cj3-classes/src/sis.rs` is ratified as it stands, and
+  Protocol Spec §5.2 now states it. Clause C8b makes the existing q = 17 fixture
+  normative and lists the further vectors P-007 owes. The entries below are the record
+  as P-003 wrote it.
 - **Text:** `docs/PROTOCOL_SPEC.md` §5.2 requires SHAKE-256 plus rejection sampling
   to derive the matrix, but it does not define the candidate word width, byte order,
   exact acceptance ceiling, or whether rejected candidates consume a complete fixed-
