@@ -5,8 +5,11 @@
 # node. Its lockfile is `fuzz/Cargo.lock`, which the D6 dependency-audit job audits.
 #
 # `libfuzzer-sys` is licensed `(MIT OR Apache-2.0) AND NCSA` and bundles LLVM's
-# libFuzzer, which is C++. NCSA is not on the allow-list of the repository's
-# `deny.toml`, and that file is not loosened: this crate is outside the graph it checks.
+# libFuzzer, which is C++. Al accepted it for this crate alone, as test tooling outside
+# the graph the node is built from (Gate G0-F ruling, clause 2.2). NCSA is not on the
+# allow-list of the repository's `deny.toml`, and that file is not loosened. This
+# workspace has a policy of its own, `fuzz/deny.toml`: the root policy plus NCSA for
+# `libfuzzer-sys` alone. D6 runs `cargo deny` over this workspace with it (clause 4.5b).
 [package]
 name = "cj3-fuzz"
 description = "Fuzz properties and cargo-fuzz targets for CJ3 Encoding v1"

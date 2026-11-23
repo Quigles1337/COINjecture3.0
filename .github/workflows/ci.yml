@@ -62,6 +62,15 @@ jobs:
         run: cargo install cargo-deny --version 0.20.2 --locked
       - name: Check dependency policy
         run: cargo deny --locked --all-features check
+      # The fuzz harness is its own workspace under fuzz/, outside the graph the node is
+      # built from. It has a policy of its own: the root policy plus one licence term,
+      # NCSA, for libfuzzer-sys alone (Gate G0-F ruling, clause 4.5b). The first step
+      # fails if fuzz/deny.toml differs from deny.toml in anything but that exception.
+      - name: Check that the fuzz policy is the root policy plus one exception
+        shell: pwsh
+        run: ./scripts/ci/check-fuzz-deny-policy.ps1
+      - name: Check the fuzz workspace's dependency policy
+        run: cargo deny --manifest-path fuzz/Cargo.toml --config fuzz/deny.toml --locked --all-features check
 
   dependency-audit:
     name: dependency-audit
@@ -83,9 +92,8 @@ jobs:
         run: cargo install cargo-audit --version 0.22.2 --locked
       - name: Audit the committed lockfile
         run: cargo audit --deny warnings
-      # The fuzz harness is its own workspace under fuzz/, outside `cargo deny`'s
-      # graph. Its lockfile is audited here so that no lockfile in the repository goes
-      # unaudited.
+      # The fuzz harness is its own workspace under fuzz/, with a lockfile of its own.
+      # It is audited here so that no lockfile in the repository goes unaudited.
       - name: Audit the committed fuzz lockfile
         run: cargo audit --deny warnings --file fuzz/Cargo.lock
 
