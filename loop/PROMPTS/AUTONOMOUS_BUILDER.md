@@ -46,6 +46,10 @@ any failure = STOP before touching anything):
   g. docs/RESEARCH_SURVEY.md present (commit it if Al supplies it now).
      P-008's target URL present in PACKETS.md; if still TBD(Al-supplied),
      P-008 stays blocked — NEVER guess it (A11).
+  h. Read the result of the latest completed D6 Nightly run on main and
+     report it. If a fuzz target failed in it, STOP. A failure before any
+     target ran is reported and is not a STOP (LEDGER, ruling "P-101 TO
+     ITS FRAME" of 2026-11-23, clause 4.4).
 
 BOOTSTRAP (first autonomous session only): after preflight passes, push main
 to origin and confirm with `git ls-remote origin main` matching local HEAD.
