@@ -271,22 +271,43 @@ its immutable run rather than treating an unpinned local installation as equival
   pinned by date; neither is evidence that no defect exists
   ([P-007 report](loop/reports/C10-p007-builder.md),
   [vectors guide](bench/p007-vectors/README.md)).
-- **One arithmetic back end, and what that does not cover.** Every build of `cj3-types`
-  in this repository uses `curve25519-dalek`'s serial back end, and a build that does
-  not fails to compile; D6 proves the refusal on every run. The reason is that every
-  node should run the same curve arithmetic whatever its processor. It is not a claim
-  that no `unsafe` code remains on the path, and three things stay true. First, both
-  dependencies contain `unsafe` code, and the zero-unsafe gate covers the `cj3-*`
-  crates, not their dependencies: under the serial back end the library still compiles
-  one `unsafe` volatile read in its scalar arithmetic, its dependency `subtle` has two
-  `unsafe` blocks, and `sha2` has `unsafe` processor intrinsics. Second, the serial back
-  end is two bodies of code, one for 64-bit targets and one for 32-bit targets, chosen
-  by pointer width; D6 builds and tests only the 64-bit one. Third, the setting covers
-  the curve arithmetic alone: on x86 processors `sha2` still chooses between its
-  portable code and processor extensions when it runs
+- **The same curve arithmetic and the same hash code on every processor, and what that
+  does not cover.** The reason for each pin below is that every node should run the
+  same code whatever its processor. None of it is a claim that no `unsafe` code remains
+  on the path.
+  - *Curve arithmetic.* Every build of `cj3-types` in this repository uses
+    `curve25519-dalek`'s serial back end with its word size set to exactly 64, and a
+    build that sets either value otherwise, or not at all, fails to compile; D6 proves
+    each refusal on every run. The serial back end is two bodies of code, one written
+    for 64-bit words and one for 32-bit words. Left alone, the library chooses between
+    them by the target's pointer width. With the word size pinned, the 64-bit code is
+    the one compiled for every target. D6 builds and tests on x86_64 only: no job
+    builds a 32-bit target, so that this code compiles and reproduces the vectors
+    there is not shown.
+  - *SHA-2.* `cj3-types` enables `sha2`'s `force-soft` feature, so SHA-256 and the
+    SHA-512 inside Ed25519 verification run the library's portable code on every
+    processor. Without it, on x86 processors, `sha2` chooses between that code and
+    processor extensions when it runs. D6 fails if what cargo resolved, or any `sha2`
+    that the build of the tests compiles, lacks the feature. This binds the code every
+    node checks with. Code that mines may hash as it likes when it comes, because every
+    node checks the result with this code.
+  - *SHA-3.* `cj3-classes` expands an instance seed with SHAKE-256 from `sha3 =0.10.9`,
+    over `keccak 0.1.6`. That library has one portable implementation and picks another
+    only when its `asm` feature is enabled, on 64-bit ARM, by processor at run time.
+    The feature is not enabled here, so SHA-3 also runs one body of code on every
+    processor. Unlike the two pins above, no D6 check fails if a later change enables
+    it.
+  - *What stays true of `unsafe`.* The zero-unsafe gate covers the `cj3-*` crates, not
+    their dependencies. As built here, `curve25519-dalek` still compiles one `unsafe`
+    volatile read in its scalar arithmetic, its dependency `subtle` has two `unsafe`
+    blocks, and `sha2` has two `unsafe` slice casts; `sha2`'s `unsafe` processor
+    intrinsics are no longer compiled.
+
   ([cargo configuration](.cargo/config.toml),
-  [the refusal](crates/cj3-types/build.rs),
-  [back-end check](scripts/ci/check-arithmetic-backend.ps1)).
+  [the refusals](crates/cj3-types/build.rs),
+  [arithmetic check](scripts/ci/check-arithmetic-backend.ps1),
+  [`cj3-types` manifest](crates/cj3-types/Cargo.toml),
+  [hash check](scripts/ci/check-sha2-portable.ps1)).
 - P-004 measured fixture behavior but admitted no legacy class; checker speed does not
   establish a hard sampled distribution
   ([P-004 report](loop/reports/C4-p004-builder.md),
