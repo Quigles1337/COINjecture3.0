@@ -1,8 +1,13 @@
 //! Deterministic problem-class and checker boundary.
 //!
-//! P-003 implements the sampled-SIS class without assigning its still-unratified
-//! numeric registry identifier. Callers bind an identifier through [`sis::Sis`]'s
-//! const generic only after the registry value is ratified.
+//! `cj3-types` owns bytes and this crate owns meaning: derivation, checking and the
+//! validity rules of a tuple. It imports the layouts and the class identifier table
+//! from `cj3-types` and defines no layout of its own except the coefficient coding of
+//! a SIS solution, which lives with the class.
+//!
+//! The sampled-SIS class is bound to class identifier 1 (Protocol Spec §5.1, ruling
+//! G0-C3b). [`sis::Sis`] reads the identifier from `cj3-types`; the number is written
+//! nowhere in this crate.
 
 #![forbid(unsafe_code)]
 
@@ -62,17 +67,17 @@ pub enum Invalid {
 /// Static contract implemented by an admitted useful-work problem class.
 ///
 /// The checker deliberately has no receiver, clock, miner field, or metadata input.
-/// `SizeParam` is associated so a class can expose a validated parameter object
-/// without introducing a cross-class wire representation before P-007.
+/// `SizeParam` is associated so a class exposes a validated parameter object; its
+/// bytes in a header are the layout that `cj3-types` gives the class.
 pub trait ProblemClass {
-    /// Registry identifier, bound only after the owning gate assigns it.
+    /// Registry identifier, as the class identifier table of `cj3-types` assigns it.
     const CLASS_ID: u16;
 
     /// Validated parameters used to derive an instance.
     type SizeParam: Copy;
     /// Deterministically derived instance.
     type Instance;
-    /// Strictly decoded solution supplied by the P-007 codec boundary.
+    /// Strictly decoded solution, produced by the class's own solution codec.
     type Solution;
 
     /// Derives an instance solely from committed seed bytes and validated parameters.

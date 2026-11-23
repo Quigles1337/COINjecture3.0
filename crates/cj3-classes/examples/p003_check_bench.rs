@@ -43,7 +43,7 @@ fn run() -> Result<(), String> {
     let instance = SisInstance::from_column_major(parameters, vec![0_u32; entries])
         .map_err(|error| format!("fixture construction failed: {error:?}"))?;
     let solution_len = usize::try_from(m).map_err(|_| String::from("m does not fit usize"))?;
-    let mut coefficients = vec![0_i64; solution_len];
+    let mut coefficients = vec![0_i16; solution_len];
     coefficients[0] = 1;
     let solution = SisSolution::new(coefficients);
 
