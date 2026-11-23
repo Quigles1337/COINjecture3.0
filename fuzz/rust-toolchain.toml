@@ -1,0 +1,7 @@
+# The nightly toolchain, pinned by date, that the D6 `codec-fuzz-smoke` job uses to run
+# the cargo-fuzz targets. That job alone uses it (P-007 resume ruling, clause 4.5). The
+# workspace and every other job stay on the stable toolchain pinned in the repository
+# root. `scripts/ci/active/codec-fuzz-smoke.ps1` reads the channel from this file.
+[toolchain]
+channel = "nightly-2026-11-15"
+profile = "minimal"

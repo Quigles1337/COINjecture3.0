@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)]
-    [ValidateSet('conservation-invariant', 'lean-conformance', 'codec-fuzz-smoke', 'genesis-spend-test')]
+    [ValidateSet('conservation-invariant', 'lean-conformance', 'codec-fuzz-smoke', 'genesis-spend-test', 'full-fuzz-corpus')]
     [string] $Gate
 )
 
@@ -11,6 +11,10 @@ $owners = @{
     'lean-conformance' = 'P-101 after P-005 vectors'
     'codec-fuzz-smoke' = 'P-007 canonical codecs'
     'genesis-spend-test' = 'Phase 1 genesis packet'
+    # The nightly long fuzz run needs a nightly toolchain. The P-007 resume ruling
+    # (clause 4.5) allows one to the D6 codec-fuzz-smoke job alone, so this gate has no
+    # handler until Al rules otherwise.
+    'full-fuzz-corpus' = "Al's ruling on a nightly-toolchain job outside D6 (P-007 resume ruling, clause 4.5)"
 }
 
 $handler = Join-Path $PSScriptRoot "active\$Gate.ps1"

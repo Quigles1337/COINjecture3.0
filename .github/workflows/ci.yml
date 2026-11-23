@@ -83,6 +83,11 @@ jobs:
         run: cargo install cargo-audit --version 0.22.2 --locked
       - name: Audit the committed lockfile
         run: cargo audit --deny warnings
+      # The fuzz harness is its own workspace under fuzz/, outside `cargo deny`'s
+      # graph. Its lockfile is audited here so that no lockfile in the repository goes
+      # unaudited.
+      - name: Audit the committed fuzz lockfile
+        run: cargo audit --deny warnings --file fuzz/Cargo.lock
 
   unsafe-audit:
     name: unsafe-audit
@@ -115,6 +120,12 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Select pinned Rust toolchain
         run: rustup show active-toolchain
+      # Ruling G0-C8a to c: every P-007 vector is derived twice. This step is the
+      # derivation that uses only the Python standard library; it fails if any
+      # committed vector file differs from what it derives. The Rust tests below read
+      # the same files and derive them again with the Rust code.
+      - name: Re-derive the P-007 vectors with the standard-library script
+        run: python3 -I -B bench/p007-vectors/derive.py --check
       - name: Run admitted tests
         run: cargo test --workspace --all-targets --all-features --locked
 
@@ -157,6 +168,25 @@ jobs:
     steps:
       - name: Check out source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Select pinned Rust toolchain
+        run: rustup show active-toolchain
+      - name: Restore pinned cargo-fuzz binary
+        id: cache-cargo-fuzz
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cargo/bin/cargo-fuzz
+          key: ${{ runner.os }}-cargo-fuzz-0.13.2-rust-1.97.1
+      - name: Install cargo-fuzz
+        if: steps.cache-cargo-fuzz.outputs.cache-hit != 'true'
+        run: cargo install cargo-fuzz --version 0.13.2 --locked
+      # This job alone uses a nightly toolchain, pinned by date in
+      # fuzz/rust-toolchain.toml (P-007 resume ruling, clause 4.5). The workspace and
+      # every other job stay on the stable toolchain pinned in rust-toolchain.toml.
+      - name: Install the date-pinned nightly toolchain for the fuzz targets
+        run: |
+          channel="$(sed -n 's/^channel = "\(nightly-[0-9-]*\)"$/\1/p' fuzz/rust-toolchain.toml)"
+          test -n "$channel"
+          rustup toolchain install "$channel" --profile minimal --no-self-update
       - name: Run or explicitly defer gate
         shell: pwsh
         run: ./scripts/ci/check-phase-gate.ps1 -Gate codec-fuzz-smoke

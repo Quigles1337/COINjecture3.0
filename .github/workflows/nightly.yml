@@ -40,6 +40,10 @@ jobs:
     steps:
       - name: Check out source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # The D6 codec-fuzz-smoke gate is live and needs a nightly Rust toolchain, which
+      # the P-007 resume ruling (clause 4.5) allows to that D6 job alone. This job
+      # therefore calls its own gate, which has no handler and reports an explicit
+      # deferral, not a fuzz result.
       - name: Run or explicitly defer gate
         shell: pwsh
-        run: ./scripts/ci/check-phase-gate.ps1 -Gate codec-fuzz-smoke
+        run: ./scripts/ci/check-phase-gate.ps1 -Gate full-fuzz-corpus
