@@ -25,9 +25,10 @@ $script:CodecFuzzTargets = @(
 # The driver version the workflow jobs install. A different one fails either gate.
 $script:RequiredCargoFuzz = 'cargo-fuzz 0.13.2'
 
-# The arithmetic back end every build of cj3-types uses (Gate G0-F ruling, clause 4.5c).
-# The same flag as in .cargo/config.toml.
-$script:SerialBackendFlags = '--cfg curve25519_dalek_backend="serial"'
+# The arithmetic back end and the word size every build of cj3-types uses (Gate G0-F
+# ruling, clause 4.5c; ruling "P-101 TO ITS FRAME", clause 4.3a). The same two flags as
+# in .cargo/config.toml.
+$script:SerialBackendFlags = '--cfg curve25519_dalek_backend="serial" --cfg curve25519_dalek_bits="64"'
 
 function Invoke-CodecFuzzGate {
     <#
@@ -129,11 +130,12 @@ function Invoke-CodecFuzzGate {
             throw "Fuzz target list mismatch. Under fuzz/: $($listed -join ', '). In the shared list: $($shared -join ', ')."
         }
 
-        # One arithmetic back end (Gate G0-F ruling, clause 4.5c). cargo-fuzz sets
-        # RUSTFLAGS for its own flags, and a RUSTFLAGS variable replaces the flags of
-        # .cargo/config.toml. cargo-fuzz appends the caller's RUSTFLAGS to its own, so
-        # the setting is passed here. Without it cj3-types refuses to compile, so a fuzz
-        # build that loses the setting fails; it does not fuzz another back end.
+        # One arithmetic back end, at one word size (Gate G0-F ruling, clause 4.5c;
+        # ruling "P-101 TO ITS FRAME", clause 4.3a). cargo-fuzz sets RUSTFLAGS for its
+        # own flags, and a RUSTFLAGS variable replaces the flags of .cargo/config.toml.
+        # cargo-fuzz appends the caller's RUSTFLAGS to its own, so both settings are
+        # passed here. Without either one cj3-types refuses to compile, so a fuzz build
+        # that loses a setting fails; it does not fuzz other arithmetic.
         if (Test-Path -LiteralPath Env:RUSTFLAGS) {
             throw 'RUSTFLAGS is set in this environment. The fuzz gates set it themselves.'
         }

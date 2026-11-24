@@ -1,11 +1,17 @@
 # COINjecture 3.0 Packet Queue
 
-**Queue status:** GATE G0 PASS — PHASE 1 OPEN. P-007 IS COMPLETE. P-101 AND PACKET
-P-011 ARE BOTH UNBLOCKED; NEITHER HAS STARTED, AND AL SAYS WHICH RUNS FIRST.
+**Queue status:** GATE G0 PASS — PHASE 1 OPEN. P-007 IS COMPLETE. P-101 RUNS FIRST
+(launch 3.1) AND IS AT ITS FRAME, STOPPED FOR AL'S RULING; NO KERNEL CODE EXISTS. PACKET
+P-011 IS UNBLOCKED AND NOT STARTED.
+Al's ruling "LIVE CJ3 RULING - P-101 TO ITS FRAME" of 2026-11-23, recorded verbatim in
+`loop/LEDGER.md`, confirms the merge of PR #22, rules the points of report C11 §4.2,
+says that P-101 runs first and takes it to its FRAME; its clauses are cited below as
+"launch 3.1" and so on. Its record is PR #23, which Al reviews and merges; the builder
+does not.
 Al's ruling "LIVE CJ3 RULING - GATE G0-F" of 2026-11-23, recorded verbatim in
 `loop/LEDGER.md`, passes the gate with items carried; its clauses are cited below as
-"pass 3.5" and so on. Its record is PR #22, which Al reviews and merges; the builder
-does not. Al's ruling "LIVE CJ3 RULING - P-007 RESUME", also recorded verbatim, resumed
+"pass 3.5" and so on. Its record was PR #22, which Al merged on 2026-11-23 as
+`d2c5f75985c776ce1c9ef204c02481715f6fac99`. Al's ruling "LIVE CJ3 RULING - P-007 RESUME", also recorded verbatim, resumed
 P-007; its clauses are cited below as "resume 2.2" and so on. G0-A is RATIFIED:
 `size_param` is a static human-upgraded protocol constant, P-11 is struck as moot, P-1
 remains unfilled with no proposal, and P-2 is provisionally ratified as `W=32`, gain
@@ -21,12 +27,16 @@ owner-controlled value was inferred.
 
 **Order of work.** Ruling F2 of 2026-11-22 is carried out as far as the gate: the
 ruling's record (PR #20, merged); P-007 (PR #21, merged); Al's G0-F ruling (given:
-PASS). What remains of it is P-101 and packet P-011. Both are unblocked, and Al says
-which runs first in the message that launches it (pass 3.6). The builder starts neither
-before that message.
+PASS). What remains of it is P-101 and packet P-011. Both are unblocked (pass 3.6). Al's
+launch ruling says that P-101 runs first (launch 3.1) and takes it to its FRAME and no
+further. The FRAME is written and stops for Al's ruling; the builder does not begin
+P-101's build before that ruling (launch 4.7). Packet P-011 is not started, and Al says
+when it runs.
 
 Clauses of the 2026-11-22 ruling are cited below as `G0-` plus their label, so `G0-F3`
-is clause F3 of that ruling and "pass 3.5" is a clause of the ruling of 2026-11-23.
+is clause F3 of that ruling, "pass 3.5" is a clause of the Gate G0-F ruling of
+2026-11-23, and "launch 3.1" is a clause of the ruling "P-101 TO ITS FRAME" of the same
+day.
 Packet P-011 is not parameter P-11 (`SIZE_RETARGET_WINDOW`, struck).
 
 | Packet | Phase | Queue status | Blocking condition |
@@ -41,8 +51,8 @@ Packet P-011 is not parameter P-11 (`SIZE_RETARGET_WINDOW`, struck).
 | P-008 | Phase 0 / Phase 4 seam input | BLOCKED | Exact public frontend repository URL supplied by Al; URL MUST NOT be guessed |
 | P-009 | Phase 0 / audit traceability | COMPLETE — `ce0b9752` | PR #15 and exact-merge-SHA D6 green; GAP-7–13 were proposals at merge and were ruled on 2026-11-22 (G0-E) |
 | P-010 | Phase 0 / documentation | COMPLETE — `1e986cb2` | Feature PR #10 and closeout PR #11; both exact-merge-SHA D6 runs green |
-| P-011 | Phase 0 / SIS solver envelope | UNBLOCKED (pass 3.6) — not started; commissioned by G0-B4 | Al says which of P-101 and packet P-011 runs first in the message that launches it. Blocks Phase 2; does not block P-101. D1 stands on what it finds (pass 3.3) |
-| P-101 | Phase 1 head | UNBLOCKED by Gate G0 PASS (pass 3.1, 3.6) — not started | Al says which of P-101 and packet P-011 runs first in the message that launches it. Its FRAME proposes how `tx_root` and the state commitment are built and stops there for Al's ruling (pass 3.5) |
+| P-011 | Phase 0 / SIS solver envelope | UNBLOCKED (pass 3.6) — not started; commissioned by G0-B4 | P-101 runs first (launch 3.1); Al says when packet P-011 runs. Blocks Phase 2; does not block P-101. D1 stands on what it finds (pass 3.3). It measures and reports costs and judges nothing (launch 2.10) |
+| P-101 | Phase 1 head | AT ITS FRAME — HUMAN — STOPPED FOR AL'S RULING (launch 3.1, 4.7). No kernel code exists | Al's ruling on the FRAME, `loop/reports/C12-p101-builder.md`: twelve decisions, among them how `tx_root` and the state commitment are built (pass 3.5, launch 3.3) and six proposed domain tags, which Al assigns. The build does not begin before that ruling |
 
 ## Seed packet definitions
 
@@ -258,10 +268,12 @@ standing rule in `loop/LEDGER.md`.
 ### P-011 — SIS solver envelope
 
 Commissioned by G0-B4 as the cadence link, under the next free packet identifier.
-Unblocked by pass 3.6 and not started: Al says which of P-101 and packet P-011 runs
-first in the message that launches it. Lane AUTO if the five D17 conditions hold at
-pickup. It measures and reports. It proposes no value for P-1, P-4, P-10 or
-`ACTIVE_SIZE_PARAM`.
+Unblocked by pass 3.6 and not started. P-101 runs first (launch 3.1); Al says when this
+packet runs. Lane AUTO if the five D17 conditions hold at pickup. It measures and
+reports. It proposes no value for P-1, P-4, P-10 or `ACTIVE_SIZE_PARAM`.
+
+**It judges nothing (launch 2.10).** Packet P-011 measures and reports costs. What is
+worth calling useful work is Al's judgment when he rules P-1 and P-4.
 
 **D1 stands on what this packet finds (pass 3.3).** SIS remains the genesis anchor
 class. No tuple is ratified, and it is not yet measured whether the family has a size
@@ -304,8 +316,9 @@ what the report carries, as "the re-measured P-3".
 
 ### P-101 — Kernel
 
-Phase 1 head, unblocked by Gate G0 PASS (pass 3.1, 3.6) and not started: Al says which
-of P-101 and packet P-011 runs first in the message that launches it. V1–V9 + STF
+Phase 1 head, unblocked by Gate G0 PASS (pass 3.1, 3.6). It runs first (launch 3.1).
+Its FRAME is written, in `loop/reports/C12-p101-builder.md`, and stops for Al's ruling;
+its build has not begun and no kernel code exists (launch 3.1, 4.7). V1–V9 + STF
 versus Lean vectors. Its concrete
 authenticated store MUST discharge all three
 `LawfulStateOps` laws from Protocol Spec §8 and prove that the kernel's actual storage
@@ -317,6 +330,16 @@ boundary and is re-checked at Gate G2. The concrete `R_MAX·SCALE` divisor MUST 
 constructed with checked u128 multiplication, proved nonzero before floor division,
 and the result checked back to u64. P-101 proposes how `tx_root` and the state
 commitment are built in its FRAME and stops there for Al's ruling (pass 3.5).
+
+**The FRAME (launch Part 3).** It puts twelve decisions to Al, K-1 to K-12, and lists
+twenty that are already settled with the place that settles each. It proposes `tx_root`
+as a list tree in the shape of RFC 6962 with the count in the root, and the state
+commitment as a binary radix tree over the address bits that records each split, with
+the count in the root and no leaf for an account of balance 0 and nonce 0. It proposes
+six domain tags by name and bytes; Al assigns tags, and the FRAME does not (launch
+3.3b). Its worked examples are under `bench/p101-roots`, derived by a standard-library
+script, and are proposed, not ruled: they are not conformance vectors. None of this is
+ruled.
 
 The P-005 vectors stay symbolic and non-normative (pass 2.4).
 
@@ -330,7 +353,8 @@ item of pass 3.5, and no implementation may assume a value for one (pass 3.4).
   re-derived P-2, the re-measured P-3, the re-ruled `BLOCK_MAX_BYTES` and the timestamp
   unit. They block Phase 2.
 - How `tx_root` and the state commitment are built (pass 3.5): P-101 proposes both in
-  its FRAME and stops there for Al's ruling.
+  its FRAME and stops there for Al's ruling. The proposal is made
+  (`loop/reports/C12-p101-builder.md`, sections 4 and 5) and is not ruled.
 - At the first Phase 2 FRAME (pass 3.5): the byte order in which a 32-byte value is
   read as a number (B8, and the weight formula and tie-break of Protocol Spec §10).
   G0-C1a does not decide it.
@@ -342,7 +366,10 @@ item of pass 3.5, and no implementation may assume a value for one (pass 3.4).
 - With their owners (pass 3.5): P-7, P-9 and P-12. In the ruling's words, "D10 and D16
   are still not ruled"; every value and seat they reserve stays reserved and UNFILLED,
   and every prohibition on contacting or notifying anyone stays in force (Part 0.2 of
-  the 2026-11-22 ruling).
+  the 2026-11-22 ruling). The meaning of the quoted sentence, as Al gives it in clause
+  2.1 of his ruling "LIVE CJ3 RULING - P-101 TO ITS FRAME" of 2026-11-23 (cited as
+  "launch 2.1"): D10 and D16 stand as ruled on 2026-08-15, and neither the 2026-11-22
+  ruling nor the gate ruling revisited them.
 - P-008 (pass 3.2, 3.5): blocked on the URL, and carried.
 
 ## Pickup guard

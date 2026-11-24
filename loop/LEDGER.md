@@ -1192,3 +1192,161 @@ verbatim text wins.
   `loop/PACKETS.md`, `loop/STATE.md`, `loop/reports/BATCH-LOG.md`). The builder's report
   is `loop/reports/C11-g0f-gate-builder.md`. The pull request is PR #22, which the
   builder does not merge.
+
+## P-101 FRAME ruling overlay — PR #22 confirmed / report C11 points ruled / P-101 to its FRAME (Al, 2026-11-23)
+
+The following live ruling is preserved verbatim. It was received on 2026-11-23 (local
+time), after Al merged PR #22. It confirms that merge, rules the points of report C11
+section 4.2, says that P-101 runs first and takes it to its FRAME, and orders this
+session's two build items, one new preflight step and two text corrections. Where it
+differs from an earlier entry in this ledger, it supersedes that entry without rewriting
+it.
+
+```text
+LIVE CJ3 RULING - P-101 TO ITS FRAME
+
+Read loop/PROMPTS/AUTONOMOUS_BUILDER.md, loop/LEDGER.md, loop/STATE.md, loop/PACKETS.md and
+loop/reports/C11-g0f-gate-builder.md first. Then act as the BUILDER seat. Record this ruling
+verbatim in loop/LEDGER.md as the first commit of a new branch. This session's whole scope is
+Part 4. If any clause below is ambiguous, or conflicts with an axiom, the Lean files, an
+earlier ruling or another clause, STOP and name the clause. Do not choose a reading.
+
+PART 1 - PR #22
+
+1.1 I reviewed and merged PR #22. In the preflight, verify the merge and its exact-merge-SHA
+    D6 run on GitHub. A missing or red run is a STOP.
+
+PART 2 - THE POINTS OF REPORT C11 SECTION 4.2
+
+2.1 (D10) The last sentence of clause 3.5 of the gate ruling was loosely worded. The fault
+    is in the ruling, not in the record. Its meaning is this: D10 and D16 stand as ruled on
+    2026-08-15, and neither the 2026-11-22 ruling nor the gate ruling revisited them. No
+    index line changes. Where loop/PACKETS.md and loop/STATE.md quote the loose sentence,
+    put that meaning beside it and cite this clause.
+2.2 (the word size) Pin it, as clause 4.5c of the gate ruling pinned the back end (4.3a).
+2.3 (sha2) Its portable code is to run on every processor (4.3b). Clause 4.5c named the
+    curve library alone, and its reason covers the hash as well. Code that mines may hash
+    as it likes when it comes, because every node checks the result with this code.
+2.4 (slower signature checks) Noted. It is measured when I re-rule BLOCK_MAX_BYTES.
+2.5 (the domain-tag rule) Accepted as built: names, comments included.
+2.6 (the nightly job) Its operating choices are accepted: 600 seconds per target, the UTC
+    date as seed, a 120-minute limit and no corpus kept. Because a failure at night blocks
+    nothing by itself, 4.4 makes every session read it.
+2.7 (the licence exception) Pinned to the version: accepted.
+2.8 (edits no clause named) They stand.
+2.9 (the stale bullet in loop/STATE.md) Give the bullet that begins "P-005's builder tail
+    is now explicit" its date, "as of 2026-08-16", and change nothing else in it.
+2.10 (a cost worth calling useful work) Packet P-011 measures and reports costs. It judges
+    nothing. What is worth calling useful work is my judgment when I rule P-1 and P-4.
+2.11 (item c in two commits) Accepted.
+
+PART 3 - P-101, TO ITS FRAME
+
+3.1 P-101 runs first. This session writes P-101's FRAME and stops there. It writes no
+    kernel code.
+3.2 The FRAME lists every decision P-101 needs from me, not only the two that the gate
+    ruling named. For each: the question, the proposal, at least one alternative that was
+    weighed, the evidence, and what it would cost to change after Phase 1. A decision that
+    the Lean files, the specification or a ruling already settles is listed as settled,
+    with the place that settles it.
+3.3 For tx_root and for the state commitment, the proposal is complete enough to rule as
+    it stands:
+    a. the structure, and why this one;
+    b. every hash input, laid out as Protocol Spec 1.2 lays out a preimage. A new domain
+       tag is proposed by name and bytes. I assign tags. The FRAME does not.
+    c. the encoding of an account and of a leaf, the order of keys, and each empty case;
+    d. a demonstration that two different transaction lists, and two different states,
+       never give the same root: no last node counted twice, leaves and inner nodes hashed
+       differently, and the count or the shape bound into the root;
+    e. what a proof that a key is present, and a proof that it is absent, would consist of,
+       whether or not P-101 builds either;
+    f. one worked example of each, with all of its bytes shown, derived by a script that
+       uses only a standard library. That script, under bench/, is the only code this
+       session adds beyond 4.3.
+3.4 The FRAME says how the proposed store discharges the three LawfulStateOps laws of
+    Protocol Spec 8 without axioms or admitted premises, how the kernel is tested against
+    the Lean vectors while those stay symbolic, and what P-101 leaves to the other Phase 1
+    packets.
+3.5 Every value that is UNFILLED stays an input of the kernel. The FRAME names each one the
+    kernel takes and shows that no code path would supply a default for it.
+3.6 The FRAME says whether P-101 should be built as one pull request or split, and predicts
+    the size of each part.
+
+PART 4 - THIS SESSION
+
+4.1 Run the preflight, with 1.1.
+4.2 Record this ruling verbatim, as the first commit of a new branch.
+4.3 Two build items, each in a commit of its own, under the rule of clause 4.5 of the gate
+    ruling: if one cannot be made green without loosening a policy, leave it out of the
+    pull request and report it.
+    a. Every build of cj3-types in this repository sets curve25519_dalek_bits to exactly
+       64, and a build that does not fails to compile. The D6 check of the back end also
+       builds with this setting absent, set to 32 and doubled, and requires each of those
+       builds to fail.
+    b. cj3-types enables the force-soft feature of sha2. D6 fails if the resolved build
+       does not have it.
+    Correct the README limitation to say what is then true of the curve arithmetic, of
+    SHA-2 and of SHA-3.
+4.4 The builder prompt gains one preflight step, h, after step g: read the result of the
+    latest completed D6 Nightly run on main and report it. If a fuzz target failed in it,
+    STOP. A failure before any target ran is reported and is not a STOP. Change nothing
+    else in loop/PROMPTS/AUTONOMOUS_BUILDER.md.
+4.5 The text of 2.1 and 2.9, in a commit of its own.
+4.6 The FRAME of Part 3, in P-101's report under loop/reports.
+4.7 Adversary pass over the whole diff. Exact-head D6 green. Pull request marked ready.
+    STOP. Do not merge, and do not begin P-101's build. I review, merge and rule.
+```
+
+### Effective record of the P-101 FRAME ruling
+
+The verbatim text above governs. This index only names what the ruling confirms, what
+it gives meaning to, what it leaves unruled, and where it is applied. On any difference,
+the verbatim text wins. No line of an earlier index in this ledger is changed (clause
+2.1).
+
+- **Clause names.** Other documents cite a clause of this ruling as "launch" plus its
+  number ("launch 2.1", "launch 4.3a"), because it is the message that launches P-101
+  (pass 3.6). A clause of the Gate G0-F ruling is still "pass" plus its number, a clause
+  of the P-007 resume ruling "resume" plus its number, and the prefix `G0-` stays with
+  the 2026-11-22 ruling.
+- **Confirmed by clause 1.1:** PR #22 merged at `2026-11-23T12:44:59Z` as
+  `d2c5f75985c776ce1c9ef204c02481715f6fac99`, and exact-merge-SHA D6 run `45177244858`
+  on that commit concluded success in all eleven jobs. Both were read on GitHub before
+  the branch was cut.
+- **Given its meaning by clause 2.1:** the last sentence of clause 3.5 of the Gate G0-F
+  ruling, "D10 and D16 are still not ruled". It means that D10 and D16 stand as ruled on
+  2026-08-15, and that neither the 2026-11-22 ruling nor the gate ruling revisited
+  them. The fault was in that ruling's wording, not in the record. The index lines above
+  that quote the sentence are left as they are, as the clause orders; this entry is
+  where the ledger carries the meaning.
+- **Ruled by Part 2:** the points of report C11 §4.2. The word size of the curve
+  arithmetic is pinned (2.2, 4.3a). `sha2` runs its portable code on every processor,
+  for the reason clause 4.5c of the gate ruling gave for the curve library; code that
+  mines may hash as it likes when it comes, because every node checks the result with
+  this code (2.3, 4.3b). The slower signature checks are noted and measured when Al
+  re-rules `BLOCK_MAX_BYTES` (2.4). The domain-tag rule is accepted as built: names,
+  comments included (2.5). The nightly job's operating choices are accepted, and every
+  session reads its latest result (2.6, 4.4). The licence exception pinned to a version
+  is accepted (2.7). The edits no clause named stand (2.8). One stale bullet of
+  `loop/STATE.md` gains its date (2.9). Packet P-011 measures and reports costs and
+  judges nothing: what is worth calling useful work is Al's judgment when he rules P-1
+  and P-4 (2.10). Item (c) in two commits is accepted (2.11).
+- **Order of work (Part 3):** P-101 runs first (3.1). This ruling takes it to its FRAME
+  and no further: the FRAME lists every decision P-101 needs from Al, proposes how
+  `tx_root` and the state commitment are built, and stops for Al's ruling. No kernel
+  code is written under this ruling.
+- **Discharged:** in the Gate G0-F ruling, "I say which runs first in the message that
+  launches it" (3.6), which clause 3.1 now says.
+- **Not ruled:** every decision P-101's FRAME puts to Al, the six domain tags it
+  proposes among them (clause 3.3b: "I assign tags. The FRAME does not."); when packet
+  P-011 runs; and every item clause 3.5 of the gate ruling carries, which stay carried.
+  D10 and D16 are not revisited (2.1).
+- **Applied in:** the text commit of clause 4.5 (`loop/PACKETS.md`, `loop/STATE.md`);
+  step h of `loop/PROMPTS/AUTONOMOUS_BUILDER.md` (4.4); the two build items of clause
+  4.3, each in a commit of its own (`.cargo/config.toml`, `crates/cj3-types`,
+  `scripts/ci`, `.github/workflows/ci.yml`), and the README limitation after them;
+  P-101's FRAME, `loop/reports/C12-p101-builder.md` (4.6), with its worked examples
+  under `bench/p101-roots`; and `README.md`, `loop/PACKETS.md`, `loop/STATE.md` and
+  `loop/reports/BATCH-LOG.md`. The session's report is
+  `loop/reports/C12-p101-frame-ruling-builder.md`. The pull request is PR #23, which the
+  builder does not merge.

@@ -20,17 +20,17 @@ enforces the complete design ([audit mapping](docs/AUDIT_TRACEABILITY.md#1-third
 
 ## Status
 
-> Refreshed 2026-11-23 for Gate G0 PASS and the opening of Phase 1. This is the repository's single current-status
+> Refreshed 2026-11-23 for Gate G0 PASS and the opening of Phase 1, and brought up to date the same day for the ruling that takes P-101 to its FRAME. This is the repository's single current-status
 > block; its refresh is required at every gate closeout
 > ([standing rule](loop/LEDGER.md#standing-readme-drift-control-rule--ratified-al-2026-08-16)).
 >
 > | Field | Current record | Evidence |
 > |---|---|---|
 > | Scope | Public repository; pre-testnet; no running testnet, production node, or mainnet configuration | [2026-11-22 ruling, Part 0.1](loop/LEDGER.md#gate-g0-ruling-overlay--g0-b-to-g0-e-ruled--g0-f-held-al-2026-11-22), [D12](loop/LEDGER.md#d1d15-seed-from-engineering-plan-3), [source-policy gate](scripts/ci/check-source-policy.ps1) |
-> | Phase | **Phase 1 — open.** Gate G0 is PASS, with items carried. No Phase 1 packet has started | [Gate G0 ruling of 2026-11-23](loop/LEDGER.md#gate-g0-f-ruling-overlay--gate-g0-pass--pr-21-confirmed--report-c10-points-ruled--phase-1-open-al-2026-11-23), [phase plan](docs/ENGINEERING_PLAN.md#4-phase-plan), [packet queue](loop/PACKETS.md) |
+> | Phase | **Phase 1 — open.** Gate G0 is PASS, with items carried. P-101, the kernel packet, runs first and is at its FRAME, stopped for Al's ruling. No kernel code exists | [Gate G0 ruling of 2026-11-23](loop/LEDGER.md#gate-g0-f-ruling-overlay--gate-g0-pass--pr-21-confirmed--report-c10-points-ruled--phase-1-open-al-2026-11-23), [ruling "P-101 TO ITS FRAME"](loop/LEDGER.md#p-101-frame-ruling-overlay--pr-22-confirmed--report-c11-points-ruled--p-101-to-its-frame-al-2026-11-23), [P-101's FRAME](loop/reports/C12-p101-builder.md), [phase plan](docs/ENGINEERING_PLAN.md#4-phase-plan), [packet queue](loop/PACKETS.md) |
 > | Last phase gate | **G0 — PASS on 2026-11-23**, with items carried to the boundaries where Al rules them. G1–G4 have not passed | [Gate G0 ruling of 2026-11-23](loop/LEDGER.md#gate-g0-f-ruling-overlay--gate-g0-pass--pr-21-confirmed--report-c10-points-ruled--phase-1-open-al-2026-11-23), [gate report](loop/reports/C11-g0f-gate-builder.md), [queue state](loop/PACKETS.md) |
 > | Completed packet evidence | P-001 through P-007, P-009 and P-010 are merged with exact-mainline CI records. P-005's Lean V1–V9/STF is HUMAN-RATIFIED. P-007 is COMPLETE: Al merged PR #21 on 2026-11-23 as `333c6708`, and D6 run 45118879871 on that commit passed all eleven jobs. PR #14, merged on 2026-10-12 as `35811404`, had carried only the checked `Amount` boundary and the stop report | [batch log](loop/reports/BATCH-LOG.md), [gate report, evidence for clause 3.2](loop/reports/C11-g0f-gate-builder.md#32-evidence-for-pass-32), [PR #21](https://github.com/Quigles1337/COINjecture3.0/pull/21), [D6 run 45118879871](https://github.com/Quigles1337/COINjecture3.0/actions/runs/45118879871), [PR #14](https://github.com/Quigles1337/COINjecture3.0/pull/14) |
-> | Current stop | The Gate G0 ruling passes the gate, makes Protocol Spec v0.2 normative except for its unfilled, provisional and carried items, makes three vector files normative conformance vectors and orders four build items. Its record is PR #22, which stops for Al's review; the builder does not merge it. P-101 and packet P-011 are both unblocked, and Al says which runs first in the message that launches it. Neither has started | [Gate G0 ruling of 2026-11-23](loop/LEDGER.md#gate-g0-f-ruling-overlay--gate-g0-pass--pr-21-confirmed--report-c10-points-ruled--phase-1-open-al-2026-11-23), [gate report](loop/reports/C11-g0f-gate-builder.md), [PR #22](https://github.com/Quigles1337/COINjecture3.0/pull/22), [loop state](loop/STATE.md) |
+> | Current stop | Al merged PR #22, the record of the Gate G0 ruling, on 2026-11-23 as `d2c5f759`, and D6 run 45177244858 on that commit passed all eleven jobs. His ruling "P-101 TO ITS FRAME" says that P-101 runs first, takes it to its FRAME and no further, and orders two build items: the word size of the curve arithmetic pinned to 64, and `sha2`'s portable code on every processor. The FRAME puts twelve decisions to Al, among them how `tx_root` and the state commitment are built and six proposed domain tags. None is ruled, and no tag is assigned. The record is PR #23, which stops for Al's review; the builder does not merge it and does not begin P-101's build. Packet P-011 is unblocked and not started | [ruling "P-101 TO ITS FRAME"](loop/LEDGER.md#p-101-frame-ruling-overlay--pr-22-confirmed--report-c11-points-ruled--p-101-to-its-frame-al-2026-11-23), [P-101's FRAME](loop/reports/C12-p101-builder.md), [session report](loop/reports/C12-p101-frame-ruling-builder.md), [PR #23](https://github.com/Quigles1337/COINjecture3.0/pull/23), [D6 run 45177244858](https://github.com/Quigles1337/COINjecture3.0/actions/runs/45177244858), [loop state](loop/STATE.md) |
 > | Implemented surfaces | D6 CI and source policy, including the rule that no Rust source outside `cj3-types` names a domain tag; dependency policy over the workspace and, under a policy of its own, over the fuzz workspace; trait-gated beacon boundary; sampled-SIS derivation/checking and external demonstrator; CJ3 Encoding v1 in `cj3-types` (grammar, domain tags, preimages, the single `addr()`, transaction, header and block layouts, the §1.3 Ed25519 verification on one arithmetic back end) with the SIS solution encoding in `cj3-classes`; three normative conformance-vector files, each derived twice; six fuzz targets, run as a D6 smoke job and as a nightly long job; checked `Amount(u64)`; admission and difficulty benches; HUMAN-ratified Lean V1–V9/STF with symbolic non-normative vectors; source-verified audit matrix v0.2 | [workflow](.github/workflows/ci.yml), [nightly workflow](.github/workflows/nightly.yml), [`cj3-types`](crates/cj3-types/src/lib.rs), [vectors](bench/p007-vectors/README.md), [fuzz properties](fuzz/src/lib.rs), [formal project](spec/README.md), [P-006 bench](bench/p006-difficulty/README.md), [audit matrix](docs/AUDIT_TRACEABILITY.md) |
 > | Planned or absent | A ratified SIS tuple, block cadence, timestamp unit and drift bound; how `tx_root` and the state commitment are built; the genesis layout; kernel, storage, consensus, networking, RPC, node behavior; production VDF; testnet | [open-TBD index](docs/PROTOCOL_SPEC.md#15-open-tbd-index), [explicit phase deferrals](scripts/ci/check-phase-gate.ps1), [roadmap](docs/ENGINEERING_PLAN.md#4-phase-plan) |
 
@@ -194,12 +194,13 @@ than assuming the current branch reproduces an earlier observation
 | `crates/` | Rust workspace: `cj3-types` (CJ3 Encoding v1), `cj3-classes` (SIS derivation, checker and solution encoding), the beacon trait and the external solver; the other crates are empty boundaries | [crate sources](crates/), [workspace manifest](Cargo.toml) |
 | `bench/p003-sis/` | Reproducible estimator, solver, and verifier records for provisional SIS candidates | [bench guide](bench/p003-sis/README.md) |
 | `bench/p004-admission/` | Bounded admission controller and read-only legacy calibration evidence | [bench guide](bench/p004-admission/README.md) |
+| `bench/p101-roots/` | Worked examples of the `tx_root` and state commitment that P-101's FRAME proposes, derived by a standard-library script. **Proposed, not ruled:** not conformance vectors, and their domain tags are not assigned | [worked examples](bench/p101-roots/WORKED-EXAMPLES.md), [P-101's FRAME](loop/reports/C12-p101-builder.md) |
 | `bench/p007-vectors/` | Standard-library derivation of the Encoding v1 vectors, three of whose files are normative conformance vectors; the pinned C2SP CCTV ed25519 vectors with their licence | [vectors guide](bench/p007-vectors/README.md) |
 | `fuzz/` | cargo-fuzz harness for the Encoding v1 codecs: its own workspace, linked into no `cj3-*` crate, and checked by `cargo deny` under a policy of its own, which is the root policy plus one licence term for `libfuzzer-sys` alone | [properties](fuzz/src/lib.rs), [shared gate script](scripts/ci/codec-fuzz-common.ps1), [fuzz policy](fuzz/deny.toml) |
 | `spec/` | HUMAN-lane Lean 4 project: the HUMAN-RATIFIED V1–V9/STF encoding, with conservation proved under `LawfulStateOps`, and 27 symbolic, non-normative vectors | [formal project](spec/README.md), [vector artifact](spec/vectors/p005-draft.json) |
 | `docs/` | Governing plan, Protocol Specification v0.2 (normative, except for its unfilled, provisional and carried items), audit traceability, and research caveats | [Engineering Plan](docs/ENGINEERING_PLAN.md), [Protocol Spec](docs/PROTOCOL_SPEC.md), [audit matrix](docs/AUDIT_TRACEABILITY.md), [research survey](docs/RESEARCH_SURVEY.md) |
 | `loop/` | Decisions, queue, state, prompts, reports, and durable audit-source custody | [ledger](loop/LEDGER.md), [queue](loop/PACKETS.md), [reports](loop/reports/) |
-| `scripts/ci/` | Source policy, zero-unsafe enforcement, the arithmetic back-end check, the fuzz policy check, the fuzz gates, and fail-explicit phase dispatch | [source policy](scripts/ci/check-source-policy.ps1), [back-end check](scripts/ci/check-arithmetic-backend.ps1), [phase dispatcher](scripts/ci/check-phase-gate.ps1) |
+| `scripts/ci/` | Source policy, zero-unsafe enforcement, the arithmetic back-end and word-size check, the portable-hash check, the fuzz policy check, the fuzz gates, and fail-explicit phase dispatch | [source policy](scripts/ci/check-source-policy.ps1), [arithmetic check](scripts/ci/check-arithmetic-backend.ps1), [hash check](scripts/ci/check-sha2-portable.ps1), [phase dispatcher](scripts/ci/check-phase-gate.ps1) |
 | `.github/` | D6/nightly workflows, PR evidence template, and the documented branch-protection contract | [D6 workflow](.github/workflows/ci.yml), [branch-protection contract](.github/BRANCH_PROTECTION.md) |
 
 ## Quickstart
@@ -271,22 +272,43 @@ its immutable run rather than treating an unpinned local installation as equival
   pinned by date; neither is evidence that no defect exists
   ([P-007 report](loop/reports/C10-p007-builder.md),
   [vectors guide](bench/p007-vectors/README.md)).
-- **One arithmetic back end, and what that does not cover.** Every build of `cj3-types`
-  in this repository uses `curve25519-dalek`'s serial back end, and a build that does
-  not fails to compile; D6 proves the refusal on every run. The reason is that every
-  node should run the same curve arithmetic whatever its processor. It is not a claim
-  that no `unsafe` code remains on the path, and three things stay true. First, both
-  dependencies contain `unsafe` code, and the zero-unsafe gate covers the `cj3-*`
-  crates, not their dependencies: under the serial back end the library still compiles
-  one `unsafe` volatile read in its scalar arithmetic, its dependency `subtle` has two
-  `unsafe` blocks, and `sha2` has `unsafe` processor intrinsics. Second, the serial back
-  end is two bodies of code, one for 64-bit targets and one for 32-bit targets, chosen
-  by pointer width; D6 builds and tests only the 64-bit one. Third, the setting covers
-  the curve arithmetic alone: on x86 processors `sha2` still chooses between its
-  portable code and processor extensions when it runs
+- **The same curve arithmetic and the same hash code on every processor, and what that
+  does not cover.** The reason for each pin below is that every node should run the
+  same code whatever its processor. None of it is a claim that no `unsafe` code remains
+  on the path.
+  - *Curve arithmetic.* Every build of `cj3-types` in this repository uses
+    `curve25519-dalek`'s serial back end with its word size set to exactly 64, and a
+    build that sets either value otherwise, or not at all, fails to compile; D6 proves
+    each refusal on every run. The serial back end is two bodies of code, one written
+    for 64-bit words and one for 32-bit words. Left alone, the library chooses between
+    them by the target's pointer width. With the word size pinned, the 64-bit code is
+    the one compiled for every target. D6 builds and tests on x86_64 only: no job
+    builds a 32-bit target, so that this code compiles and reproduces the vectors
+    there is not shown.
+  - *SHA-2.* `cj3-types` enables `sha2`'s `force-soft` feature, so SHA-256 and the
+    SHA-512 inside Ed25519 verification run the library's portable code on every
+    processor. Without it, on x86 processors, `sha2` chooses between that code and
+    processor extensions when it runs. D6 fails if what cargo resolved, or any `sha2`
+    that the build of the tests compiles, lacks the feature. This binds the code every
+    node checks with. Code that mines may hash as it likes when it comes, because every
+    node checks the result with this code.
+  - *SHA-3.* `cj3-classes` expands an instance seed with SHAKE-256 from `sha3 =0.10.9`,
+    over `keccak 0.1.6`. That library has one portable implementation and picks another
+    only when its `asm` feature is enabled, on 64-bit ARM, by processor at run time.
+    The feature is not enabled here, so SHA-3 also runs one body of code on every
+    processor. Unlike the two pins above, no D6 check fails if a later change enables
+    it.
+  - *What stays true of `unsafe`.* The zero-unsafe gate covers the `cj3-*` crates, not
+    their dependencies. As built here, `curve25519-dalek` still compiles one `unsafe`
+    volatile read in its scalar arithmetic, its dependency `subtle` has two `unsafe`
+    blocks, and `sha2` has two `unsafe` slice casts; `sha2`'s `unsafe` processor
+    intrinsics are no longer compiled.
+
   ([cargo configuration](.cargo/config.toml),
-  [the refusal](crates/cj3-types/build.rs),
-  [back-end check](scripts/ci/check-arithmetic-backend.ps1)).
+  [the refusals](crates/cj3-types/build.rs),
+  [arithmetic check](scripts/ci/check-arithmetic-backend.ps1),
+  [`cj3-types` manifest](crates/cj3-types/Cargo.toml),
+  [hash check](scripts/ci/check-sha2-portable.ps1)).
 - P-004 measured fixture behavior but admitted no legacy class; checker speed does not
   establish a hard sampled distribution
   ([P-004 report](loop/reports/C4-p004-builder.md),
@@ -326,7 +348,7 @@ The phase gates are evidence thresholds, not calendar or deployment promises
 | Gate | Planned phase outcome | Current position |
 |---|---|---|
 | **G0 — Foundations and spikes** | P-001–P-007 reports complete; D1/D2/D14/D15 and open interpretation issues resolved with spike evidence | **PASSED on 2026-11-23, with items carried.** D1 stands on a condition, and packet P-011 measures what that condition asks ([Gate G0 ruling of 2026-11-23](loop/LEDGER.md#gate-g0-f-ruling-overlay--gate-g0-pass--pr-21-confirmed--report-c10-points-ruled--phase-1-open-al-2026-11-23), [gate report](loop/reports/C11-g0f-gate-builder.md)) |
-| **G1 — Kernel** | Lean-vector conformance, conservation properties, mutation spot-check, genesis spend, and crash consistency | **▶ CURRENT — Phase 1 is open; P-101 is unblocked and has not started** ([Plan G1](docs/ENGINEERING_PLAN.md#4-phase-plan), [packet queue](loop/PACKETS.md)) |
+| **G1 — Kernel** | Lean-vector conformance, conservation properties, mutation spot-check, genesis spend, and crash consistency | **▶ CURRENT — Phase 1 is open; P-101 runs first and is at its FRAME, stopped for Al's ruling; no kernel code exists** ([Plan G1](docs/ENGINEERING_PLAN.md#4-phase-plan), [P-101's FRAME](loop/reports/C12-p101-builder.md), [packet queue](loop/PACKETS.md)) |
 | **G2 — Consensus** | Deterministic two-node replay and typed rejection of the adversarial block corpus | Planned after G1 ([Plan G2](docs/ENGINEERING_PLAN.md#4-phase-plan)) |
 | **G3 — Network and RPC** | Three-node devnet adversarial replay and complete fail-closed auth matrix | Planned after G2 ([Plan G3](docs/ENGINEERING_PLAN.md#4-phase-plan)) |
 | **G4 — Testnet and integration seam** | Testnet operations, external solver fleet, adversarial replay, and stable frontend read/event surface | Planned after G3 ([Plan G4](docs/ENGINEERING_PLAN.md#4-phase-plan)) |

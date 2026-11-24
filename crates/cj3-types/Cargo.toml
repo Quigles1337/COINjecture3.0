@@ -9,7 +9,11 @@ repository.workspace = true
 
 [dependencies]
 curve25519-dalek = { version = "=4.1.3", default-features = false }
-sha2 = { version = "=0.10.9", default-features = false }
+# `force-soft` makes sha2 run its portable code on every processor, where it would
+# otherwise choose between that code and processor extensions when it runs (ruling
+# "P-101 TO ITS FRAME", clauses 2.3 and 4.3b). D6 fails if a build lacks the feature
+# (scripts/ci/check-sha2-portable.ps1).
+sha2 = { version = "=0.10.9", default-features = false, features = ["force-soft"] }
 
 [lints]
 workspace = true

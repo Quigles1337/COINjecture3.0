@@ -31,6 +31,21 @@ compile_error!(
      replaces that file's flags and must repeat the flag."
 );
 
+// One word size (ruling "P-101 TO ITS FRAME", clauses 2.2 and 4.3a). The serial back end
+// is two bodies of code, one written for 64-bit words and one for 32-bit words, and the
+// library chooses between them by the target's pointer width unless the setting names
+// one. Every build of this crate sets it to exactly 64, and a build that does not fails
+// here. The two tests are the same two as above: one for a build without cargo, one set
+// by `build.rs`, which compares the whole value exactly, because the library treats a
+// value it does not recognise as if none were set.
+#[cfg(any(not(curve25519_dalek_bits = "64"), cj3_arithmetic_bits_not_64))]
+compile_error!(
+    "cj3-types must be built with exactly `--cfg curve25519_dalek_bits=\"64\"` (ruling \
+     \"P-101 TO ITS FRAME\", clause 4.3a). The repository's .cargo/config.toml passes the \
+     flag to every build started inside the repository. A RUSTFLAGS environment variable \
+     replaces that file's flags and must repeat the flag."
+);
+
 pub mod block;
 pub mod class;
 pub mod codec;

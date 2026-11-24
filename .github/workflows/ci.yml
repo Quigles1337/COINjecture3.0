@@ -134,13 +134,23 @@ jobs:
       # the same files and derive them again with the Rust code.
       - name: Re-derive the P-007 vectors with the standard-library script
         run: python3 -I -B bench/p007-vectors/derive.py --check
-      # One arithmetic back end (Gate G0-F ruling, clause 4.5c). .cargo/config.toml
-      # makes every build in this workflow use curve25519-dalek's serial back end, the
-      # tests below included. This step builds cj3-types that way, then with the setting
-      # absent, wrong and doubled, and requires each of those builds to fail to compile.
-      - name: Prove that cj3-types compiles with the serial back end and no other
+      # One arithmetic back end, at one word size (Gate G0-F ruling, clause 4.5c; ruling
+      # "P-101 TO ITS FRAME", clause 4.3a). .cargo/config.toml makes every build in this
+      # workflow use curve25519-dalek's serial back end with its word size set to 64, the
+      # tests below included. This step builds cj3-types that way, then with each of the
+      # two settings absent, wrong and doubled, and requires each of those builds to fail
+      # to compile.
+      - name: Prove that cj3-types compiles with the serial back end at 64 bits and no other
         shell: pwsh
         run: ./scripts/ci/check-arithmetic-backend.ps1
+      # The portable hash (ruling "P-101 TO ITS FRAME", clauses 2.3 and 4.3b). cj3-types
+      # enables sha2's force-soft feature, so that its portable code runs on every
+      # processor. This step fails if the feature is missing from what cj3-types asks
+      # for, from what cargo resolved for the workspace or for the fuzz workspace, or
+      # from any sha2 that the build of the tests below compiles.
+      - name: Prove that every sha2 in the build is compiled with its portable code
+        shell: pwsh
+        run: ./scripts/ci/check-sha2-portable.ps1
       - name: Run admitted tests
         run: cargo test --workspace --all-targets --all-features --locked
 
